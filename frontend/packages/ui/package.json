@@ -1,0 +1,78 @@
+{
+  "name": "@pilot/ui",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./tokens": "./src/tokens.ts",
+    "./tailwind.preset": "./tailwind.preset.ts",
+    "./styles/globals.css": "./src/styles/globals.css",
+    "./voice": "./src/voice/index.ts",
+    "./voice-confirm-turn": "./src/voice-confirm-turn/index.ts",
+    "./auth": "./src/auth/index.ts",
+    "./role-gate": "./src/role-gate/index.ts",
+    "./hooks": "./src/hooks/index.ts",
+    "./states": {
+      "react-native": "./src/states/mobile/index.ts",
+      "default": "./src/states/web/index.ts"
+    },
+    "./notification-banner": "./src/notification-banner/index.ts",
+    "./notification-banner/web/NotificationPortal": "./src/notification-banner/web/NotificationPortal.tsx",
+    "./notification-banner/mobile/NotificationBanner": "./src/notification-banner/mobile/NotificationBanner.tsx",
+    "./sync-indicator": "./src/sync-indicator/index.ts",
+    "./sync-indicator/mobile/InFlightSyncIndicator": "./src/sync-indicator/mobile/InFlightSyncIndicator.tsx",
+    "./email-branding-preview": "./src/email-branding-preview/index.ts",
+    "./mfa-enrollment-wizard": "./src/mfa-enrollment-wizard/index.ts",
+    "./mfa-enrollment-wizard/mobile/MFAEnrollmentWizard": "./src/mfa-enrollment-wizard/mobile/MFAEnrollmentWizard.tsx",
+    "./phone-input": "./src/phone-input/index.ts",
+    "./phone-input/web/PhoneInput": "./src/phone-input/web/PhoneInput.tsx",
+    "./tier-picker-card": "./src/tier-picker-card/index.ts",
+    "./diff-view": {
+      "react-native": "./src/diff-view/mobile/index.ts",
+      "default": "./src/diff-view/web/index.ts"
+    },
+    "./message-preview": {
+      "react-native": "./src/message-preview/mobile/index.ts",
+      "default": "./src/message-preview/index.ts"
+    },
+    "./*": "./src/*.tsx"
+  },
+  "scripts": {
+    "lint": "eslint . --max-warnings 0",
+    "generate:component": "turbo gen react-component",
+    "check-types": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "devDependencies": {
+    "@repo/eslint-config": "workspace:*",
+    "@repo/typescript-config": "workspace:*",
+    "@tanstack/react-query": "^5.0.0",
+    "@testing-library/jest-dom": "^6.0.0",
+    "@testing-library/react": "^16.0.0",
+    "@testing-library/user-event": "^14.0.0",
+    "@types/node": "^22.15.3",
+    "@types/react": "19.2.2",
+    "@types/react-dom": "19.2.2",
+    "@vitejs/plugin-react": "^4.0.0",
+    "eslint": "^9.39.1",
+    "jsdom": "^25.0.0",
+    "typescript": "5.9.2",
+    "vitest": "^2.0.0"
+  },
+  "peerDependencies": {
+    "@tanstack/react-query": ">=5.0.0",
+    "react": ">=18.0.0",
+    "react-dom": ">=18.0.0"
+  },
+  "dependencies": {
+    "@pilot/shared-api": "workspace:*",
+    "@react-native-async-storage/async-storage": "^2.1.2",
+    "@stripe/react-stripe-js": "^3.1.0",
+    "@stripe/stripe-js": "^5.5.0",
+    "aws-amplify": "^6.0.0",
+    "expo-av": "^16.0.8",
+    "zustand": "^4.5.0"
+  }
+}

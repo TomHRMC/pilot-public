@@ -1,0 +1,9 @@
+{
+  "template_id": "trial_expired",
+  "display_name": "Trial Expired",
+  "category": "internal",
+  "subject_template": "Your free trial has ended",
+  "body_html_template": "<p>Your trial has expired.</p>",
+  "body_plain_template": "Your trial has expired.",
+  "variables": ["tenant_name", "upgrade_url"]
+}

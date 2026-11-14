@@ -1,0 +1,1452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AevoFab · Quote Approval Workflow (Pass 3 Flow 5 Prototype)</title>
+<style>
+  :root {
+    --bg-page: #FAFAF9;
+    --bg-surface: #FFFFFF;
+    --bg-muted: #F5F5F4;
+    --bg-hover: #EFEDEC;
+
+    --text-primary: #1C1917;
+    --text-secondary: #57534E;
+    --text-tertiary: #A8A29E;
+
+    --border-subtle: #E7E5E4;
+    --border-default: #D6D3D1;
+
+    --brand: #3B43D6;
+    --brand-hover: #232AA3;
+    --brand-muted-bg: #EEF1FF;
+    --brand-muted-text: #232AA3;
+
+    --alert: #F59E0B;
+    --alert-light: #FDD997;
+    --alert-muted-bg: #FAEEDA;
+    --alert-muted-text: #633806;
+
+    --margin-positive: #0F6E56;
+    --margin-positive-bg: #E1F5EE;
+    --margin-positive-light: #34D399;
+
+    --fault: #DC2626;
+    --fault-muted-bg: #FCEBEB;
+    --fault-muted-text: #791F1F;
+
+    --change-add-bg: #E1F5EE;
+    --change-add-text: #0F6E56;
+    --change-add-border: #34D399;
+    --change-modify-bg: #FAEEDA;
+    --change-modify-text: #633806;
+    --change-modify-border: #F59E0B;
+    --change-delete-bg: #FCEBEB;
+    --change-delete-text: #791F1F;
+    --change-delete-border: #DC2626;
+
+    --shadow-md: 0 2px 8px rgba(28, 25, 23, 0.06);
+    --shadow-lg: 0 4px 16px rgba(28, 25, 23, 0.10);
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: var(--bg-page);
+    color: var(--text-primary);
+    font-size: 14px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .stage {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 24px 16px 48px;
+    gap: 24px;
+  }
+
+  .prototype-banner {
+    width: 100%;
+    max-width: 1100px;
+    background: var(--brand-muted-bg);
+    color: var(--brand-muted-text);
+    padding: 12px 18px;
+    font-size: 12.5px;
+    border-radius: 8px;
+    line-height: 1.55;
+  }
+  .prototype-banner strong { font-weight: 500; }
+  .prototype-banner code {
+    background: rgba(35, 42, 163, 0.1);
+    padding: 1px 5px;
+    border-radius: 3px;
+    font-size: 11px;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+  }
+
+  .surface-toggle {
+    display: flex;
+    gap: 6px;
+    background: var(--bg-surface);
+    padding: 4px;
+    border-radius: 8px;
+    border: 0.5px solid var(--border-subtle);
+  }
+  .surface-btn {
+    padding: 8px 16px;
+    background: transparent;
+    border: none;
+    border-radius: 6px;
+    font-size: 13px;
+    cursor: pointer;
+    color: var(--text-secondary);
+    font-family: inherit;
+  }
+  .surface-btn.active { background: var(--text-primary); color: #fff; }
+
+  .surface-container { display: flex; gap: 24px; align-items: flex-start; flex-wrap: wrap; justify-content: center; }
+
+  /* WEB FRAME */
+  .web-frame {
+    width: 1100px;
+    background: var(--bg-surface);
+    border: 0.5px solid var(--border-subtle);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+  }
+  .web-toolbar {
+    background: var(--bg-muted);
+    padding: 8px 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-bottom: 0.5px solid var(--border-subtle);
+  }
+  .web-dot { width: 11px; height: 11px; border-radius: 50%; }
+  .web-dot.r { background: #F87171; }
+  .web-dot.y { background: #FCD34D; }
+  .web-dot.g { background: #34D399; }
+  .web-url {
+    flex: 1;
+    background: var(--bg-surface);
+    border-radius: 6px;
+    padding: 4px 10px;
+    font-size: 11px;
+    color: var(--text-secondary);
+    margin-left: 12px;
+  }
+
+  .web-content { padding: 24px 32px 32px; }
+  .web-page-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 22px; padding-bottom: 18px; border-bottom: 0.5px solid var(--border-subtle); }
+  .web-breadcrumb {
+    font-size: 11.5px;
+    color: var(--text-tertiary);
+    margin: 0 0 4px;
+  }
+  .web-breadcrumb span { color: var(--text-secondary); }
+  .web-page-title {
+    font-size: 22px;
+    font-weight: 500;
+    margin: 0 0 4px;
+    letter-spacing: -0.01em;
+  }
+  .web-page-subtitle {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin: 0;
+  }
+  .web-status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 11px;
+    font-weight: 500;
+    padding: 4px 10px;
+    border-radius: 5px;
+    background: var(--alert-muted-bg);
+    color: var(--alert-muted-text);
+  }
+
+  .review-toolbar {
+    background: var(--alert-muted-bg);
+    border: 0.5px solid var(--alert-light);
+    border-radius: 10px;
+    padding: 12px 16px;
+    margin-bottom: 18px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .review-toolbar-icon {
+    width: 32px; height: 32px;
+    background: var(--alert-light);
+    color: var(--alert-muted-text);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .review-toolbar-text { flex: 1; font-size: 12.5px; color: var(--alert-muted-text); line-height: 1.4; }
+  .review-toolbar-text strong { font-weight: 500; }
+  .review-changes-count {
+    font-size: 11px;
+    color: var(--alert-muted-text);
+    padding: 4px 8px;
+    background: rgba(180, 83, 9, 0.1);
+    border-radius: 4px;
+    font-weight: 500;
+  }
+
+  .quote-meta-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+  .quote-meta {
+    background: var(--bg-muted);
+    padding: 10px 12px;
+    border-radius: 7px;
+  }
+  .quote-meta-label {
+    font-size: 10px;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 500;
+    margin: 0 0 4px;
+  }
+  .quote-meta-value {
+    font-size: 13px;
+    color: var(--text-primary);
+    margin: 0;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .section-divider {
+    background: var(--bg-muted);
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-size: 10.5px;
+    font-weight: 500;
+    padding: 8px 12px;
+    border-radius: 6px;
+    margin: 4px 0;
+  }
+
+  .line-row {
+    display: grid;
+    grid-template-columns: 24px 1fr 80px 100px 100px 36px;
+    gap: 12px;
+    padding: 12px 12px;
+    border-radius: 7px;
+    margin-bottom: 4px;
+    align-items: flex-start;
+    position: relative;
+  }
+  .line-row:hover {
+    background: var(--bg-muted);
+  }
+  .line-row.modified { background: var(--change-modify-bg); border-left: 3px solid var(--change-modify-border); padding-left: 9px; }
+  .line-row.added { background: var(--change-add-bg); border-left: 3px solid var(--change-add-border); padding-left: 9px; }
+  .line-row.deleted { background: var(--change-delete-bg); border-left: 3px solid var(--change-delete-border); padding-left: 9px; }
+  .line-row.deleted .line-name, .line-row.deleted .line-amount, .line-row.deleted .line-qty { text-decoration: line-through; opacity: 0.7; }
+
+  .line-marker {
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    background: var(--bg-muted);
+    color: var(--text-tertiary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 9px;
+    font-weight: 500;
+    margin-top: 2px;
+  }
+  .line-row.modified .line-marker { background: var(--change-modify-border); color: white; }
+  .line-row.added .line-marker { background: var(--change-add-border); color: white; }
+  .line-row.deleted .line-marker { background: var(--change-delete-border); color: white; }
+
+  .line-name {
+    font-size: 13px;
+    color: var(--text-primary);
+    font-weight: 500;
+    line-height: 1.4;
+  }
+  .line-name-strike { text-decoration: line-through; color: var(--text-tertiary); margin-right: 6px; font-weight: 400; }
+  .line-name-new { color: var(--change-modify-text); }
+  .line-description {
+    font-size: 11.5px;
+    color: var(--text-secondary);
+    margin-top: 3px;
+    line-height: 1.5;
+    white-space: pre-wrap;
+  }
+  .line-description.long {
+    background: var(--bg-surface);
+    padding: 8px 10px;
+    border-radius: 5px;
+    border: 0.5px solid var(--border-subtle);
+    font-size: 11px;
+    margin-top: 6px;
+  }
+
+  .line-qty, .line-rate, .line-amount {
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 12.5px;
+    color: var(--text-primary);
+    padding-top: 2px;
+  }
+  .qty-strike, .amount-strike {
+    color: var(--text-tertiary);
+    text-decoration: line-through;
+    margin-right: 5px;
+    font-size: 11.5px;
+  }
+  .qty-new, .amount-new {
+    color: var(--change-modify-text);
+    font-weight: 500;
+  }
+
+  .line-actions {
+    display: flex;
+    gap: 4px;
+    justify-content: flex-end;
+  }
+  .line-action-btn {
+    width: 26px; height: 26px;
+    background: transparent;
+    border: 0.5px solid transparent;
+    border-radius: 5px;
+    cursor: pointer;
+    color: var(--text-tertiary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+  }
+  .line-row:hover .line-action-btn { border-color: var(--border-subtle); }
+  .line-action-btn:hover { background: var(--bg-surface); color: var(--text-primary); }
+  .line-action-btn svg { width: 13px; height: 13px; }
+
+  .child-line {
+    margin-left: 36px;
+    padding: 8px 12px;
+    background: var(--bg-page);
+    border-left: 2px solid var(--border-default);
+    border-radius: 0 6px 6px 0;
+    margin-bottom: 3px;
+    display: grid;
+    grid-template-columns: 1fr 80px 100px 100px;
+    gap: 12px;
+    font-size: 11.5px;
+    color: var(--text-secondary);
+  }
+  .child-line-label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .child-line-tag {
+    display: inline-block;
+    font-size: 9px;
+    padding: 1px 5px;
+    background: var(--text-tertiary);
+    color: white;
+    border-radius: 3px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    font-weight: 500;
+  }
+  .child-line-amount {
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 11.5px;
+  }
+
+  .add-line-zone {
+    margin: 10px 0 18px;
+    padding: 14px;
+    background: var(--bg-page);
+    border: 1px dashed var(--border-default);
+    border-radius: 7px;
+    text-align: center;
+    color: var(--text-secondary);
+    font-size: 12px;
+    cursor: pointer;
+  }
+  .add-line-zone:hover { border-color: var(--brand); color: var(--brand); background: var(--brand-muted-bg); }
+  .add-line-zone svg { width: 13px; height: 13px; vertical-align: middle; margin-right: 4px; }
+
+  .quote-totals {
+    margin: 24px 0 28px;
+    padding: 18px 20px;
+    background: var(--bg-muted);
+    border-radius: 9px;
+  }
+  .totals-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 5px 0;
+    font-size: 13px;
+    color: var(--text-secondary);
+    font-variant-numeric: tabular-nums;
+  }
+  .totals-row.grand {
+    font-size: 17px;
+    font-weight: 500;
+    color: var(--text-primary);
+    padding-top: 11px;
+    margin-top: 6px;
+    border-top: 0.5px solid var(--border-default);
+  }
+  .totals-row .totals-strike { color: var(--text-tertiary); text-decoration: line-through; margin-right: 8px; font-size: 12.5px; }
+  .totals-row .totals-new { color: var(--change-modify-text); }
+
+  .approval-actions {
+    display: flex;
+    gap: 10px;
+    padding: 18px 20px;
+    background: var(--bg-muted);
+    border-radius: 9px;
+    align-items: center;
+  }
+  .approval-btn {
+    padding: 10px 18px;
+    border-radius: 7px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    font-family: inherit;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    border: none;
+  }
+  .approval-btn svg { width: 14px; height: 14px; }
+  .approval-btn-approve {
+    background: var(--brand);
+    color: #fff;
+  }
+  .approval-btn-approve:hover { background: var(--brand-hover); }
+  .approval-btn-kickback {
+    background: var(--bg-surface);
+    color: var(--text-primary);
+    border: 0.5px solid var(--border-default);
+  }
+  .approval-btn-kickback:hover { background: var(--bg-page); }
+  .approval-btn-reject {
+    background: var(--fault-muted-bg);
+    color: var(--fault-muted-text);
+    border: 0.5px solid var(--fault);
+  }
+  .approval-btn-reject:hover { background: #F8C7C7; }
+  .approval-btn-cancel-edits {
+    margin-left: auto;
+    background: transparent;
+    color: var(--text-secondary);
+    font-size: 12px;
+  }
+
+  /* PHONE STYLES */
+  .phone-stage { display: flex; flex-direction: column; gap: 14px; align-items: center; }
+  .phone-toggle {
+    display: flex;
+    gap: 4px;
+    background: var(--bg-surface);
+    padding: 3px;
+    border-radius: 7px;
+    border: 0.5px solid var(--border-subtle);
+  }
+  .phone-toggle-btn {
+    padding: 6px 12px;
+    background: transparent;
+    border: none;
+    border-radius: 5px;
+    font-size: 11px;
+    cursor: pointer;
+    color: var(--text-secondary);
+    font-family: inherit;
+  }
+  .phone-toggle-btn.active { background: var(--text-primary); color: #fff; }
+
+  .phone {
+    width: 360px;
+    background: #1C1917;
+    border-radius: 36px;
+    padding: 6px;
+    box-sizing: border-box;
+    border: 1px solid #3F3F46;
+    position: relative;
+    box-shadow: var(--shadow-lg);
+  }
+  .phone-inner {
+    background: var(--bg-page);
+    border-radius: 30px;
+    overflow: hidden;
+    height: 720px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+  .notch {
+    position: absolute;
+    top: 6px; left: 50%;
+    transform: translateX(-50%);
+    width: 100px; height: 22px;
+    background: #000;
+    border-radius: 0 0 14px 14px;
+    z-index: 20;
+  }
+  .statusbar {
+    height: 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 24px 0;
+    color: var(--text-primary);
+    font-size: 12px;
+    font-weight: 500;
+    flex-shrink: 0;
+    background: var(--bg-surface);
+  }
+
+  .m-app-bar {
+    height: 52px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0 14px;
+    background: var(--bg-surface);
+    border-bottom: 0.5px solid var(--border-subtle);
+    flex-shrink: 0;
+  }
+  .icon-btn {
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    background: transparent;
+    border: none;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    color: var(--text-primary);
+    padding: 0;
+  }
+  .icon-btn:active { background: var(--bg-muted); }
+  .m-app-bar-title {
+    flex: 1;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-primary);
+  }
+  .m-app-bar-context {
+    font-size: 11px;
+    color: var(--text-secondary);
+    margin-top: 1px;
+  }
+
+  .m-body { flex: 1; overflow-y: auto; }
+
+  .m-changes-toggle {
+    background: var(--alert-muted-bg);
+    border-bottom: 0.5px solid var(--alert-light);
+    padding: 10px 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 12px;
+    color: var(--alert-muted-text);
+  }
+  .m-changes-toggle-text { flex: 1; line-height: 1.4; }
+  .m-changes-toggle-text strong { font-weight: 500; }
+  .m-changes-switch {
+    background: var(--alert-light);
+    color: var(--alert-muted-text);
+    padding: 4px 10px;
+    border-radius: 5px;
+    font-size: 11px;
+    font-weight: 500;
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+  }
+  .m-changes-switch.active {
+    background: var(--alert);
+    color: #451A03;
+  }
+
+  .m-quote-card {
+    background: var(--bg-surface);
+    margin: 12px;
+    border-radius: 10px;
+    padding: 14px;
+  }
+  .m-quote-customer-name {
+    font-size: 15px;
+    font-weight: 500;
+    margin: 0 0 3px;
+    color: var(--text-primary);
+  }
+  .m-quote-job {
+    font-size: 12px;
+    color: var(--text-secondary);
+    margin: 0 0 10px;
+  }
+  .m-quote-meta {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 12px;
+    font-size: 11px;
+    color: var(--text-secondary);
+  }
+  .m-quote-meta strong { color: var(--text-primary); font-weight: 500; }
+  .m-tech-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 10px;
+    padding: 1px 6px;
+    background: var(--brand-muted-bg);
+    color: var(--brand-muted-text);
+    border-radius: 3px;
+    font-weight: 500;
+  }
+
+  .m-line-row {
+    padding: 10px 14px;
+    background: var(--bg-surface);
+    border-bottom: 0.5px solid var(--border-subtle);
+    position: relative;
+  }
+  .m-line-row.has-change { padding-left: 17px; }
+  .m-line-row.has-change.show-changes::before {
+    content: '';
+    position: absolute;
+    left: 6px; top: 12px;
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--change-modify-border);
+  }
+  .m-line-row.show-changes-mode {
+    background: var(--change-modify-bg);
+  }
+  .m-line-row-top { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; }
+  .m-line-name { font-size: 13px; font-weight: 500; color: var(--text-primary); }
+  .m-line-amount {
+    font-size: 12.5px;
+    font-variant-numeric: tabular-nums;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    color: var(--text-primary);
+    flex-shrink: 0;
+  }
+  .m-line-amount.changed { color: var(--change-modify-text); font-weight: 500; }
+  .m-line-detail {
+    font-size: 11px;
+    color: var(--text-secondary);
+    margin-top: 3px;
+  }
+  .m-line-detail .strike { text-decoration: line-through; color: var(--text-tertiary); margin-right: 4px; }
+  .m-line-detail .new { color: var(--change-modify-text); font-weight: 500; }
+  .m-line-row-actions {
+    display: flex;
+    gap: 6px;
+    margin-top: 8px;
+  }
+  .m-line-action {
+    background: transparent;
+    border: 0.5px solid var(--border-subtle);
+    border-radius: 5px;
+    padding: 4px 9px;
+    font-size: 11px;
+    color: var(--text-secondary);
+    cursor: pointer;
+    font-family: inherit;
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+  }
+  .m-line-action:active { background: var(--bg-muted); }
+  .m-line-action.delete-action { color: var(--fault); border-color: rgba(220, 38, 38, 0.3); }
+  .m-line-action svg { width: 11px; height: 11px; }
+
+  .m-totals {
+    background: var(--bg-surface);
+    padding: 14px;
+    border-top: 0.5px solid var(--border-subtle);
+  }
+  .m-total-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 3px 0;
+    font-size: 12px;
+    color: var(--text-secondary);
+    font-variant-numeric: tabular-nums;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+  }
+  .m-total-row.grand {
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--text-primary);
+    border-top: 0.5px solid var(--border-default);
+    padding-top: 10px;
+    margin-top: 6px;
+  }
+  .m-total-row .strike { color: var(--text-tertiary); text-decoration: line-through; margin-right: 6px; font-size: 12px; }
+  .m-total-row .new { color: var(--change-modify-text); }
+
+  .m-edit-on-web {
+    margin: 10px 12px;
+    padding: 10px 14px;
+    background: var(--brand-muted-bg);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 12px;
+    color: var(--brand-muted-text);
+    cursor: pointer;
+  }
+  .m-edit-on-web:active { background: #DADFFD; }
+  .m-edit-on-web-icon {
+    width: 28px; height: 28px;
+    background: var(--brand);
+    color: #fff;
+    border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .m-edit-on-web-text { flex: 1; line-height: 1.4; }
+  .m-edit-on-web-text strong { font-weight: 500; }
+  .m-edit-on-web svg.chev { width: 14px; height: 14px; flex-shrink: 0; }
+
+  .m-actions {
+    background: var(--bg-surface);
+    padding: 12px 14px 14px;
+    border-top: 0.5px solid var(--border-subtle);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex-shrink: 0;
+  }
+  .m-action-btn {
+    height: 46px;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    font-family: inherit;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+  }
+  .m-action-btn svg { width: 14px; height: 14px; }
+  .m-action-btn.approve {
+    background: var(--brand);
+    color: #fff;
+  }
+  .m-action-btn.kickback {
+    background: var(--bg-surface);
+    color: var(--text-primary);
+    border: 0.5px solid var(--border-default);
+  }
+  .m-action-btn.reject {
+    background: var(--fault-muted-bg);
+    color: var(--fault-muted-text);
+    border: 0.5px solid var(--fault);
+  }
+
+  .tab-bar {
+    height: 56px;
+    background: var(--bg-surface);
+    border-top: 0.5px solid var(--border-subtle);
+    display: flex;
+    align-items: center;
+    padding: 0 4px;
+    flex-shrink: 0;
+  }
+  .tab {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    padding: 6px 0;
+  }
+  .tab-icon { width: 20px; height: 20px; }
+  .tab-label { font-size: 10px; color: var(--text-tertiary); font-weight: 500; }
+  .tab.active .tab-label { color: var(--brand); }
+
+  /* QUEUE LIST */
+  .m-queue-row {
+    background: var(--bg-surface);
+    margin: 10px 12px 0;
+    padding: 14px;
+    border-radius: 10px;
+    border: 0.5px solid var(--border-subtle);
+    cursor: pointer;
+  }
+  .m-queue-row:active { background: var(--bg-muted); }
+  .m-queue-row-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; }
+  .m-queue-row-name { font-size: 14px; font-weight: 500; margin: 0; color: var(--text-primary); }
+  .m-queue-row-job { font-size: 11px; color: var(--text-secondary); margin: 2px 0 0; }
+  .m-queue-row-amount {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-primary);
+    font-variant-numeric: tabular-nums;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    flex-shrink: 0;
+  }
+  .m-queue-row-meta { display: flex; gap: 10px; align-items: center; font-size: 11px; color: var(--text-secondary); }
+  .m-queue-row-meta .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 2px 7px;
+    border-radius: 4px;
+    font-size: 10.5px;
+    font-weight: 500;
+  }
+  .m-queue-row-meta .pill.pending {
+    background: var(--alert-muted-bg);
+    color: var(--alert-muted-text);
+  }
+  .m-queue-row-meta .pill.urgent {
+    background: var(--fault-muted-bg);
+    color: var(--fault-muted-text);
+  }
+
+  .m-queue-empty {
+    padding: 40px 24px;
+    text-align: center;
+    color: var(--text-tertiary);
+    font-size: 12px;
+  }
+
+  /* WEB Tech Notification */
+  .tech-notification {
+    background: var(--margin-positive-bg);
+    border: 0.5px solid var(--margin-positive-light);
+    border-radius: 10px;
+    padding: 14px 18px;
+    margin-bottom: 18px;
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+  }
+  .tech-notification-icon {
+    width: 32px; height: 32px;
+    background: var(--margin-positive);
+    color: white;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .tech-notification-text { flex: 1; }
+  .tech-notification-title { font-size: 13px; font-weight: 500; margin: 0 0 3px; color: var(--text-primary); }
+  .tech-notification-detail { font-size: 12px; color: var(--text-secondary); margin: 0; line-height: 1.4; }
+  .tech-notification-tabs {
+    display: flex;
+    gap: 16px;
+    margin: 18px 0 12px;
+    border-bottom: 0.5px solid var(--border-subtle);
+  }
+  .tech-tab {
+    padding: 8px 0;
+    font-size: 13px;
+    color: var(--text-secondary);
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+  }
+  .tech-tab.active {
+    color: var(--text-primary);
+    font-weight: 500;
+    border-bottom-color: var(--brand);
+  }
+
+  .totals-strike { color: var(--text-tertiary); text-decoration: line-through; margin-right: 8px; font-size: 12.5px; }
+  .totals-new { color: var(--change-modify-text); }
+</style>
+</head>
+<body>
+  <div class="stage">
+    <div class="prototype-banner">
+      <strong>Pass 3 Flow 5 prototype</strong> · Quote approval workflow · The <strong>web view</strong> shows owner reviewing a tech-submitted quote with track-changes editing. The <strong>mobile view</strong> (right) shows the same quote on the owner's mobile approval surface with capability parity but condensed rendering. Toggle the <strong>"Show changes"</strong> indicator on mobile to see how condensed diff rendering works on smaller screens. Toggle the <strong>tech view</strong> to see what the tech sees after the quote is approved with edits.
+    </div>
+
+    <div class="surface-toggle">
+      <button class="surface-btn active" data-view="approval">Owner: Reviewing tech submission</button>
+      <button class="surface-btn" data-view="approved-tech">Tech: Sees approved quote</button>
+    </div>
+
+    <div class="surface-container" id="surface-container">
+      <!-- Web view goes here -->
+    </div>
+  </div>
+
+<script>
+(function() {
+  const container = document.getElementById('surface-container');
+  const surfaceButtons = document.querySelectorAll('.surface-btn');
+  let mobileMode = 'queue';
+  let showChangesOnMobile = true;
+
+  surfaceButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      surfaceButtons.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      render(btn.dataset.view);
+    });
+  });
+
+  function render(view) {
+    if (view === 'approval') renderApproval();
+    else if (view === 'approved-tech') renderApprovedTech();
+  }
+
+  function renderApproval() {
+    container.innerHTML = `
+      ${webApprovalFrame()}
+      <div class="phone-stage">
+        ${mobilePhoneToggle()}
+        <div class="phone">
+          <div class="notch"></div>
+          <div class="phone-inner" id="phone-inner">
+            ${mobileApprovalContent()}
+          </div>
+        </div>
+      </div>
+    `;
+    attachMobileHandlers();
+  }
+
+  function mobilePhoneToggle() {
+    return `
+      <div class="phone-toggle">
+        <button class="phone-toggle-btn ${mobileMode === 'queue' ? 'active' : ''}" data-mobile="queue">1. Queue</button>
+        <button class="phone-toggle-btn ${mobileMode === 'detail' ? 'active' : ''}" data-mobile="detail">2. Detail</button>
+      </div>
+    `;
+  }
+
+  function mobileApprovalContent() {
+    if (mobileMode === 'queue') return mobileQueueScreen();
+    return mobileDetailScreen();
+  }
+
+  function mobileQueueScreen() {
+    return `
+      <div class="statusbar">
+        <span>9:41</span>
+        <span>●●●● 5G</span>
+      </div>
+      <div class="m-app-bar">
+        <div style="flex: 1;">
+          <div class="m-app-bar-title">Approvals</div>
+          <div class="m-app-bar-context">2 pending · 1 urgent</div>
+        </div>
+      </div>
+      <div class="m-body" style="background: var(--bg-page); padding-bottom: 12px;">
+        <div class="m-queue-row" id="queue-row-1">
+          <div class="m-queue-row-header">
+            <div>
+              <p class="m-queue-row-name">Tom Johnson</p>
+              <p class="m-queue-row-job">200A panel upgrade · 42 Oak St</p>
+            </div>
+            <span class="m-queue-row-amount">$2,335.18</span>
+          </div>
+          <div class="m-queue-row-meta">
+            <span class="m-tech-tag">MR Mike R.</span>
+            <span class="pill pending">pending review</span>
+            <span style="margin-left: auto;">submitted 14m ago</span>
+          </div>
+        </div>
+        <div class="m-queue-row">
+          <div class="m-queue-row-header">
+            <div>
+              <p class="m-queue-row-name">Patel Family</p>
+              <p class="m-queue-row-job">Subpanel + EV charger · 87 Maple</p>
+            </div>
+            <span class="m-queue-row-amount">$4,820.00</span>
+          </div>
+          <div class="m-queue-row-meta">
+            <span class="m-tech-tag" style="background: #E1F5EE; color: #0F6E56;">LF Luis F.</span>
+            <span class="pill urgent">urgent · customer waiting</span>
+            <span style="margin-left: auto;">submitted 2h ago</span>
+          </div>
+        </div>
+        <p class="m-queue-empty">No more pending quotes</p>
+      </div>
+      <div class="tab-bar">
+        <div class="tab"><svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="#A8A29E" stroke-width="1.8"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18"/></svg><span class="tab-label">Today</span></div>
+        <div class="tab"><svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="#A8A29E" stroke-width="1.8"><path d="M3 7h18M3 12h18M3 17h18"/></svg><span class="tab-label">Jobs</span></div>
+        <div class="tab"><svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="#A8A29E" stroke-width="1.8"><rect x="9" y="3" width="6" height="12" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg><span class="tab-label">Voice</span></div>
+        <div class="tab"><svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="#A8A29E" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M7 9h4M13 9h4M7 13h4M13 13h4"/></svg><span class="tab-label">Calcs</span></div>
+        <div class="tab active"><svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="#3B43D6" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg><span class="tab-label">Owner</span></div>
+      </div>
+    `;
+  }
+
+  function mobileDetailScreen() {
+    const showChanges = showChangesOnMobile;
+    return `
+      <div class="statusbar">
+        <span>9:41</span>
+        <span>●●●● 5G</span>
+      </div>
+      <div class="m-app-bar">
+        <button class="icon-btn" id="phone-back" aria-label="Back">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+        <div style="flex: 1;">
+          <div class="m-app-bar-title">Quote review</div>
+          <div class="m-app-bar-context">Tom Johnson · pending</div>
+        </div>
+        <button class="icon-btn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="12" cy="19" r="1"/></svg>
+        </button>
+      </div>
+      <div class="m-body">
+        <div class="m-changes-toggle">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"/><path d="M9 12l2 2 4-4"/></svg>
+          <span class="m-changes-toggle-text"><strong>2 pending edits</strong> on this quote</span>
+          <button class="m-changes-switch ${showChanges ? 'active' : ''}" id="m-changes-switch">
+            ${showChanges ? 'Hide' : 'Show'} changes
+          </button>
+        </div>
+        <div class="m-quote-card">
+          <p class="m-quote-customer-name">Tom Johnson</p>
+          <p class="m-quote-job">200A panel upgrade · 42 Oak Street</p>
+          <div class="m-quote-meta">
+            <span class="m-tech-tag">MR Mike R.</span>
+            <span style="margin-left: auto;">submitted <strong>14 min ago</strong></span>
+          </div>
+        </div>
+
+        <div class="m-line-row ${showChanges ? 'has-change show-changes' : 'has-change'}" style="${showChanges ? 'background: var(--change-modify-bg); border-left: 3px solid var(--change-modify-border);' : ''}">
+          <div class="m-line-row-top">
+            <span class="m-line-name">Labor · 6.5 hrs @ $145/hr</span>
+            <span class="m-line-amount ${showChanges ? 'changed' : ''}">$1,160.00</span>
+          </div>
+          <p class="m-line-detail">${showChanges
+            ? '<span class="strike">6.5 hrs · $942.50</span><span class="new">8 hrs · $1,160.00</span>'
+            : 'Originally 6.5 hrs · $942.50'}</p>
+          <div class="m-line-row-actions">
+            <button class="m-line-action"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>Edit</button>
+            <button class="m-line-action delete-action"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-2 14a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2L5 6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>Delete</button>
+          </div>
+        </div>
+
+        <div class="m-line-row">
+          <div class="m-line-row-top">
+            <span class="m-line-name">Square D 200A main breaker</span>
+            <span class="m-line-amount">$318.00</span>
+          </div>
+        </div>
+
+        <div class="m-line-row">
+          <div class="m-line-row-top">
+            <span class="m-line-name">42-circuit panel</span>
+            <span class="m-line-amount">$486.00</span>
+          </div>
+        </div>
+
+        <div class="m-line-row">
+          <div class="m-line-row-top">
+            <span class="m-line-name">4/0 SER service cable</span>
+            <span class="m-line-amount">$164.00</span>
+          </div>
+        </div>
+
+        <div class="m-line-row">
+          <div class="m-line-row-top">
+            <span class="m-line-name">Permit + inspection</span>
+            <span class="m-line-amount">$225.00</span>
+          </div>
+        </div>
+
+        <div class="m-line-row">
+          <div class="m-line-row-top">
+            <span class="m-line-name">5 × 20A breakers</span>
+            <span class="m-line-amount">$67.50</span>
+          </div>
+        </div>
+
+        <div class="m-line-row ${showChanges ? 'has-change show-changes' : 'has-change'}" style="${showChanges ? 'background: var(--change-add-bg); border-left: 3px solid var(--change-add-border);' : ''}">
+          <div class="m-line-row-top">
+            <span class="m-line-name" style="${showChanges ? 'color: var(--change-add-text);' : ''}">${showChanges ? '+ ' : ''}Conduit fittings &amp; supplies</span>
+            <span class="m-line-amount" style="${showChanges ? 'color: var(--change-add-text);' : ''}">$45.00</span>
+          </div>
+          ${showChanges ? '<p class="m-line-detail" style="color: var(--change-add-text);">Added by you (owner)</p>' : ''}
+        </div>
+
+        <div class="m-totals">
+          <div class="m-total-row"><span>subtotal</span><span>${showChanges ? '<span class="strike">$2,203.00</span><span class="new">$2,465.50</span>' : '$2,465.50'}</span></div>
+          <div class="m-total-row"><span>tax</span><span>${showChanges ? '<span class="strike">$132.18</span><span class="new">$147.93</span>' : '$147.93'}</span></div>
+          <div class="m-total-row grand"><span>total</span><span>${showChanges ? '<span class="strike">$2,335.18</span><span class="new">$2,613.43</span>' : '$2,613.43'}</span></div>
+          <div style="margin-top: 10px; font-size: 11px; color: var(--margin-positive); display: flex; justify-content: space-between;">
+            <span>margin · 24.1%</span>
+            <span style="color: var(--text-secondary);">target 20% ✓</span>
+          </div>
+        </div>
+
+        <div class="m-edit-on-web">
+          <div class="m-edit-on-web-icon">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 9h6v6H9z"/></svg>
+          </div>
+          <div class="m-edit-on-web-text">
+            <strong>More edits to make?</strong><br>
+            Open this quote on web for full editing
+          </div>
+          <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+        </div>
+      </div>
+      <div class="m-actions">
+        <button class="m-action-btn approve">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+          ${showChanges ? 'Approve with 2 edits · $2,613.43' : 'Approve · $2,613.43'}
+        </button>
+        <div style="display: flex; gap: 8px;">
+          <button class="m-action-btn kickback" style="flex: 1;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h13l-3-3M3 12l3 3"/></svg>
+            Kick back
+          </button>
+          <button class="m-action-btn reject" style="flex: 1;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            Reject
+          </button>
+        </div>
+      </div>
+    `;
+  }
+
+  function attachMobileHandlers() {
+    document.querySelectorAll('.phone-toggle-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        mobileMode = btn.dataset.mobile;
+        renderApproval();
+      });
+    });
+
+    const queueRow = document.getElementById('queue-row-1');
+    if (queueRow) {
+      queueRow.addEventListener('click', () => {
+        mobileMode = 'detail';
+        renderApproval();
+      });
+    }
+
+    const phoneBack = document.getElementById('phone-back');
+    if (phoneBack) {
+      phoneBack.addEventListener('click', () => {
+        mobileMode = 'queue';
+        renderApproval();
+      });
+    }
+
+    const changesSwitch = document.getElementById('m-changes-switch');
+    if (changesSwitch) {
+      changesSwitch.addEventListener('click', () => {
+        showChangesOnMobile = !showChangesOnMobile;
+        renderApproval();
+      });
+    }
+  }
+
+  function webApprovalFrame() {
+    return `
+      <div class="web-frame">
+        <div class="web-toolbar">
+          <div class="web-dot r"></div>
+          <div class="web-dot y"></div>
+          <div class="web-dot g"></div>
+          <div class="web-url">app.aevofab.example.com / quotes / Q-4029 / approve</div>
+        </div>
+        <div class="web-content">
+          <div class="web-page-header">
+            <div>
+              <p class="web-breadcrumb"><span>Quotes</span> › <span>Approvals</span> › Q-4029</p>
+              <h1 class="web-page-title">Tom Johnson — 200A panel upgrade</h1>
+              <p class="web-page-subtitle">Submitted by <strong style="color: var(--text-primary); font-weight: 500;">Mike R.</strong> · 14 min ago · 42 Oak Street</p>
+            </div>
+            <div style="display: flex; gap: 8px; align-items: center;">
+              <span class="web-status-pill">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                Pending review
+              </span>
+            </div>
+          </div>
+
+          <div class="review-toolbar">
+            <div class="review-toolbar-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+            </div>
+            <div class="review-toolbar-text">
+              <strong>Review mode:</strong> your edits are pending. Click <strong>Approve with edits</strong> to commit them, or <strong>Cancel my edits</strong> to revert.
+            </div>
+            <span class="review-changes-count">2 edits pending</span>
+          </div>
+
+          <div class="quote-meta-grid">
+            <div class="quote-meta">
+              <p class="quote-meta-label">Customer</p>
+              <p class="quote-meta-value">Tom Johnson</p>
+            </div>
+            <div class="quote-meta">
+              <p class="quote-meta-label">Site</p>
+              <p class="quote-meta-value">42 Oak Street</p>
+            </div>
+            <div class="quote-meta">
+              <p class="quote-meta-label">Estimated start</p>
+              <p class="quote-meta-value">May 27, 2026</p>
+            </div>
+            <div class="quote-meta">
+              <p class="quote-meta-label">Quote style</p>
+              <p class="quote-meta-value">Component-level</p>
+            </div>
+          </div>
+
+          <p class="section-divider">Materials &amp; permits</p>
+
+          <div class="line-row">
+            <span class="line-marker"></span>
+            <div>
+              <span class="line-name">Square D 200A main breaker</span>
+            </div>
+            <span class="line-qty">1</span>
+            <span class="line-rate">$318.00</span>
+            <span class="line-amount">$318.00</span>
+            <div class="line-actions"></div>
+          </div>
+
+          <div class="line-row">
+            <span class="line-marker"></span>
+            <div>
+              <span class="line-name">42-circuit panel</span>
+            </div>
+            <span class="line-qty">1</span>
+            <span class="line-rate">$486.00</span>
+            <span class="line-amount">$486.00</span>
+            <div class="line-actions"></div>
+          </div>
+
+          <div class="line-row">
+            <span class="line-marker"></span>
+            <div>
+              <span class="line-name">4/0 SER service cable</span>
+            </div>
+            <span class="line-qty">1</span>
+            <span class="line-rate">$164.00</span>
+            <span class="line-amount">$164.00</span>
+            <div class="line-actions"></div>
+          </div>
+
+          <div class="line-row">
+            <span class="line-marker"></span>
+            <div>
+              <span class="line-name">Permit + inspection</span>
+            </div>
+            <span class="line-qty">1</span>
+            <span class="line-rate">$225.00</span>
+            <span class="line-amount">$225.00</span>
+            <div class="line-actions"></div>
+          </div>
+
+          <div class="line-row">
+            <span class="line-marker"></span>
+            <div>
+              <span class="line-name">5 × 20A breakers</span>
+            </div>
+            <span class="line-qty">5</span>
+            <span class="line-rate">$13.50</span>
+            <span class="line-amount">$67.50</span>
+            <div class="line-actions"></div>
+          </div>
+
+          <div class="line-row added">
+            <span class="line-marker">+</span>
+            <div>
+              <span class="line-name line-name-new">Conduit fittings &amp; supplies</span>
+              <p class="line-description" style="color: var(--change-add-text);">Added by Owner — needed for proper crawlspace routing</p>
+            </div>
+            <span class="line-qty">1</span>
+            <span class="line-rate">$45.00</span>
+            <span class="line-amount">$45.00</span>
+            <div class="line-actions">
+              <button class="line-action-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>
+              <button class="line-action-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-2 14a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2L5 6"/></svg></button>
+            </div>
+          </div>
+
+          <p class="section-divider">Labor</p>
+
+          <div class="line-row modified">
+            <span class="line-marker">~</span>
+            <div>
+              <span class="line-name">Labor · install</span>
+              <p class="line-description" style="color: var(--change-modify-text);">Changed by Owner — rough-in is heavier than 6.5 hrs on this house given the crawlspace work; bumping to 8 hrs.</p>
+            </div>
+            <span class="line-qty"><span class="qty-strike">6.5</span><span class="qty-new">8</span></span>
+            <span class="line-rate">$145.00</span>
+            <span class="line-amount"><span class="amount-strike">$942.50</span><span class="amount-new">$1,160.00</span></span>
+            <div class="line-actions">
+              <button class="line-action-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>
+              <button class="line-action-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9"/><path d="M3 4v8h8"/></svg></button>
+            </div>
+          </div>
+
+          <div class="add-line-zone">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+            Add a line item
+          </div>
+
+          <div class="quote-totals">
+            <div class="totals-row">
+              <span>Subtotal</span>
+              <span><span class="totals-strike">$2,203.00</span><span class="totals-new">$2,465.50</span></span>
+            </div>
+            <div class="totals-row">
+              <span>Tax (6%)</span>
+              <span><span class="totals-strike">$132.18</span><span class="totals-new">$147.93</span></span>
+            </div>
+            <div class="totals-row grand">
+              <span>Total</span>
+              <span><span class="totals-strike">$2,335.18</span><span class="totals-new">$2,613.43</span></span>
+            </div>
+            <div style="display: flex; justify-content: space-between; margin-top: 14px; padding-top: 12px; border-top: 0.5px dashed var(--border-default); font-size: 12.5px;">
+              <span style="color: var(--text-secondary);">Projected margin</span>
+              <span style="color: var(--margin-positive); font-weight: 500;">24.1% &nbsp;<span style="color: var(--text-tertiary); font-weight: 400;">(was 23.3%)</span> &nbsp;<span style="color: var(--text-tertiary); font-weight: 400;">· target 20% ✓</span></span>
+            </div>
+          </div>
+
+          <div class="approval-actions">
+            <button class="approval-btn approval-btn-approve">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              Approve with 2 edits
+            </button>
+            <button class="approval-btn approval-btn-kickback">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h13l-3-3M3 12l3 3"/></svg>
+              Kick back to Mike with comments
+            </button>
+            <button class="approval-btn approval-btn-reject">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+              Reject
+            </button>
+            <button class="approval-btn approval-btn-cancel-edits">Cancel my edits</button>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  function renderApprovedTech() {
+    container.innerHTML = `
+      <div class="web-frame">
+        <div class="web-toolbar">
+          <div class="web-dot r"></div>
+          <div class="web-dot y"></div>
+          <div class="web-dot g"></div>
+          <div class="web-url">app.aevofab.example.com / quotes / Q-4029</div>
+        </div>
+        <div class="web-content">
+          <div class="web-page-header">
+            <div>
+              <p class="web-breadcrumb"><span>Quotes</span> › Q-4029</p>
+              <h1 class="web-page-title">Tom Johnson — 200A panel upgrade</h1>
+              <p class="web-page-subtitle">42 Oak Street · approved May 25, 2026</p>
+            </div>
+            <span class="web-status-pill" style="background: var(--margin-positive-bg); color: var(--margin-positive); border: 0.5px solid var(--margin-positive-light);">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+              Approved
+            </span>
+          </div>
+
+          <div class="tech-notification">
+            <div class="tech-notification-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <div class="tech-notification-text">
+              <p class="tech-notification-title">Quote approved with 2 edits by Owner</p>
+              <p class="tech-notification-detail">Bumped labor from 6.5 to 8 hrs and added conduit fittings ($45). Total now $2,613.43. <a style="color: var(--brand); cursor: pointer;">View what changed →</a></p>
+            </div>
+          </div>
+
+          <div class="tech-notification-tabs">
+            <span class="tech-tab active">Quote</span>
+            <span class="tech-tab">Changes (2)</span>
+            <span class="tech-tab">Activity</span>
+          </div>
+
+          <div class="quote-meta-grid">
+            <div class="quote-meta"><p class="quote-meta-label">Customer</p><p class="quote-meta-value">Tom Johnson</p></div>
+            <div class="quote-meta"><p class="quote-meta-label">Site</p><p class="quote-meta-value">42 Oak Street</p></div>
+            <div class="quote-meta"><p class="quote-meta-label">Status</p><p class="quote-meta-value" style="color: var(--margin-positive); font-weight: 500;">Approved · ready to send</p></div>
+            <div class="quote-meta"><p class="quote-meta-label">Total</p><p class="quote-meta-value" style="font-weight: 500;">$2,613.43</p></div>
+          </div>
+
+          <p class="section-divider">Materials &amp; permits</p>
+
+          ${approvedLineItem('Square D 200A main breaker', 1, 318, 318)}
+          ${approvedLineItem('42-circuit panel', 1, 486, 486)}
+          ${approvedLineItem('4/0 SER service cable', 1, 164, 164)}
+          ${approvedLineItem('Permit + inspection', 1, 225, 225)}
+          ${approvedLineItem('5 × 20A breakers', 5, 13.50, 67.50)}
+          ${approvedLineItem('Conduit fittings & supplies', 1, 45, 45)}
+
+          <p class="section-divider">Labor</p>
+
+          ${approvedLineItem('Labor · install', 8, 145, 1160)}
+
+          <div class="quote-totals">
+            <div class="totals-row"><span>Subtotal</span><span>$2,465.50</span></div>
+            <div class="totals-row"><span>Tax (6%)</span><span>$147.93</span></div>
+            <div class="totals-row grand"><span>Total</span><span>$2,613.43</span></div>
+          </div>
+
+          <div class="approval-actions">
+            <button class="approval-btn approval-btn-approve" style="background: var(--brand);">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18l-7-7M3 12l7 7"/></svg>
+              Send to customer
+            </button>
+            <button class="approval-btn approval-btn-kickback">View as customer would see it</button>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  function approvedLineItem(name, qty, rate, amount) {
+    return `
+      <div class="line-row">
+        <span class="line-marker"></span>
+        <div><span class="line-name">${name}</span></div>
+        <span class="line-qty">${qty}</span>
+        <span class="line-rate">$${rate.toFixed(2)}</span>
+        <span class="line-amount">$${amount.toFixed(2)}</span>
+        <div class="line-actions"></div>
+      </div>
+    `;
+  }
+
+  render('approval');
+})();
+</script>
+</body>
+</html>

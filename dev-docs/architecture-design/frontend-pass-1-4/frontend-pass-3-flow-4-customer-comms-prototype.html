@@ -1,0 +1,1213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AevoFab · Customer Communications (Pass 3 Flow 4 Prototype)</title>
+<style>
+  :root {
+    --bg-page: #FAFAF9;
+    --bg-surface: #FFFFFF;
+    --bg-muted: #F5F5F4;
+
+    --text-primary: #1C1917;
+    --text-secondary: #57534E;
+    --text-tertiary: #A8A29E;
+
+    --border-subtle: #E7E5E4;
+    --border-default: #D6D3D1;
+
+    --brand: #3B43D6;
+    --brand-muted-bg: #EEF1FF;
+    --brand-muted-text: #232AA3;
+
+    --alert: #F59E0B;
+    --alert-light: #FDD997;
+    --alert-muted-bg: #FAEEDA;
+    --alert-muted-text: #633806;
+
+    --margin-positive: #0F6E56;
+    --margin-positive-bg: #E1F5EE;
+    --margin-positive-light: #34D399;
+
+    --fault: #DC2626;
+    --fault-muted-bg: #FCEBEB;
+    --fault-muted-text: #791F1F;
+
+    --shadow-md: 0 2px 8px rgba(28, 25, 23, 0.06);
+    --shadow-lg: 0 4px 16px rgba(28, 25, 23, 0.10);
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: var(--bg-page);
+    color: var(--text-primary);
+    font-size: 14px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .stage {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 24px 16px 48px;
+    gap: 24px;
+  }
+
+  .prototype-banner {
+    width: 100%;
+    max-width: 920px;
+    background: var(--brand-muted-bg);
+    color: var(--brand-muted-text);
+    padding: 12px 18px;
+    font-size: 12.5px;
+    border-radius: 8px;
+    line-height: 1.55;
+  }
+  .prototype-banner strong { font-weight: 500; }
+  .prototype-banner code {
+    background: rgba(35, 42, 163, 0.1);
+    padding: 1px 5px;
+    border-radius: 3px;
+    font-size: 11px;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+  }
+
+  .demo-toggles {
+    display: flex;
+    gap: 8px;
+    background: var(--bg-surface);
+    padding: 12px 14px;
+    border-radius: 10px;
+    border: 0.5px solid var(--border-subtle);
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .demo-toggles .label { font-size: 11px; color: var(--text-secondary); margin-right: 4px; }
+  .demo-btn {
+    padding: 6px 12px;
+    background: var(--bg-surface);
+    border: 0.5px solid var(--border-subtle);
+    border-radius: 6px;
+    font-size: 12px;
+    cursor: pointer;
+    color: var(--text-primary);
+    font-family: inherit;
+  }
+  .demo-btn.primary { background: var(--text-primary); color: #fff; border-color: var(--text-primary); }
+  .demo-btn:hover:not(.primary) { background: var(--bg-muted); }
+
+  /* Phone container */
+  .phone {
+    width: 360px;
+    background: #1C1917;
+    border-radius: 36px;
+    padding: 6px;
+    box-sizing: border-box;
+    border: 1px solid #3F3F46;
+    position: relative;
+    box-shadow: var(--shadow-lg);
+  }
+  .phone-inner {
+    background: #FAFAF9;
+    border-radius: 30px;
+    overflow: hidden;
+    height: 720px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+  .notch {
+    position: absolute;
+    top: 6px; left: 50%;
+    transform: translateX(-50%);
+    width: 100px; height: 22px;
+    background: #000;
+    border-radius: 0 0 14px 14px;
+    z-index: 20;
+  }
+  .statusbar {
+    height: 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 24px 0;
+    color: var(--text-primary);
+    font-size: 12px;
+    font-weight: 500;
+    flex-shrink: 0;
+  }
+
+  /* Top app bar */
+  .app-bar {
+    height: 52px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 0 14px;
+    background: var(--bg-surface);
+    border-bottom: 0.5px solid var(--border-subtle);
+    flex-shrink: 0;
+  }
+  .icon-btn {
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    background: transparent;
+    border: none;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    color: var(--text-primary);
+    padding: 0;
+  }
+  .icon-btn:active { background: var(--bg-muted); }
+  .app-bar-title {
+    flex: 1;
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--text-primary);
+  }
+  .app-bar-context {
+    font-size: 11px;
+    color: var(--text-secondary);
+    margin-top: 1px;
+  }
+
+  /* Body scroll area */
+  .body-scroll {
+    flex: 1;
+    overflow-y: auto;
+    background: var(--bg-page);
+  }
+
+  /* Tab bar at bottom */
+  .tab-bar {
+    height: 56px;
+    background: var(--bg-surface);
+    border-top: 0.5px solid var(--border-subtle);
+    display: flex;
+    align-items: center;
+    padding: 0 4px;
+    flex-shrink: 0;
+  }
+  .tab {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    padding: 6px 0;
+  }
+  .tab-icon { width: 20px; height: 20px; }
+  .tab-label { font-size: 10px; color: var(--text-tertiary); font-weight: 500; }
+  .tab.active .tab-label { color: var(--brand); }
+
+  /* SCREEN: Job detail with Communicate option */
+  .screen { padding: 14px 16px 16px; display: flex; flex-direction: column; gap: 14px; }
+  .job-card {
+    background: var(--bg-surface);
+    border: 0.5px solid var(--border-subtle);
+    border-radius: 10px;
+    padding: 14px;
+  }
+  .job-card-title {
+    font-size: 16px;
+    font-weight: 500;
+    margin: 0 0 4px;
+    color: var(--text-primary);
+  }
+  .job-card-customer {
+    font-size: 12.5px;
+    color: var(--text-secondary);
+    margin: 0;
+  }
+  .job-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 14px; }
+  .action-btn {
+    height: 56px;
+    border: 0.5px solid var(--border-subtle);
+    background: var(--bg-surface);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    cursor: pointer;
+    color: var(--text-primary);
+    font-family: inherit;
+  }
+  .action-btn:active { background: var(--bg-muted); }
+  .action-btn.primary { background: var(--brand); color: #fff; border: none; }
+  .action-btn.primary:active { background: #2A30A8; }
+  .action-btn-icon { width: 18px; height: 18px; }
+  .action-btn-label { font-size: 12px; font-weight: 500; }
+
+  /* SCREEN: Communicate template picker */
+  .screen-header {
+    padding: 14px 16px 8px;
+  }
+  .screen-header-title {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin: 0 0 2px;
+  }
+  .screen-header-customer {
+    font-size: 16px;
+    font-weight: 500;
+    margin: 0;
+    color: var(--text-primary);
+  }
+  .channel-info {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    margin-top: 8px;
+    font-size: 11.5px;
+    color: var(--text-secondary);
+  }
+  .channel-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 3px 8px 3px 6px;
+    background: var(--bg-surface);
+    border: 0.5px solid var(--border-subtle);
+    border-radius: 999px;
+    font-size: 11px;
+    color: var(--text-primary);
+  }
+  .channel-pill svg { width: 11px; height: 11px; }
+  .channel-override-link {
+    font-size: 11px;
+    color: var(--brand);
+    text-decoration: none;
+    margin-left: auto;
+  }
+
+  .voice-cta {
+    margin: 8px 16px;
+    padding: 12px 14px;
+    background: var(--alert-muted-bg);
+    border: 0.5px solid var(--alert-light);
+    border-radius: 10px;
+    display: flex;
+    gap: 12px;
+    align-items: center;
+  }
+  .voice-cta-icon {
+    width: 32px; height: 32px;
+    background: var(--alert-light);
+    color: var(--alert-muted-text);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .voice-cta-text {
+    flex: 1;
+    font-size: 12px;
+    color: var(--alert-muted-text);
+    line-height: 1.4;
+  }
+  .voice-cta-text strong { font-weight: 500; }
+
+  .templates-grid {
+    padding: 4px 16px 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  .template-card {
+    background: var(--bg-surface);
+    border: 0.5px solid var(--border-subtle);
+    border-radius: 10px;
+    padding: 12px 12px 14px;
+    cursor: pointer;
+    text-align: left;
+    font-family: inherit;
+    transition: transform 80ms ease, box-shadow 80ms ease;
+  }
+  .template-card:active {
+    transform: scale(0.98);
+    box-shadow: var(--shadow-md);
+  }
+  .template-card-icon {
+    width: 28px; height: 28px;
+    border-radius: 7px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 8px;
+  }
+  .template-card-icon.tc-on-way { background: var(--brand-muted-bg); color: var(--brand-muted-text); }
+  .template-card-icon.tc-late { background: var(--alert-muted-bg); color: var(--alert-muted-text); }
+  .template-card-icon.tc-arrived { background: var(--margin-positive-bg); color: var(--margin-positive); }
+  .template-card-icon.tc-complete { background: var(--margin-positive-bg); color: var(--margin-positive); }
+  .template-card-icon.tc-parts { background: var(--alert-muted-bg); color: var(--alert-muted-text); }
+  .template-card-icon.tc-confirm { background: var(--brand-muted-bg); color: var(--brand-muted-text); }
+
+  .template-card-title {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-primary);
+    margin: 0 0 3px;
+    line-height: 1.3;
+  }
+  .template-card-preview {
+    font-size: 11px;
+    color: var(--text-secondary);
+    line-height: 1.35;
+    margin: 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  /* SCREEN: Preview & send */
+  .preview-screen { display: flex; flex-direction: column; height: 100%; background: var(--bg-page); }
+  .preview-customer-block {
+    padding: 14px 16px;
+    background: var(--bg-surface);
+    border-bottom: 0.5px solid var(--border-subtle);
+  }
+  .preview-to-label {
+    font-size: 11px;
+    color: var(--text-secondary);
+    margin: 0 0 3px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .preview-customer-name {
+    font-size: 16px;
+    font-weight: 500;
+    margin: 0 0 2px;
+    color: var(--text-primary);
+  }
+  .preview-customer-channel {
+    font-size: 12px;
+    color: var(--text-secondary);
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .channel-override-btn {
+    margin-left: auto;
+    font-size: 11px;
+    color: var(--brand);
+    background: transparent;
+    border: 0.5px solid var(--brand);
+    padding: 3px 8px;
+    border-radius: 6px;
+    font-family: inherit;
+    cursor: pointer;
+  }
+
+  .preview-body {
+    flex: 1;
+    padding: 16px;
+    background: var(--bg-page);
+    overflow-y: auto;
+  }
+  .message-bubble {
+    background: var(--bg-surface);
+    border-radius: 14px;
+    padding: 14px 16px;
+    border: 0.5px solid var(--border-subtle);
+    box-shadow: var(--shadow-md);
+    line-height: 1.5;
+    font-size: 14px;
+    color: var(--text-primary);
+    margin: 0 0 12px;
+  }
+  .message-bubble .editable {
+    background: var(--alert-muted-bg);
+    color: var(--alert-muted-text);
+    padding: 1px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    border: 0.5px dashed var(--alert);
+    display: inline-block;
+    font-weight: 500;
+  }
+  .message-bubble .editable:hover { background: var(--alert-light); }
+
+  .preview-meta {
+    font-size: 11px;
+    color: var(--text-secondary);
+    text-align: center;
+    margin: 4px 0 0;
+  }
+
+  .eta-edit-block {
+    background: var(--bg-surface);
+    border-radius: 10px;
+    border: 0.5px solid var(--border-subtle);
+    padding: 12px 14px;
+    margin: 12px 0 0;
+  }
+  .eta-edit-label {
+    font-size: 11px;
+    color: var(--text-secondary);
+    margin: 0 0 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .eta-options {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+  .eta-option {
+    padding: 5px 10px;
+    background: var(--bg-page);
+    border: 0.5px solid var(--border-subtle);
+    border-radius: 6px;
+    font-size: 12px;
+    cursor: pointer;
+    font-family: inherit;
+    color: var(--text-primary);
+  }
+  .eta-option.selected {
+    background: var(--brand-muted-bg);
+    border-color: var(--brand);
+    color: var(--brand-muted-text);
+    font-weight: 500;
+  }
+
+  .preview-actions {
+    padding: 12px 16px 16px;
+    background: var(--bg-surface);
+    border-top: 0.5px solid var(--border-subtle);
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-shrink: 0;
+  }
+  .voice-mic-btn {
+    width: 48px; height: 48px;
+    background: var(--alert-light);
+    color: var(--alert-muted-text);
+    border: none;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+  .voice-mic-btn:active { background: var(--alert); }
+  .voice-mic-btn svg { width: 20px; height: 20px; }
+  .send-btn {
+    flex: 1;
+    height: 48px;
+    background: var(--brand);
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    font-family: inherit;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+  }
+  .send-btn:active { background: #2A30A8; }
+  .cancel-btn {
+    height: 48px;
+    padding: 0 16px;
+    background: transparent;
+    color: var(--text-secondary);
+    border: 0.5px solid var(--border-subtle);
+    border-radius: 12px;
+    font-size: 14px;
+    cursor: pointer;
+    font-family: inherit;
+  }
+
+  /* SCREEN: Sent confirmation */
+  .sent-screen {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    gap: 16px;
+    text-align: center;
+  }
+  .sent-icon {
+    width: 64px; height: 64px;
+    background: var(--margin-positive);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .sent-title {
+    font-size: 18px;
+    font-weight: 500;
+    margin: 0;
+    color: var(--text-primary);
+  }
+  .sent-meta {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  /* Voice listening overlay */
+  .voice-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(28, 25, 23, 0.96);
+    z-index: 30;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 32px;
+    gap: 20px;
+    text-align: center;
+  }
+  .voice-pulse {
+    width: 120px; height: 120px;
+    border-radius: 50%;
+    background: rgba(245, 158, 11, 0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: voice-pulse 1.6s ease-in-out infinite;
+  }
+  @keyframes voice-pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.08); }
+  }
+  .voice-pulse-core {
+    width: 72px; height: 72px;
+    border-radius: 50%;
+    background: var(--alert);
+    color: #451A03;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .voice-state-label {
+    font-size: 13px;
+    color: var(--alert-light);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: 500;
+    margin: 0;
+  }
+  .voice-transcript {
+    font-size: 17px;
+    color: #F5F5F4;
+    line-height: 1.4;
+    max-width: 280px;
+    margin: 0;
+  }
+  .voice-transcript .ent { color: #ADB8FF; }
+  .voice-transcript .cursor {
+    display: inline-block;
+    width: 2px; height: 17px;
+    background: var(--alert);
+    vertical-align: middle;
+    margin-left: 2px;
+    animation: blink 0.9s ease-in-out infinite;
+  }
+  @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.2; } }
+  .voice-cancel {
+    background: transparent;
+    color: #A8A29E;
+    border: 0.5px solid #57534E;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 12px;
+    cursor: pointer;
+    font-family: inherit;
+  }
+
+  /* Confirmation overlay */
+  .confirm-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(28, 25, 23, 0.5);
+    z-index: 25;
+    display: flex;
+    align-items: flex-end;
+  }
+  .confirm-sheet {
+    background: var(--bg-surface);
+    border-radius: 16px 16px 0 0;
+    padding: 18px 18px 18px;
+    width: 100%;
+    animation: sheet-up 200ms ease-out;
+  }
+  @keyframes sheet-up {
+    from { transform: translateY(100%); }
+    to { transform: translateY(0); }
+  }
+  .confirm-title {
+    font-size: 16px;
+    font-weight: 500;
+    margin: 0 0 6px;
+    color: var(--text-primary);
+  }
+  .confirm-message {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+    margin: 0 0 14px;
+  }
+  .confirm-message strong { color: var(--text-primary); font-weight: 500; }
+
+  /* WEB COMM HISTORY */
+  .web-frame {
+    width: 920px;
+    background: var(--bg-surface);
+    border: 0.5px solid var(--border-subtle);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+  }
+  .web-toolbar {
+    background: var(--bg-muted);
+    padding: 8px 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-bottom: 0.5px solid var(--border-subtle);
+  }
+  .web-dot { width: 11px; height: 11px; border-radius: 50%; }
+  .web-dot.r { background: #F87171; }
+  .web-dot.y { background: #FCD34D; }
+  .web-dot.g { background: #34D399; }
+  .web-url {
+    flex: 1;
+    background: var(--bg-surface);
+    border-radius: 6px;
+    padding: 4px 10px;
+    font-size: 11px;
+    color: var(--text-secondary);
+    margin-left: 12px;
+  }
+
+  .web-content { padding: 24px 28px; }
+  .web-breadcrumb {
+    font-size: 11.5px;
+    color: var(--text-tertiary);
+    margin: 0 0 4px;
+  }
+  .web-breadcrumb span { color: var(--text-secondary); }
+  .web-page-title {
+    font-size: 22px;
+    font-weight: 500;
+    margin: 0 0 6px;
+    letter-spacing: -0.01em;
+  }
+  .web-page-meta {
+    font-size: 12.5px;
+    color: var(--text-secondary);
+    margin: 0 0 22px;
+  }
+  .web-page-meta span { font-weight: 500; color: var(--text-primary); }
+
+  .comm-history {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    border: 0.5px solid var(--border-subtle);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .comm-row {
+    display: grid;
+    grid-template-columns: 110px 80px 1fr 110px;
+    gap: 14px;
+    padding: 12px 16px;
+    border-bottom: 0.5px solid var(--border-subtle);
+    align-items: center;
+    font-size: 13px;
+  }
+  .comm-row:last-child { border-bottom: none; }
+  .comm-row:hover { background: var(--bg-muted); }
+  .comm-time {
+    font-size: 11.5px;
+    color: var(--text-tertiary);
+    font-variant-numeric: tabular-nums;
+  }
+  .comm-channel-cell {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 11px;
+    color: var(--text-secondary);
+  }
+  .comm-channel-cell svg { width: 12px; height: 12px; }
+  .comm-message {
+    font-size: 13px;
+    color: var(--text-primary);
+    line-height: 1.5;
+  }
+  .comm-message-meta {
+    font-size: 11px;
+    color: var(--text-tertiary);
+    margin-top: 2px;
+  }
+  .comm-meta-cell {
+    font-size: 11.5px;
+    color: var(--text-secondary);
+  }
+  .comm-template-tag {
+    display: inline-block;
+    font-size: 10.5px;
+    padding: 1px 6px;
+    background: var(--brand-muted-bg);
+    color: var(--brand-muted-text);
+    border-radius: 3px;
+    font-weight: 500;
+  }
+  .comm-status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 11px;
+    padding: 2px 7px;
+    border-radius: 4px;
+    font-weight: 500;
+  }
+  .comm-status-pill.delivered {
+    background: var(--margin-positive-bg);
+    color: var(--margin-positive);
+  }
+  .comm-status-pill.replied {
+    background: var(--brand-muted-bg);
+    color: var(--brand-muted-text);
+  }
+  .comm-history-table-head {
+    display: grid;
+    grid-template-columns: 110px 80px 1fr 110px;
+    gap: 14px;
+    padding: 9px 16px;
+    background: var(--bg-muted);
+    border-bottom: 0.5px solid var(--border-subtle);
+    font-size: 10.5px;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    letter-spacing: 0.05em;
+    font-weight: 500;
+  }
+</style>
+</head>
+<body>
+  <div class="stage">
+    <div class="prototype-banner">
+      <strong>Pass 3 Flow 4 prototype</strong> · Tech-to-customer templated communications · The mobile phone shows three states: <strong>Job detail</strong> (with Communicate action) → <strong>Communicate template picker</strong> (cards) → <strong>Preview & send</strong>. Use the toggles below to step through. Click the <strong>orange mic</strong> on the preview screen to see the voice override flow. The <strong>web view</strong> below shows the customer comm history.
+    </div>
+
+    <div class="demo-toggles">
+      <span class="label">Mobile state:</span>
+      <button class="demo-btn primary" data-state="job">1. Job detail</button>
+      <button class="demo-btn" data-state="picker">2. Pick template</button>
+      <button class="demo-btn" data-state="preview-onway">3. Preview · On my way</button>
+      <button class="demo-btn" data-state="preview-late">4. Preview · Running late</button>
+      <button class="demo-btn" data-state="sent">5. Sent</button>
+    </div>
+
+    <div class="phone">
+      <div class="notch"></div>
+      <div class="phone-inner">
+        <div class="statusbar">
+          <span>9:41</span>
+          <span>●●●● 5G</span>
+        </div>
+        <div id="phone-content" style="flex: 1; display: flex; flex-direction: column; overflow: hidden; position: relative;"></div>
+        <div class="tab-bar">
+          <div class="tab"><svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="#A8A29E" stroke-width="1.8"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18"/></svg><span class="tab-label">Today</span></div>
+          <div class="tab active"><svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="#3B43D6" stroke-width="1.8"><path d="M3 7h18M3 12h18M3 17h18"/></svg><span class="tab-label">Jobs</span></div>
+          <div class="tab"><svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="#A8A29E" stroke-width="1.8"><rect x="9" y="3" width="6" height="12" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg><span class="tab-label">Voice</span></div>
+          <div class="tab"><svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="#A8A29E" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M7 9h4M13 9h4M7 13h4M13 13h4"/></svg><span class="tab-label">Calcs</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="web-frame">
+      <div class="web-toolbar">
+        <div class="web-dot r"></div>
+        <div class="web-dot y"></div>
+        <div class="web-dot g"></div>
+        <div class="web-url">app.aevofab.example.com / customers / tom-johnson / communications</div>
+      </div>
+      <div class="web-content">
+        <p class="web-breadcrumb"><span>Customers</span> › <span>Tom Johnson</span> › Communications</p>
+        <h1 class="web-page-title">Tom Johnson</h1>
+        <p class="web-page-meta">42 Oak St · <span>SMS</span> preferred · 3 jobs · <span>$8,420</span> lifetime</p>
+
+        <div class="comm-history">
+          <div class="comm-history-table-head">
+            <span>Time</span>
+            <span>Channel</span>
+            <span>Message</span>
+            <span>Status</span>
+          </div>
+
+          <div class="comm-row">
+            <div class="comm-time">Today · 11:14 AM</div>
+            <div class="comm-channel-cell"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>SMS</div>
+            <div class="comm-message">
+              On my way, ETA 2:45 PM
+              <div class="comm-message-meta"><span class="comm-template-tag">on_my_way</span> &nbsp;·&nbsp; sent by Mike R. &nbsp;·&nbsp; auto-ETA from route data</div>
+            </div>
+            <div><span class="comm-status-pill delivered">delivered</span></div>
+          </div>
+
+          <div class="comm-row">
+            <div class="comm-time">Today · 8:02 AM</div>
+            <div class="comm-channel-cell"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>SMS</div>
+            <div class="comm-message">
+              Please confirm appointment for today at 9:00 AM at 42 Oak St.
+              <div class="comm-message-meta"><span class="comm-template-tag">confirm_appointment</span> &nbsp;·&nbsp; sent by Mike R.</div>
+            </div>
+            <div><span class="comm-status-pill replied">replied "yes"</span></div>
+          </div>
+
+          <div class="comm-row">
+            <div class="comm-time">Yesterday · 4:45 PM</div>
+            <div class="comm-channel-cell"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><path d="M22 6l-10 7L2 6"/></svg>Email</div>
+            <div class="comm-message">
+              Quote ready: 200A panel upgrade — total $2,335.18. Click to review and approve.
+              <div class="comm-message-meta">quote.send · sent by Mike R. (channel overridden from SMS to email — quote attached)</div>
+            </div>
+            <div><span class="comm-status-pill delivered">opened</span></div>
+          </div>
+
+          <div class="comm-row">
+            <div class="comm-time">Yesterday · 2:30 PM</div>
+            <div class="comm-channel-cell"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>SMS</div>
+            <div class="comm-message">
+              Job complete, invoice to follow.
+              <div class="comm-message-meta"><span class="comm-template-tag">job_complete</span> &nbsp;·&nbsp; sent by Mike R.</div>
+            </div>
+            <div><span class="comm-status-pill delivered">delivered</span></div>
+          </div>
+
+          <div class="comm-row">
+            <div class="comm-time">Mar 18 · 10:12 AM</div>
+            <div class="comm-channel-cell"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>SMS</div>
+            <div class="comm-message">
+              Running 15 min late — apologies, light traffic from prior job.
+              <div class="comm-message-meta"><span class="comm-template-tag">running_late</span> &nbsp;·&nbsp; sent by Mike R. &nbsp;·&nbsp; voice-triggered "tell Johnson 15 late"</div>
+            </div>
+            <div><span class="comm-status-pill delivered">delivered</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<script>
+(function() {
+  const phoneContent = document.getElementById('phone-content');
+  const stateButtons = document.querySelectorAll('.demo-btn[data-state]');
+
+  function setState(state) {
+    stateButtons.forEach(b => b.classList.toggle('primary', b.dataset.state === state));
+    if (state === 'job') renderJobScreen();
+    else if (state === 'picker') renderTemplatePicker();
+    else if (state === 'preview-onway') renderPreview('on_my_way');
+    else if (state === 'preview-late') renderPreview('running_late');
+    else if (state === 'sent') renderSent();
+  }
+
+  function renderJobScreen() {
+    phoneContent.innerHTML = `
+      <div class="app-bar">
+        <button class="icon-btn" aria-label="Back">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+        <div style="flex: 1;">
+          <div class="app-bar-title">Job detail</div>
+        </div>
+        <button class="icon-btn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="12" cy="19" r="1"/></svg>
+        </button>
+      </div>
+      <div class="body-scroll">
+        <div class="screen">
+          <div class="job-card">
+            <p class="job-card-title">Johnson — 200A panel upgrade</p>
+            <p class="job-card-customer">Tom Johnson · 42 Oak Street</p>
+            <p class="job-card-customer" style="margin-top:8px; color: var(--text-tertiary); font-size: 11.5px;">Today · 1:30 PM – 4:30 PM · 40% complete</p>
+            <div class="job-actions">
+              <button class="action-btn primary">
+                <svg class="action-btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                <span class="action-btn-label">Clock out</span>
+              </button>
+              <button class="action-btn" id="communicate-btn">
+                <svg class="action-btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+                <span class="action-btn-label">Communicate</span>
+              </button>
+              <button class="action-btn">
+                <svg class="action-btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+                <span class="action-btn-label">Log expense</span>
+              </button>
+              <button class="action-btn">
+                <svg class="action-btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>
+                <span class="action-btn-label">Change order</span>
+              </button>
+            </div>
+          </div>
+          <p style="font-size: 12px; color: var(--text-tertiary); margin: 4px 0 0; text-align: center;">Tap <strong style="color: var(--text-secondary); font-weight: 500;">Communicate</strong> to send Tom a templated message →</p>
+        </div>
+      </div>
+    `;
+    document.getElementById('communicate-btn').addEventListener('click', () => setState('picker'));
+  }
+
+  function renderTemplatePicker() {
+    phoneContent.innerHTML = `
+      <div class="app-bar">
+        <button class="icon-btn" id="picker-back" aria-label="Back">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+        <div style="flex: 1;">
+          <div class="app-bar-title">Communicate</div>
+          <div class="app-bar-context">Johnson — 200A panel upgrade</div>
+        </div>
+      </div>
+      <div class="body-scroll">
+        <div class="screen-header">
+          <p class="screen-header-title">To</p>
+          <p class="screen-header-customer">Tom Johnson</p>
+          <div class="channel-info">
+            <span class="channel-pill">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+              SMS preferred
+            </span>
+            <a class="channel-override-link">Send via email instead →</a>
+          </div>
+        </div>
+        <div class="voice-cta">
+          <div class="voice-cta-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="3" width="6" height="12" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg>
+          </div>
+          <div class="voice-cta-text">
+            <strong>Or use voice:</strong> "Tell Tom I'm 20 out" — the AI picks the right template and fills in the ETA.
+          </div>
+        </div>
+        <div class="templates-grid">
+          <button class="template-card" data-template="on_my_way">
+            <div class="template-card-icon tc-on-way">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h13l-3-3M3 12l3 3"/></svg>
+            </div>
+            <p class="template-card-title">On my way</p>
+            <p class="template-card-preview">"On my way, ETA [auto-computed]"</p>
+          </button>
+          <button class="template-card" data-template="running_late">
+            <div class="template-card-icon tc-late">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+            </div>
+            <p class="template-card-title">Running late</p>
+            <p class="template-card-preview">"Running [X] min late — apologies."</p>
+          </button>
+          <button class="template-card" data-template="arrived">
+            <div class="template-card-icon tc-arrived">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            </div>
+            <p class="template-card-title">Arrived</p>
+            <p class="template-card-preview">"Arrived, starting work."</p>
+          </button>
+          <button class="template-card" data-template="job_complete">
+            <div class="template-card-icon tc-complete">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <p class="template-card-title">Job complete</p>
+            <p class="template-card-preview">"Job complete, invoice to follow."</p>
+          </button>
+          <button class="template-card" data-template="parts_delay">
+            <div class="template-card-icon tc-parts">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 13h6"/></svg>
+            </div>
+            <p class="template-card-title">Parts delay</p>
+            <p class="template-card-preview">"Parts delay — will update when resolved."</p>
+          </button>
+          <button class="template-card" data-template="confirm">
+            <div class="template-card-icon tc-confirm">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M3 10h18M8 2v4M16 2v4"/></svg>
+            </div>
+            <p class="template-card-title">Confirm appt</p>
+            <p class="template-card-preview">"Please confirm [date/time] at [site]."</p>
+          </button>
+        </div>
+      </div>
+    `;
+    document.getElementById('picker-back').addEventListener('click', () => setState('job'));
+    document.querySelectorAll('.template-card').forEach(card => {
+      card.addEventListener('click', () => {
+        const t = card.dataset.template;
+        if (t === 'on_my_way') setState('preview-onway');
+        else if (t === 'running_late') setState('preview-late');
+        else setState('preview-onway');
+      });
+    });
+  }
+
+  function renderPreview(templateType) {
+    const isLate = templateType === 'running_late';
+    const messageText = isLate
+      ? `Running <span class="editable" id="late-edit">15 min</span> late — apologies, light traffic from prior job.`
+      : `On my way, ETA <span class="editable" id="eta-edit">2:45 PM</span>`;
+
+    phoneContent.innerHTML = `
+      <div class="app-bar">
+        <button class="icon-btn" id="preview-back" aria-label="Back">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+        <div style="flex: 1;">
+          <div class="app-bar-title">Review &amp; send</div>
+          <div class="app-bar-context">${isLate ? 'Running late' : 'On my way'} — to Tom Johnson</div>
+        </div>
+      </div>
+      <div class="preview-screen">
+        <div class="preview-customer-block">
+          <p class="preview-to-label">Sending to</p>
+          <p class="preview-customer-name">Tom Johnson</p>
+          <div class="preview-customer-channel">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="color: var(--brand);"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+            <span>SMS · (555) 318-4029</span>
+            <button class="channel-override-btn">Use email</button>
+          </div>
+        </div>
+        <div class="preview-body">
+          <div class="message-bubble">${messageText}</div>
+          <p class="preview-meta">Tap the highlighted ${isLate ? 'time' : 'ETA'} to edit, or use voice</p>
+
+          ${isLate ? `
+          <div class="eta-edit-block">
+            <p class="eta-edit-label">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+              How late?
+            </p>
+            <div class="eta-options">
+              <button class="eta-option">5 min</button>
+              <button class="eta-option">10 min</button>
+              <button class="eta-option selected">15 min</button>
+              <button class="eta-option">20 min</button>
+              <button class="eta-option">30 min</button>
+              <button class="eta-option">45 min</button>
+              <button class="eta-option">Custom</button>
+            </div>
+          </div>
+          ` : `
+          <div class="eta-edit-block">
+            <p class="eta-edit-label">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+              ETA — auto-computed from your route
+            </p>
+            <div class="eta-options">
+              <button class="eta-option">15 min</button>
+              <button class="eta-option selected">20 min</button>
+              <button class="eta-option">30 min</button>
+              <button class="eta-option">45 min</button>
+              <button class="eta-option">1 hour</button>
+              <button class="eta-option">Custom time</button>
+            </div>
+          </div>
+          `}
+        </div>
+        <div class="preview-actions">
+          <button class="voice-mic-btn" id="preview-voice" aria-label="Voice override">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="3" width="6" height="12" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg>
+          </button>
+          <button class="send-btn" id="preview-send">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18l-7-7M3 12l7 7"/></svg>
+            Send to Tom
+          </button>
+        </div>
+      </div>
+    `;
+    document.getElementById('preview-back').addEventListener('click', () => setState('picker'));
+    document.getElementById('preview-send').addEventListener('click', () => setState('sent'));
+    document.getElementById('preview-voice').addEventListener('click', showVoiceOverlay);
+  }
+
+  function showVoiceOverlay() {
+    const overlay = document.createElement('div');
+    overlay.className = 'voice-overlay';
+    overlay.innerHTML = `
+      <div class="voice-pulse">
+        <div class="voice-pulse-core">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="3" width="6" height="12" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg>
+        </div>
+      </div>
+      <p class="voice-state-label">listening</p>
+      <p class="voice-transcript" id="voice-text"><span class="cursor"></span></p>
+      <button class="voice-cancel" id="voice-cancel">Cancel</button>
+    `;
+    phoneContent.appendChild(overlay);
+
+    const fullText = "Make it 30 minutes";
+    const target = overlay.querySelector('#voice-text');
+    let i = 0;
+    const interval = setInterval(() => {
+      if (i >= fullText.length) {
+        clearInterval(interval);
+        target.innerHTML = `"${fullText}"`;
+        setTimeout(() => {
+          overlay.remove();
+          const opts = phoneContent.querySelectorAll('.eta-option');
+          opts.forEach(o => o.classList.remove('selected'));
+          opts.forEach(o => { if (o.textContent.includes('30')) o.classList.add('selected'); });
+          const etaEdit = phoneContent.querySelector('#eta-edit, #late-edit');
+          if (etaEdit) etaEdit.textContent = etaEdit.id === 'eta-edit' ? '2:55 PM' : '30 min';
+        }, 800);
+        return;
+      }
+      target.innerHTML = `"${fullText.substring(0, i + 1)}<span class="cursor"></span>"`;
+      i++;
+    }, 65);
+
+    overlay.querySelector('#voice-cancel').addEventListener('click', () => {
+      clearInterval(interval);
+      overlay.remove();
+    });
+  }
+
+  function renderSent() {
+    phoneContent.innerHTML = `
+      <div class="app-bar">
+        <div style="flex: 1;">
+          <div class="app-bar-title">Communications</div>
+        </div>
+      </div>
+      <div class="sent-screen">
+        <div class="sent-icon">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <p class="sent-title">Sent to Tom Johnson</p>
+        <p class="sent-meta">"On my way, ETA 2:45 PM"<br>via SMS to (555) 318-4029</p>
+        <p style="font-size: 11px; color: var(--text-tertiary); margin: 16px 0 0;">Logged to job · visible in customer history</p>
+      </div>
+    `;
+    setTimeout(() => { setState('job'); }, 2400);
+  }
+
+  stateButtons.forEach(b => {
+    b.addEventListener('click', () => setState(b.dataset.state));
+  });
+
+  setState('job');
+})();
+</script>
+</body>
+</html>

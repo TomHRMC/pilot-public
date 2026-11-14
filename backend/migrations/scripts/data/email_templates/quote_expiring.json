@@ -1,0 +1,9 @@
+{
+  "template_id": "quote_expiring",
+  "display_name": "Quote Expiring Soon",
+  "category": "customer_facing",
+  "subject_template": "Your quote from {{company_name}} expires {{expires_at}}",
+  "body_html_template": "<p>Hi {{customer_name}},</p>\n\n<p>Just a heads up \u2014 your quote from <strong>{{company_name}}</strong> is expiring soon.</p>\n\n<table style=\"border-collapse:collapse;width:100%;max-width:480px;margin:16px 0;\">\n  <tr>\n    <td style=\"padding:8px 0;color:#6b7280;font-size:14px;\">Quote expires</td>\n    <td style=\"padding:8px 0;font-weight:600;text-align:right;\">{{expires_at}}</td>\n  </tr>\n</table>\n\n<p style=\"margin:24px 0;\">\n  <a href=\"{{quote_url}}\" style=\"background:#2563eb;color:#ffffff;padding:12px 24px;border-radius:6px;text-decoration:none;font-weight:600;display:inline-block;\">View Quote \u2192</a>\n</p>\n\n<p style=\"color:#6b7280;font-size:13px;\">If you'd like to move forward, accept the quote before it expires. If you need more time or have questions, just reply and let us know.</p>\n\n<p>Thank you,<br><strong>{{company_name}}</strong></p>\n\n<p style=\"color:#9ca3af;font-size:11px;margin-top:32px;\">Do not reply directly to this email \u2014 contact support@pilotfortrades.com for help.</p>",
+  "body_plain_template": "Hi {{customer_name}},\n\nYour quote from {{company_name}} is expiring soon.\n\nQuote expires: {{expires_at}}\n\nView quote: {{quote_url}}\n\nIf you'd like to move forward, accept the quote before it expires. If you need more time or have questions, just reach out.\n\nThank you,\n{{company_name}}",
+  "variables": ["customer_name", "quote_url", "expires_at"]
+}

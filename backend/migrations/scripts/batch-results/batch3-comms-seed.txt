@@ -1,0 +1,22 @@
+=== seed_scenario_customer_comms: seed mode ===
+    Tenant ID: 00000000-0000-0000-0000-000000000001
+
+  ℹ️  [tenant_phone_number] +15125559001 already exists
+  ℹ️  [customer] 'Carlos Rivera' already exists
+  ℹ️  [customer] 'Linda Park' already exists
+  ℹ️  [customer] 'Sunrise Electric LLC' already exists
+  ℹ️  [customer_communication_thread] Thread for 'Carlos Rivera' already exists
+  ℹ️  [customer_communication_thread] Thread for 'Linda Park' already exists
+  ℹ️  [customer_communication_thread] Thread for 'Sunrise Electric LLC' already exists
+  ✅ [customer_communication_thread] Sunrise Electric LLC thread → status=archived
+
+  -- SD-7 B3: contact_endpoint --
+  ℹ️  [contact_endpoint] SKIPPED — constraint allows only 'email'|'sms'; 'sms' is on hold (§8.2); 'phone' is not a valid channel.
+
+  -- SD-7 B3: customer_communication_message_read_state --
+  ✅ [customer_communication_message_read_state] 7 read_state rows inserted for owner user
+
+  -- SD-7 B3: customer_communication_unrouted (parked) --
+  ℹ️  [customer_communication_unrouted] Parked row already exists
+
+🎉 seed_scenario_customer_comms complete — Group D comms data present for 00000000-0000-0000-0000-000000000001

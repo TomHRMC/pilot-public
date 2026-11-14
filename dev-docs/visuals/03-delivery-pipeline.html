@@ -1,0 +1,113 @@
+<title>Delivery Pipeline</title>
+<style>
+  /* Layout: a left-to-right rail — local dev → CI gate → AWS QA → AWS prod — over a Terraform IaC foundation band. */
+  :root{
+    --bg:#f6f8f8; --surface:#ffffff; --fg:#192024; --muted:#59656d; --line:#d2d9dc;
+    --accent:#0d7d74; --accent-soft:#e4f1ef; --accent-strong:#0a5d56;
+    --sans:"IBM Plex Sans",ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  }
+  @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+    --bg:#0e1416; --surface:#161d20; --fg:#e9eef0; --muted:#9aa7ad; --line:#2a343a;
+    --accent:#3fd0c2; --accent-soft:#10302e; --accent-strong:#63e2d5; color-scheme:dark;
+  }}
+  :root[data-theme="dark"]{
+    --bg:#0e1416; --surface:#161d20; --fg:#e9eef0; --muted:#9aa7ad; --line:#2a343a;
+    --accent:#3fd0c2; --accent-soft:#10302e; --accent-strong:#63e2d5; color-scheme:dark;
+  }
+  body{background:var(--bg);color:var(--fg);font-family:var(--sans);line-height:1.5;}
+  .wrap{max-width:1120px;margin:0 auto;padding-block:32px 40px;padding-inline:16px;}
+  .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-strong);margin:0 0 6px;}
+  h1{font-size:clamp(22px,3.2vw,30px);line-height:1.12;text-wrap:balance;margin:0 0 8px;font-weight:700;letter-spacing:-.01em;}
+  .lede{color:var(--muted);font-size:15px;max-width:66ch;margin:0 0 22px;}
+  figure{margin:0;}
+  .diagram{width:100%;height:auto;display:block;background:var(--surface);border:1px solid var(--line);border-radius:14px;}
+  figcaption{color:var(--muted);font-size:13px;margin-top:12px;max-width:72ch;}
+  .foot{margin-top:18px;font-size:12.5px;color:var(--muted);font-family:var(--mono);}
+  svg{color:var(--fg);}
+  .h1{fill:var(--fg);font-weight:700;font-size:25px;letter-spacing:-.01em;}
+  .sub{fill:var(--muted);font-size:14.5px;}
+  .nt{fill:var(--fg);font-weight:700;font-size:16.5px;}
+  .gt{fill:var(--accent-strong);font-weight:700;font-size:16.5px;}
+  .nb{fill:var(--fg);font-size:12.5px;}
+  .nm{fill:var(--muted);font-family:var(--mono);font-size:11px;}
+  .ns{fill:var(--muted);font-size:11.5px;font-style:italic;}
+  .lbl{fill:var(--muted);font-family:var(--mono);font-size:11.5px;}
+  .node{fill:var(--surface);stroke:var(--line);stroke-width:1.5;}
+  .gate{fill:var(--accent-soft);stroke:var(--accent);stroke-width:2.5;}
+  .band{fill:var(--accent-soft);stroke:var(--accent);stroke-width:1.5;}
+  .bandt{fill:var(--accent-strong);font-weight:700;font-size:14.5px;}
+</style>
+
+<div class="wrap">
+  <p class="eyebrow">HotRMC · Build → test → prod</p>
+  <h1>From my laptop to AWS — gated and reproducible</h1>
+  <p class="lede">Every change moved through a containerized dev stack, a CI gate with no stored secrets, and a rolling deploy with automatic rollback to one AWS environment built to production spec — all defined in Terraform, with a human verifying. The separate QA stack drawn in the path was used once. It never carried customer traffic.</p>
+
+  <figure>
+    <svg class="diagram" viewBox="0 0 1200 500" role="img"
+      aria-label="Pipeline: local Docker Compose dev, then a GitHub Actions CI gate using OIDC with build to ECR, a Trivy secret scan and an on-demand Playwright E2E workflow, then a separate AWS QA stack that was deployed once, tested and torn down, alongside one long-lived AWS environment built to production spec that served as QA and production candidate, with ECS rolling deploys, circuit-breaker rollback and a human verification run. It never carried customer traffic. All AWS infrastructure is defined in Terraform; one CloudFront distribution was recreated by hand.">
+      <defs>
+        <marker id="pa" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto-start-reverse">
+          <path d="M1,1 L9,5 L1,9 Z" fill="var(--muted)"/>
+        </marker>
+      </defs>
+      <text class="h1" x="600" y="42" text-anchor="middle">One change, laptop to AWS</text>
+      <text class="sub" x="600" y="70" text-anchor="middle">Gated at every hop · reproducible by code · a human confirms the last step</text>
+
+      <!-- DEV -->
+      <rect class="node" x="40" y="150" width="245" height="175" rx="12"/>
+      <text class="nt" x="162" y="184" text-anchor="middle">Local dev</text>
+      <text class="nb" x="162" y="210" text-anchor="middle">Docker Compose · 6 services</text>
+      <text class="nm" x="162" y="234" text-anchor="middle">PG17 · Redis · Celery×2</text>
+      <text class="nm" x="162" y="252" text-anchor="middle">Ollama · Whisper</text>
+      <text class="nm" x="162" y="270" text-anchor="middle">API under uvicorn</text>
+      <text class="ns" x="162" y="302" text-anchor="middle">same backend code as AWS</text>
+
+      <line x1="285" y1="237" x2="348" y2="237" stroke="var(--muted)" stroke-width="2" marker-end="url(#pa)"/>
+      <text class="lbl" x="316" y="225" text-anchor="middle">git push</text>
+
+      <!-- CI (accent gate) -->
+      <rect class="gate" x="350" y="150" width="258" height="175" rx="12"/>
+      <text class="gt" x="479" y="184" text-anchor="middle">CI — GitHub Actions</text>
+      <text class="nb" x="479" y="212" text-anchor="middle">OIDC · no stored keys</text>
+      <text class="nb" x="479" y="236" text-anchor="middle">build → ECR · secret scan</text>
+      <text class="nb" x="479" y="260" text-anchor="middle">Playwright E2E (on demand)</text>
+      <text class="ns" x="479" y="292" text-anchor="middle">the automated gate</text>
+
+      <line x1="608" y1="237" x2="671" y2="237" stroke="var(--muted)" stroke-width="2" marker-end="url(#pa)"/>
+      <text class="lbl" x="639" y="225" text-anchor="middle">image</text>
+
+      <!-- QA -->
+      <rect class="node" x="673" y="150" width="210" height="175" rx="12"/>
+      <text class="nt" x="778" y="184" text-anchor="middle">AWS · QA stack</text>
+      <text class="nb" x="778" y="212" text-anchor="middle">ECS Fargate · RDS · Redis</text>
+      <text class="nb" x="778" y="236" text-anchor="middle">deployed once, tested,</text>
+      <text class="nb" x="778" y="260" text-anchor="middle">torn down to save cost</text>
+      <text class="ns" x="778" y="292" text-anchor="middle">not on every change's path</text>
+
+      <line x1="883" y1="237" x2="946" y2="237" stroke="var(--muted)" stroke-width="2" marker-end="url(#pa)"/>
+      <text class="lbl" x="914" y="225" text-anchor="middle">deploy</text>
+
+      <!-- PROD (accent gate) -->
+      <rect class="gate" x="948" y="150" width="212" height="175" rx="12"/>
+      <text class="gt" x="1054" y="184" text-anchor="middle">AWS · production spec</text>
+      <text class="nb" x="1054" y="212" text-anchor="middle">ECS rolling · auto-rollback</text>
+      <text class="nb" x="1054" y="236" text-anchor="middle">off-hours · health checks</text>
+      <text class="nb" x="1054" y="260" text-anchor="middle">human verification</text>
+      <text class="ns" x="1054" y="292" text-anchor="middle">no customer traffic</text>
+
+      <!-- Terraform foundation band -->
+      <rect class="band" x="350" y="372" width="810" height="78" rx="12"/>
+      <text class="bandt" x="755" y="402" text-anchor="middle">Infrastructure as code — Terraform</text>
+      <text class="nb" x="755" y="428" text-anchor="middle">all AWS resources defined in code (one CloudFront distribution recreated by hand) · reviewable</text>
+      <!-- ties from the AWS stages down to the IaC band -->
+      <line x1="479" y1="325" x2="479" y2="372" stroke="var(--accent)" stroke-width="1.2" stroke-dasharray="3 4"/>
+      <line x1="778" y1="325" x2="778" y2="372" stroke="var(--accent)" stroke-width="1.2" stroke-dasharray="3 4"/>
+      <line x1="1054" y1="325" x2="1054" y2="372" stroke="var(--accent)" stroke-width="1.2" stroke-dasharray="3 4"/>
+    </svg>
+    <figcaption>Build → test → deploy: a containerized dev stack (API under uvicorn; same backend code as AWS), a GitHub Actions CI gate (OIDC, Trivy secret scan, on-demand Playwright E2E), a separate QA stack that was deployed once, tested and torn down to avoid doubling cost, and one long-lived AWS environment built to production spec — ECS rolling deploys with circuit-breaker rollback and a human-run verification. It never carried customer traffic. The stack is reproducible from Terraform (one CloudFront distribution was recreated by hand after an accidental destroy); blue/green target groups are provisioned for a later traffic-shift phase that was not enabled.</figcaption>
+  </figure>
+
+  <p class="foot">Pilot for Trades proof suite · 2026</p>
+</div>

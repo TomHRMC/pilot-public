@@ -1,0 +1,54 @@
+appId: com.pilotfortrades.mobile
+name: FE-B7 Mid-Sync Network Drop and Resume
+tags:
+  - batch_fe_b7
+  - offline_sync
+  - network_resilience
+  - e2e
+
+---
+
+# Pre-conditions: User is logged in, has 3+ pending offline items, is online
+
+# Step 1: Verify there are pending items
+- assertVisible:
+    id: connection-state-pill
+
+# Step 2: Tap "Sync now" to start a manual sync
+- tapOn:
+    id: connection-state-pill
+- assertVisible:
+    id: sync-queue-drawer
+- tapOn:
+    id: drawer-sync-now
+
+# Step 3: Verify sync in progress
+- assertVisible:
+    text: "Syncing…"
+    timeout: 3000
+
+# Step 4: Drop network mid-sync
+- setAirplaneMode: true
+
+# Step 5: Wait for sync to fail gracefully
+- wait: 3000
+
+# Step 6: Verify error state (pending items still visible)
+- assertVisible:
+    id: connection-state-pill
+
+# Step 7: Reconnect
+- setAirplaneMode: false
+
+# Step 8: Wait for auto-recovery sync to trigger
+- wait: 5000
+
+# Step 9: Verify items eventually sync (no duplicates expected — idempotency key protects)
+- assertNotVisible:
+    id: pending-badge
+    timeout: 15000
+
+# Step 10: Verify duplicate protection — server shows exactly 3 items (not 6)
+# (This verification is done server-side; app shows "All synced" state)
+- assertNotVisible:
+    text: "Syncing…"

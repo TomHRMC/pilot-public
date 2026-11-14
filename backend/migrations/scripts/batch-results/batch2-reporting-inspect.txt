@@ -1,0 +1,97 @@
+=== seed_scenario_reporting: inspect mode ===
+    Tenant ID: 00000000-0000-0000-0000-000000000001
+
+  [job (completed)]  10 row(s)
+    • 7e925689-4cc9-44f4-8129-b7f9cb0c96fa  2026-07-22 10:00:00+00:00 → 2026-07-22 15:00:00+00:00  labor=$0.00  materials=$0.00
+    • ea630feb-ae97-4377-aeb3-df6946943864  2026-07-20 09:00:00+00:00 → 2026-07-20 12:00:00+00:00  labor=$0.00  materials=$0.00
+    • 411cf83f-8e33-45a9-bd73-d26b5fab61d2  2026-06-24 09:00:00+00:00 → 2026-06-24 17:00:00+00:00  labor=$480.00  materials=$220.00
+    • 3db645bf-d1b6-4e23-9115-fe49c309d13a  2026-06-16 09:00:00+00:00 → 2026-06-16 12:00:00+00:00  labor=$212.50  materials=$42.00
+    • 811f0125-614e-4a40-b916-961a8c34e3af  2026-06-11 10:00:00+00:00 → 2026-06-11 15:00:00+00:00  labor=$255.00  materials=$85.00
+    • 325e517b-c6a5-4a35-b0b9-36fe0678eec2  2026-06-01 08:00:00+00:00 → 2026-06-01 17:00:00+00:00  labor=$777.50  materials=$450.00
+    • 8945d869-52ee-447c-b8cd-4eda55eb1fd9  2026-05-27 08:00:00+00:00 → 2026-05-27 14:00:00+00:00  labor=$480.00  materials=$320.00
+    • aaf81c1c-5089-4d59-aa8d-323c76644f2a  2026-05-17 09:00:00+00:00 → 2026-05-17 13:00:00+00:00  labor=$297.50  materials=$80.00
+    • 15478800-a10e-480a-ad19-c83d2a376221  2026-05-02 10:00:00+00:00 → 2026-05-02 16:00:00+00:00  labor=$700.00  materials=$125.00
+    • 0a66fb7a-88ff-4b66-815c-17294b428fd5  2026-04-17 07:00:00+00:00 → 2026-04-17 16:00:00+00:00  labor=$1110.00  materials=$650.00
+
+  [job_time_entry]  15 row(s)
+    • job=0a66fb7a-88ff-4b66-815c-17294b428fd5  5.000h @ 12000¢/hr = $600.00  'Full commercial rewire'
+    • job=0a66fb7a-88ff-4b66-815c-17294b428fd5  6.000h @ 8500¢/hr = $510.00  'Panel sub-feed installation'
+    • job=15478800-a10e-480a-ad19-c83d2a376221  3.000h @ 12000¢/hr = $360.00  'Full commercial panel inspection'
+    • job=15478800-a10e-480a-ad19-c83d2a376221  4.000h @ 8500¢/hr = $340.00  'Wiring audit and load calculation'
+    • job=aaf81c1c-5089-4d59-aa8d-323c76644f2a  2.000h @ 8500¢/hr = $170.00  'Diagnostic and GFCI replacement'
+    • job=aaf81c1c-5089-4d59-aa8d-323c76644f2a  1.500h @ 8500¢/hr = $127.50  'Circuit testing'
+    • job=8945d869-52ee-447c-b8cd-4eda55eb1fd9  4.000h @ 12000¢/hr = $480.00  'Generator transfer switch installation'
+    • job=325e517b-c6a5-4a35-b0b9-36fe0678eec2  4.000h @ 12000¢/hr = $480.00  'Panel removal and wiring'
+    • job=325e517b-c6a5-4a35-b0b9-36fe0678eec2  3.500h @ 8500¢/hr = $297.50  'Circuit breaker installation'
+    • job=811f0125-614e-4a40-b916-961a8c34e3af  3.000h @ 8500¢/hr = $255.00  'Coordination with HVAC contractor'
+    • job=3db645bf-d1b6-4e23-9115-fe49c309d13a  2.500h @ 8500¢/hr = $212.50  'Install 6 duplex outlets'
+    • job=51bfbb84-1401-48e3-9fce-5c4bbb0aab99  2.000h @ 12000¢/hr = $240.00  'Site prep and material staging'
+    • job=51bfbb84-1401-48e3-9fce-5c4bbb0aab99  2.000h @ 12000¢/hr = $240.00  'Panel rough-in complete'
+    • job=ce51c400-ab99-43f9-9b9a-6a8882e17d2d  2.000h @ 12000¢/hr = $240.00  'Site prep and material staging'
+    • job=ce51c400-ab99-43f9-9b9a-6a8882e17d2d  2.000h @ 12000¢/hr = $240.00  'Panel rough-in complete'
+
+  [job_expense]  13 row(s)
+    • materials: 'Commercial wiring materials' cost=$650.00 markup=20.0000% billable=$780.00
+    • permits: 'Commercial electrical permit' cost=$450.00 markup=0.0000% billable=$450.00
+    • materials: 'Conduit fittings and hardware' cost=$125.00 markup=20.0000% billable=$150.00
+    • permits: 'Commercial electrical permit' cost=$350.00 markup=0.0000% billable=$350.00
+    • materials: 'GFCI Outlets (qty 4)' cost=$80.00 markup=20.0000% billable=$96.00
+    • materials: 'Transfer switch hardware' cost=$320.00 markup=20.0000% billable=$384.00
+    • materials: '200A Main Panel + Breakers' cost=$450.00 markup=20.0000% billable=$540.00
+    • materials: 'Electrical supplies' cost=$85.00 markup=20.0000% billable=$102.00
+    • materials: 'Duplex outlets and wall plates (qty 6)' cost=$42.00 markup=20.0000% billable=$50.40
+    • materials: '200A panel + materials (at-risk scenario)' cost=$850.00 markup=20.0000% billable=$1020.00
+    • materials: 'Circuit breakers and hardware' cost=$92.00 markup=20.0000% billable=$110.40
+    • materials: 'Circuit breakers and hardware' cost=$92.00 markup=20.0000% billable=$110.40
+    • materials: 'Electrical supplies and wire' cost=$185.00 markup=20.0000% billable=$222.00
+
+  [job_tech_assignment (completed jobs)]  8 row(s)
+    • job=0a66fb7a-88ff-4b66-815c-17294b428fd5  user=00000000-0000-0000-0000-000000000003  role=primary
+    • job=15478800-a10e-480a-ad19-c83d2a376221  user=00000000-0000-0000-0000-000000000003  role=primary
+    • job=325e517b-c6a5-4a35-b0b9-36fe0678eec2  user=00000000-0000-0000-0000-000000000003  role=primary
+    • job=3db645bf-d1b6-4e23-9115-fe49c309d13a  user=00000000-0000-0000-0000-000000000003  role=primary
+    • job=7e925689-4cc9-44f4-8129-b7f9cb0c96fa  user=00000000-0000-0000-0000-000000000003  role=primary
+    • job=811f0125-614e-4a40-b916-961a8c34e3af  user=00000000-0000-0000-0000-000000000003  role=primary
+    • job=8945d869-52ee-447c-b8cd-4eda55eb1fd9  user=00000000-0000-0000-0000-000000000003  role=primary
+    • job=aaf81c1c-5089-4d59-aa8d-323c76644f2a  user=00000000-0000-0000-0000-000000000003  role=primary
+
+  [invoice (seeded jobs)]  8 row(s)
+    • INV-900001  status=paid  total=$955.96  balance=$0.00
+    • INV-900002  status=paid  total=$2261.35  balance=$0.00
+    • INV-900003  status=paid  total=$437.78  balance=$0.00
+    • INV-900004  status=issued  total=$1156.30  balance=$1156.30
+    • INV-900005  status=draft  total=$169.60  balance=$169.60
+    • INV-900006  status=partial  total=$2158.00  balance=$1358.00
+    • INV-900007  status=void  total=$2343.50  balance=$2343.50
+    • INV-900008  status=writeoff  total=$5068.60  balance=$5068.60
+
+  [invoice_line]  24 row(s) across 8 invoice(s)
+    • INV-900001: 3 line(s)
+    • INV-900002: 4 line(s)
+    • INV-900003: 3 line(s)
+    • INV-900004: 3 line(s)
+    • INV-900005: 2 line(s)
+    • INV-900006: 2 line(s)
+    • INV-900007: 3 line(s)
+    • INV-900008: 4 line(s)
+
+  [loto_confirmation]  2 row(s)
+    • job=325e517b-c6a5-4a35-b0b9-36fe0678eec2  confirmed_at=2026-06-01 09:15:00+00:00
+    • job=0a66fb7a-88ff-4b66-815c-17294b428fd5  confirmed_at=2026-04-17 08:00:00+00:00
+
+  [usage_ledger]  13 row(s)
+    feature=outbound_sms_segments  entries=5  total_qty=18
+      • qty=3.0000  occurred=2026-06-05  key=ul-sms-2026-07-05-001
+      • qty=4.0000  occurred=2026-06-09  key=ul-sms-2026-07-09-001
+      • qty=4.0000  occurred=2026-06-14  key=ul-sms-2026-07-14-001
+      • qty=3.0000  occurred=2026-06-19  key=ul-sms-2026-07-19-001
+      • qty=4.0000  occurred=2026-06-26  key=ul-sms-2026-07-26-001
+    feature=voice_ai_minutes  entries=8  total_qty=42
+      • qty=5.0000  occurred=2026-06-03  key=ul-voice-ai-2026-07-03-001
+      • qty=8.0000  occurred=2026-06-06  key=ul-voice-ai-2026-07-06-001
+      • qty=6.0000  occurred=2026-06-10  key=ul-voice-ai-2026-07-10-001
+      • qty=7.0000  occurred=2026-06-13  key=ul-voice-ai-2026-07-13-001
+      • qty=4.0000  occurred=2026-06-17  key=ul-voice-ai-2026-07-17-001
+      • qty=5.0000  occurred=2026-06-20  key=ul-voice-ai-2026-07-20-001
+      • qty=4.0000  occurred=2026-06-24  key=ul-voice-ai-2026-07-24-001
+      • qty=3.0000  occurred=2026-06-28  key=ul-voice-ai-2026-07-28-001

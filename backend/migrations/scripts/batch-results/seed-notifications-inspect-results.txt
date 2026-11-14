@@ -1,0 +1,7 @@
+=== seed_scenario_notifications: inspect mode ===
+  [in_app_notification]  5 row(s)  (2 unread)  user=dev@pilot.local
+    • 55b56c04-a185-4acc-ae48-ec10be2a9efa  category=sync_conflicts  priority=critical  unread
+    • f5dcba3f-9dd5-4195-96ba-60fe01f56816  category=job_activity  priority=standard  unread
+    • b4708cd8-e347-4a7d-af5e-f892ee6b7193  category=billing  priority=standard  read at 2026-06-28
+    • 8f590eee-d450-4858-a2af-ee9b60cf7f82  category=customer_activity  priority=standard  read at 2026-06-26
+    • 02d3c480-9ebf-4347-8b85-5e41a5b70a6e  category=field_issues  priority=standard  read at 2026-06-24

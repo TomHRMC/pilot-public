@@ -1,0 +1,242 @@
+name: E2E Nightly (Tier 1 + Tier 2 — pytest + Playwright)
+
+# SD-10: Tier 1 E2E test harness — designed to run nightly at 02:00 UTC (schedule paused; run on demand).
+# Covers the 5 critical paths: Auth/RBAC, Quote-to-Cash, Dispatch,
+# Customer SMS, and Dunning Cycle.
+#
+# This workflow uses an isolated pilot_e2e_db (pgvector:pg17 on port 5433)
+# and a mock Redis. No real Stripe, QuickBooks, Telnyx, or Cognito calls are made.
+#
+# Tier 2 (Playwright browser E2E — SD-10 Tier 2) runs after Tier 1 pytest passes.
+# Tier 3 (Maestro mobile) is a separate future batch.
+
+on:
+  # Nightly schedule paused; uncomment both lines to re-enable.
+  # schedule:
+  #   - cron: "0 2 * * *"   # 02:00 UTC nightly
+  workflow_dispatch:        # Manual trigger for on-demand runs
+
+# Every `run:` step uses bash with `-eo pipefail`, so a test failure piped
+# through `tee` still fails the step.
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  e2e:
+    name: E2E Integration Tests (Tier 1 — pytest)
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    services:
+      postgres:
+        image: pgvector/pgvector:pg17
+        env:
+          POSTGRES_DB: pilot_e2e_db
+          POSTGRES_USER: pilot
+          POSTGRES_PASSWORD: pilot_e2e_password
+        ports:
+          - 5433:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+      redis:
+        image: redis:7-alpine
+        ports:
+          - 6380:6379
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: "pip"
+          cache-dependency-path: backend/requirements*.txt
+
+      - name: Install backend dependencies
+        working-directory: backend
+        run: |
+          pip install --upgrade pip
+          pip install -e ".[dev]"
+
+      - name: Wait for PostgreSQL
+        run: |
+          for i in {1..10}; do
+            pg_isready -h localhost -p 5433 -U pilot && break
+            echo "Waiting for postgres... attempt $i"
+            sleep 3
+          done
+
+      - name: Run Alembic migrations
+        working-directory: backend
+        env:
+          DATABASE_URL: postgresql://pilot:pilot_e2e_password@localhost:5433/pilot_e2e_db
+          REDIS_URL: redis://localhost:6380
+          SMS_CARRIER: mock
+          ENVIRONMENT: e2e
+          SECRET_KEY: e2e_secret_key_placeholder
+          COGNITO_USER_POOL_ID: us-east-1_XXXXXXXXX
+          COGNITO_CLIENT_ID: test_client_id
+          COGNITO_REGION: us-east-1
+          STRIPE_SECRET_KEY: sk_test_e2e_placeholder
+          STRIPE_WEBHOOK_SECRET: whsec_test_e2e_placeholder
+          QB_CLIENT_ID: e2e_qb_placeholder
+          QB_CLIENT_SECRET: e2e_qb_placeholder
+          TELNYX_API_KEY: e2e_telnyx_placeholder
+          TELNYX_PHONE_NUMBER: "+15005550006"
+          OLLAMA_API_URL: http://localhost:11434/api
+          WHISPER_API_URL: http://localhost:8080/v1
+        run: alembic upgrade head
+
+      - name: Seed E2E DB (Groups A→B→C→D)
+        working-directory: backend
+        env:
+          DATABASE_URL: postgresql://pilot:pilot_e2e_password@localhost:5433/pilot_e2e_db
+          REDIS_URL: redis://localhost:6380
+          SMS_CARRIER: mock
+          ENVIRONMENT: e2e
+          SECRET_KEY: e2e_secret_key_placeholder
+          COGNITO_USER_POOL_ID: us-east-1_XXXXXXXXX
+          COGNITO_CLIENT_ID: test_client_id
+          COGNITO_REGION: us-east-1
+          STRIPE_SECRET_KEY: sk_test_e2e_placeholder
+          STRIPE_WEBHOOK_SECRET: whsec_test_e2e_placeholder
+          QB_CLIENT_ID: e2e_qb_placeholder
+          QB_CLIENT_SECRET: e2e_qb_placeholder
+          TELNYX_API_KEY: e2e_telnyx_placeholder
+          TELNYX_PHONE_NUMBER: "+15005550006"
+          OLLAMA_API_URL: http://localhost:11434/api
+          WHISPER_API_URL: http://localhost:8080/v1
+        run: python tests/e2e/seed_e2e_db.py
+
+      - name: Run E2E tests (Tier 1 — 5 Critical Paths)
+        working-directory: backend
+        env:
+          DATABASE_URL: postgresql://pilot:pilot_e2e_password@localhost:5433/pilot_e2e_db
+          REDIS_URL: redis://localhost:6380
+          SMS_CARRIER: mock
+          ENVIRONMENT: e2e
+          SECRET_KEY: e2e_secret_key_placeholder
+          COGNITO_USER_POOL_ID: us-east-1_XXXXXXXXX
+          COGNITO_CLIENT_ID: test_client_id
+          COGNITO_REGION: us-east-1
+          STRIPE_SECRET_KEY: sk_test_e2e_placeholder
+          STRIPE_WEBHOOK_SECRET: whsec_test_e2e_placeholder
+          QB_CLIENT_ID: e2e_qb_placeholder
+          QB_CLIENT_SECRET: e2e_qb_placeholder
+          TELNYX_API_KEY: e2e_telnyx_placeholder
+          TELNYX_PHONE_NUMBER: "+15005550006"
+          OLLAMA_API_URL: http://localhost:11434/api
+          WHISPER_API_URL: http://localhost:8080/v1
+          CELERY_BROKER_URL: redis://localhost:6380/1
+          CELERY_RESULT_BACKEND: redis://localhost:6380/2
+        run: |
+          python -m pytest tests/e2e/ --e2e --tb=short -q 2>&1 | tee e2e-results.txt
+          echo "E2E test exit code: $?"
+
+      - name: Upload E2E Tier 1 results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: e2e-tier1-results-${{ github.run_id }}
+          path: backend/e2e-results.txt
+          retention-days: 14
+
+      # ---------------------------------------------------------------------------
+      # Tier 2 — Playwright Web E2E (SD-10 Tier 2)
+      # Runs after Tier 1 pytest passes. Uses the same pilot_e2e_db (already seeded).
+      # ---------------------------------------------------------------------------
+
+      - name: Set up Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install pnpm
+        run: npm install -g pnpm
+
+      - name: Install frontend dependencies
+        working-directory: frontend
+        run: pnpm install --frozen-lockfile
+
+      - name: Install Playwright browsers
+        working-directory: frontend/apps/web
+        run: pnpm dlx playwright install --with-deps chromium
+
+      - name: Build Next.js web app (E2E mode)
+        working-directory: frontend/apps/web
+        env:
+          NEXT_PUBLIC_API_URL: http://localhost:8001
+          NEXT_PUBLIC_USE_MOCK_AUTH: "false"
+          NODE_ENV: production
+        run: pnpm build
+
+      - name: Start FastAPI backend (E2E mode, port 8001)
+        working-directory: backend
+        env:
+          DATABASE_URL: postgresql://pilot:pilot_e2e_password@localhost:5433/pilot_e2e_db
+          REDIS_URL: redis://localhost:6380
+          SMS_CARRIER: mock
+          ENVIRONMENT: e2e
+          SECRET_KEY: e2e_secret_key_placeholder
+          COGNITO_USER_POOL_ID: us-east-1_XXXXXXXXX
+          COGNITO_CLIENT_ID: test_client_id
+          COGNITO_REGION: us-east-1
+          STRIPE_SECRET_KEY: sk_test_e2e_placeholder
+          STRIPE_WEBHOOK_SECRET: whsec_test_e2e_placeholder
+          QB_CLIENT_ID: e2e_qb_placeholder
+          QB_CLIENT_SECRET: e2e_qb_placeholder
+          TELNYX_API_KEY: e2e_telnyx_placeholder
+          TELNYX_PHONE_NUMBER: "+15005550006"
+          OLLAMA_API_URL: http://localhost:11434/api
+          WHISPER_API_URL: http://localhost:8080/v1
+          PORT: "8001"
+        run: uvicorn app.main:app --host 0.0.0.0 --port 8001 &
+
+      - name: Start Next.js web app (port 3000)
+        working-directory: frontend/apps/web
+        env:
+          NEXT_PUBLIC_API_URL: http://localhost:8001
+          NEXT_PUBLIC_USE_MOCK_AUTH: "false"
+          PORT: "3000"
+        run: pnpm start &
+
+      - name: Wait for web app to be ready
+        run: npx wait-on http://localhost:3000 http://localhost:8001/api/v1/health --timeout 60000
+
+      - name: Run Playwright E2E tests (Tier 2 — 5 Critical Paths)
+        working-directory: frontend/apps/web
+        env:
+          PLAYWRIGHT_BASE_URL: http://localhost:3000
+          E2E_TEST_PASSWORD: ${{ secrets.E2E_TEST_PASSWORD }}
+        run: |
+          pnpm dlx playwright test src/__tests__/e2e/ --reporter=list 2>&1 | tee playwright-results.txt
+          echo "Playwright exit code: $?"
+
+      - name: Upload Playwright Tier 2 results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-tier2-results-${{ github.run_id }}
+          path: |
+            frontend/apps/web/playwright-results.txt
+            frontend/apps/web/test-results/
+          retention-days: 14
+
+      - name: Notify on failure
+        if: failure()
+        run: |
+          echo "::error::E2E Nightly tests FAILED. Check artifacts for details."
+          echo "::error::Tier 1 (pytest) — CP-1 Auth/RBAC, CP-2 Quote-to-Cash, CP-3 Dispatch, CP-4 SMS, CP-5 Dunning"
+          echo "::error::Tier 2 (Playwright) — cp1_auth_rbac, cp2_quote_to_cash, cp3_dispatch_field_sync, cp4_customer_sms, cp5_dunning_cycle"

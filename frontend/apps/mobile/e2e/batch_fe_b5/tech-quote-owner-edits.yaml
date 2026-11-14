@@ -1,0 +1,75 @@
+# Tech quote owner edits (DiffView) E2E flow — FE-B5
+# Location: apps/mobile/e2e/batch_fe_b5/tech-quote-owner-edits.yaml
+#
+# Scenario: Tech sees approved-with-edits quote and DiffView renders on Changes tab
+#
+# Flow:
+#   1. Launch app as tech role (MSW mock auth)
+#   2. MSW returns a quote with has_owner_edits=true, status=approved
+#   3. Navigate to that quote's detail screen
+#   4. Assert: "Changes" tab is visible (only shown when has_owner_edits=true)
+#   5. Tap "Changes" tab
+#   6. Assert: DiffView renders (testID="tech-quote-changes-diff-view")
+#   7. Assert: "Show changes" toggle visible (showToggle=true on mobile)
+#   8. Tap toggle — assert diff content expands
+#
+# Run via: maestro test e2e/batch_fe_b5/tech-quote-owner-edits.yaml
+
+appId: com.pilotfortrades.mobile
+---
+- launchApp:
+    clearState: true
+    launchArguments:
+      MOCK_AUTH_ROLE: tech
+      USE_MOCK_AUTH: "true"
+      # Tells MSW to return has_owner_edits=true for quote-uuid-2
+      MOCK_QUOTE_SCENARIO: owner_edits
+
+# Navigate directly to the approved-with-edits quote detail
+- openLink: "pilotfortrades://quotes/quote-uuid-2"
+
+# Wait for detail screen to render
+- waitForAnimationToEnd:
+    timeout: 4000
+
+# Assert Status tab visible (default active)
+- assertVisible:
+    text: "Status"
+
+# Assert Changes tab is visible — only rendered when has_owner_edits=true
+- assertVisible:
+    text: "Changes"
+
+# Tap the Changes tab
+- tapOn:
+    text: "Changes"
+
+# Wait for tab content to render
+- waitForAnimationToEnd:
+    timeout: 2000
+
+# Assert DiffView is rendered on the Changes tab
+# testID from TechQuoteStatusDetail: "tech-quote-changes-diff-view"
+- assertVisible:
+    id: "tech-quote-changes-diff-view"
+
+# Assert the "Show changes" toggle is present
+# showToggle=true is set on the DiffView in TechQuoteStatusDetail
+- assertVisible:
+    text: "Show changes"
+
+# Tap the toggle to expand diff content
+- tapOn:
+    text: "Show changes"
+
+# Wait for animation
+- waitForAnimationToEnd:
+    timeout: 1000
+
+# Assert toggle label has changed to "Hide changes" (now expanded)
+- assertVisible:
+    text: "Hide changes"
+
+# Assert at least one owner change is visible after expansion
+- assertVisible:
+    text: "Owner comment"

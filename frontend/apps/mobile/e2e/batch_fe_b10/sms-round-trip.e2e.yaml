@@ -1,0 +1,63 @@
+# sms-round-trip E2E — Mobile Maestro
+#
+# Full SMS round-trip: inbound message arrives → push fires → tech taps → thread opens → tech replies → confirmed.
+# Design doc G.3
+
+appId: com.pilot.mobile
+---
+- launchApp:
+    clearState: true
+
+# Login as tech
+- tapOn: "Email"
+- inputText: "tech@test.com"
+- tapOn: "Password"
+- inputText: "test-password"
+- tapOn: "Sign In"
+- assertVisible: "Pilot for Trades"
+
+# Verify Customer Messages section visible on Home
+- assertVisible:
+    id: "customer-messages-section"
+
+# Tap "View all" to open inbox
+- tapOn:
+    id: "view-all-inbox"
+- assertVisible: "Customer Messages"
+
+# Open first thread in list (John Smith - thread-001)
+- tapOn:
+    id: "thread-row-thread-001"
+- assertVisible:
+    id: "thread-header"
+- assertVisible:
+    id: "conversation-list"
+- assertVisible:
+    id: "reply-composer"
+
+# Type a reply
+- tapOn:
+    id: "composer-text-input"
+- inputText: "On my way! ETA 10 minutes."
+
+# Verify segment counter appears
+- assertVisible:
+    id: "quota-indicator"
+
+# Tap send
+- tapOn:
+    id: "send-button"
+
+# Preview modal should appear
+- assertVisible:
+    id: "message-preview-modal"
+- tapOn: "Send"
+
+# Message should appear in thread with pending_send status
+- assertVisible:
+    id: "pending-badge-*"
+
+# After server confirms, pending badge clears
+- assertNotVisible:
+    id: "pending-badge-*"
+    timeout: 5000

@@ -1,0 +1,46 @@
+=== seed_test_tenant: inspect mode ===
+    Tenant ID: 00000000-0000-0000-0000-000000000001
+
+  [tenant]  1 row(s)
+    00000000-0000-0000-0000-000000000001  "Pilot Dev Tenant"  is_active=True
+
+  [user]  4 row(s)
+    00000000-0000-0000-0000-000000000005  accountant@pilot.local  role=accountant
+    00000000-0000-0000-0000-000000000004  office@pilot.local  role=office_staff
+    00000000-0000-0000-0000-000000000002  dev@pilot.local  role=owner
+    00000000-0000-0000-0000-000000000003  tech@pilot.local  role=technician
+
+  [user_endpoint]  12 row(s)
+    00000000-0000-0000-0000-000000000002  channel=push  value=ExponentPushToken[test-owner-00000002]  status=verified  consent=opted_in
+    00000000-0000-0000-0000-000000000003  channel=in_app  value=tech@pilot.local  status=verified  consent=opted_in
+    00000000-0000-0000-0000-000000000003  channel=push  value=ExponentPushToken[test-tech-00000003]  status=verified  consent=opted_in
+    00000000-0000-0000-0000-000000000004  channel=in_app  value=office@pilot.local  status=verified  consent=opted_in
+    00000000-0000-0000-0000-000000000002  channel=email  value=dev@pilot.local  status=verified  consent=opted_in
+    00000000-0000-0000-0000-000000000003  channel=email  value=tech@pilot.local  status=verified  consent=opted_in
+    00000000-0000-0000-0000-000000000004  channel=email  value=office@pilot.local  status=verified  consent=opted_in
+    00000000-0000-0000-0000-000000000005  channel=email  value=accountant@pilot.local  status=verified  consent=opted_in
+    00000000-0000-0000-0000-000000000002  channel=in_app  value=dev@pilot.local  status=verified  consent=opted_in
+    00000000-0000-0000-0000-000000000004  channel=push  value=ExponentPushToken[test-office-00000004]  status=verified  consent=opted_in
+    00000000-0000-0000-0000-000000000005  channel=in_app  value=accountant@pilot.local  status=verified  consent=opted_in
+    00000000-0000-0000-0000-000000000005  channel=push  value=ExponentPushToken[test-acct-00000005]  status=verified  consent=opted_in
+
+  [password_policy]  1 row(s)  min_length=8  (lockout_threshold=5)
+  [tenant_email_branding]  1 row(s)  brand_color=#2563EB
+  [tenant_onboarding_checklist]  1 row(s)  dismissed=True
+
+  [subscription]  1 row(s)  plan=founders_plan  is_active=True
+    (quantity_seats=4, billing_anchor=2026-07-01)
+
+  [labor_rate_version]  3 row(s)
+    apprentice  @ 5500¢/hr  ($55.00/hr)  burden=0.1500  → burdened=$63.25/hr
+    journeyman  @ 8500¢/hr  ($85.00/hr)  burden=0.2000  → burdened=$102.00/hr
+    master  @ 12000¢/hr  ($120.00/hr)  burden=0.2500  → burdened=$150.00/hr
+
+  [tenant_markup_version]  1 row(s)  pct=20.0000
+
+  [user_preference]  1 row(s)  user=dev@pilot.local
+  [user_setting_override]  2 row(s)  user=dev@pilot.local  keys=background_sync_enabled,voice_persona_tone
+
+  [discount_version]  2 row(s)
+    'NEW_CUSTOMER'  $25.00 off  valid: [2026-01-01 00:00:00+00:00 → open]
+    'SUMMER_PROMO'  10.000% off  valid: [2024-06-01 00:00:00+00:00 → 2024-08-31 00:00:00+00:00]

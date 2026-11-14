@@ -1,0 +1,925 @@
+{
+  "summary": {
+    "total_foreign_keys_in_db": 447,
+    "properly_indexed_fks": 143,
+    "audit_fks_ignored": 192,
+    "CRITICAL_missing_structural_indexes": 112,
+    "tables_needing_indexes": 65
+  },
+  "tables": {
+    "user": [
+      {
+        "fk_name": "fk_user_platform_role",
+        "columns": [
+          "platform_role_code"
+        ],
+        "references": "platform_role"
+      }
+    ],
+    "user_preference": [
+      {
+        "fk_name": "fk_user_pref_tenant",
+        "columns": [
+          "tenant_id"
+        ],
+        "references": "tenant"
+      }
+    ],
+    "tenant_user": [
+      {
+        "fk_name": "fk_tenant_user_tenant_user_role",
+        "columns": [
+          "role_code"
+        ],
+        "references": "tenant_user_role"
+      },
+      {
+        "fk_name": "fk_tenant_user_tenant_user_status",
+        "columns": [
+          "status_id"
+        ],
+        "references": "tenant_user_status"
+      },
+      {
+        "fk_name": "fk_tenant_user_suspended_by",
+        "columns": [
+          "suspended_by"
+        ],
+        "references": "user"
+      }
+    ],
+    "customer": [
+      {
+        "fk_name": "fk_customer_lifecycle_status",
+        "columns": [
+          "lifecycle_status_id"
+        ],
+        "references": "customer_lifecycle_status"
+      }
+    ],
+    "site": [
+      {
+        "fk_name": "fk_site_customer",
+        "columns": [
+          "customer_id"
+        ],
+        "references": "customer"
+      },
+      {
+        "fk_name": "fk_site_lifecycle_status",
+        "columns": [
+          "lifecycle_status_id"
+        ],
+        "references": "site_lifecycle_status"
+      }
+    ],
+    "supplier": [
+      {
+        "fk_name": "fk_supplier_lifecycle_status",
+        "columns": [
+          "lifecycle_status_id"
+        ],
+        "references": "supplier_lifecycle_status"
+      },
+      {
+        "fk_name": "fk_supplier_tenant",
+        "columns": [
+          "tenant_id"
+        ],
+        "references": "tenant"
+      }
+    ],
+    "app_service": [
+      {
+        "fk_name": "fk_app_service_provider",
+        "columns": [
+          "provider_code"
+        ],
+        "references": "app_service_provider"
+      }
+    ],
+    "contact_type": [
+      {
+        "fk_name": "fk_contact_type_tenant",
+        "columns": [
+          "tenant_id"
+        ],
+        "references": "tenant"
+      }
+    ],
+    "entity_contact": [
+      {
+        "fk_name": "fk_entity_contact_contact_type",
+        "columns": [
+          "contact_type_code"
+        ],
+        "references": "contact_type"
+      }
+    ],
+    "address_type": [
+      {
+        "fk_name": "fk_address_type_tenant",
+        "columns": [
+          "tenant_id"
+        ],
+        "references": "tenant"
+      }
+    ],
+    "entity_address": [
+      {
+        "fk_name": "fk_entity_address_address_type",
+        "columns": [
+          "address_type_code"
+        ],
+        "references": "address_type"
+      }
+    ],
+    "quote": [
+      {
+        "fk_name": "fk_quote_currency",
+        "columns": [
+          "currency"
+        ],
+        "references": "currency"
+      }
+    ],
+    "qco_line_type": [
+      {
+        "fk_name": "fk_qco_line_type_tenant",
+        "columns": [
+          "tenant_id"
+        ],
+        "references": "tenant"
+      }
+    ],
+    "quote_line": [
+      {
+        "fk_name": "fk_quote_line_qco_line_type",
+        "columns": [
+          "qco_line_type_id"
+        ],
+        "references": "qco_line_type"
+      },
+      {
+        "fk_name": "fk_quote_line_supplier",
+        "columns": [
+          "supplier_id"
+        ],
+        "references": "supplier"
+      },
+      {
+        "fk_name": "fk_quote_line_supplier_item",
+        "columns": [
+          "supplier_item_id"
+        ],
+        "references": "supplier_item"
+      },
+      {
+        "fk_name": "fk_quote_line_taxability_code",
+        "columns": [
+          "taxability_code"
+        ],
+        "references": "taxability_code"
+      },
+      {
+        "fk_name": "fk_quote_line_pricebook_item",
+        "columns": [
+          "pricebook_item_id"
+        ],
+        "references": "pricebook_item"
+      }
+    ],
+    "quote_public_link": [
+      {
+        "fk_name": "fk_qbl_customer_contact",
+        "columns": [
+          "contact_id"
+        ],
+        "references": "contact"
+      },
+      {
+        "fk_name": "fk_qbl_quote",
+        "columns": [
+          "quote_id"
+        ],
+        "references": "quote"
+      },
+      {
+        "fk_name": "fk_qbl_quote_link_status",
+        "columns": [
+          "status_id"
+        ],
+        "references": "quote_link_status"
+      }
+    ],
+    "quote_public_link_contact_action": [
+      {
+        "fk_name": "fk_qpl_contact_action_qpl_contact_action_type",
+        "columns": [
+          "qpl_contact_action_type_id"
+        ],
+        "references": "qpl_contact_action_type"
+      }
+    ],
+    "quote_acceptance": [
+      {
+        "fk_name": "fk_quote_acceptance_contact",
+        "columns": [
+          "contact_id"
+        ],
+        "references": "contact"
+      },
+      {
+        "fk_name": "fk_quote_acceptance_accepted_by_user",
+        "columns": [
+          "accepted_by_user_id"
+        ],
+        "references": "user"
+      },
+      {
+        "fk_name": "fk_quote_acceptance_quote_public_link",
+        "columns": [
+          "quote_public_link_id"
+        ],
+        "references": "quote_public_link"
+      }
+    ],
+    "quote_message": [
+      {
+        "fk_name": "fk_quote_msg_quote",
+        "columns": [
+          "quote_id"
+        ],
+        "references": "quote"
+      },
+      {
+        "fk_name": "fk_quote_msg_contact",
+        "columns": [
+          "contact_id"
+        ],
+        "references": "contact"
+      }
+    ],
+    "job_attachment": [
+      {
+        "fk_name": "fk_job_att_tenant",
+        "columns": [
+          "tenant_id"
+        ],
+        "references": "tenant"
+      }
+    ],
+    "tenant_markup_version": [
+      {
+        "fk_name": "fk_tmv_category",
+        "columns": [
+          "job_expense_category_code"
+        ],
+        "references": "job_expense_category"
+      }
+    ],
+    "job_expense_category": [
+      {
+        "fk_name": "fk_jec_tenant",
+        "columns": [
+          "tenant_id"
+        ],
+        "references": "tenant"
+      }
+    ],
+    "job_expense": [
+      {
+        "fk_name": "fk_job_expense_category",
+        "columns": [
+          "job_expense_category_code"
+        ],
+        "references": "job_expense_category"
+      },
+      {
+        "fk_name": "fk_job_expense_invoice_line",
+        "columns": [
+          "invoice_line_id"
+        ],
+        "references": "invoice_line"
+      }
+    ],
+    "job_assignment": [
+      {
+        "fk_name": "fk_job_assign_tenant",
+        "columns": [
+          "tenant_id"
+        ],
+        "references": "tenant"
+      }
+    ],
+    "change_order_line": [
+      {
+        "fk_name": "fk_change_order_line_qco_line_type",
+        "columns": [
+          "qco_line_type_id"
+        ],
+        "references": "qco_line_type"
+      },
+      {
+        "fk_name": "fk_change_order_line_supplier",
+        "columns": [
+          "supplier_id"
+        ],
+        "references": "supplier"
+      },
+      {
+        "fk_name": "fk_change_order_line_supplier_item",
+        "columns": [
+          "supplier_item_id"
+        ],
+        "references": "supplier_item"
+      },
+      {
+        "fk_name": "fk_change_order_line_taxability_code",
+        "columns": [
+          "taxability_code"
+        ],
+        "references": "taxability_code"
+      },
+      {
+        "fk_name": "fk_change_order_line_pricebook_item",
+        "columns": [
+          "pricebook_item_id"
+        ],
+        "references": "pricebook_item"
+      }
+    ],
+    "invoice": [
+      {
+        "fk_name": "fk_invoice_currency",
+        "columns": [
+          "currency"
+        ],
+        "references": "currency"
+      }
+    ],
+    "invoice_line": [
+      {
+        "fk_name": "fk_invoice_line_qco_line_type",
+        "columns": [
+          "qco_line_type_id"
+        ],
+        "references": "qco_line_type"
+      },
+      {
+        "fk_name": "fk_invoice_line_taxability_code",
+        "columns": [
+          "taxability_code"
+        ],
+        "references": "taxability_code"
+      },
+      {
+        "fk_name": "fk_invoice_line_pricebook_item",
+        "columns": [
+          "pricebook_item_id"
+        ],
+        "references": "pricebook_item"
+      }
+    ],
+    "payment": [
+      {
+        "fk_name": "fk_payment_payment_status",
+        "columns": [
+          "status_id"
+        ],
+        "references": "payment_status"
+      },
+      {
+        "fk_name": "fk_payment_payment_method",
+        "columns": [
+          "payment_method_id"
+        ],
+        "references": "payment_method"
+      },
+      {
+        "fk_name": "fk_payment_connector_config",
+        "columns": [
+          "connector_config_id"
+        ],
+        "references": "connector_config"
+      }
+    ],
+    "payment_method": [
+      {
+        "fk_name": "fk_payment_method_payment_type",
+        "columns": [
+          "payment_type_id"
+        ],
+        "references": "payment_type"
+      },
+      {
+        "fk_name": "fk_payment_method_billing_address",
+        "columns": [
+          "billing_address_id"
+        ],
+        "references": "address"
+      }
+    ],
+    "psp_customer": [
+      {
+        "fk_name": "fk_psp_customer_tenant",
+        "columns": [
+          "tenant_id"
+        ],
+        "references": "tenant"
+      }
+    ],
+    "supplier_item": [
+      {
+        "fk_name": "fk_supplier_item_supplier_item_category",
+        "columns": [
+          "category_id"
+        ],
+        "references": "supplier_item_category"
+      },
+      {
+        "fk_name": "fk_supplier_item_supplier_item_uom",
+        "columns": [
+          "uom_id"
+        ],
+        "references": "supplier_item_uom"
+      },
+      {
+        "fk_name": "fk_supplier_item_taxability_code",
+        "columns": [
+          "taxability_code"
+        ],
+        "references": "taxability_code"
+      }
+    ],
+    "supplier_item_price": [
+      {
+        "fk_name": "fk_sip_tenant",
+        "columns": [
+          "tenant_id"
+        ],
+        "references": "tenant"
+      },
+      {
+        "fk_name": "fk_sip_currency",
+        "columns": [
+          "currency"
+        ],
+        "references": "currency"
+      }
+    ],
+    "pricing_cache": [
+      {
+        "fk_name": "fk_pricing_cache_currency",
+        "columns": [
+          "currency"
+        ],
+        "references": "currency"
+      }
+    ],
+    "pricebook_item": [
+      {
+        "fk_name": "fk_pricebook_item_uom",
+        "columns": [
+          "uom_id"
+        ],
+        "references": "supplier_item_uom"
+      },
+      {
+        "fk_name": "fk_pricebook_item_tax_code",
+        "columns": [
+          "taxability_code"
+        ],
+        "references": "taxability_code"
+      }
+    ],
+    "discount_version": [
+      {
+        "fk_name": "fk_discount_version_tenant",
+        "columns": [
+          "tenant_id"
+        ],
+        "references": "tenant"
+      }
+    ],
+    "product_plan_product_feature_version": [
+      {
+        "fk_name": "fk_pppfv_product_feature",
+        "columns": [
+          "product_feature_code"
+        ],
+        "references": "product_feature"
+      }
+    ],
+    "tenant_product_feature_override": [
+      {
+        "fk_name": "fk_tpfo_product_feature",
+        "columns": [
+          "product_feature_code"
+        ],
+        "references": "product_feature"
+      }
+    ],
+    "subscription": [
+      {
+        "fk_name": "fk_subscription_product_plan",
+        "columns": [
+          "product_plan_code"
+        ],
+        "references": "product_plan"
+      },
+      {
+        "fk_name": "fk_subscription_subscription_status",
+        "columns": [
+          "status_id"
+        ],
+        "references": "subscription_status"
+      }
+    ],
+    "subscription_usage": [
+      {
+        "fk_name": "fk_subscription_usage_product_feature",
+        "columns": [
+          "product_feature_code"
+        ],
+        "references": "product_feature"
+      }
+    ],
+    "usage_ledger": [
+      {
+        "fk_name": "fk_usage_ledger_product_feature_code",
+        "columns": [
+          "product_feature_code"
+        ],
+        "references": "product_feature"
+      }
+    ],
+    "notification_type": [
+      {
+        "fk_name": "fk_notification_type_tenant",
+        "columns": [
+          "tenant_id"
+        ],
+        "references": "tenant"
+      }
+    ],
+    "tenant_user_notification_pref": [
+      {
+        "fk_name": "fk_tunp_user",
+        "columns": [
+          "user_id"
+        ],
+        "references": "user"
+      }
+    ],
+    "notification_template": [
+      {
+        "fk_name": "fk_notification_template_tenant",
+        "columns": [
+          "tenant_id"
+        ],
+        "references": "tenant"
+      },
+      {
+        "fk_name": "fk_notification_template_notification_type",
+        "columns": [
+          "notification_type_code"
+        ],
+        "references": "notification_type"
+      }
+    ],
+    "notification_event": [
+      {
+        "fk_name": "fk_notification_event_tenant",
+        "columns": [
+          "tenant_id"
+        ],
+        "references": "tenant"
+      },
+      {
+        "fk_name": "fk_notification_event_notification_type_code",
+        "columns": [
+          "notification_type_code"
+        ],
+        "references": "notification_type"
+      },
+      {
+        "fk_name": "fk_notification_event_entity_type_code",
+        "columns": [
+          "entity_type_code"
+        ],
+        "references": "entity_type"
+      }
+    ],
+    "notification_outbox": [
+      {
+        "fk_name": "fk_notification_outbox_notification_event",
+        "columns": [
+          "notification_event_id"
+        ],
+        "references": "notification_event"
+      },
+      {
+        "fk_name": "fk_notification_outbox_contact_endpoint",
+        "columns": [
+          "contact_endpoint_id"
+        ],
+        "references": "contact_endpoint"
+      },
+      {
+        "fk_name": "fk_notification_outbox_user_endpoint",
+        "columns": [
+          "user_endpoint_id"
+        ],
+        "references": "user_endpoint"
+      },
+      {
+        "fk_name": "fk_notification_outbox_contact",
+        "columns": [
+          "recipient_contact_id"
+        ],
+        "references": "contact"
+      },
+      {
+        "fk_name": "fk_notification_outbox_user",
+        "columns": [
+          "recipient_user_id"
+        ],
+        "references": "user"
+      }
+    ],
+    "notification_delivery_attempt": [
+      {
+        "fk_name": "fk_notification_delivery_attempt_tenant",
+        "columns": [
+          "tenant_id"
+        ],
+        "references": "tenant"
+      }
+    ],
+    "psp_transaction_log": [
+      {
+        "fk_name": "fk_psp_tx_log_app_service",
+        "columns": [
+          "app_service_id"
+        ],
+        "references": "app_service"
+      }
+    ],
+    "auth_refresh_token": [
+      {
+        "fk_name": "fk_auth_refresh_token_tenant",
+        "columns": [
+          "tenant_id"
+        ],
+        "references": "tenant"
+      },
+      {
+        "fk_name": "fk_auth_refresh_token_user",
+        "columns": [
+          "user_id"
+        ],
+        "references": "user"
+      }
+    ],
+    "auth_password_reset": [
+      {
+        "fk_name": "fk_auth_password_reset_user",
+        "columns": [
+          "user_id"
+        ],
+        "references": "user"
+      },
+      {
+        "fk_name": "fk_auth_password_reset_contact",
+        "columns": [
+          "contact_id"
+        ],
+        "references": "contact"
+      }
+    ],
+    "auth_email_verification": [
+      {
+        "fk_name": "fk_auth_email_verification_user",
+        "columns": [
+          "user_id"
+        ],
+        "references": "user"
+      },
+      {
+        "fk_name": "fk_auth_email_verification_contact",
+        "columns": [
+          "contact_id"
+        ],
+        "references": "contact"
+      }
+    ],
+    "auth_mfa_otp": [
+      {
+        "fk_name": "fk_auth_mfa_otp_user",
+        "columns": [
+          "user_id"
+        ],
+        "references": "user"
+      },
+      {
+        "fk_name": "fk_auth_mfa_otp_contact",
+        "columns": [
+          "contact_id"
+        ],
+        "references": "contact"
+      },
+      {
+        "fk_name": "fk_auth_mfa_otp_user_endpoint",
+        "columns": [
+          "user_endpoint_id"
+        ],
+        "references": "user_endpoint"
+      }
+    ],
+    "auth_password_history": [
+      {
+        "fk_name": "fk_auth_password_history_user",
+        "columns": [
+          "user_id"
+        ],
+        "references": "user"
+      },
+      {
+        "fk_name": "fk_auth_password_history_contact",
+        "columns": [
+          "contact_id"
+        ],
+        "references": "contact"
+      }
+    ],
+    "auth_api_token": [
+      {
+        "fk_name": "fk_auth_api_token_tenant",
+        "columns": [
+          "tenant_id"
+        ],
+        "references": "tenant"
+      },
+      {
+        "fk_name": "fk_auth_api_token_user",
+        "columns": [
+          "user_id"
+        ],
+        "references": "user"
+      }
+    ],
+    "auth_jwk": [
+      {
+        "fk_name": "fk_auth_jwk_tenant",
+        "columns": [
+          "tenant_id"
+        ],
+        "references": "tenant"
+      },
+      {
+        "fk_name": "fk_auth_jwk_status",
+        "columns": [
+          "jwk_status_id"
+        ],
+        "references": "jwk_status"
+      }
+    ],
+    "tenant_user_invite": [
+      {
+        "fk_name": "fk_tenant_user_invite_invited_by",
+        "columns": [
+          "invited_by"
+        ],
+        "references": "user"
+      }
+    ],
+    "contact_portal_invite": [
+      {
+        "fk_name": "fk_contact_portal_invite_user",
+        "columns": [
+          "invited_by"
+        ],
+        "references": "user"
+      }
+    ],
+    "password_policy": [
+      {
+        "fk_name": "fk_password_policy_tenant",
+        "columns": [
+          "tenant_id"
+        ],
+        "references": "tenant"
+      }
+    ],
+    "idempotency_key": [
+      {
+        "fk_name": "fk_idempotency_key_tenant",
+        "columns": [
+          "tenant_id"
+        ],
+        "references": "tenant"
+      },
+      {
+        "fk_name": "fk_idempotency_key_user",
+        "columns": [
+          "user_id"
+        ],
+        "references": "user"
+      }
+    ],
+    "webhook_event": [
+      {
+        "fk_name": "fk_webhook_event_event_type",
+        "columns": [
+          "event_type_code"
+        ],
+        "references": "webhook_event_type"
+      }
+    ],
+    "webhook_delivery_attempt": [
+      {
+        "fk_name": "fk_wda_webhook_endpoint",
+        "columns": [
+          "webhook_endpoint_id"
+        ],
+        "references": "webhook_endpoint"
+      }
+    ],
+    "integration_credential": [
+      {
+        "fk_name": "fk_int_cred_initiated_by",
+        "columns": [
+          "initiated_by_user_id"
+        ],
+        "references": "user"
+      }
+    ],
+    "integration_sync_mapping": [
+      {
+        "fk_name": "fk_ism_tenant",
+        "columns": [
+          "tenant_id"
+        ],
+        "references": "tenant"
+      }
+    ],
+    "integration_sync_conflict": [
+      {
+        "fk_name": "fk_isc_app_service",
+        "columns": [
+          "app_service_id"
+        ],
+        "references": "app_service"
+      },
+      {
+        "fk_name": "fk_isc_entity_type",
+        "columns": [
+          "entity_type_code"
+        ],
+        "references": "entity_type"
+      },
+      {
+        "fk_name": "fk_isc_resolved_by",
+        "columns": [
+          "resolved_by"
+        ],
+        "references": "user"
+      }
+    ],
+    "integration_sync_log": [
+      {
+        "fk_name": "fk_isl_app_service",
+        "columns": [
+          "app_service_id"
+        ],
+        "references": "app_service"
+      }
+    ],
+    "conversation_session": [
+      {
+        "fk_name": "fk_conv_session_user",
+        "columns": [
+          "user_id"
+        ],
+        "references": "user"
+      }
+    ],
+    "voice_command_log": [
+      {
+        "fk_name": "fk_voice_log_user",
+        "columns": [
+          "user_id"
+        ],
+        "references": "user"
+      },
+      {
+        "fk_name": "fk_voice_log_message",
+        "columns": [
+          "message_id"
+        ],
+        "references": "conversation_message"
+      }
+    ]
+  }
+}

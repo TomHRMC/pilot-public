@@ -1,0 +1,9 @@
+{
+  "template_id": "mfa_reset_by_owner",
+  "display_name": "MFA Reset by Account Owner",
+  "category": "internal",
+  "subject_template": "Your MFA has been reset",
+  "body_html_template": "<p>Your MFA was reset by your account owner.</p>",
+  "body_plain_template": "Your MFA was reset by your account owner.",
+  "variables": ["user_name", "company_name"]
+}

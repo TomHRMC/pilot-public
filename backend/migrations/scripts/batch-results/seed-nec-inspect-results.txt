@@ -1,0 +1,5 @@
+=== seed_scenario_nec: inspect mode ===
+  [nec_calculation_log]  3 row(s)
+    • 54062b3f-f4ac-4190-9ebe-96f7f65f5554  calc_type=voltage_drop  offline=False  created=2026-07-23 13:27:11.269259+00:00
+    • 0239d906-9090-496f-9bae-e69abd22d2dc  calc_type=voltage_drop  offline=True  created=2026-07-23 13:27:11.269259+00:00
+    • 00bb9748-fdad-43e6-9a1f-5d15cea34051  calc_type=conduit_fill  offline=False  created=2026-07-23 13:27:11.269259+00:00

@@ -1,0 +1,9 @@
+{
+  "template_id": "team_invite",
+  "display_name": "Team Invite",
+  "category": "internal",
+  "subject_template": "You've been invited to join {{tenant_name}} on Pilot for Trades",
+  "body_html_template": "<div style=\"font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 24px;\"><h2 style=\"color: #5B3FF0;\">You're Invited to Join {{tenant_name}}</h2><p>You've been invited to join <strong>{{tenant_name}}</strong> on Pilot for Trades as a <strong>{{role_name}}</strong>.</p><p>Click the button below to accept your invitation and create your account:</p><p style=\"text-align: center; margin: 32px 0;\"><a href=\"{{invite_url}}\" style=\"background-color: #5B3FF0; color: #ffffff; padding: 12px 32px; text-decoration: none; border-radius: 6px; font-weight: bold;\">Accept Invitation</a></p><p style=\"color: #666; font-size: 14px;\">This invitation expires on {{expires_date}}.</p><p style=\"color: #999; font-size: 12px;\">If the button doesn't work, copy and paste this link: {{invite_url}}</p></div>",
+  "body_plain_template": "You've been invited to join {{tenant_name}} on Pilot for Trades as a {{role_name}}.\n\nClick the link below to accept your invitation and create your account:\n{{invite_url}}\n\nThis invitation expires on {{expires_date}}.",
+  "variables": ["invitee_email", "tenant_name", "role_name", "invite_url", "expires_date"]
+}

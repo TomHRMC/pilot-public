@@ -1,0 +1,34 @@
+=== seed_scenario_notifications: inspect mode ===
+  [in_app_notification]  5 row(s)  (2 unread)  user=dev@pilot.local
+    • 55b56c04-a185-4acc-ae48-ec10be2a9efa  category=sync_conflicts  priority=critical  unread
+    • f5dcba3f-9dd5-4195-96ba-60fe01f56816  category=job_activity  priority=standard  unread
+    • b4708cd8-e347-4a7d-af5e-f892ee6b7193  category=billing  priority=standard  read at 2026-06-28
+    • 8f590eee-d450-4858-a2af-ee9b60cf7f82  category=customer_activity  priority=standard  read at 2026-06-26
+    • 02d3c480-9ebf-4347-8b85-5e41a5b70a6e  category=field_issues  priority=standard  read at 2026-06-24
+
+  [notification_event]  3 row(s)
+    • 68cc831a-1adb-4333-b928-dcf4e2a47156  type=job_assigned  entity=job/JOB-SEED-A  occurred=2026-06-29
+    • f5292e34-8cbe-48c1-9ccd-6f5e92b55e93  type=dunning_reminder  entity=invoice/INV-900004  occurred=2026-06-28
+    • a85787e0-24b2-4313-9031-ad8d76fb8fde  type=quote_accepted  entity=quote/QUO-900005  occurred=2026-06-26
+
+  [notification_outbox]  9 row(s)
+    • a2dd078d-51c1-4f3c-ae52-81f0194de35e  channel=email  status=sent  attempts=1  category=quote_approvals
+    • 6385edc0-7147-4a85-b329-7b9385af3255  channel=in_app  status=sent  attempts=1  category=quote_approvals
+    • 8a70b045-62ac-4916-815a-c3930ebfcb1b  channel=push  status=sent  attempts=1  category=quote_approvals
+    • 52dbf877-f36b-475d-aed0-357e32f70524  channel=email  status=sent  attempts=1  category=billing
+    • c8ab5f8b-cc16-48fe-ab93-91a5f4c9d043  channel=in_app  status=sent  attempts=1  category=billing
+    • bbcb3f38-8e64-4de0-a427-7ab76184c94f  channel=push  status=sent  attempts=1  category=billing
+    • 977370b9-ee0f-457d-ab33-f5bb958473a3  channel=email  status=sent  attempts=1  category=job_activity
+    • 59a8ef4a-37d6-4c9e-a938-66ffe9c25faf  channel=in_app  status=sent  attempts=1  category=job_activity
+    • 5e57bdf8-7237-484a-8bc5-1ab1f4cf8d88  channel=push  status=sent  attempts=1  category=job_activity
+
+  [notification_delivery_attempt]  9 row(s)
+    • 11812  attempt_no=1  status=delivered  provider=expo  duration=250ms
+    • 11810  attempt_no=1  status=delivered  provider=sendgrid  duration=250ms
+    • 11811  attempt_no=1  status=delivered  provider=internal  duration=250ms
+    • 11808  attempt_no=1  status=delivered  provider=internal  duration=250ms
+    • 11807  attempt_no=1  status=delivered  provider=sendgrid  duration=250ms
+    • 11809  attempt_no=1  status=delivered  provider=expo  duration=250ms
+    • 11804  attempt_no=1  status=delivered  provider=sendgrid  duration=250ms
+    • 11806  attempt_no=1  status=delivered  provider=expo  duration=250ms
+    • 11805  attempt_no=1  status=delivered  provider=internal  duration=250ms

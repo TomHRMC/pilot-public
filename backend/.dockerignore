@@ -1,0 +1,14 @@
+.env
+.env.*
+!.env.example
+.venv/
+.pytest_cache/
+.coverage
+.DS_Store
+celerybeat-schedule*
+dump.rdb
+htmlcov/
+.mypy_cache/
+tests/
+prompts/
+admin_tools/

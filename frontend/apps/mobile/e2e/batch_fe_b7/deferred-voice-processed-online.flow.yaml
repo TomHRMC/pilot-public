@@ -1,0 +1,49 @@
+appId: com.pilotfortrades.mobile
+name: FE-B7 Deferred Voice Upload Processed on Reconnect
+tags:
+  - batch_fe_b7
+  - voice
+  - offline_sync
+  - e2e
+
+---
+
+# Pre-conditions: User is logged in, has a job open
+
+# Step 1: Go offline
+- setAirplaneMode: true
+
+# Step 2: Navigate to voice session
+- tapOn:
+    text: "Voice"
+- assertVisible:
+    id: mic-button
+
+# Step 3: Record a voice command while offline
+- tapOn:
+    id: mic-button
+- wait: 2000
+- tapOn:
+    id: mic-button
+
+# Step 4: Verify offline voice recording was queued
+# (The app should show that voice was captured offline)
+- assertVisible:
+    text: "Voice captured offline"
+    timeout: 3000
+
+# Step 5: Reconnect to internet
+- setAirplaneMode: false
+
+# Step 6: Wait for automatic voice upload to trigger
+- wait: 5000
+
+# Step 7: Verify "Processing your voice command..." banner appears
+- assertVisible:
+    text: "Processing"
+    timeout: 10000
+
+# Step 8: Verify voice intent eventually completes
+- assertVisible:
+    id: voice-confirm-turn
+    timeout: 15000

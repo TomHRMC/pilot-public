@@ -1,0 +1,42 @@
+# Voice session resume E2E flow — FE-B3
+# Location: apps/mobile/e2e/batch_fe_b3/voice-session-resume.flow.yaml
+#
+# Tests: launch → navigate to existing session → verify messages load
+#        → verify context chip shows customer name → start new voice turn
+
+appId: com.pilotfortrades.mobile
+---
+- launchApp:
+    clearState: false
+
+# Navigate to Home and open sessions list
+- tapOn:
+    text: "Home"
+- tapOn:
+    id: "view-sessions-btn"
+
+# Tap the first existing session
+- assertVisible:
+    id: "sessions-list"
+- tapOn:
+    id: "session-item-s-001"
+
+# Verify messages loaded
+- assertVisible:
+    id: "voice-message-list"
+
+# Verify session drawer trigger is accessible
+- assertVisible:
+    id: "session-drawer-trigger"
+
+# Verify voice trigger button is ready
+- assertVisible:
+    id: "voice-trigger-btn"
+
+# Open session drawer to verify session history
+- tapOn:
+    id: "session-drawer-trigger"
+- assertVisible:
+    id: "session-drawer"
+- tapOn:
+    id: "session-drawer-close"

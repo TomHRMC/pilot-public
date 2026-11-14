@@ -1,0 +1,9 @@
+{
+  "template_id": "welcome",
+  "display_name": "Welcome",
+  "category": "internal",
+  "subject_template": "Welcome to Pilot for Trades",
+  "body_html_template": "<p>Welcome to Pilot!</p>",
+  "body_plain_template": "Welcome to Pilot!",
+  "variables": ["user_name", "company_name"]
+}

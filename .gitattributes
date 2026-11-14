@@ -1,0 +1,5 @@
+# Generated files: keep them out of GitHub language statistics
+frontend/packages/shared-types/src/api-schema.d.ts linguist-generated=true
+backend/openapi.json linguist-generated=true
+backend/scripts/*.sql linguist-generated=true
+dev-docs/db-design/*.json linguist-generated=true

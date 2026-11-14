@@ -1,0 +1,261 @@
+{
+  "supplier": {
+    "name": "Wesco Distribution",
+    "website": "https://wesco.com",
+    "api_auth_type": "api_key",
+    "api_base_url": "https://api.wesco.com/v1",
+    "lifecycle_status_code": "active"
+  },
+  "items": [
+    {
+      "sku": "WES-12-2NM-250",
+      "name": "12/2 NM-B Wire 250ft Roll",
+      "description": "Southwire 12/2 NM-B with ground, 250ft coil — standard residential branch circuit wiring",
+      "uom_code": "roll",
+      "category_code": "wire_cable",
+      "taxability_code": "taxable",
+      "is_active": true,
+      "current_price_dollars": 89.99
+    },
+    {
+      "sku": "WES-14-2NM-250",
+      "name": "14/2 NM-B Wire 250ft Roll",
+      "description": "Southwire 14/2 NM-B with ground, 250ft coil — 15A branch circuits",
+      "uom_code": "roll",
+      "category_code": "wire_cable",
+      "taxability_code": "taxable",
+      "is_active": true,
+      "current_price_dollars": 65.99
+    },
+    {
+      "sku": "WES-12AWG-THHN-BLK",
+      "name": "12 AWG THHN Wire, Black (by foot)",
+      "description": "Southwire 12 AWG solid copper THHN/THWN-2, black insulation — sold by foot",
+      "uom_code": "foot",
+      "category_code": "wire_cable",
+      "taxability_code": "taxable",
+      "is_active": true,
+      "current_price_dollars": 0.89
+    },
+    {
+      "sku": "WES-10AWG-THHN-BLK",
+      "name": "10 AWG THHN Wire, Black (by foot)",
+      "description": "Southwire 10 AWG stranded copper THHN/THWN-2, black insulation — sold by foot",
+      "uom_code": "foot",
+      "category_code": "wire_cable",
+      "taxability_code": "taxable",
+      "is_active": true,
+      "current_price_dollars": 1.45
+    },
+    {
+      "sku": "WES-6AWG-THHN-BLK",
+      "name": "6 AWG THHN Wire, Black (by foot)",
+      "description": "Southwire 6 AWG stranded copper THHN/THWN-2, black insulation — sold by foot",
+      "uom_code": "foot",
+      "category_code": "wire_cable",
+      "taxability_code": "taxable",
+      "is_active": true,
+      "current_price_dollars": 3.25
+    },
+    {
+      "sku": "WES-EMT-0.5IN",
+      "name": "1/2\" EMT Conduit 10ft",
+      "description": "Allied 1/2\" steel EMT conduit, 10ft stick — for residential and light commercial wiring",
+      "uom_code": "foot",
+      "category_code": "conduit_raceway",
+      "taxability_code": "taxable",
+      "is_active": true,
+      "current_price_dollars": 1.75
+    },
+    {
+      "sku": "WES-EMT-0.75IN",
+      "name": "3/4\" EMT Conduit 10ft",
+      "description": "Allied 3/4\" steel EMT conduit, 10ft stick",
+      "uom_code": "foot",
+      "category_code": "conduit_raceway",
+      "taxability_code": "taxable",
+      "is_active": true,
+      "current_price_dollars": 2.45
+    },
+    {
+      "sku": "WES-EMT-1IN",
+      "name": "1\" EMT Conduit 10ft",
+      "description": "Allied 1\" steel EMT conduit, 10ft stick — commercial feeder runs",
+      "uom_code": "foot",
+      "category_code": "conduit_raceway",
+      "taxability_code": "taxable",
+      "is_active": true,
+      "current_price_dollars": 3.85
+    },
+    {
+      "sku": "WES-PVC-SCH40-0.75IN",
+      "name": "3/4\" PVC Conduit Sch40 10ft",
+      "description": "Cantex 3/4\" Schedule 40 gray PVC conduit, 10ft — for underground and wet locations",
+      "uom_code": "foot",
+      "category_code": "conduit_raceway",
+      "taxability_code": "taxable",
+      "is_active": true,
+      "current_price_dollars": 1.65
+    },
+    {
+      "sku": "WES-QO115",
+      "name": "Square D QO115 15A Single Pole Breaker",
+      "description": "Square D QO series 15A 1-pole 120V plug-on circuit breaker",
+      "uom_code": "each",
+      "category_code": "dist_equip",
+      "taxability_code": "taxable",
+      "is_active": true,
+      "current_price_dollars": 12.50
+    },
+    {
+      "sku": "WES-QO120",
+      "name": "Square D QO120 20A Single Pole Breaker",
+      "description": "Square D QO series 20A 1-pole 120V plug-on circuit breaker",
+      "uom_code": "each",
+      "category_code": "dist_equip",
+      "taxability_code": "taxable",
+      "is_active": true,
+      "current_price_dollars": 13.75
+    },
+    {
+      "sku": "WES-QO230",
+      "name": "Square D QO230 30A Double Pole Breaker",
+      "description": "Square D QO series 30A 2-pole 240V plug-on circuit breaker — HVAC/dryer circuits",
+      "uom_code": "each",
+      "category_code": "dist_equip",
+      "taxability_code": "taxable",
+      "is_active": true,
+      "current_price_dollars": 24.99
+    },
+    {
+      "sku": "WES-QO240",
+      "name": "Square D QO240 40A Double Pole Breaker",
+      "description": "Square D QO series 40A 2-pole 240V plug-on circuit breaker — range/EV charger circuits",
+      "uom_code": "each",
+      "category_code": "dist_equip",
+      "taxability_code": "taxable",
+      "is_active": true,
+      "current_price_dollars": 32.50
+    },
+    {
+      "sku": "WES-QO140L200PG",
+      "name": "Square D 200A 40-Space Load Center",
+      "description": "Square D QO 200A 40-circuit 40-space indoor main breaker load center with cover",
+      "uom_code": "each",
+      "category_code": "dist_equip",
+      "taxability_code": "taxable",
+      "is_active": true,
+      "current_price_dollars": 189.99
+    },
+    {
+      "sku": "WES-OUTLET-DUPLEX",
+      "name": "Standard Duplex Outlet 15A",
+      "description": "Leviton 15A 125V grounding duplex outlet, white — NEMA 5-15R residential grade",
+      "uom_code": "each",
+      "category_code": "wiring_devices",
+      "taxability_code": "taxable",
+      "is_active": true,
+      "current_price_dollars": 2.25
+    },
+    {
+      "sku": "WES-GFCI-15A-WHT",
+      "name": "GFCI Outlet 15A Tamper-Resistant, White",
+      "description": "Leviton 15A 125V tamper-resistant GFCI outlet with LED indicator, white — NEC 2020 compliant",
+      "uom_code": "each",
+      "category_code": "wiring_devices",
+      "taxability_code": "taxable",
+      "is_active": true,
+      "current_price_dollars": 14.99
+    },
+    {
+      "sku": "WES-AFCI-COMB-20A",
+      "name": "AFCI/GFCI Combination Outlet 20A",
+      "description": "Leviton 20A combination AFCI+GFCI receptacle — required by NEC 2020 in bedrooms and living areas",
+      "uom_code": "each",
+      "category_code": "wiring_devices",
+      "taxability_code": "taxable",
+      "is_active": true,
+      "current_price_dollars": 44.99
+    },
+    {
+      "sku": "WES-SW-SINGLE-15A",
+      "name": "Single Pole Light Switch 15A",
+      "description": "Leviton 15A 120/277V single pole toggle switch, white — standard residential/commercial",
+      "uom_code": "each",
+      "category_code": "wiring_devices",
+      "taxability_code": "taxable",
+      "is_active": true,
+      "current_price_dollars": 3.25
+    },
+    {
+      "sku": "WES-COUPLING-EMT-0.5IN",
+      "name": "1/2\" EMT Set Screw Coupling",
+      "description": "Thomas & Betts 1/2\" steel EMT set screw coupling, concrete tight",
+      "uom_code": "each",
+      "category_code": "fittings",
+      "taxability_code": "taxable",
+      "is_active": true,
+      "current_price_dollars": 0.85
+    },
+    {
+      "sku": "WES-COUPLING-EMT-0.75IN",
+      "name": "3/4\" EMT Set Screw Coupling",
+      "description": "Thomas & Betts 3/4\" steel EMT set screw coupling",
+      "uom_code": "each",
+      "category_code": "fittings",
+      "taxability_code": "taxable",
+      "is_active": true,
+      "current_price_dollars": 1.15
+    },
+    {
+      "sku": "WES-CONN-EMT-0.5IN",
+      "name": "1/2\" EMT Set Screw Connector",
+      "description": "Thomas & Betts 1/2\" steel EMT set screw connector for panel/box entry",
+      "uom_code": "each",
+      "category_code": "fittings",
+      "taxability_code": "taxable",
+      "is_active": true,
+      "current_price_dollars": 0.65
+    },
+    {
+      "sku": "WES-CONN-EMT-0.75IN",
+      "name": "3/4\" EMT Set Screw Connector",
+      "description": "Thomas & Betts 3/4\" steel EMT set screw connector",
+      "uom_code": "each",
+      "category_code": "fittings",
+      "taxability_code": "taxable",
+      "is_active": true,
+      "current_price_dollars": 0.95
+    },
+    {
+      "sku": "WES-BOX-4SQ-1.5IN",
+      "name": "4\" Square Steel Box 1-1/2\" Deep",
+      "description": "Raco 4\" square steel outlet box, 1-1/2\" deep, 30.3 cu in — general purpose junction",
+      "uom_code": "each",
+      "category_code": "enclosures",
+      "taxability_code": "taxable",
+      "is_active": true,
+      "current_price_dollars": 4.75
+    },
+    {
+      "sku": "WES-BOX-GANG-1",
+      "name": "Single Gang New Work Plastic Box",
+      "description": "Carlon 18 cu in single gang nail-on plastic box — 14/2 and 12/2 NM-B rated",
+      "uom_code": "each",
+      "category_code": "enclosures",
+      "taxability_code": "taxable",
+      "is_active": true,
+      "current_price_dollars": 1.45
+    },
+    {
+      "sku": "WES-WIRENUTS-RED-100",
+      "name": "Wire Nuts, Red (Box of 100)",
+      "description": "Ideal 30 series red wire connectors — 2x #14 to 3x #10 AWG, 100 per box",
+      "uom_code": "box",
+      "category_code": "fasteners",
+      "taxability_code": "taxable",
+      "is_active": true,
+      "current_price_dollars": 12.99
+    }
+  ]
+}

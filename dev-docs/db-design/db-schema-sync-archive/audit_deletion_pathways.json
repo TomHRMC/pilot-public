@@ -1,0 +1,3853 @@
+{
+  "summary": {
+    "total_tables": 118,
+    "tables_with_soft_delete": 60,
+    "tables_without_soft_delete": 58,
+    "total_fks_analyzed": 447,
+    "fk_rules": {
+      "CASCADE": 81,
+      "RESTRICT": 149,
+      "SET_NULL": 199,
+      "NO_ACTION_OR_DEFAULT": 18
+    },
+    "CRITICAL_risky_financial_cascades": 16
+  },
+  "critical_risks": [
+    {
+      "table": "quote_status",
+      "fk_name": "fk_quote_status_tenant",
+      "columns": [
+        "tenant_id"
+      ],
+      "references": "tenant"
+    },
+    {
+      "table": "quote",
+      "fk_name": "fk_quote_tenant",
+      "columns": [
+        "tenant_id"
+      ],
+      "references": "tenant"
+    },
+    {
+      "table": "quote_version",
+      "fk_name": "fk_quote_version_quote",
+      "columns": [
+        "quote_id"
+      ],
+      "references": "quote"
+    },
+    {
+      "table": "quote_line",
+      "fk_name": "fk_quote_line_quote",
+      "columns": [
+        "quote_id"
+      ],
+      "references": "quote"
+    },
+    {
+      "table": "quote_line_tax_component",
+      "fk_name": "fk_qltc_quote_line",
+      "columns": [
+        "quote_line_id"
+      ],
+      "references": "quote_line"
+    },
+    {
+      "table": "quote_public_link",
+      "fk_name": "fk_qbl_customer_contact",
+      "columns": [
+        "contact_id"
+      ],
+      "references": "contact"
+    },
+    {
+      "table": "quote_public_link_contact_action",
+      "fk_name": "fk_qpl_contact_action_contact",
+      "columns": [
+        "contact_id"
+      ],
+      "references": "contact"
+    },
+    {
+      "table": "quote_message",
+      "fk_name": "fk_quote_msg_quote",
+      "columns": [
+        "quote_id"
+      ],
+      "references": "quote"
+    },
+    {
+      "table": "quote_message",
+      "fk_name": "fk_quote_msg_contact",
+      "columns": [
+        "contact_id"
+      ],
+      "references": "contact"
+    },
+    {
+      "table": "invoice_status",
+      "fk_name": "fk_invoice_status_tenant",
+      "columns": [
+        "tenant_id"
+      ],
+      "references": "tenant"
+    },
+    {
+      "table": "invoice",
+      "fk_name": "fk_invoice_tenant",
+      "columns": [
+        "tenant_id"
+      ],
+      "references": "tenant"
+    },
+    {
+      "table": "invoice_line",
+      "fk_name": "fk_invoice_line_invoice",
+      "columns": [
+        "invoice_id"
+      ],
+      "references": "invoice"
+    },
+    {
+      "table": "invoice_line_tax_component",
+      "fk_name": "fk_iltc_invoice_line",
+      "columns": [
+        "invoice_line_id"
+      ],
+      "references": "invoice_line"
+    },
+    {
+      "table": "payment_status",
+      "fk_name": "fk_payment_status_tenant",
+      "columns": [
+        "tenant_id"
+      ],
+      "references": "tenant"
+    },
+    {
+      "table": "subscription",
+      "fk_name": "fk_subscription_tenant",
+      "columns": [
+        "tenant_id"
+      ],
+      "references": "tenant"
+    },
+    {
+      "table": "usage_ledger",
+      "fk_name": "fk_usage_ledger_tenant",
+      "columns": [
+        "tenant_id"
+      ],
+      "references": "tenant"
+    }
+  ],
+  "soft_delete_tables": [
+    "address",
+    "address_type",
+    "app_service",
+    "app_service_category",
+    "app_service_provider",
+    "change_order",
+    "change_order_line",
+    "contact",
+    "contact_endpoint",
+    "contact_type",
+    "conversation_session",
+    "currency",
+    "customer",
+    "customer_lifecycle_status",
+    "entity_address",
+    "entity_type",
+    "invoice",
+    "invoice_line",
+    "invoice_line_tax_component",
+    "invoice_status",
+    "job",
+    "job_assignment",
+    "job_expense_category",
+    "job_status",
+    "notification_channel",
+    "notification_template",
+    "notification_type",
+    "payment",
+    "payment_status",
+    "payment_type",
+    "platform_role",
+    "pricebook_item",
+    "product_feature",
+    "product_plan",
+    "qco_line_type",
+    "qpl_contact_action_type",
+    "quote",
+    "quote_line",
+    "quote_link_status",
+    "quote_status",
+    "quote_version",
+    "site",
+    "site_lifecycle_status",
+    "sso_provider",
+    "subscription",
+    "supplier",
+    "supplier_item",
+    "supplier_item_category",
+    "supplier_item_uom",
+    "supplier_lifecycle_status",
+    "taxability_code",
+    "tenant",
+    "tenant_domain",
+    "tenant_user",
+    "tenant_user_invite",
+    "tenant_user_role",
+    "tenant_user_status",
+    "user",
+    "user_endpoint",
+    "webhook_event_type"
+  ],
+  "hard_delete_tables": [
+    "auth_api_token",
+    "auth_email_verification",
+    "auth_jwk",
+    "auth_mfa_otp",
+    "auth_password_history",
+    "auth_password_reset",
+    "auth_refresh_token",
+    "change_order_attachment",
+    "change_order_line_tax_component",
+    "connector_config",
+    "connector_run_log",
+    "contact_notification_pref",
+    "contact_portal_invite",
+    "conversation_message",
+    "discount_version",
+    "entity_contact",
+    "idempotency_key",
+    "integration_credential",
+    "integration_sync_conflict",
+    "integration_sync_log",
+    "integration_sync_mapping",
+    "job_attachment",
+    "job_expense",
+    "job_notes",
+    "job_time_entry",
+    "jwk_status",
+    "notification_delivery_attempt",
+    "notification_event",
+    "notification_outbox",
+    "password_policy",
+    "payment_method",
+    "pricebook_item_version",
+    "pricing_cache",
+    "product_plan_product_feature_version",
+    "product_plan_version",
+    "psp_customer",
+    "psp_transaction_log",
+    "quote_acceptance",
+    "quote_line_tax_component",
+    "quote_message",
+    "quote_public_link",
+    "quote_public_link_contact_action",
+    "subscription_status",
+    "subscription_usage",
+    "supplier_item_price",
+    "tax_rate_version",
+    "tenant_markup_version",
+    "tenant_notification_default",
+    "tenant_product_feature_override",
+    "tenant_settings",
+    "tenant_user_notification_pref",
+    "usage_ledger",
+    "user_preference",
+    "user_sso_identity",
+    "voice_command_log",
+    "webhook_delivery_attempt",
+    "webhook_endpoint",
+    "webhook_event"
+  ],
+  "detailed_fk_rules": {
+    "CASCADE": [
+      {
+        "table": "tenant_settings",
+        "fk_name": "fk_tenant_settings_tenant",
+        "columns": [
+          "tenant_id"
+        ],
+        "references": "tenant"
+      },
+      {
+        "table": "user_endpoint",
+        "fk_name": "fk_user_endpoint_user",
+        "columns": [
+          "user_id"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "user_preference",
+        "fk_name": "fk_user_pref_user",
+        "columns": [
+          "user_id"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "user_preference",
+        "fk_name": "fk_user_pref_tenant",
+        "columns": [
+          "tenant_id"
+        ],
+        "references": "tenant"
+      },
+      {
+        "table": "tenant_user_status",
+        "fk_name": "fk_tenant_user_status_tenant",
+        "columns": [
+          "tenant_id"
+        ],
+        "references": "tenant"
+      },
+      {
+        "table": "customer_lifecycle_status",
+        "fk_name": "fk_cls_tenant",
+        "columns": [
+          "tenant_id"
+        ],
+        "references": "tenant"
+      },
+      {
+        "table": "site_lifecycle_status",
+        "fk_name": "fk_site_ls_tenant",
+        "columns": [
+          "tenant_id"
+        ],
+        "references": "tenant"
+      },
+      {
+        "table": "supplier_lifecycle_status",
+        "fk_name": "fk_supplier_ls_tenant",
+        "columns": [
+          "tenant_id"
+        ],
+        "references": "tenant"
+      },
+      {
+        "table": "quote_status",
+        "fk_name": "fk_quote_status_tenant",
+        "columns": [
+          "tenant_id"
+        ],
+        "references": "tenant"
+      },
+      {
+        "table": "job_status",
+        "fk_name": "fk_job_status_tenant",
+        "columns": [
+          "tenant_id"
+        ],
+        "references": "tenant"
+      },
+      {
+        "table": "customer",
+        "fk_name": "fk_customer_tenant",
+        "columns": [
+          "tenant_id"
+        ],
+        "references": "tenant"
+      },
+      {
+        "table": "supplier",
+        "fk_name": "fk_supplier_tenant",
+        "columns": [
+          "tenant_id"
+        ],
+        "references": "tenant"
+      },
+      {
+        "table": "app_service",
+        "fk_name": "fk_app_service_tenant",
+        "columns": [
+          "tenant_id"
+        ],
+        "references": "tenant"
+      },
+      {
+        "table": "contact_type",
+        "fk_name": "fk_contact_type_tenant",
+        "columns": [
+          "tenant_id"
+        ],
+        "references": "tenant"
+      },
+      {
+        "table": "entity_contact",
+        "fk_name": "fk_entity_contact_contact",
+        "columns": [
+          "contact_id"
+        ],
+        "references": "contact"
+      },
+      {
+        "table": "address_type",
+        "fk_name": "fk_address_type_tenant",
+        "columns": [
+          "tenant_id"
+        ],
+        "references": "tenant"
+      },
+      {
+        "table": "quote",
+        "fk_name": "fk_quote_tenant",
+        "columns": [
+          "tenant_id"
+        ],
+        "references": "tenant"
+      },
+      {
+        "table": "quote_version",
+        "fk_name": "fk_quote_version_quote",
+        "columns": [
+          "quote_id"
+        ],
+        "references": "quote"
+      },
+      {
+        "table": "quote_line",
+        "fk_name": "fk_quote_line_quote",
+        "columns": [
+          "quote_id"
+        ],
+        "references": "quote"
+      },
+      {
+        "table": "quote_line_tax_component",
+        "fk_name": "fk_qltc_quote_line",
+        "columns": [
+          "quote_line_id"
+        ],
+        "references": "quote_line"
+      },
+      {
+        "table": "quote_public_link",
+        "fk_name": "fk_qbl_customer_contact",
+        "columns": [
+          "contact_id"
+        ],
+        "references": "contact"
+      },
+      {
+        "table": "quote_public_link_contact_action",
+        "fk_name": "fk_qpl_contact_action_contact",
+        "columns": [
+          "contact_id"
+        ],
+        "references": "contact"
+      },
+      {
+        "table": "quote_message",
+        "fk_name": "fk_quote_msg_quote",
+        "columns": [
+          "quote_id"
+        ],
+        "references": "quote"
+      },
+      {
+        "table": "quote_message",
+        "fk_name": "fk_quote_msg_contact",
+        "columns": [
+          "contact_id"
+        ],
+        "references": "contact"
+      },
+      {
+        "table": "job",
+        "fk_name": "fk_job_tenant",
+        "columns": [
+          "tenant_id"
+        ],
+        "references": "tenant"
+      },
+      {
+        "table": "job_notes",
+        "fk_name": "fk_job_notes_tenant_id",
+        "columns": [
+          "tenant_id"
+        ],
+        "references": "tenant"
+      },
+      {
+        "table": "job_attachment",
+        "fk_name": "fk_job_att_job",
+        "columns": [
+          "job_id"
+        ],
+        "references": "job"
+      },
+      {
+        "table": "tenant_markup_version",
+        "fk_name": "fk_tmv_tenant",
+        "columns": [
+          "tenant_id"
+        ],
+        "references": "tenant"
+      },
+      {
+        "table": "job_expense_category",
+        "fk_name": "fk_jec_tenant",
+        "columns": [
+          "tenant_id"
+        ],
+        "references": "tenant"
+      },
+      {
+        "table": "job_expense",
+        "fk_name": "fk_job_expense_job",
+        "columns": [
+          "job_id"
+        ],
+        "references": "job"
+      },
+      {
+        "table": "job_assignment",
+        "fk_name": "fk_job_assign_job",
+        "columns": [
+          "job_id"
+        ],
+        "references": "job"
+      },
+      {
+        "table": "job_assignment",
+        "fk_name": "fk_job_assign_user",
+        "columns": [
+          "user_id"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "job_time_entry",
+        "fk_name": "fk_job_time_entry_tenant_id",
+        "columns": [
+          "tenant_id"
+        ],
+        "references": "tenant"
+      },
+      {
+        "table": "change_order",
+        "fk_name": "fk_change_order_tenant_id",
+        "columns": [
+          "tenant_id"
+        ],
+        "references": "tenant"
+      },
+      {
+        "table": "change_order",
+        "fk_name": "fk_change_order_job",
+        "columns": [
+          "job_id"
+        ],
+        "references": "job"
+      },
+      {
+        "table": "change_order_line",
+        "fk_name": "fk_change_order_line_tenant_id",
+        "columns": [
+          "tenant_id"
+        ],
+        "references": "tenant"
+      },
+      {
+        "table": "change_order_line",
+        "fk_name": "fk_change_order_line_change_order",
+        "columns": [
+          "change_order_id"
+        ],
+        "references": "change_order"
+      },
+      {
+        "table": "change_order_line_tax_component",
+        "fk_name": "fk_change_order_line_tax_component_tenant_id",
+        "columns": [
+          "tenant_id"
+        ],
+        "references": "tenant"
+      },
+      {
+        "table": "change_order_line_tax_component",
+        "fk_name": "fk_coltc_change_order_line",
+        "columns": [
+          "change_order_line_id"
+        ],
+        "references": "change_order_line"
+      },
+      {
+        "table": "change_order_attachment",
+        "fk_name": "fk_change_order_attachment_tenant_id",
+        "columns": [
+          "tenant_id"
+        ],
+        "references": "tenant"
+      },
+      {
+        "table": "change_order_attachment",
+        "fk_name": "fk_coa_change_order",
+        "columns": [
+          "change_order_id"
+        ],
+        "references": "change_order"
+      },
+      {
+        "table": "invoice_status",
+        "fk_name": "fk_invoice_status_tenant",
+        "columns": [
+          "tenant_id"
+        ],
+        "references": "tenant"
+      },
+      {
+        "table": "invoice",
+        "fk_name": "fk_invoice_tenant",
+        "columns": [
+          "tenant_id"
+        ],
+        "references": "tenant"
+      },
+      {
+        "table": "invoice_line",
+        "fk_name": "fk_invoice_line_invoice",
+        "columns": [
+          "invoice_id"
+        ],
+        "references": "invoice"
+      },
+      {
+        "table": "invoice_line_tax_component",
+        "fk_name": "fk_iltc_invoice_line",
+        "columns": [
+          "invoice_line_id"
+        ],
+        "references": "invoice_line"
+      },
+      {
+        "table": "payment_status",
+        "fk_name": "fk_payment_status_tenant",
+        "columns": [
+          "tenant_id"
+        ],
+        "references": "tenant"
+      },
+      {
+        "table": "supplier_item_category",
+        "fk_name": "fk_sic_tenant",
+        "columns": [
+          "tenant_id"
+        ],
+        "references": "tenant"
+      },
+      {
+        "table": "supplier_item_uom",
+        "fk_name": "fk_siu_tenant",
+        "columns": [
+          "tenant_id"
+        ],
+        "references": "tenant"
+      },
+      {
+        "table": "pricebook_item",
+        "fk_name": "fk_pricebook_item_tenant",
+        "columns": [
+          "tenant_id"
+        ],
+        "references": "tenant"
+      },
+      {
+        "table": "pricebook_item_version",
+        "fk_name": "fk_piv_tenant",
+        "columns": [
+          "tenant_id"
+        ],
+        "references": "tenant"
+      },
+      {
+        "table": "pricebook_item_version",
+        "fk_name": "fk_piv_pricebook_item",
+        "columns": [
+          "pricebook_item_id"
+        ],
+        "references": "pricebook_item"
+      },
+      {
+        "table": "tenant_product_feature_override",
+        "fk_name": "fk_tpfo_tenant",
+        "columns": [
+          "tenant_id"
+        ],
+        "references": "tenant"
+      },
+      {
+        "table": "subscription",
+        "fk_name": "fk_subscription_tenant",
+        "columns": [
+          "tenant_id"
+        ],
+        "references": "tenant"
+      },
+      {
+        "table": "usage_ledger",
+        "fk_name": "fk_usage_ledger_tenant",
+        "columns": [
+          "tenant_id"
+        ],
+        "references": "tenant"
+      },
+      {
+        "table": "contact_endpoint",
+        "fk_name": "fk_contact_endpoint_contact",
+        "columns": [
+          "contact_id"
+        ],
+        "references": "contact"
+      },
+      {
+        "table": "notification_template",
+        "fk_name": "fk_notification_template_tenant",
+        "columns": [
+          "tenant_id"
+        ],
+        "references": "tenant"
+      },
+      {
+        "table": "notification_template",
+        "fk_name": "fk_notification_template_notification_type",
+        "columns": [
+          "notification_type_code"
+        ],
+        "references": "notification_type"
+      },
+      {
+        "table": "notification_delivery_attempt",
+        "fk_name": "fk_nda_notification_outbox",
+        "columns": [
+          "notification_outbox_id"
+        ],
+        "references": "notification_outbox"
+      },
+      {
+        "table": "user_sso_identity",
+        "fk_name": "fk_user_sso_identity_user",
+        "columns": [
+          "user_id"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "auth_mfa_otp",
+        "fk_name": "fk_auth_mfa_otp_user",
+        "columns": [
+          "user_id"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "auth_mfa_otp",
+        "fk_name": "fk_auth_mfa_otp_user_endpoint",
+        "columns": [
+          "user_endpoint_id"
+        ],
+        "references": "user_endpoint"
+      },
+      {
+        "table": "auth_password_history",
+        "fk_name": "fk_auth_password_history_user",
+        "columns": [
+          "user_id"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "auth_api_token",
+        "fk_name": "fk_auth_api_token_tenant",
+        "columns": [
+          "tenant_id"
+        ],
+        "references": "tenant"
+      },
+      {
+        "table": "auth_api_token",
+        "fk_name": "fk_auth_api_token_user",
+        "columns": [
+          "user_id"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "auth_jwk",
+        "fk_name": "fk_auth_jwk_tenant",
+        "columns": [
+          "tenant_id"
+        ],
+        "references": "tenant"
+      },
+      {
+        "table": "tenant_user_invite",
+        "fk_name": "fk_tenant_user_invite_tenant",
+        "columns": [
+          "tenant_id"
+        ],
+        "references": "tenant"
+      },
+      {
+        "table": "contact_portal_invite",
+        "fk_name": "fk_contact_portal_invite_contact",
+        "columns": [
+          "contact_id"
+        ],
+        "references": "contact"
+      },
+      {
+        "table": "idempotency_key",
+        "fk_name": "fk_idempotency_key_tenant",
+        "columns": [
+          "tenant_id"
+        ],
+        "references": "tenant"
+      },
+      {
+        "table": "idempotency_key",
+        "fk_name": "fk_idempotency_key_user",
+        "columns": [
+          "user_id"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "webhook_endpoint",
+        "fk_name": "fk_webhook_endpoint_tenant",
+        "columns": [
+          "tenant_id"
+        ],
+        "references": "tenant"
+      },
+      {
+        "table": "webhook_event",
+        "fk_name": "fk_webhook_event_tenant",
+        "columns": [
+          "tenant_id"
+        ],
+        "references": "tenant"
+      },
+      {
+        "table": "integration_credential",
+        "fk_name": "fk_int_cred_tenant",
+        "columns": [
+          "tenant_id"
+        ],
+        "references": "tenant"
+      },
+      {
+        "table": "integration_sync_mapping",
+        "fk_name": "fk_ism_tenant",
+        "columns": [
+          "tenant_id"
+        ],
+        "references": "tenant"
+      },
+      {
+        "table": "integration_sync_mapping",
+        "fk_name": "fk_ism_app_service",
+        "columns": [
+          "app_service_id"
+        ],
+        "references": "app_service"
+      },
+      {
+        "table": "integration_sync_conflict",
+        "fk_name": "fk_isc_tenant",
+        "columns": [
+          "tenant_id"
+        ],
+        "references": "tenant"
+      },
+      {
+        "table": "integration_sync_conflict",
+        "fk_name": "fk_isc_app_service",
+        "columns": [
+          "app_service_id"
+        ],
+        "references": "app_service"
+      },
+      {
+        "table": "integration_sync_log",
+        "fk_name": "fk_isl_tenant",
+        "columns": [
+          "tenant_id"
+        ],
+        "references": "tenant"
+      },
+      {
+        "table": "integration_sync_log",
+        "fk_name": "fk_isl_app_service",
+        "columns": [
+          "app_service_id"
+        ],
+        "references": "app_service"
+      },
+      {
+        "table": "conversation_message",
+        "fk_name": "fk_conv_msg_session",
+        "columns": [
+          "session_id"
+        ],
+        "references": "conversation_session"
+      },
+      {
+        "table": "connector_config",
+        "fk_name": "fk_connector_config_supplier",
+        "columns": [
+          "supplier_id"
+        ],
+        "references": "supplier"
+      },
+      {
+        "table": "connector_run_log",
+        "fk_name": "fk_crl_supplier",
+        "columns": [
+          "supplier_id"
+        ],
+        "references": "supplier"
+      }
+    ],
+    "RESTRICT": [
+      {
+        "table": "user",
+        "fk_name": "fk_user_platform_role",
+        "columns": [
+          "platform_role_code"
+        ],
+        "references": "platform_role"
+      },
+      {
+        "table": "tenant_user",
+        "fk_name": "fk_tenant_user_tenant",
+        "columns": [
+          "tenant_id"
+        ],
+        "references": "tenant"
+      },
+      {
+        "table": "tenant_user",
+        "fk_name": "fk_tenant_user_user",
+        "columns": [
+          "user_id"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "tenant_user",
+        "fk_name": "fk_tenant_user_tenant_user_role",
+        "columns": [
+          "role_code"
+        ],
+        "references": "tenant_user_role"
+      },
+      {
+        "table": "tenant_user",
+        "fk_name": "fk_tenant_user_tenant_user_status",
+        "columns": [
+          "status_id"
+        ],
+        "references": "tenant_user_status"
+      },
+      {
+        "table": "customer",
+        "fk_name": "fk_customer_lifecycle_status",
+        "columns": [
+          "lifecycle_status_id"
+        ],
+        "references": "customer_lifecycle_status"
+      },
+      {
+        "table": "site",
+        "fk_name": "fk_site_tenant",
+        "columns": [
+          "tenant_id"
+        ],
+        "references": "tenant"
+      },
+      {
+        "table": "site",
+        "fk_name": "fk_site_customer",
+        "columns": [
+          "customer_id"
+        ],
+        "references": "customer"
+      },
+      {
+        "table": "site",
+        "fk_name": "fk_site_lifecycle_status",
+        "columns": [
+          "lifecycle_status_id"
+        ],
+        "references": "site_lifecycle_status"
+      },
+      {
+        "table": "supplier",
+        "fk_name": "fk_supplier_lifecycle_status",
+        "columns": [
+          "lifecycle_status_id"
+        ],
+        "references": "supplier_lifecycle_status"
+      },
+      {
+        "table": "app_service",
+        "fk_name": "fk_app_service_category",
+        "columns": [
+          "category_code"
+        ],
+        "references": "app_service_category"
+      },
+      {
+        "table": "app_service",
+        "fk_name": "fk_app_service_provider",
+        "columns": [
+          "provider_code"
+        ],
+        "references": "app_service_provider"
+      },
+      {
+        "table": "contact",
+        "fk_name": "fk_contact_customer",
+        "columns": [
+          "customer_id"
+        ],
+        "references": "customer"
+      },
+      {
+        "table": "entity_contact",
+        "fk_name": "fk_entity_contact_entity_type",
+        "columns": [
+          "entity_type_code"
+        ],
+        "references": "entity_type"
+      },
+      {
+        "table": "entity_contact",
+        "fk_name": "fk_entity_contact_contact_type",
+        "columns": [
+          "contact_type_code"
+        ],
+        "references": "contact_type"
+      },
+      {
+        "table": "entity_address",
+        "fk_name": "fk_entity_address_address",
+        "columns": [
+          "address_id"
+        ],
+        "references": "address"
+      },
+      {
+        "table": "entity_address",
+        "fk_name": "fk_entity_address_address_type",
+        "columns": [
+          "address_type_code"
+        ],
+        "references": "address_type"
+      },
+      {
+        "table": "entity_address",
+        "fk_name": "fk_entity_address_entity_type",
+        "columns": [
+          "entity_type_code"
+        ],
+        "references": "entity_type"
+      },
+      {
+        "table": "quote",
+        "fk_name": "fk_quote_customer",
+        "columns": [
+          "customer_id"
+        ],
+        "references": "customer"
+      },
+      {
+        "table": "quote",
+        "fk_name": "fk_quote_site",
+        "columns": [
+          "site_id"
+        ],
+        "references": "site"
+      },
+      {
+        "table": "quote",
+        "fk_name": "fk_quote_currency",
+        "columns": [
+          "currency"
+        ],
+        "references": "currency"
+      },
+      {
+        "table": "quote",
+        "fk_name": "fk_quote_status",
+        "columns": [
+          "status_id"
+        ],
+        "references": "quote_status"
+      },
+      {
+        "table": "qco_line_type",
+        "fk_name": "fk_qco_line_type_tenant",
+        "columns": [
+          "tenant_id"
+        ],
+        "references": "tenant"
+      },
+      {
+        "table": "quote_line",
+        "fk_name": "fk_quote_line_qco_line_type",
+        "columns": [
+          "qco_line_type_id"
+        ],
+        "references": "qco_line_type"
+      },
+      {
+        "table": "quote_line",
+        "fk_name": "fk_quote_line_supplier",
+        "columns": [
+          "supplier_id"
+        ],
+        "references": "supplier"
+      },
+      {
+        "table": "quote_line",
+        "fk_name": "fk_quote_line_supplier_item",
+        "columns": [
+          "supplier_item_id"
+        ],
+        "references": "supplier_item"
+      },
+      {
+        "table": "quote_line",
+        "fk_name": "fk_quote_line_taxability_code",
+        "columns": [
+          "taxability_code"
+        ],
+        "references": "taxability_code"
+      },
+      {
+        "table": "quote_line",
+        "fk_name": "fk_quote_line_pricebook_item",
+        "columns": [
+          "pricebook_item_id"
+        ],
+        "references": "pricebook_item"
+      },
+      {
+        "table": "quote_line_tax_component",
+        "fk_name": "fk_qltc_tax_rate_version",
+        "columns": [
+          "tax_rate_version_id"
+        ],
+        "references": "tax_rate_version"
+      },
+      {
+        "table": "quote_link_status",
+        "fk_name": "fk_quote_link_status_tenant",
+        "columns": [
+          "tenant_id"
+        ],
+        "references": "tenant"
+      },
+      {
+        "table": "quote_public_link",
+        "fk_name": "fk_qbl_quote",
+        "columns": [
+          "quote_id"
+        ],
+        "references": "quote"
+      },
+      {
+        "table": "quote_public_link",
+        "fk_name": "fk_qbl_quote_link_status",
+        "columns": [
+          "status_id"
+        ],
+        "references": "quote_link_status"
+      },
+      {
+        "table": "qpl_contact_action_type",
+        "fk_name": "fk_qpb_contact_action_type_tenant",
+        "columns": [
+          "tenant_id"
+        ],
+        "references": "tenant"
+      },
+      {
+        "table": "quote_public_link_contact_action",
+        "fk_name": "fk_qpl_contact_action_quote",
+        "columns": [
+          "quote_id"
+        ],
+        "references": "quote"
+      },
+      {
+        "table": "quote_public_link_contact_action",
+        "fk_name": "fk_qpl_contact_action_quote_version",
+        "columns": [
+          "quote_version_id"
+        ],
+        "references": "quote_version"
+      },
+      {
+        "table": "quote_public_link_contact_action",
+        "fk_name": "fk_qpl_contact_action_qpl_contact_action_type",
+        "columns": [
+          "qpl_contact_action_type_id"
+        ],
+        "references": "qpl_contact_action_type"
+      },
+      {
+        "table": "quote_acceptance",
+        "fk_name": "fk_quote_acceptance_contact",
+        "columns": [
+          "contact_id"
+        ],
+        "references": "contact"
+      },
+      {
+        "table": "quote_acceptance",
+        "fk_name": "fk_quote_acceptance_quote_version",
+        "columns": [
+          "quote_version_id"
+        ],
+        "references": "quote_version"
+      },
+      {
+        "table": "quote_message",
+        "fk_name": "fk_quote_msg_tenant",
+        "columns": [
+          "tenant_id"
+        ],
+        "references": "tenant"
+      },
+      {
+        "table": "job",
+        "fk_name": "fk_job_customer",
+        "columns": [
+          "customer_id"
+        ],
+        "references": "customer"
+      },
+      {
+        "table": "job",
+        "fk_name": "fk_job_site",
+        "columns": [
+          "site_id"
+        ],
+        "references": "site"
+      },
+      {
+        "table": "job",
+        "fk_name": "fk_job_quote",
+        "columns": [
+          "quote_id"
+        ],
+        "references": "quote"
+      },
+      {
+        "table": "job",
+        "fk_name": "fk_job_quote_version",
+        "columns": [
+          "quote_version_id"
+        ],
+        "references": "quote_version"
+      },
+      {
+        "table": "job",
+        "fk_name": "fk_job_status",
+        "columns": [
+          "status_id"
+        ],
+        "references": "job_status"
+      },
+      {
+        "table": "job_notes",
+        "fk_name": "fk_job_notes_job",
+        "columns": [
+          "job_id"
+        ],
+        "references": "job"
+      },
+      {
+        "table": "job_attachment",
+        "fk_name": "fk_job_att_tenant",
+        "columns": [
+          "tenant_id"
+        ],
+        "references": "tenant"
+      },
+      {
+        "table": "tenant_markup_version",
+        "fk_name": "fk_tmv_category",
+        "columns": [
+          "job_expense_category_code"
+        ],
+        "references": "job_expense_category"
+      },
+      {
+        "table": "job_expense",
+        "fk_name": "fk_job_expense_tenant",
+        "columns": [
+          "tenant_id"
+        ],
+        "references": "tenant"
+      },
+      {
+        "table": "job_expense",
+        "fk_name": "fk_job_expense_category",
+        "columns": [
+          "job_expense_category_code"
+        ],
+        "references": "job_expense_category"
+      },
+      {
+        "table": "job_assignment",
+        "fk_name": "fk_job_assign_tenant",
+        "columns": [
+          "tenant_id"
+        ],
+        "references": "tenant"
+      },
+      {
+        "table": "job_time_entry",
+        "fk_name": "fk_job_time_entry_job",
+        "columns": [
+          "job_id"
+        ],
+        "references": "job"
+      },
+      {
+        "table": "job_time_entry",
+        "fk_name": "fk_job_time_entry_user",
+        "columns": [
+          "user_id"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "change_order_line",
+        "fk_name": "fk_change_order_line_qco_line_type",
+        "columns": [
+          "qco_line_type_id"
+        ],
+        "references": "qco_line_type"
+      },
+      {
+        "table": "change_order_line",
+        "fk_name": "fk_change_order_line_supplier",
+        "columns": [
+          "supplier_id"
+        ],
+        "references": "supplier"
+      },
+      {
+        "table": "change_order_line",
+        "fk_name": "fk_change_order_line_supplier_item",
+        "columns": [
+          "supplier_item_id"
+        ],
+        "references": "supplier_item"
+      },
+      {
+        "table": "change_order_line",
+        "fk_name": "fk_change_order_line_taxability_code",
+        "columns": [
+          "taxability_code"
+        ],
+        "references": "taxability_code"
+      },
+      {
+        "table": "change_order_line",
+        "fk_name": "fk_change_order_line_pricebook_item",
+        "columns": [
+          "pricebook_item_id"
+        ],
+        "references": "pricebook_item"
+      },
+      {
+        "table": "change_order_line_tax_component",
+        "fk_name": "fk_coltc_tax_rate_version",
+        "columns": [
+          "tax_rate_version_id"
+        ],
+        "references": "tax_rate_version"
+      },
+      {
+        "table": "invoice",
+        "fk_name": "fk_invoice_customer",
+        "columns": [
+          "customer_id"
+        ],
+        "references": "customer"
+      },
+      {
+        "table": "invoice",
+        "fk_name": "fk_invoice_quote",
+        "columns": [
+          "quote_id"
+        ],
+        "references": "quote"
+      },
+      {
+        "table": "invoice",
+        "fk_name": "fk_invoice_job",
+        "columns": [
+          "job_id"
+        ],
+        "references": "job"
+      },
+      {
+        "table": "invoice",
+        "fk_name": "fk_invoice_site",
+        "columns": [
+          "site_id"
+        ],
+        "references": "site"
+      },
+      {
+        "table": "invoice",
+        "fk_name": "fk_invoice_status",
+        "columns": [
+          "status_id"
+        ],
+        "references": "invoice_status"
+      },
+      {
+        "table": "invoice",
+        "fk_name": "fk_invoice_currency",
+        "columns": [
+          "currency"
+        ],
+        "references": "currency"
+      },
+      {
+        "table": "invoice_line",
+        "fk_name": "fk_invoice_line_qco_line_type",
+        "columns": [
+          "qco_line_type_id"
+        ],
+        "references": "qco_line_type"
+      },
+      {
+        "table": "invoice_line",
+        "fk_name": "fk_invoice_line_taxability_code",
+        "columns": [
+          "taxability_code"
+        ],
+        "references": "taxability_code"
+      },
+      {
+        "table": "invoice_line",
+        "fk_name": "fk_invoice_line_pricebook_item",
+        "columns": [
+          "pricebook_item_id"
+        ],
+        "references": "pricebook_item"
+      },
+      {
+        "table": "invoice_line",
+        "fk_name": "fk_invoice_line_tenant_id",
+        "columns": [
+          "tenant_id"
+        ],
+        "references": "tenant"
+      },
+      {
+        "table": "invoice_line_tax_component",
+        "fk_name": "fk_iltc_tax_rate_version",
+        "columns": [
+          "tax_rate_version_id"
+        ],
+        "references": "tax_rate_version"
+      },
+      {
+        "table": "invoice_line_tax_component",
+        "fk_name": "fk_invoice_line_tax_component_tenant_id",
+        "columns": [
+          "tenant_id"
+        ],
+        "references": "tenant"
+      },
+      {
+        "table": "payment",
+        "fk_name": "fk_payment_tenant",
+        "columns": [
+          "tenant_id"
+        ],
+        "references": "tenant"
+      },
+      {
+        "table": "payment",
+        "fk_name": "fk_payment_invoice",
+        "columns": [
+          "invoice_id"
+        ],
+        "references": "invoice"
+      },
+      {
+        "table": "payment",
+        "fk_name": "fk_payment_payment_status",
+        "columns": [
+          "status_id"
+        ],
+        "references": "payment_status"
+      },
+      {
+        "table": "payment",
+        "fk_name": "fk_payment_payment_method",
+        "columns": [
+          "payment_method_id"
+        ],
+        "references": "payment_method"
+      },
+      {
+        "table": "payment",
+        "fk_name": "fk_payment_connector_config",
+        "columns": [
+          "connector_config_id"
+        ],
+        "references": "connector_config"
+      },
+      {
+        "table": "payment_type",
+        "fk_name": "fk_payment_type_tenant",
+        "columns": [
+          "tenant_id"
+        ],
+        "references": "tenant"
+      },
+      {
+        "table": "payment_method",
+        "fk_name": "fk_payment_method_tenant",
+        "columns": [
+          "tenant_id"
+        ],
+        "references": "tenant"
+      },
+      {
+        "table": "payment_method",
+        "fk_name": "fk_payment_method_payment_type",
+        "columns": [
+          "payment_type_id"
+        ],
+        "references": "payment_type"
+      },
+      {
+        "table": "payment_method",
+        "fk_name": "fk_payment_method_billing_address",
+        "columns": [
+          "billing_address_id"
+        ],
+        "references": "address"
+      },
+      {
+        "table": "psp_customer",
+        "fk_name": "fk_psp_customer_tenant",
+        "columns": [
+          "tenant_id"
+        ],
+        "references": "tenant"
+      },
+      {
+        "table": "psp_customer",
+        "fk_name": "fk_psp_customer_customer",
+        "columns": [
+          "customer_id"
+        ],
+        "references": "customer"
+      },
+      {
+        "table": "supplier_item",
+        "fk_name": "fk_supplier_item_tenant",
+        "columns": [
+          "tenant_id"
+        ],
+        "references": "tenant"
+      },
+      {
+        "table": "supplier_item",
+        "fk_name": "fk_supplier_item_supplier",
+        "columns": [
+          "supplier_id"
+        ],
+        "references": "supplier"
+      },
+      {
+        "table": "supplier_item",
+        "fk_name": "fk_supplier_item_supplier_item_category",
+        "columns": [
+          "category_id"
+        ],
+        "references": "supplier_item_category"
+      },
+      {
+        "table": "supplier_item",
+        "fk_name": "fk_supplier_item_supplier_item_uom",
+        "columns": [
+          "uom_id"
+        ],
+        "references": "supplier_item_uom"
+      },
+      {
+        "table": "supplier_item",
+        "fk_name": "fk_supplier_item_taxability_code",
+        "columns": [
+          "taxability_code"
+        ],
+        "references": "taxability_code"
+      },
+      {
+        "table": "supplier_item_price",
+        "fk_name": "fk_sip_tenant",
+        "columns": [
+          "tenant_id"
+        ],
+        "references": "tenant"
+      },
+      {
+        "table": "supplier_item_price",
+        "fk_name": "fk_sip_supplier_item",
+        "columns": [
+          "supplier_item_id"
+        ],
+        "references": "supplier_item"
+      },
+      {
+        "table": "supplier_item_price",
+        "fk_name": "fk_sip_currency",
+        "columns": [
+          "currency"
+        ],
+        "references": "currency"
+      },
+      {
+        "table": "pricing_cache",
+        "fk_name": "fk_pricing_cache_supplier",
+        "columns": [
+          "supplier_id"
+        ],
+        "references": "supplier"
+      },
+      {
+        "table": "pricing_cache",
+        "fk_name": "fk_pricing_cache_currency",
+        "columns": [
+          "currency"
+        ],
+        "references": "currency"
+      },
+      {
+        "table": "pricebook_item",
+        "fk_name": "fk_pricebook_item_uom",
+        "columns": [
+          "uom_id"
+        ],
+        "references": "supplier_item_uom"
+      },
+      {
+        "table": "pricebook_item",
+        "fk_name": "fk_pricebook_item_tax_code",
+        "columns": [
+          "taxability_code"
+        ],
+        "references": "taxability_code"
+      },
+      {
+        "table": "product_plan_version",
+        "fk_name": "fk_product_plan_version_product_plan",
+        "columns": [
+          "product_plan_code"
+        ],
+        "references": "product_plan"
+      },
+      {
+        "table": "discount_version",
+        "fk_name": "fk_discount_version_tenant",
+        "columns": [
+          "tenant_id"
+        ],
+        "references": "tenant"
+      },
+      {
+        "table": "product_plan_product_feature_version",
+        "fk_name": "fk_pppfv_product_plan",
+        "columns": [
+          "product_plan_code"
+        ],
+        "references": "product_plan"
+      },
+      {
+        "table": "product_plan_product_feature_version",
+        "fk_name": "fk_pppfv_product_feature",
+        "columns": [
+          "product_feature_code"
+        ],
+        "references": "product_feature"
+      },
+      {
+        "table": "tenant_product_feature_override",
+        "fk_name": "fk_tpfo_product_feature",
+        "columns": [
+          "product_feature_code"
+        ],
+        "references": "product_feature"
+      },
+      {
+        "table": "subscription_status",
+        "fk_name": "fk_subscription_status_tenant",
+        "columns": [
+          "tenant_id"
+        ],
+        "references": "tenant"
+      },
+      {
+        "table": "subscription",
+        "fk_name": "fk_subscription_product_plan",
+        "columns": [
+          "product_plan_code"
+        ],
+        "references": "product_plan"
+      },
+      {
+        "table": "subscription",
+        "fk_name": "fk_subscription_subscription_status",
+        "columns": [
+          "status_id"
+        ],
+        "references": "subscription_status"
+      },
+      {
+        "table": "subscription_usage",
+        "fk_name": "fk_subscription_usage_subscription",
+        "columns": [
+          "subscription_id"
+        ],
+        "references": "subscription"
+      },
+      {
+        "table": "subscription_usage",
+        "fk_name": "fk_subscription_usage_product_feature",
+        "columns": [
+          "product_feature_code"
+        ],
+        "references": "product_feature"
+      },
+      {
+        "table": "subscription_usage",
+        "fk_name": "fk_subscription_usage_tenant_id",
+        "columns": [
+          "tenant_id"
+        ],
+        "references": "tenant"
+      },
+      {
+        "table": "usage_ledger",
+        "fk_name": "fk_usage_ledger_subscription",
+        "columns": [
+          "subscription_id"
+        ],
+        "references": "subscription"
+      },
+      {
+        "table": "usage_ledger",
+        "fk_name": "fk_usage_ledger_product_feature_code",
+        "columns": [
+          "product_feature_code"
+        ],
+        "references": "product_feature"
+      },
+      {
+        "table": "notification_type",
+        "fk_name": "fk_notification_type_tenant",
+        "columns": [
+          "tenant_id"
+        ],
+        "references": "tenant"
+      },
+      {
+        "table": "contact_notification_pref",
+        "fk_name": "fk_cnp_contact",
+        "columns": [
+          "contact_id"
+        ],
+        "references": "contact"
+      },
+      {
+        "table": "contact_notification_pref",
+        "fk_name": "fk_cnp_notification_type",
+        "columns": [
+          "notification_type_code"
+        ],
+        "references": "notification_type"
+      },
+      {
+        "table": "tenant_user_notification_pref",
+        "fk_name": "fk_tunp_tenant",
+        "columns": [
+          "tenant_id"
+        ],
+        "references": "tenant"
+      },
+      {
+        "table": "tenant_user_notification_pref",
+        "fk_name": "fk_tunp_user",
+        "columns": [
+          "user_id"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "tenant_user_notification_pref",
+        "fk_name": "fk_tunp_notification_type",
+        "columns": [
+          "notification_type_code"
+        ],
+        "references": "notification_type"
+      },
+      {
+        "table": "tenant_notification_default",
+        "fk_name": "fk_tnd_tenant",
+        "columns": [
+          "tenant_id"
+        ],
+        "references": "tenant"
+      },
+      {
+        "table": "tenant_notification_default",
+        "fk_name": "fk_tnd_notification_type",
+        "columns": [
+          "notification_type_code"
+        ],
+        "references": "notification_type"
+      },
+      {
+        "table": "notification_event",
+        "fk_name": "fk_notification_event_tenant",
+        "columns": [
+          "tenant_id"
+        ],
+        "references": "tenant"
+      },
+      {
+        "table": "notification_event",
+        "fk_name": "fk_notification_event_notification_type_code",
+        "columns": [
+          "notification_type_code"
+        ],
+        "references": "notification_type"
+      },
+      {
+        "table": "notification_event",
+        "fk_name": "fk_notification_event_entity_type_code",
+        "columns": [
+          "entity_type_code"
+        ],
+        "references": "entity_type"
+      },
+      {
+        "table": "notification_outbox",
+        "fk_name": "fk_notification_outbox_notification_event",
+        "columns": [
+          "notification_event_id"
+        ],
+        "references": "notification_event"
+      },
+      {
+        "table": "notification_outbox",
+        "fk_name": "fk_notification_outbox_tenant",
+        "columns": [
+          "tenant_id"
+        ],
+        "references": "tenant"
+      },
+      {
+        "table": "notification_outbox",
+        "fk_name": "fk_notification_outbox_contact_endpoint",
+        "columns": [
+          "contact_endpoint_id"
+        ],
+        "references": "contact_endpoint"
+      },
+      {
+        "table": "notification_outbox",
+        "fk_name": "fk_notification_outbox_user_endpoint",
+        "columns": [
+          "user_endpoint_id"
+        ],
+        "references": "user_endpoint"
+      },
+      {
+        "table": "notification_delivery_attempt",
+        "fk_name": "fk_notification_delivery_attempt_tenant",
+        "columns": [
+          "tenant_id"
+        ],
+        "references": "tenant"
+      },
+      {
+        "table": "psp_transaction_log",
+        "fk_name": "fk_psp_tx_log_tenant",
+        "columns": [
+          "tenant_id"
+        ],
+        "references": "tenant"
+      },
+      {
+        "table": "psp_transaction_log",
+        "fk_name": "fk_psp_tx_log_app_service",
+        "columns": [
+          "app_service_id"
+        ],
+        "references": "app_service"
+      },
+      {
+        "table": "auth_refresh_token",
+        "fk_name": "fk_auth_refresh_token_tenant",
+        "columns": [
+          "tenant_id"
+        ],
+        "references": "tenant"
+      },
+      {
+        "table": "auth_refresh_token",
+        "fk_name": "fk_auth_refresh_token_user",
+        "columns": [
+          "user_id"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "auth_password_reset",
+        "fk_name": "fk_auth_password_reset_user",
+        "columns": [
+          "user_id"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "auth_password_reset",
+        "fk_name": "fk_auth_password_reset_contact",
+        "columns": [
+          "contact_id"
+        ],
+        "references": "contact"
+      },
+      {
+        "table": "auth_email_verification",
+        "fk_name": "fk_auth_email_verification_user",
+        "columns": [
+          "user_id"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "auth_email_verification",
+        "fk_name": "fk_auth_email_verification_contact",
+        "columns": [
+          "contact_id"
+        ],
+        "references": "contact"
+      },
+      {
+        "table": "user_sso_identity",
+        "fk_name": "fk_user_sso_identity_provider",
+        "columns": [
+          "sso_provider_code"
+        ],
+        "references": "sso_provider"
+      },
+      {
+        "table": "auth_mfa_otp",
+        "fk_name": "fk_auth_mfa_otp_contact",
+        "columns": [
+          "contact_id"
+        ],
+        "references": "contact"
+      },
+      {
+        "table": "auth_password_history",
+        "fk_name": "fk_auth_password_history_contact",
+        "columns": [
+          "contact_id"
+        ],
+        "references": "contact"
+      },
+      {
+        "table": "auth_jwk",
+        "fk_name": "fk_auth_jwk_status",
+        "columns": [
+          "jwk_status_id"
+        ],
+        "references": "jwk_status"
+      },
+      {
+        "table": "tenant_domain",
+        "fk_name": "fk_tenant_domain_tenant",
+        "columns": [
+          "tenant_id"
+        ],
+        "references": "tenant"
+      },
+      {
+        "table": "password_policy",
+        "fk_name": "fk_password_policy_tenant",
+        "columns": [
+          "tenant_id"
+        ],
+        "references": "tenant"
+      },
+      {
+        "table": "webhook_event",
+        "fk_name": "fk_webhook_event_event_type",
+        "columns": [
+          "event_type_code"
+        ],
+        "references": "webhook_event_type"
+      },
+      {
+        "table": "webhook_event",
+        "fk_name": "fk_webhook_event_entity_type",
+        "columns": [
+          "entity_type_code"
+        ],
+        "references": "entity_type"
+      },
+      {
+        "table": "webhook_delivery_attempt",
+        "fk_name": "fk_webhook_delivery_attempt_tenant_id",
+        "columns": [
+          "tenant_id"
+        ],
+        "references": "tenant"
+      },
+      {
+        "table": "webhook_delivery_attempt",
+        "fk_name": "fk_wda_webhook_event",
+        "columns": [
+          "webhook_event_id"
+        ],
+        "references": "webhook_event"
+      },
+      {
+        "table": "webhook_delivery_attempt",
+        "fk_name": "fk_wda_webhook_endpoint",
+        "columns": [
+          "webhook_endpoint_id"
+        ],
+        "references": "webhook_endpoint"
+      },
+      {
+        "table": "integration_credential",
+        "fk_name": "fk_int_cred_app_service",
+        "columns": [
+          "app_service_id"
+        ],
+        "references": "app_service"
+      },
+      {
+        "table": "integration_sync_mapping",
+        "fk_name": "fk_ism_entity_type",
+        "columns": [
+          "entity_type_code"
+        ],
+        "references": "entity_type"
+      },
+      {
+        "table": "integration_sync_conflict",
+        "fk_name": "fk_isc_entity_type",
+        "columns": [
+          "entity_type_code"
+        ],
+        "references": "entity_type"
+      },
+      {
+        "table": "conversation_session",
+        "fk_name": "fk_conv_session_tenant",
+        "columns": [
+          "tenant_id"
+        ],
+        "references": "tenant"
+      },
+      {
+        "table": "conversation_session",
+        "fk_name": "fk_conv_session_user",
+        "columns": [
+          "user_id"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "conversation_message",
+        "fk_name": "fk_conversation_message_tenant_id",
+        "columns": [
+          "tenant_id"
+        ],
+        "references": "tenant"
+      },
+      {
+        "table": "voice_command_log",
+        "fk_name": "fk_voice_log_tenant",
+        "columns": [
+          "tenant_id"
+        ],
+        "references": "tenant"
+      },
+      {
+        "table": "voice_command_log",
+        "fk_name": "fk_voice_log_user",
+        "columns": [
+          "user_id"
+        ],
+        "references": "user"
+      }
+    ],
+    "SET_NULL": [
+      {
+        "table": "tenant",
+        "fk_name": "fk_tenant_created_by",
+        "columns": [
+          "created_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "tenant",
+        "fk_name": "fk_tenant_updated_by",
+        "columns": [
+          "updated_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "tenant_settings",
+        "fk_name": "fk_tenant_settings_created_by",
+        "columns": [
+          "created_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "tenant_settings",
+        "fk_name": "fk_tenant_settings_updated_by",
+        "columns": [
+          "updated_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "platform_role",
+        "fk_name": "fk_platform_role_created_by",
+        "columns": [
+          "created_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "platform_role",
+        "fk_name": "fk_platform_role_updated_by",
+        "columns": [
+          "updated_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "user_endpoint",
+        "fk_name": "fk_user_endpoint_created_by",
+        "columns": [
+          "created_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "user_endpoint",
+        "fk_name": "fk_user_endpoint_updated_by",
+        "columns": [
+          "updated_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "user_preference",
+        "fk_name": "fk_user_pref_created_by",
+        "columns": [
+          "created_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "user_preference",
+        "fk_name": "fk_user_pref_updated_by",
+        "columns": [
+          "updated_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "tenant_user_role",
+        "fk_name": "fk_tenant_created_by",
+        "columns": [
+          "created_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "tenant_user_role",
+        "fk_name": "fk_tenant_updated_by",
+        "columns": [
+          "updated_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "tenant_user_status",
+        "fk_name": "fk_tenant_user_status_created_by",
+        "columns": [
+          "created_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "tenant_user_status",
+        "fk_name": "fk_tenant_user_status_updated_by",
+        "columns": [
+          "updated_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "tenant_user",
+        "fk_name": "fk_tenant_user_suspended_by",
+        "columns": [
+          "suspended_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "tenant_user",
+        "fk_name": "fk_tenant_user_created_by",
+        "columns": [
+          "created_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "tenant_user",
+        "fk_name": "fk_tenant_user_updated_by",
+        "columns": [
+          "updated_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "customer_lifecycle_status",
+        "fk_name": "fk_cls_created_by",
+        "columns": [
+          "created_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "customer_lifecycle_status",
+        "fk_name": "fk_cls_updated_by",
+        "columns": [
+          "updated_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "site_lifecycle_status",
+        "fk_name": "fk_site_ls_created_by",
+        "columns": [
+          "created_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "site_lifecycle_status",
+        "fk_name": "fk_site_ls_updated_by",
+        "columns": [
+          "updated_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "supplier_lifecycle_status",
+        "fk_name": "fk_supplier_ls_created_by",
+        "columns": [
+          "created_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "supplier_lifecycle_status",
+        "fk_name": "fk_supplier_ls_updated_by",
+        "columns": [
+          "updated_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "quote_status",
+        "fk_name": "fk_quote_status_created_by",
+        "columns": [
+          "created_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "quote_status",
+        "fk_name": "fk_quote_status_updated_by",
+        "columns": [
+          "updated_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "job_status",
+        "fk_name": "fk_job_status_created_by",
+        "columns": [
+          "created_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "job_status",
+        "fk_name": "fk_job_status_updated_by",
+        "columns": [
+          "updated_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "customer",
+        "fk_name": "fk_customer_created_by",
+        "columns": [
+          "created_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "customer",
+        "fk_name": "fk_customer_updated_by",
+        "columns": [
+          "updated_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "site",
+        "fk_name": "fk_site_created_by",
+        "columns": [
+          "created_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "site",
+        "fk_name": "fk_site_updated_by",
+        "columns": [
+          "updated_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "supplier",
+        "fk_name": "fk_supplier_created_by",
+        "columns": [
+          "created_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "supplier",
+        "fk_name": "fk_supplier_updated_by",
+        "columns": [
+          "updated_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "app_service_category",
+        "fk_name": "fk_asc_created_by",
+        "columns": [
+          "created_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "app_service_category",
+        "fk_name": "fk_asc_updated_by",
+        "columns": [
+          "updated_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "app_service_provider",
+        "fk_name": "fk_app_svc_prov_created_by",
+        "columns": [
+          "created_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "app_service_provider",
+        "fk_name": "fk_app_svc_prov_updated_by",
+        "columns": [
+          "updated_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "app_service",
+        "fk_name": "fk_app_service_created_by",
+        "columns": [
+          "created_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "app_service",
+        "fk_name": "fk_app_service_updated_by",
+        "columns": [
+          "updated_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "contact",
+        "fk_name": "fk_contact_created_by",
+        "columns": [
+          "created_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "contact",
+        "fk_name": "fk_contact_updated_by",
+        "columns": [
+          "updated_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "entity_type",
+        "fk_name": "fk_entity_type_created_by",
+        "columns": [
+          "created_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "entity_type",
+        "fk_name": "fk_entity_type_updated_by",
+        "columns": [
+          "updated_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "contact_type",
+        "fk_name": "fk_contact_type_created_by",
+        "columns": [
+          "created_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "contact_type",
+        "fk_name": "fk_contact_type_updated_by",
+        "columns": [
+          "updated_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "entity_contact",
+        "fk_name": "fk_entity_contact_created_by",
+        "columns": [
+          "created_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "entity_contact",
+        "fk_name": "fk_entity_contact_updated_by",
+        "columns": [
+          "updated_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "address",
+        "fk_name": "fk_address_created_by",
+        "columns": [
+          "created_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "address",
+        "fk_name": "fk_address_updated_by",
+        "columns": [
+          "updated_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "address_type",
+        "fk_name": "fk_address_type_created_by",
+        "columns": [
+          "created_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "address_type",
+        "fk_name": "fk_address_type_updated_by",
+        "columns": [
+          "updated_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "entity_address",
+        "fk_name": "fk_entity_address_created_by",
+        "columns": [
+          "created_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "entity_address",
+        "fk_name": "fk_entity_address_updated_by",
+        "columns": [
+          "updated_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "quote",
+        "fk_name": "fk_quote_created_by",
+        "columns": [
+          "created_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "quote",
+        "fk_name": "fk_quote_updated_by",
+        "columns": [
+          "updated_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "quote_version",
+        "fk_name": "fk_quote_version_created_by",
+        "columns": [
+          "created_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "qco_line_type",
+        "fk_name": "fk_qco_line_type_created_by",
+        "columns": [
+          "created_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "qco_line_type",
+        "fk_name": "fk_qco_line_type_updated_by",
+        "columns": [
+          "updated_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "quote_line",
+        "fk_name": "fk_quote_line_created_by",
+        "columns": [
+          "created_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "quote_line_tax_component",
+        "fk_name": "fk_qltc_created_by",
+        "columns": [
+          "created_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "taxability_code",
+        "fk_name": "fk_taxability_code_created_by",
+        "columns": [
+          "created_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "taxability_code",
+        "fk_name": "fk_taxability_code_updated_by",
+        "columns": [
+          "updated_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "quote_link_status",
+        "fk_name": "fk_quote_link_status_created_by",
+        "columns": [
+          "created_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "quote_link_status",
+        "fk_name": "fk_quote_link_status_updated_by",
+        "columns": [
+          "updated_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "quote_public_link",
+        "fk_name": "fk_qpl_created_by",
+        "columns": [
+          "created_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "qpl_contact_action_type",
+        "fk_name": "fk_qpl_contact_action_type_created_by",
+        "columns": [
+          "created_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "quote_public_link_contact_action",
+        "fk_name": "fk_qpl_contact_action_created_by",
+        "columns": [
+          "created_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "quote_acceptance",
+        "fk_name": "fk_quote_acceptance_accepted_by_user",
+        "columns": [
+          "accepted_by_user_id"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "quote_acceptance",
+        "fk_name": "fk_quote_acceptance_quote_public_link",
+        "columns": [
+          "quote_public_link_id"
+        ],
+        "references": "quote_public_link"
+      },
+      {
+        "table": "quote_acceptance",
+        "fk_name": "fk_quote_acceptance_created_by",
+        "columns": [
+          "created_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "quote_message",
+        "fk_name": "fk_quote_message_created_by",
+        "columns": [
+          "created_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "quote_message",
+        "fk_name": "fk_quote_message_updated_by",
+        "columns": [
+          "updated_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "job",
+        "fk_name": "fk_job_created_by",
+        "columns": [
+          "created_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "job",
+        "fk_name": "fk_job_updated_by",
+        "columns": [
+          "updated_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "job_notes",
+        "fk_name": "fk_job_notes_created_by",
+        "columns": [
+          "created_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "job_notes",
+        "fk_name": "fk_job_notes_updated_by",
+        "columns": [
+          "updated_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "job_attachment",
+        "fk_name": "fk_job_att_created_by",
+        "columns": [
+          "created_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "job_attachment",
+        "fk_name": "fk_job_att_updated_by",
+        "columns": [
+          "updated_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "tenant_markup_version",
+        "fk_name": "fk_tmv_created_by",
+        "columns": [
+          "created_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "job_expense_category",
+        "fk_name": "fk_jec_created_by",
+        "columns": [
+          "created_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "job_expense_category",
+        "fk_name": "fk_jec_updated_by",
+        "columns": [
+          "updated_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "job_expense",
+        "fk_name": "fk_job_expense_invoice_line",
+        "columns": [
+          "invoice_line_id"
+        ],
+        "references": "invoice_line"
+      },
+      {
+        "table": "job_expense",
+        "fk_name": "fk_job_expense_created_by",
+        "columns": [
+          "created_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "job_expense",
+        "fk_name": "fk_job_expense_updated_by",
+        "columns": [
+          "updated_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "job_assignment",
+        "fk_name": "fk_job_assign_created_by",
+        "columns": [
+          "created_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "job_assignment",
+        "fk_name": "fk_job_assign_updated_by",
+        "columns": [
+          "updated_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "job_time_entry",
+        "fk_name": "fk_job_time_entry_created_by",
+        "columns": [
+          "created_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "job_time_entry",
+        "fk_name": "fk_job_time_entry_updated_by",
+        "columns": [
+          "updated_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "change_order",
+        "fk_name": "fk_change_order_created_by",
+        "columns": [
+          "created_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "change_order",
+        "fk_name": "fk_change_order_updated_by",
+        "columns": [
+          "updated_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "change_order_line",
+        "fk_name": "fk_change_order_line_created_by",
+        "columns": [
+          "created_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "change_order_line",
+        "fk_name": "fk_change_order_line_updated_by",
+        "columns": [
+          "updated_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "change_order_line_tax_component",
+        "fk_name": "fk_coltc_created_by",
+        "columns": [
+          "created_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "change_order_attachment",
+        "fk_name": "fk_coa_created_by",
+        "columns": [
+          "created_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "change_order_attachment",
+        "fk_name": "fk_coa_updated_by",
+        "columns": [
+          "updated_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "invoice_status",
+        "fk_name": "fk_invoice_status_created_by",
+        "columns": [
+          "created_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "invoice_status",
+        "fk_name": "fk_invoice_status_updated_by",
+        "columns": [
+          "updated_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "invoice",
+        "fk_name": "fk_invoice_created_by",
+        "columns": [
+          "created_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "invoice",
+        "fk_name": "fk_invoice_updated_by",
+        "columns": [
+          "updated_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "invoice_line",
+        "fk_name": "fk_invoice_line_created_by",
+        "columns": [
+          "created_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "invoice_line_tax_component",
+        "fk_name": "fk_iltc_created_by",
+        "columns": [
+          "created_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "payment_status",
+        "fk_name": "fk_payment_status_created_by",
+        "columns": [
+          "created_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "payment_status",
+        "fk_name": "fk_payment_status_updated_by",
+        "columns": [
+          "updated_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "currency",
+        "fk_name": "fk_currency_created_by",
+        "columns": [
+          "created_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "currency",
+        "fk_name": "fk_currency_updated_by",
+        "columns": [
+          "updated_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "payment",
+        "fk_name": "fk_payment_created_by",
+        "columns": [
+          "created_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "payment",
+        "fk_name": "fk_payment_updated_by",
+        "columns": [
+          "updated_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "payment_type",
+        "fk_name": "fk_payment_type_created_by",
+        "columns": [
+          "created_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "payment_type",
+        "fk_name": "fk_payment_type_updated_by",
+        "columns": [
+          "updated_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "payment_method",
+        "fk_name": "fk_payment_method_created_by",
+        "columns": [
+          "created_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "payment_method",
+        "fk_name": "fk_payment_method_updated_by",
+        "columns": [
+          "updated_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "psp_customer",
+        "fk_name": "fk_psp_customer_created_by",
+        "columns": [
+          "created_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "psp_customer",
+        "fk_name": "fk_psp_customer_updated_by",
+        "columns": [
+          "updated_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "supplier_item_category",
+        "fk_name": "fk_sic_created_by",
+        "columns": [
+          "created_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "supplier_item_category",
+        "fk_name": "fk_sic_updated_by",
+        "columns": [
+          "updated_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "supplier_item_uom",
+        "fk_name": "fk_siu_created_by",
+        "columns": [
+          "created_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "supplier_item_uom",
+        "fk_name": "fk_siu_updated_by",
+        "columns": [
+          "updated_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "supplier_item",
+        "fk_name": "fk_supplier_item_created_by",
+        "columns": [
+          "created_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "supplier_item",
+        "fk_name": "fk_supplier_item_updated_by",
+        "columns": [
+          "updated_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "supplier_item_price",
+        "fk_name": "fk_sip_created_by",
+        "columns": [
+          "created_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "pricing_cache",
+        "fk_name": "fk_pricing_cache_created_by",
+        "columns": [
+          "created_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "tax_rate_version",
+        "fk_name": "fk_tax_rate_version_created_by",
+        "columns": [
+          "created_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "pricebook_item",
+        "fk_name": "fk_pricebook_item_created_by",
+        "columns": [
+          "created_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "pricebook_item",
+        "fk_name": "fk_pricebook_item_updated_by",
+        "columns": [
+          "updated_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "pricebook_item_version",
+        "fk_name": "fk_piv_created_by",
+        "columns": [
+          "created_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "product_plan",
+        "fk_name": "fk_product_plan_created_by",
+        "columns": [
+          "created_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "product_plan",
+        "fk_name": "fk_product_plan_updated_by",
+        "columns": [
+          "updated_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "product_plan_version",
+        "fk_name": "fk_product_plan_version_created_by",
+        "columns": [
+          "created_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "discount_version",
+        "fk_name": "fk_discount_version_created_by",
+        "columns": [
+          "created_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "product_feature",
+        "fk_name": "fk_product_feature_created_by",
+        "columns": [
+          "created_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "product_feature",
+        "fk_name": "fk_product_feature_updated_by",
+        "columns": [
+          "updated_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "product_plan_product_feature_version",
+        "fk_name": "fk_pppfv_created_by",
+        "columns": [
+          "created_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "tenant_product_feature_override",
+        "fk_name": "fk_tpfo_created_by",
+        "columns": [
+          "created_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "tenant_product_feature_override",
+        "fk_name": "fk_tpfo_updated_by",
+        "columns": [
+          "updated_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "subscription_status",
+        "fk_name": "fk_subscription_status_created_by",
+        "columns": [
+          "created_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "subscription_status",
+        "fk_name": "fk_subscription_status_updated_by",
+        "columns": [
+          "updated_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "subscription",
+        "fk_name": "fk_subscription_created_by",
+        "columns": [
+          "created_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "subscription",
+        "fk_name": "fk_subscription_updated_by",
+        "columns": [
+          "updated_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "subscription_usage",
+        "fk_name": "fk_subscription_usage_created_by",
+        "columns": [
+          "created_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "subscription_usage",
+        "fk_name": "fk_subscription_usage_updated_by",
+        "columns": [
+          "updated_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "usage_ledger",
+        "fk_name": "fk_usage_ledger_created_by",
+        "columns": [
+          "created_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "notification_channel",
+        "fk_name": "fk_notification_channel_created_by",
+        "columns": [
+          "created_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "notification_channel",
+        "fk_name": "fk_notification_channel_updated_by",
+        "columns": [
+          "updated_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "notification_type",
+        "fk_name": "fk_notification_type_created_by",
+        "columns": [
+          "created_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "notification_type",
+        "fk_name": "fk_notification_type_updated_by",
+        "columns": [
+          "updated_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "contact_endpoint",
+        "fk_name": "fk_contact_endpoint_created_by",
+        "columns": [
+          "created_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "contact_endpoint",
+        "fk_name": "fk_contact_endpoint_updated_by",
+        "columns": [
+          "updated_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "contact_notification_pref",
+        "fk_name": "fk_cnp_created_by",
+        "columns": [
+          "created_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "contact_notification_pref",
+        "fk_name": "fk_cnp_updated_by",
+        "columns": [
+          "updated_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "tenant_user_notification_pref",
+        "fk_name": "fk_tunp_created_by",
+        "columns": [
+          "created_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "tenant_user_notification_pref",
+        "fk_name": "fk_tunp_updated_by",
+        "columns": [
+          "updated_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "tenant_notification_default",
+        "fk_name": "fk_tnd_created_by",
+        "columns": [
+          "created_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "tenant_notification_default",
+        "fk_name": "fk_tnd_updated_by",
+        "columns": [
+          "updated_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "notification_template",
+        "fk_name": "fk_notification_template_created_by",
+        "columns": [
+          "created_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "notification_template",
+        "fk_name": "fk_notification_template_updated_by",
+        "columns": [
+          "updated_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "notification_event",
+        "fk_name": "fk_notification_event_created_by",
+        "columns": [
+          "created_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "notification_outbox",
+        "fk_name": "fk_notification_outbox_contact",
+        "columns": [
+          "recipient_contact_id"
+        ],
+        "references": "contact"
+      },
+      {
+        "table": "notification_outbox",
+        "fk_name": "fk_notification_outbox_user",
+        "columns": [
+          "recipient_user_id"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "notification_outbox",
+        "fk_name": "fk_notification_outbox_created_by",
+        "columns": [
+          "created_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "notification_outbox",
+        "fk_name": "fk_notification_outbox_updated_by",
+        "columns": [
+          "updated_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "notification_delivery_attempt",
+        "fk_name": "fk_nda_created_by",
+        "columns": [
+          "created_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "psp_transaction_log",
+        "fk_name": "fk_psp_tx_log_payment",
+        "columns": [
+          "payment_id"
+        ],
+        "references": "payment"
+      },
+      {
+        "table": "psp_transaction_log",
+        "fk_name": "fk_psp_tx_log_created_by",
+        "columns": [
+          "created_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "auth_password_reset",
+        "fk_name": "fk_auth_password_reset_created_by",
+        "columns": [
+          "created_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "auth_email_verification",
+        "fk_name": "fk_auth_email_verification_created_by",
+        "columns": [
+          "created_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "sso_provider",
+        "fk_name": "fk_sso_provider_created_by",
+        "columns": [
+          "created_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "sso_provider",
+        "fk_name": "fk_sso_provider_updated_by",
+        "columns": [
+          "updated_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "user_sso_identity",
+        "fk_name": "fk_user_sso_identity_created_by",
+        "columns": [
+          "created_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "user_sso_identity",
+        "fk_name": "fk_user_sso_identity_updated_by",
+        "columns": [
+          "updated_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "auth_mfa_otp",
+        "fk_name": "fk_auth_mfa_otp_created_by",
+        "columns": [
+          "created_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "auth_password_history",
+        "fk_name": "fk_auth_password_history_created_by",
+        "columns": [
+          "created_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "auth_api_token",
+        "fk_name": "fk_auth_api_token_created_by",
+        "columns": [
+          "created_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "jwk_status",
+        "fk_name": "fk_jwk_status_created_by",
+        "columns": [
+          "created_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "auth_jwk",
+        "fk_name": "fk_auth_jwk_created_by",
+        "columns": [
+          "created_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "tenant_domain",
+        "fk_name": "fk_tenant_domain_created_by",
+        "columns": [
+          "created_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "tenant_domain",
+        "fk_name": "fk_tenant_domain_updated_by",
+        "columns": [
+          "updated_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "tenant_user_invite",
+        "fk_name": "fk_tenant_user_invite_invited_by",
+        "columns": [
+          "invited_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "tenant_user_invite",
+        "fk_name": "fk_tenant_user_invite_created_by",
+        "columns": [
+          "created_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "contact_portal_invite",
+        "fk_name": "fk_contact_portal_invite_user",
+        "columns": [
+          "invited_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "contact_portal_invite",
+        "fk_name": "fk_contact_portal_invite_created_by",
+        "columns": [
+          "created_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "password_policy",
+        "fk_name": "fk_password_policy_created_by",
+        "columns": [
+          "created_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "password_policy",
+        "fk_name": "fk_password_policy_updated_by",
+        "columns": [
+          "updated_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "webhook_event_type",
+        "fk_name": "fk_webhook_event_type_created_by",
+        "columns": [
+          "created_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "webhook_event_type",
+        "fk_name": "fk_webhook_event_type_updated_by",
+        "columns": [
+          "updated_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "integration_credential",
+        "fk_name": "fk_int_cred_initiated_by",
+        "columns": [
+          "initiated_by_user_id"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "integration_credential",
+        "fk_name": "fk_int_cred_created_by",
+        "columns": [
+          "created_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "integration_credential",
+        "fk_name": "fk_int_cred_updated_by",
+        "columns": [
+          "updated_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "integration_sync_mapping",
+        "fk_name": "fk_ism_created_by",
+        "columns": [
+          "created_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "integration_sync_mapping",
+        "fk_name": "fk_ism_updated_by",
+        "columns": [
+          "updated_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "integration_sync_conflict",
+        "fk_name": "fk_isc_resolved_by",
+        "columns": [
+          "resolved_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "integration_sync_conflict",
+        "fk_name": "fk_isc_created_by",
+        "columns": [
+          "created_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "integration_sync_conflict",
+        "fk_name": "fk_isc_updated_by",
+        "columns": [
+          "updated_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "integration_sync_log",
+        "fk_name": "fk_isl_created_by",
+        "columns": [
+          "created_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "conversation_session",
+        "fk_name": "fk_conv_session_created_by",
+        "columns": [
+          "created_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "conversation_session",
+        "fk_name": "fk_conv_session_updated_by",
+        "columns": [
+          "updated_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "conversation_message",
+        "fk_name": "fk_conv_msg_created_by",
+        "columns": [
+          "created_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "voice_command_log",
+        "fk_name": "fk_voice_log_message",
+        "columns": [
+          "message_id"
+        ],
+        "references": "conversation_message"
+      },
+      {
+        "table": "connector_config",
+        "fk_name": "fk_connector_config_created_by",
+        "columns": [
+          "created_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "connector_config",
+        "fk_name": "fk_connector_config_updated_by",
+        "columns": [
+          "updated_by"
+        ],
+        "references": "user"
+      }
+    ],
+    "NO_ACTION_OR_DEFAULT": [
+      {
+        "table": "user",
+        "fk_name": "fk_user_created_by",
+        "columns": [
+          "created_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "user",
+        "fk_name": "fk_user_updated_by",
+        "columns": [
+          "updated_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "contact",
+        "fk_name": "fk_contact_tenant_id",
+        "columns": [
+          "tenant_id"
+        ],
+        "references": "tenant"
+      },
+      {
+        "table": "entity_contact",
+        "fk_name": "fk_entity_contact_tenant_id",
+        "columns": [
+          "tenant_id"
+        ],
+        "references": "tenant"
+      },
+      {
+        "table": "address",
+        "fk_name": "fk_address_tenant_id",
+        "columns": [
+          "tenant_id"
+        ],
+        "references": "tenant"
+      },
+      {
+        "table": "entity_address",
+        "fk_name": "fk_entity_address_tenant_id",
+        "columns": [
+          "tenant_id"
+        ],
+        "references": "tenant"
+      },
+      {
+        "table": "quote_version",
+        "fk_name": "fk_quote_version_tenant_id",
+        "columns": [
+          "tenant_id"
+        ],
+        "references": "tenant"
+      },
+      {
+        "table": "quote_line",
+        "fk_name": "fk_quote_line_updated_by",
+        "columns": [
+          "updated_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "quote_line",
+        "fk_name": "fk_quote_line_tenant_id",
+        "columns": [
+          "tenant_id"
+        ],
+        "references": "tenant"
+      },
+      {
+        "table": "quote_line_tax_component",
+        "fk_name": "fk_quote_line_tax_component_tenant_id",
+        "columns": [
+          "tenant_id"
+        ],
+        "references": "tenant"
+      },
+      {
+        "table": "quote_public_link",
+        "fk_name": "fk_quote_public_link_updated_by",
+        "columns": [
+          "updated_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "quote_public_link",
+        "fk_name": "fk_quote_public_link_tenant_id",
+        "columns": [
+          "tenant_id"
+        ],
+        "references": "tenant"
+      },
+      {
+        "table": "qpl_contact_action_type",
+        "fk_name": "fk_qpl_contact_action_type_updated_by",
+        "columns": [
+          "updated_by"
+        ],
+        "references": "user"
+      },
+      {
+        "table": "quote_public_link_contact_action",
+        "fk_name": "fk_quote_public_link_contact_action_tenant_id",
+        "columns": [
+          "tenant_id"
+        ],
+        "references": "tenant"
+      },
+      {
+        "table": "quote_acceptance",
+        "fk_name": "fk_quote_acceptance_tenant_id",
+        "columns": [
+          "tenant_id"
+        ],
+        "references": "tenant"
+      },
+      {
+        "table": "contact_endpoint",
+        "fk_name": "fk_contact_endpoint_tenant_id",
+        "columns": [
+          "tenant_id"
+        ],
+        "references": "tenant"
+      },
+      {
+        "table": "contact_notification_pref",
+        "fk_name": "fk_contact_notification_pref_tenant_id",
+        "columns": [
+          "tenant_id"
+        ],
+        "references": "tenant"
+      },
+      {
+        "table": "contact_portal_invite",
+        "fk_name": "fk_contact_portal_invite_tenant_id",
+        "columns": [
+          "tenant_id"
+        ],
+        "references": "tenant"
+      }
+    ]
+  }
+}

@@ -1,0 +1,102 @@
+/*
+ * Pilot for Trades — Token-sourced CSS Variables
+ *
+ * Location: packages/ui/src/styles/globals.css
+ *
+ * These CSS variables are sourced from packages/ui/src/tokens.ts.
+ * They provide the shadcn/ui-compatible semantic layer consumed by
+ * Tailwind utility classes like `bg-background`, `text-foreground`, etc.
+ *
+ * Imported by apps/web/src/app/globals.css via:
+ *   @import "@pilot/ui/styles/globals.css";
+ */
+
+:root {
+  /* Brand */
+  --brand-50: #eef1ff;
+  --brand-100: #d6dcff;
+  --brand-200: #adb8ff;
+  --brand-400: #6875f5;
+  --brand-600: #3b43d6;
+  --brand-800: #232aa3;
+  --brand-900: #181d66;
+
+  /* Alert */
+  --alert-50: #fff7eb;
+  --alert-100: #feebc8;
+  --alert-200: #fdd997;
+  --alert-400: #f59e0b;
+  --alert-600: #b45309;
+  --alert-800: #78350f;
+  --alert-900: #451a03;
+
+  /* Margin (success) */
+  --margin-50: #ecfdf5;
+  --margin-100: #d1fae5;
+  --margin-200: #a7f3d0;
+  --margin-400: #34d399;
+  --margin-600: #059669;
+  --margin-800: #065f46;
+  --margin-900: #022c22;
+
+  /* Fault (danger) */
+  --fault-50: #fef2f2;
+  --fault-100: #fee2e2;
+  --fault-200: #fecaca;
+  --fault-400: #f87171;
+  --fault-600: #dc2626;
+  --fault-800: #991b1b;
+  --fault-900: #450a0a;
+
+  /* Neutral */
+  --neutral-50: #fafaf9;
+  --neutral-100: #f5f5f4;
+  --neutral-200: #e7e5e4;
+  --neutral-400: #a8a29e;
+  --neutral-600: #57534e;
+  --neutral-800: #292524;
+  --neutral-900: #1c1917;
+
+  /* shadcn/ui-compatible semantic variables — light theme */
+  --background: 0 0% 100%;
+  --foreground: 20 14.3% 4.1%;
+  --card: 0 0% 100%;
+  --card-foreground: 20 14.3% 4.1%;
+  --primary: 233 63% 53%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 60 4.8% 95.9%;
+  --secondary-foreground: 24 9.8% 10%;
+  --muted: 60 4.8% 95.9%;
+  --muted-foreground: 25 5.3% 44.7%;
+  --accent: 60 4.8% 95.9%;
+  --accent-foreground: 24 9.8% 10%;
+  --destructive: 0 84.2% 60.2%;
+  --destructive-foreground: 60 9.1% 97.8%;
+  --border: 20 5.9% 90%;
+  --input: 20 5.9% 90%;
+  --ring: 233 63% 53%;
+  --radius: 0.5rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* shadcn/ui-compatible semantic variables — dark theme */
+    --background: 20 14.3% 4.1%;
+    --foreground: 60 9.1% 97.8%;
+    --card: 20 14.3% 4.1%;
+    --card-foreground: 60 9.1% 97.8%;
+    --primary: 233 63% 64%;
+    --primary-foreground: 20 14.3% 4.1%;
+    --secondary: 12 6.5% 15.1%;
+    --secondary-foreground: 60 9.1% 97.8%;
+    --muted: 12 6.5% 15.1%;
+    --muted-foreground: 24 5.4% 63.9%;
+    --accent: 12 6.5% 15.1%;
+    --accent-foreground: 60 9.1% 97.8%;
+    --destructive: 0 72.2% 50.6%;
+    --destructive-foreground: 60 9.1% 97.8%;
+    --border: 12 6.5% 15.1%;
+    --input: 12 6.5% 15.1%;
+    --ring: 233 63% 64%;
+  }
+}

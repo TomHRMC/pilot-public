@@ -1,0 +1,441 @@
+name: Deploy — Production
+
+# Triggers on push to the qa branch (see the note under `on:`) or manual dispatch
+# Per blue-green-constraints.md §5: uses OIDC — no long-lived IAM keys
+on:
+  # Releases deploy from the `qa` branch (feature/* → dev → qa; demo and prod
+  # branches were defined but not used — see
+  # dev-docs/sdlc/dev-git-commands-reference-v1.6.md). This R&D build ran a
+  # single AWS environment that served as QA and production candidate, so `qa` is
+  # the branch that ships. Most interim and single-component deploys during the
+  # build were run manually.
+  push:
+    branches: [qa]
+  workflow_dispatch: # Manual trigger (Kill Switch for emergency rollback)
+    inputs:
+      rollback:
+        description: "⚠️  KILL SWITCH: Set to 'true' to force rollback to previous stable task definition"
+        required: false
+        default: "false"
+
+permissions:
+  id-token: write  # Required for OIDC token generation
+  contents: read
+
+env:
+  AWS_REGION: us-east-1
+  ECR_REGISTRY: 000000000000.dkr.ecr.us-east-1.amazonaws.com
+  ECS_CLUSTER: pilot-production
+
+# ─── Job 1: Backend Unit Tests ────────────────────────────────────────────────
+# Every `run:` step uses bash with `-eo pipefail`, so a failing command
+# anywhere in a pipeline (e.g. `pytest ... | tail`) fails the step.
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  test-backend:
+    name: Backend Unit Tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: "pip"
+
+      - name: Install dependencies
+        run: |
+          pip install -r backend/requirements.txt
+
+      - name: Run unit tests (fast, no DB required)
+        run: |
+          cd backend && pytest -m unit --tb=short -q 2>&1 | tail -20
+        env:
+          ENVIRONMENT: test
+          TEST_ENDPOINT_ENABLED: "true"
+
+  # ─── Job 2: Secret Scanning (no-hardcode mandate) ─────────────────────────
+  secret-scan:
+    name: Secret Scanning
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Full history for git diff scanning
+
+      - name: Run Trivy secret scanner
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: "fs"
+          scan-ref: "."
+          scanners: "secret"
+          severity: "HIGH,CRITICAL"
+          exit-code: "1" # Fail build if secrets detected
+          format: "table"
+
+  # ─── Job 3: Build & Push Backend Image ────────────────────────────────────
+  build-backend:
+    name: Build & Push Backend Image
+    needs: [test-backend, secret-scan]
+    runs-on: ubuntu-latest
+    outputs:
+      image-tag: ${{ steps.build.outputs.image_tag }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials (OIDC — no long-lived keys)
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::000000000000:role/pilot-production-github-actions
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Login to Amazon ECR
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build and push backend image
+        id: build
+        run: |
+          IMAGE_TAG=${{ github.sha }}
+          IMAGE_BASE=${{ env.ECR_REGISTRY }}
+
+          # Build once, tag for api/worker/beat (all use same image with different CMD)
+          docker build \
+            --cache-from $IMAGE_BASE/pilot/api:latest \
+            --build-arg BUILDKIT_INLINE_CACHE=1 \
+            -t $IMAGE_BASE/pilot/api:$IMAGE_TAG \
+            -t $IMAGE_BASE/pilot/api:latest \
+            ./backend
+
+          # Push api image
+          docker push $IMAGE_BASE/pilot/api:$IMAGE_TAG
+          docker push $IMAGE_BASE/pilot/api:latest
+
+          # Worker and Beat use the same image (different CMD in ECS task def)
+          docker tag $IMAGE_BASE/pilot/api:$IMAGE_TAG $IMAGE_BASE/pilot/worker:$IMAGE_TAG
+          docker tag $IMAGE_BASE/pilot/api:latest $IMAGE_BASE/pilot/worker:latest
+          docker push $IMAGE_BASE/pilot/worker:$IMAGE_TAG
+          docker push $IMAGE_BASE/pilot/worker:latest
+
+          docker tag $IMAGE_BASE/pilot/api:$IMAGE_TAG $IMAGE_BASE/pilot/beat:$IMAGE_TAG
+          docker tag $IMAGE_BASE/pilot/api:latest $IMAGE_BASE/pilot/beat:latest
+          docker push $IMAGE_BASE/pilot/beat:$IMAGE_TAG
+          docker push $IMAGE_BASE/pilot/beat:latest
+
+          echo "image_tag=$IMAGE_TAG" >> $GITHUB_OUTPUT
+        env:
+          DOCKER_BUILDKIT: 1
+
+  # ─── Job 4: Database Migrations ───────────────────────────────────────────
+  migrate:
+    name: Run Alembic Migrations
+    needs: build-backend
+    runs-on: ubuntu-latest
+    steps:
+      - name: Configure AWS credentials (OIDC)
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::000000000000:role/pilot-production-github-actions
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Run Alembic migrations as one-off ECS task
+        run: |
+          echo "Running Alembic migrations..."
+
+          # Get subnet and security group IDs from Terraform outputs
+          # These are stable after Phase 1 terraform apply
+          PRIVATE_SUBNET=$(aws ec2 describe-subnets \
+            --filters "Name=tag:Name,Values=pilot-production-private-a" \
+            --query 'Subnets[0].SubnetId' --output text)
+
+          ECS_SG=$(aws ec2 describe-security-groups \
+            --filters "Name=tag:Name,Values=pilot-production-sg-ecs-api" \
+            --query 'SecurityGroups[0].GroupId' --output text)
+
+          echo "Running migration task in subnet: $PRIVATE_SUBNET"
+
+          TASK_ARN=$(aws ecs run-task \
+            --cluster ${{ env.ECS_CLUSTER }} \
+            --task-definition pilot-api \
+            --launch-type FARGATE \
+            --network-configuration "awsvpcConfiguration={
+              subnets=[$PRIVATE_SUBNET],
+              securityGroups=[$ECS_SG],
+              assignPublicIp=DISABLED
+            }" \
+            --overrides '{"containerOverrides":[{"name":"api","command":["alembic","upgrade","head"]}]}' \
+            --query 'tasks[0].taskArn' --output text)
+
+          echo "Migration task ARN: $TASK_ARN"
+
+          # Wait for migration to complete (timeout: 10 minutes)
+          aws ecs wait tasks-stopped \
+            --cluster ${{ env.ECS_CLUSTER }} \
+            --tasks $TASK_ARN
+
+          # Check exit code
+          EXIT_CODE=$(aws ecs describe-tasks \
+            --cluster ${{ env.ECS_CLUSTER }} \
+            --tasks $TASK_ARN \
+            --query 'tasks[0].containers[0].exitCode' --output text)
+
+          if [ "$EXIT_CODE" != "0" ]; then
+            echo "❌ Migration failed with exit code $EXIT_CODE"
+            echo "Check CloudWatch logs: /ecs/pilot-api"
+            exit 1
+          fi
+
+          echo "✅ Alembic migrations completed successfully"
+
+  # ─── Job 5: Deploy Backend Services ───────────────────────────────────────
+  deploy-backend:
+    name: Deploy Backend (ECS)
+    needs: migrate
+    runs-on: ubuntu-latest
+    steps:
+      - name: Configure AWS credentials (OIDC)
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::000000000000:role/pilot-production-github-actions
+          aws-region: ${{ env.AWS_REGION }}
+
+      # Blue-Green Phase 1 (ECS rolling):
+      # Per blue-green-constraints.md §2, rolling deploy:
+      # - minimum_healthy_percent=100 keeps Blue tasks running until Green passes health checks
+      # - 3× consecutive 30s health checks required before full cutover
+      # - Auto-rollback via deployment_circuit_breaker if new tasks fail health
+      - name: Deploy FastAPI API service
+        run: |
+          aws ecs update-service \
+            --cluster ${{ env.ECS_CLUSTER }} \
+            --service pilot-api \
+            --force-new-deployment \
+            --no-cli-pager
+          echo "FastAPI deployment triggered"
+
+      - name: Deploy Celery Worker service
+        run: |
+          aws ecs update-service \
+            --cluster ${{ env.ECS_CLUSTER }} \
+            --service pilot-celery-worker \
+            --force-new-deployment \
+            --no-cli-pager
+          echo "Celery Worker deployment triggered"
+
+      - name: Deploy Celery Beat service
+        run: |
+          aws ecs update-service \
+            --cluster ${{ env.ECS_CLUSTER }} \
+            --service pilot-celery-beat \
+            --force-new-deployment \
+            --no-cli-pager
+          echo "Celery Beat deployment triggered"
+
+      - name: Wait for API service stability (10 min timeout)
+        run: |
+          echo "Waiting for pilot-api to stabilize..."
+          aws ecs wait services-stable \
+            --cluster ${{ env.ECS_CLUSTER }} \
+            --services pilot-api
+          echo "✅ pilot-api service is stable"
+
+      - name: Verify API health endpoint
+        run: |
+          sleep 10
+          HTTP_STATUS=$(curl -s -o /dev/null -w "%{http_code}" \
+            https://api.pilotfortrades.com/api/v1/health || echo "000")
+
+          if [ "$HTTP_STATUS" = "200" ]; then
+            echo "✅ API health check passed (HTTP $HTTP_STATUS)"
+          else
+            # Fail the run so the bad deploy is visible. The ECS deployment
+            # circuit breaker separately rolls back tasks that fail health checks.
+            echo "::error::API health check returned HTTP $HTTP_STATUS after deploy"
+            exit 1
+          fi
+
+  # ─── Job 6: Build & Deploy Web Dashboard ──────────────────────────────────
+  deploy-web:
+    name: Build & Deploy Web Dashboard
+    needs: [test-backend, secret-scan]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials (OIDC)
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::000000000000:role/pilot-production-github-actions
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Login to Amazon ECR
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 9
+
+      - name: Install frontend dependencies
+        run: cd frontend && pnpm install --frozen-lockfile
+
+      - name: Build web dashboard Docker image
+        run: |
+          IMAGE_TAG=${{ github.sha }}
+          IMAGE_URL=${{ env.ECR_REGISTRY }}/pilot/web
+
+          docker build \
+            --cache-from $IMAGE_URL:latest \
+            -t $IMAGE_URL:$IMAGE_TAG \
+            -t $IMAGE_URL:latest \
+            -f frontend/apps/web/Dockerfile \
+            ./frontend
+
+          docker push $IMAGE_URL:$IMAGE_TAG
+          docker push $IMAGE_URL:latest
+          echo "✅ Web dashboard image pushed: $IMAGE_URL:$IMAGE_TAG"
+        env:
+          DOCKER_BUILDKIT: 1
+          NEXT_PUBLIC_API_URL: https://api.pilotfortrades.com
+          NEXT_PUBLIC_COGNITO_REGION: us-east-1
+          NEXT_PUBLIC_COGNITO_USER_POOL_ID: us-east-1_XXXXXXXXX
+          NEXT_PUBLIC_COGNITO_APP_CLIENT_ID: xxxxxxxxxxxxxxxxxxxxxxxxxx
+          NEXT_PUBLIC_USE_MOCK_AUTH: "false"
+          NEXT_PUBLIC_USE_MSW_MOCKS: "false"
+
+      # The web dashboard runs as the pilot-web ECS Fargate service (ADR-0001 —
+      # App Runner was sunset Apr 2026). ECS does not poll ECR, so the new image
+      # must be rolled out explicitly, same as the backend services above.
+      - name: Deploy web dashboard service
+        run: |
+          aws ecs update-service \
+            --cluster ${{ env.ECS_CLUSTER }} \
+            --service pilot-web \
+            --force-new-deployment \
+            --no-cli-pager
+          echo "Web dashboard deployment triggered"
+
+  # ─── Job 7: Build & Deploy Marketing Site ─────────────────────────────────
+  deploy-marketing:
+    name: Deploy Marketing Site (S3 + CloudFront)
+    needs: [test-backend, secret-scan]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 9
+
+      - name: Install frontend dependencies
+        run: cd frontend && pnpm install --frozen-lockfile
+
+      - name: Build marketing site (Next.js static export)
+        run: cd frontend && pnpm --filter marketing build
+        env:
+          NEXT_PUBLIC_API_URL: https://api.pilotfortrades.com
+          NEXT_PUBLIC_CLOUDFLARE_TURNSTILE_SITE_KEY: 0x4AAAAAADtbEEHD6Y-jXDbC
+          # Placeholder roles for the launch draft; no roles were ever open.
+          NEXT_PUBLIC_CAREERS_OPEN_ROLES: "Example Role A,Example Role B"
+
+      - name: Configure AWS credentials (OIDC)
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::000000000000:role/pilot-production-github-actions
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Deploy static assets to S3 (long cache — 1 year)
+        run: |
+          # Non-HTML: immutable assets (JS/CSS/images) — 1-year cache
+          aws s3 sync frontend/apps/marketing/out/ s3://pilot-production-marketing/ \
+            --delete \
+            --exclude "*.html" \
+            --cache-control "max-age=31536000,public,immutable" \
+            --no-progress
+          echo "✅ Static assets synced (1-year cache)"
+
+      - name: Deploy HTML files to S3 (no cache — always fresh)
+        run: |
+          # HTML files: must-revalidate so browsers always check for updates
+          aws s3 sync frontend/apps/marketing/out/ s3://pilot-production-marketing/ \
+            --delete \
+            --include "*.html" \
+            --exclude "*" \
+            --cache-control "no-cache,no-store,must-revalidate" \
+            --no-progress
+          echo "✅ HTML files synced (no-cache)"
+
+      - name: Invalidate CloudFront cache
+        run: |
+          INVALIDATION_ID=$(aws cloudfront create-invalidation \
+            --distribution-id ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }} \
+            --paths "/*" \
+            --query 'Invalidation.Id' --output text)
+          echo "✅ CloudFront invalidation created: $INVALIDATION_ID"
+          echo "Propagation takes 1-5 minutes globally"
+
+  # ─── Job 8: Post-Deploy Smoke Test ────────────────────────────────────────
+  smoke-test:
+    name: Post-Deploy Smoke Tests
+    needs: [deploy-backend, deploy-marketing]
+    runs-on: ubuntu-latest
+    if: always() # Run even if some deploys fail to get full picture
+    steps:
+      # Each check fails the run on a bad result. `if: always()` on every step
+      # makes all three checks report, even when an earlier one fails.
+      - name: Marketing site health check
+        if: always()
+        run: |
+          HTTP=$(curl -s -o /dev/null -w "%{http_code}" https://pilotfortrades.com || echo "000")
+          if [ "$HTTP" = "200" ]; then
+            echo "✅ pilotfortrades.com → $HTTP"
+          else
+            echo "::error::pilotfortrades.com returned HTTP $HTTP"
+            exit 1
+          fi
+
+      - name: API health check
+        if: always()
+        run: |
+          RESPONSE=$(curl -s https://api.pilotfortrades.com/api/v1/health || echo '{"status":"unreachable"}')
+          echo "API health: $RESPONSE"
+          if echo "$RESPONSE" | grep -q '"healthy"'; then
+            echo "✅ API is healthy"
+          else
+            echo "::error::API not healthy — check CloudWatch /ecs/pilot-api"
+            exit 1
+          fi
+
+      - name: TEST endpoint must return 403 (prod safety check)
+        if: always()
+        run: |
+          HTTP=$(curl -s -o /dev/null -w "%{http_code}" \
+            https://api.pilotfortrades.com/api/v1/customers/test || echo "000")
+          if [ "$HTTP" = "403" ]; then
+            echo "✅ TEST_ENDPOINT_ENABLED=false confirmed (HTTP 403)"
+          else
+            echo "::error::CRITICAL: TEST endpoint returned $HTTP — TEST_ENDPOINT_ENABLED may be true in prod!"
+            exit 1
+          fi

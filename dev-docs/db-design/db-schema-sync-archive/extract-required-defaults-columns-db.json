@@ -1,0 +1,2882 @@
+[
+ {
+  "table_schema": "audit",
+  "table_name": "event",
+  "column_name": "action",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "audit",
+  "table_name": "event",
+  "column_name": "actor_type",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "audit",
+  "table_name": "event",
+  "column_name": "entity_id",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "audit",
+  "table_name": "event",
+  "column_name": "entity_name",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "audit",
+  "table_name": "event",
+  "column_name": "occurred_at",
+  "data_type": "timestamp with time zone"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "address",
+  "column_name": "is_active",
+  "data_type": "boolean"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "address_type",
+  "column_name": "code",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "address_type",
+  "column_name": "is_active",
+  "data_type": "boolean"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "address_type",
+  "column_name": "is_default",
+  "data_type": "boolean"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "address_type",
+  "column_name": "name",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "alembic_version",
+  "column_name": "version_num",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "app_service",
+  "column_name": "category_code",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "app_service",
+  "column_name": "is_active",
+  "data_type": "boolean"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "app_service",
+  "column_name": "name",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "app_service",
+  "column_name": "provider_code",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "app_service_category",
+  "column_name": "code",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "app_service_category",
+  "column_name": "is_active",
+  "data_type": "boolean"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "app_service_provider",
+  "column_name": "code",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "app_service_provider",
+  "column_name": "is_active",
+  "data_type": "boolean"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "auth_api_token",
+  "column_name": "name",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "auth_api_token",
+  "column_name": "token_hash",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "auth_email_verification",
+  "column_name": "expires_at",
+  "data_type": "timestamp with time zone"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "auth_email_verification",
+  "column_name": "token_hash",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "auth_jwk",
+  "column_name": "alg",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "auth_jwk",
+  "column_name": "jwk_status_id",
+  "data_type": "uuid"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "auth_jwk",
+  "column_name": "kid",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "auth_jwk",
+  "column_name": "public_jwk",
+  "data_type": "jsonb"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "auth_mfa_otp",
+  "column_name": "attempt_count",
+  "data_type": "integer"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "auth_mfa_otp",
+  "column_name": "channel",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "auth_mfa_otp",
+  "column_name": "code_hash",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "auth_mfa_otp",
+  "column_name": "expires_at",
+  "data_type": "timestamp with time zone"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "auth_password_history",
+  "column_name": "changed_at",
+  "data_type": "timestamp with time zone"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "auth_password_history",
+  "column_name": "password_hash",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "auth_password_reset",
+  "column_name": "expires_at",
+  "data_type": "timestamp with time zone"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "auth_password_reset",
+  "column_name": "token_hash",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "auth_refresh_token",
+  "column_name": "expires_at",
+  "data_type": "timestamp with time zone"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "auth_refresh_token",
+  "column_name": "issued_at",
+  "data_type": "timestamp with time zone"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "auth_refresh_token",
+  "column_name": "jti",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "auth_refresh_token",
+  "column_name": "user_id",
+  "data_type": "uuid"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "change_order",
+  "column_name": "description",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "change_order",
+  "column_name": "job_id",
+  "data_type": "uuid"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "change_order_attachment",
+  "column_name": "change_order_id",
+  "data_type": "uuid"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "change_order_attachment",
+  "column_name": "file_name",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "change_order_attachment",
+  "column_name": "mime_type",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "change_order_attachment",
+  "column_name": "object_key",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "change_order_attachment",
+  "column_name": "size_bytes",
+  "data_type": "integer"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "change_order_line",
+  "column_name": "change_order_id",
+  "data_type": "uuid"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "change_order_line",
+  "column_name": "description",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "change_order_line",
+  "column_name": "position",
+  "data_type": "integer"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "change_order_line",
+  "column_name": "qco_line_type_id",
+  "data_type": "uuid"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "change_order_line_tax_component",
+  "column_name": "amount_cents",
+  "data_type": "integer"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "change_order_line_tax_component",
+  "column_name": "change_order_line_id",
+  "data_type": "uuid"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "change_order_line_tax_component",
+  "column_name": "component_code",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "change_order_line_tax_component",
+  "column_name": "rate_pct",
+  "data_type": "numeric"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "change_order_line_tax_component",
+  "column_name": "tax_rate_version_id",
+  "data_type": "bigint"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "connector_config",
+  "column_name": "enabled",
+  "data_type": "boolean"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "connector_config",
+  "column_name": "failure_count",
+  "data_type": "integer"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "connector_config",
+  "column_name": "mode",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "connector_config",
+  "column_name": "supplier_id",
+  "data_type": "uuid"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "connector_run_log",
+  "column_name": "started_at",
+  "data_type": "timestamp with time zone"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "connector_run_log",
+  "column_name": "supplier_id",
+  "data_type": "uuid"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "contact",
+  "column_name": "is_active",
+  "data_type": "boolean"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "contact_endpoint",
+  "column_name": "channel",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "contact_endpoint",
+  "column_name": "consent_status",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "contact_endpoint",
+  "column_name": "contact_id",
+  "data_type": "uuid"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "contact_endpoint",
+  "column_name": "is_active",
+  "data_type": "boolean"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "contact_endpoint",
+  "column_name": "is_primary",
+  "data_type": "boolean"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "contact_endpoint",
+  "column_name": "value",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "contact_endpoint",
+  "column_name": "verification_status",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "contact_notification_pref",
+  "column_name": "allow_email",
+  "data_type": "boolean"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "contact_notification_pref",
+  "column_name": "allow_sms",
+  "data_type": "boolean"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "contact_notification_pref",
+  "column_name": "contact_id",
+  "data_type": "uuid"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "contact_notification_pref",
+  "column_name": "is_enabled",
+  "data_type": "boolean"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "contact_notification_pref",
+  "column_name": "notification_type_code",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "contact_portal_invite",
+  "column_name": "contact_id",
+  "data_type": "uuid"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "contact_portal_invite",
+  "column_name": "email",
+  "data_type": "USER-DEFINED"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "contact_portal_invite",
+  "column_name": "expires_at",
+  "data_type": "timestamp with time zone"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "contact_portal_invite",
+  "column_name": "token_hash",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "contact_type",
+  "column_name": "code",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "contact_type",
+  "column_name": "is_active",
+  "data_type": "boolean"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "contact_type",
+  "column_name": "is_default",
+  "data_type": "boolean"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "contact_type",
+  "column_name": "name",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "conversation_message",
+  "column_name": "content_text",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "conversation_message",
+  "column_name": "role",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "conversation_message",
+  "column_name": "session_id",
+  "data_type": "uuid"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "conversation_session",
+  "column_name": "is_active",
+  "data_type": "boolean"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "conversation_session",
+  "column_name": "status",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "conversation_session",
+  "column_name": "tenant_id",
+  "data_type": "uuid"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "conversation_session",
+  "column_name": "user_id",
+  "data_type": "uuid"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "currency",
+  "column_name": "code",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "currency",
+  "column_name": "is_active",
+  "data_type": "boolean"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "currency",
+  "column_name": "name",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "currency",
+  "column_name": "symbol",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "customer",
+  "column_name": "display_name",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "customer",
+  "column_name": "is_active",
+  "data_type": "boolean"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "customer",
+  "column_name": "tenant_id",
+  "data_type": "uuid"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "customer",
+  "column_name": "type",
+  "data_type": "text"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "customer_lifecycle_status",
+  "column_name": "code",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "customer_lifecycle_status",
+  "column_name": "is_active",
+  "data_type": "boolean"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "customer_lifecycle_status",
+  "column_name": "is_default",
+  "data_type": "boolean"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "customer_lifecycle_status",
+  "column_name": "name",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "discount_version",
+  "column_name": "code",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "discount_version",
+  "column_name": "recorded_at",
+  "data_type": "timestamp with time zone"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "discount_version",
+  "column_name": "valid_period",
+  "data_type": "tstzrange"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "entity_address",
+  "column_name": "address_id",
+  "data_type": "uuid"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "entity_address",
+  "column_name": "address_type_code",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "entity_address",
+  "column_name": "entity_id",
+  "data_type": "uuid"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "entity_address",
+  "column_name": "entity_type_code",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "entity_address",
+  "column_name": "is_active",
+  "data_type": "boolean"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "entity_address",
+  "column_name": "is_primary",
+  "data_type": "boolean"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "entity_contact",
+  "column_name": "contact_id",
+  "data_type": "uuid"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "entity_contact",
+  "column_name": "contact_type_code",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "entity_contact",
+  "column_name": "entity_id",
+  "data_type": "uuid"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "entity_contact",
+  "column_name": "entity_type_code",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "entity_contact",
+  "column_name": "is_primary",
+  "data_type": "boolean"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "entity_type",
+  "column_name": "code",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "entity_type",
+  "column_name": "is_active",
+  "data_type": "boolean"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "entity_type",
+  "column_name": "name",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "idempotency_key",
+  "column_name": "expires_at",
+  "data_type": "timestamp with time zone"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "idempotency_key",
+  "column_name": "first_seen_at",
+  "data_type": "timestamp with time zone"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "idempotency_key",
+  "column_name": "key",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "integration_credential",
+  "column_name": "app_service_id",
+  "data_type": "uuid"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "integration_credential",
+  "column_name": "secret_json",
+  "data_type": "jsonb"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "integration_sync_conflict",
+  "column_name": "app_service_id",
+  "data_type": "uuid"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "integration_sync_conflict",
+  "column_name": "entity_id",
+  "data_type": "uuid"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "integration_sync_conflict",
+  "column_name": "entity_type_code",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "integration_sync_conflict",
+  "column_name": "external_id",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "integration_sync_conflict",
+  "column_name": "external_payload",
+  "data_type": "jsonb"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "integration_sync_conflict",
+  "column_name": "internal_payload",
+  "data_type": "jsonb"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "integration_sync_conflict",
+  "column_name": "tenant_id",
+  "data_type": "uuid"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "integration_sync_log",
+  "column_name": "app_service_id",
+  "data_type": "uuid"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "integration_sync_log",
+  "column_name": "finished_at",
+  "data_type": "timestamp with time zone"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "integration_sync_log",
+  "column_name": "records_failed",
+  "data_type": "integer"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "integration_sync_log",
+  "column_name": "records_processed",
+  "data_type": "integer"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "integration_sync_log",
+  "column_name": "started_at",
+  "data_type": "timestamp with time zone"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "integration_sync_log",
+  "column_name": "status",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "integration_sync_log",
+  "column_name": "tenant_id",
+  "data_type": "uuid"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "integration_sync_mapping",
+  "column_name": "app_service_id",
+  "data_type": "uuid"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "integration_sync_mapping",
+  "column_name": "entity_id",
+  "data_type": "uuid"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "integration_sync_mapping",
+  "column_name": "entity_type_code",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "integration_sync_mapping",
+  "column_name": "external_id",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "integration_sync_mapping",
+  "column_name": "last_synced_at",
+  "data_type": "timestamp with time zone"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "integration_sync_mapping",
+  "column_name": "tenant_id",
+  "data_type": "uuid"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "invoice",
+  "column_name": "balance_due_cents",
+  "data_type": "integer"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "invoice",
+  "column_name": "currency",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "invoice",
+  "column_name": "customer_id",
+  "data_type": "uuid"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "invoice",
+  "column_name": "invoice_number",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "invoice",
+  "column_name": "is_active",
+  "data_type": "boolean"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "invoice",
+  "column_name": "site_id",
+  "data_type": "uuid"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "invoice",
+  "column_name": "status_id",
+  "data_type": "uuid"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "invoice",
+  "column_name": "subtotal_cents",
+  "data_type": "integer"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "invoice",
+  "column_name": "tax_cents",
+  "data_type": "integer"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "invoice",
+  "column_name": "tenant_id",
+  "data_type": "uuid"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "invoice",
+  "column_name": "total_cents",
+  "data_type": "integer"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "invoice_line",
+  "column_name": "description",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "invoice_line",
+  "column_name": "invoice_id",
+  "data_type": "uuid"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "invoice_line",
+  "column_name": "is_active",
+  "data_type": "boolean"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "invoice_line",
+  "column_name": "position",
+  "data_type": "integer"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "invoice_line",
+  "column_name": "qco_line_type_id",
+  "data_type": "uuid"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "invoice_line",
+  "column_name": "source_type",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "invoice_line_tax_component",
+  "column_name": "amount_cents",
+  "data_type": "integer"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "invoice_line_tax_component",
+  "column_name": "component_code",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "invoice_line_tax_component",
+  "column_name": "invoice_line_id",
+  "data_type": "uuid"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "invoice_line_tax_component",
+  "column_name": "rate_pct",
+  "data_type": "numeric"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "invoice_line_tax_component",
+  "column_name": "tax_rate_version_id",
+  "data_type": "bigint"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "invoice_status",
+  "column_name": "code",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "invoice_status",
+  "column_name": "is_active",
+  "data_type": "boolean"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "invoice_status",
+  "column_name": "is_default",
+  "data_type": "boolean"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "invoice_status",
+  "column_name": "is_terminal",
+  "data_type": "boolean"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "invoice_status",
+  "column_name": "name",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "job",
+  "column_name": "customer_id",
+  "data_type": "uuid"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "job",
+  "column_name": "is_active",
+  "data_type": "boolean"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "job",
+  "column_name": "site_id",
+  "data_type": "uuid"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "job",
+  "column_name": "status_id",
+  "data_type": "uuid"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "job",
+  "column_name": "tenant_id",
+  "data_type": "uuid"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "job_assignment",
+  "column_name": "is_active",
+  "data_type": "boolean"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "job_assignment",
+  "column_name": "is_lead",
+  "data_type": "boolean"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "job_assignment",
+  "column_name": "job_id",
+  "data_type": "uuid"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "job_assignment",
+  "column_name": "tenant_id",
+  "data_type": "uuid"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "job_assignment",
+  "column_name": "user_id",
+  "data_type": "uuid"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "job_attachment",
+  "column_name": "file_name",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "job_attachment",
+  "column_name": "job_id",
+  "data_type": "uuid"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "job_attachment",
+  "column_name": "mime_type",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "job_attachment",
+  "column_name": "object_key",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "job_attachment",
+  "column_name": "size_bytes",
+  "data_type": "integer"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "job_attachment",
+  "column_name": "tenant_id",
+  "data_type": "uuid"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "job_expense",
+  "column_name": "billable_cents",
+  "data_type": "integer"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "job_expense",
+  "column_name": "cost_cents",
+  "data_type": "integer"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "job_expense",
+  "column_name": "description",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "job_expense",
+  "column_name": "incurred_at",
+  "data_type": "timestamp with time zone"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "job_expense",
+  "column_name": "job_expense_category_code",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "job_expense",
+  "column_name": "job_id",
+  "data_type": "uuid"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "job_expense",
+  "column_name": "tenant_id",
+  "data_type": "uuid"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "job_expense_category",
+  "column_name": "code",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "job_expense_category",
+  "column_name": "is_active",
+  "data_type": "boolean"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "job_expense_category",
+  "column_name": "is_default",
+  "data_type": "boolean"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "job_expense_category",
+  "column_name": "name",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "job_notes",
+  "column_name": "customer_visible",
+  "data_type": "boolean"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "job_notes",
+  "column_name": "job_id",
+  "data_type": "uuid"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "job_notes",
+  "column_name": "notes",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "job_status",
+  "column_name": "code",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "job_status",
+  "column_name": "is_active",
+  "data_type": "boolean"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "job_status",
+  "column_name": "is_default",
+  "data_type": "boolean"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "job_status",
+  "column_name": "is_terminal",
+  "data_type": "boolean"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "job_status",
+  "column_name": "name",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "job_time_entry",
+  "column_name": "hourly_rate_cents",
+  "data_type": "integer"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "job_time_entry",
+  "column_name": "job_id",
+  "data_type": "uuid"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "job_time_entry",
+  "column_name": "started_at",
+  "data_type": "timestamp with time zone"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "job_time_entry",
+  "column_name": "total_cost_cents",
+  "data_type": "integer"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "job_time_entry",
+  "column_name": "user_id",
+  "data_type": "uuid"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "jwk_status",
+  "column_name": "code",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "jwk_status",
+  "column_name": "is_default",
+  "data_type": "boolean"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "jwk_status",
+  "column_name": "is_signable",
+  "data_type": "boolean"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "jwk_status",
+  "column_name": "name",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "notification_channel",
+  "column_name": "code",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "notification_channel",
+  "column_name": "is_active",
+  "data_type": "boolean"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "notification_channel",
+  "column_name": "name",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "notification_delivery_attempt",
+  "column_name": "attempt_no",
+  "data_type": "integer"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "notification_delivery_attempt",
+  "column_name": "attempted_at",
+  "data_type": "timestamp with time zone"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "notification_delivery_attempt",
+  "column_name": "notification_outbox_id",
+  "data_type": "uuid"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "notification_delivery_attempt",
+  "column_name": "provider",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "notification_delivery_attempt",
+  "column_name": "status",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "notification_delivery_attempt",
+  "column_name": "tenant_id",
+  "data_type": "uuid"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "notification_event",
+  "column_name": "entity_id",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "notification_event",
+  "column_name": "entity_type_code",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "notification_event",
+  "column_name": "notification_type_code",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "notification_event",
+  "column_name": "occurred_at",
+  "data_type": "timestamp with time zone"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "notification_event",
+  "column_name": "tenant_id",
+  "data_type": "uuid"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "notification_outbox",
+  "column_name": "body",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "notification_outbox",
+  "column_name": "channel",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "notification_outbox",
+  "column_name": "notification_event_id",
+  "data_type": "uuid"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "notification_outbox",
+  "column_name": "tenant_id",
+  "data_type": "uuid"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "notification_template",
+  "column_name": "body",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "notification_template",
+  "column_name": "channel",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "notification_template",
+  "column_name": "is_active",
+  "data_type": "boolean"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "notification_template",
+  "column_name": "locale",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "notification_template",
+  "column_name": "notification_type_code",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "notification_type",
+  "column_name": "audience",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "notification_type",
+  "column_name": "code",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "notification_type",
+  "column_name": "is_active",
+  "data_type": "boolean"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "notification_type",
+  "column_name": "name",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "payment",
+  "column_name": "amount_cents",
+  "data_type": "integer"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "payment",
+  "column_name": "invoice_id",
+  "data_type": "uuid"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "payment",
+  "column_name": "is_active",
+  "data_type": "boolean"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "payment",
+  "column_name": "payment_method_id",
+  "data_type": "uuid"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "payment",
+  "column_name": "status_id",
+  "data_type": "uuid"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "payment",
+  "column_name": "tenant_id",
+  "data_type": "uuid"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "payment_method",
+  "column_name": "payment_type_id",
+  "data_type": "uuid"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "payment_method",
+  "column_name": "psp_payment_method_id",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "payment_method",
+  "column_name": "psp_provider",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "payment_method",
+  "column_name": "tenant_id",
+  "data_type": "uuid"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "payment_status",
+  "column_name": "code",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "payment_status",
+  "column_name": "is_active",
+  "data_type": "boolean"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "payment_status",
+  "column_name": "is_default",
+  "data_type": "boolean"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "payment_status",
+  "column_name": "is_terminal",
+  "data_type": "boolean"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "payment_status",
+  "column_name": "name",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "payment_type",
+  "column_name": "code",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "payment_type",
+  "column_name": "is_active",
+  "data_type": "boolean"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "payment_type",
+  "column_name": "name",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "platform_role",
+  "column_name": "code",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "platform_role",
+  "column_name": "is_active",
+  "data_type": "boolean"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "platform_role",
+  "column_name": "is_default",
+  "data_type": "boolean"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "platform_role",
+  "column_name": "name",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "pricebook_item",
+  "column_name": "is_active",
+  "data_type": "boolean"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "pricebook_item",
+  "column_name": "name",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "pricebook_item",
+  "column_name": "sku",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "pricebook_item",
+  "column_name": "tenant_id",
+  "data_type": "uuid"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "pricebook_item_version",
+  "column_name": "default_unit_price_cents",
+  "data_type": "integer"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "pricebook_item_version",
+  "column_name": "pricebook_item_id",
+  "data_type": "uuid"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "pricebook_item_version",
+  "column_name": "recorded_at",
+  "data_type": "timestamp with time zone"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "pricebook_item_version",
+  "column_name": "tenant_id",
+  "data_type": "uuid"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "pricebook_item_version",
+  "column_name": "valid_period",
+  "data_type": "tstzrange"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "pricing_cache",
+  "column_name": "currency",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "pricing_cache",
+  "column_name": "expires_at",
+  "data_type": "timestamp with time zone"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "pricing_cache",
+  "column_name": "price_cents",
+  "data_type": "integer"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "pricing_cache",
+  "column_name": "sku",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "pricing_cache",
+  "column_name": "supplier_id",
+  "data_type": "uuid"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "product_feature",
+  "column_name": "code",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "product_feature",
+  "column_name": "is_active",
+  "data_type": "boolean"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "product_feature",
+  "column_name": "name",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "product_feature",
+  "column_name": "unit",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "product_plan",
+  "column_name": "code",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "product_plan",
+  "column_name": "is_active",
+  "data_type": "boolean"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "product_plan",
+  "column_name": "name",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "product_plan_product_feature_version",
+  "column_name": "limit_enforcement",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "product_plan_product_feature_version",
+  "column_name": "product_feature_code",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "product_plan_product_feature_version",
+  "column_name": "product_plan_code",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "product_plan_product_feature_version",
+  "column_name": "recorded_at",
+  "data_type": "timestamp with time zone"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "product_plan_product_feature_version",
+  "column_name": "valid_period",
+  "data_type": "tstzrange"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "product_plan_version",
+  "column_name": "name",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "product_plan_version",
+  "column_name": "price_cents",
+  "data_type": "integer"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "product_plan_version",
+  "column_name": "product_plan_code",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "product_plan_version",
+  "column_name": "recorded_at",
+  "data_type": "timestamp with time zone"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "product_plan_version",
+  "column_name": "valid_period",
+  "data_type": "tstzrange"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "psp_customer",
+  "column_name": "customer_id",
+  "data_type": "uuid"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "psp_customer",
+  "column_name": "psp_customer_id",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "psp_customer",
+  "column_name": "psp_provider",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "psp_customer",
+  "column_name": "tenant_id",
+  "data_type": "uuid"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "psp_transaction_log",
+  "column_name": "app_service_id",
+  "data_type": "uuid"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "psp_transaction_log",
+  "column_name": "tenant_id",
+  "data_type": "uuid"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "psp_transaction_log",
+  "column_name": "transaction_type",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "qco_line_type",
+  "column_name": "code",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "qco_line_type",
+  "column_name": "is_active",
+  "data_type": "boolean"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "qco_line_type",
+  "column_name": "is_default",
+  "data_type": "boolean"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "qco_line_type",
+  "column_name": "name",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "qpl_contact_action_type",
+  "column_name": "code",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "qpl_contact_action_type",
+  "column_name": "is_active",
+  "data_type": "boolean"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "qpl_contact_action_type",
+  "column_name": "is_default",
+  "data_type": "boolean"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "qpl_contact_action_type",
+  "column_name": "name",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "quote",
+  "column_name": "customer_id",
+  "data_type": "uuid"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "quote",
+  "column_name": "is_active",
+  "data_type": "boolean"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "quote",
+  "column_name": "site_id",
+  "data_type": "uuid"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "quote",
+  "column_name": "status_id",
+  "data_type": "uuid"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "quote",
+  "column_name": "tenant_id",
+  "data_type": "uuid"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "quote_acceptance",
+  "column_name": "accepted_by_email",
+  "data_type": "USER-DEFINED"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "quote_acceptance",
+  "column_name": "accepted_by_name",
+  "data_type": "text"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "quote_acceptance",
+  "column_name": "approved_at",
+  "data_type": "timestamp with time zone"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "quote_acceptance",
+  "column_name": "quote_version_id",
+  "data_type": "uuid"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "quote_acceptance",
+  "column_name": "terms_acknowledged",
+  "data_type": "boolean"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "quote_line",
+  "column_name": "description",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "quote_line",
+  "column_name": "is_active",
+  "data_type": "boolean"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "quote_line",
+  "column_name": "position",
+  "data_type": "integer"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "quote_line",
+  "column_name": "qco_line_type_id",
+  "data_type": "uuid"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "quote_line",
+  "column_name": "quote_id",
+  "data_type": "uuid"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "quote_line_tax_component",
+  "column_name": "amount_cents",
+  "data_type": "integer"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "quote_line_tax_component",
+  "column_name": "component_code",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "quote_line_tax_component",
+  "column_name": "quote_line_id",
+  "data_type": "uuid"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "quote_line_tax_component",
+  "column_name": "rate_pct",
+  "data_type": "numeric"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "quote_line_tax_component",
+  "column_name": "tax_rate_version_id",
+  "data_type": "bigint"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "quote_link_status",
+  "column_name": "code",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "quote_link_status",
+  "column_name": "is_active",
+  "data_type": "boolean"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "quote_link_status",
+  "column_name": "is_default",
+  "data_type": "boolean"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "quote_link_status",
+  "column_name": "name",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "quote_message",
+  "column_name": "action_type",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "quote_message",
+  "column_name": "message",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "quote_message",
+  "column_name": "quote_id",
+  "data_type": "uuid"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "quote_message",
+  "column_name": "tenant_id",
+  "data_type": "uuid"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "quote_public_link",
+  "column_name": "contact_id",
+  "data_type": "uuid"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "quote_public_link",
+  "column_name": "max_uses",
+  "data_type": "integer"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "quote_public_link",
+  "column_name": "quote_id",
+  "data_type": "uuid"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "quote_public_link",
+  "column_name": "status_id",
+  "data_type": "uuid"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "quote_public_link",
+  "column_name": "token_hash",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "quote_public_link",
+  "column_name": "used_count",
+  "data_type": "integer"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "quote_public_link_contact_action",
+  "column_name": "contact_id",
+  "data_type": "uuid"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "quote_public_link_contact_action",
+  "column_name": "occurred_at",
+  "data_type": "timestamp with time zone"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "quote_public_link_contact_action",
+  "column_name": "qpl_contact_action_type_id",
+  "data_type": "uuid"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "quote_public_link_contact_action",
+  "column_name": "quote_id",
+  "data_type": "uuid"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "quote_status",
+  "column_name": "code",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "quote_status",
+  "column_name": "is_active",
+  "data_type": "boolean"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "quote_status",
+  "column_name": "is_default",
+  "data_type": "boolean"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "quote_status",
+  "column_name": "is_terminal",
+  "data_type": "boolean"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "quote_status",
+  "column_name": "name",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "quote_version",
+  "column_name": "is_active",
+  "data_type": "boolean"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "quote_version",
+  "column_name": "quote_id",
+  "data_type": "uuid"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "quote_version",
+  "column_name": "snapshot",
+  "data_type": "jsonb"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "quote_version",
+  "column_name": "version_no",
+  "data_type": "integer"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "site",
+  "column_name": "customer_id",
+  "data_type": "uuid"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "site",
+  "column_name": "is_active",
+  "data_type": "boolean"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "site",
+  "column_name": "tenant_id",
+  "data_type": "uuid"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "site_lifecycle_status",
+  "column_name": "code",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "site_lifecycle_status",
+  "column_name": "is_active",
+  "data_type": "boolean"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "site_lifecycle_status",
+  "column_name": "is_default",
+  "data_type": "boolean"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "site_lifecycle_status",
+  "column_name": "name",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "sso_provider",
+  "column_name": "code",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "sso_provider",
+  "column_name": "is_active",
+  "data_type": "boolean"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "sso_provider",
+  "column_name": "name",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "subscription",
+  "column_name": "is_active",
+  "data_type": "boolean"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "subscription",
+  "column_name": "product_plan_code",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "subscription",
+  "column_name": "started_at",
+  "data_type": "timestamp with time zone"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "subscription",
+  "column_name": "status_id",
+  "data_type": "uuid"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "subscription",
+  "column_name": "tenant_id",
+  "data_type": "uuid"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "subscription_status",
+  "column_name": "code",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "subscription_status",
+  "column_name": "is_billing_active",
+  "data_type": "boolean"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "subscription_status",
+  "column_name": "name",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "subscription_usage",
+  "column_name": "period_end",
+  "data_type": "date"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "subscription_usage",
+  "column_name": "period_start",
+  "data_type": "date"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "subscription_usage",
+  "column_name": "product_feature_code",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "subscription_usage",
+  "column_name": "subscription_id",
+  "data_type": "uuid"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "supplier",
+  "column_name": "is_active",
+  "data_type": "boolean"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "supplier",
+  "column_name": "name",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "supplier_item",
+  "column_name": "is_active",
+  "data_type": "boolean"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "supplier_item",
+  "column_name": "name",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "supplier_item",
+  "column_name": "sku",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "supplier_item",
+  "column_name": "supplier_id",
+  "data_type": "uuid"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "supplier_item",
+  "column_name": "uom_id",
+  "data_type": "uuid"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "supplier_item_category",
+  "column_name": "code",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "supplier_item_category",
+  "column_name": "is_active",
+  "data_type": "boolean"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "supplier_item_category",
+  "column_name": "name",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "supplier_item_price",
+  "column_name": "currency",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "supplier_item_price",
+  "column_name": "supplier_item_id",
+  "data_type": "uuid"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "supplier_item_price",
+  "column_name": "unit_price",
+  "data_type": "numeric"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "supplier_item_price",
+  "column_name": "valid_period",
+  "data_type": "tstzrange"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "supplier_item_uom",
+  "column_name": "code",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "supplier_item_uom",
+  "column_name": "is_active",
+  "data_type": "boolean"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "supplier_item_uom",
+  "column_name": "is_default",
+  "data_type": "boolean"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "supplier_item_uom",
+  "column_name": "name",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "supplier_lifecycle_status",
+  "column_name": "code",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "supplier_lifecycle_status",
+  "column_name": "is_active",
+  "data_type": "boolean"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "supplier_lifecycle_status",
+  "column_name": "is_default",
+  "data_type": "boolean"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "supplier_lifecycle_status",
+  "column_name": "name",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "tax_rate_version",
+  "column_name": "jurisdiction_code",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "tax_rate_version",
+  "column_name": "rate_pct",
+  "data_type": "numeric"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "tax_rate_version",
+  "column_name": "recorded_at",
+  "data_type": "timestamp with time zone"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "tax_rate_version",
+  "column_name": "valid_period",
+  "data_type": "tstzrange"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "taxability_code",
+  "column_name": "code",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "taxability_code",
+  "column_name": "is_active",
+  "data_type": "boolean"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "tenant",
+  "column_name": "is_active",
+  "data_type": "boolean"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "tenant",
+  "column_name": "name",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "tenant_domain",
+  "column_name": "domain",
+  "data_type": "USER-DEFINED"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "tenant_domain",
+  "column_name": "is_active",
+  "data_type": "boolean"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "tenant_domain",
+  "column_name": "tenant_id",
+  "data_type": "uuid"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "tenant_markup_version",
+  "column_name": "job_expense_category_code",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "tenant_markup_version",
+  "column_name": "markup_pct",
+  "data_type": "numeric"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "tenant_markup_version",
+  "column_name": "recorded_at",
+  "data_type": "timestamp with time zone"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "tenant_markup_version",
+  "column_name": "tenant_id",
+  "data_type": "uuid"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "tenant_markup_version",
+  "column_name": "valid_period",
+  "data_type": "tstzrange"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "tenant_notification_default",
+  "column_name": "default_is_enabled",
+  "data_type": "boolean"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "tenant_notification_default",
+  "column_name": "notification_type_code",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "tenant_notification_default",
+  "column_name": "tenant_id",
+  "data_type": "uuid"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "tenant_product_feature_override",
+  "column_name": "enabled",
+  "data_type": "boolean"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "tenant_product_feature_override",
+  "column_name": "product_feature_code",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "tenant_product_feature_override",
+  "column_name": "tenant_id",
+  "data_type": "uuid"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "tenant_settings",
+  "column_name": "tenant_id",
+  "data_type": "uuid"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "tenant_user",
+  "column_name": "is_active",
+  "data_type": "boolean"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "tenant_user",
+  "column_name": "role_code",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "tenant_user",
+  "column_name": "status_id",
+  "data_type": "uuid"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "tenant_user",
+  "column_name": "tenant_id",
+  "data_type": "uuid"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "tenant_user",
+  "column_name": "user_id",
+  "data_type": "uuid"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "tenant_user_invite",
+  "column_name": "email",
+  "data_type": "USER-DEFINED"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "tenant_user_invite",
+  "column_name": "expires_at",
+  "data_type": "timestamp with time zone"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "tenant_user_invite",
+  "column_name": "is_active",
+  "data_type": "boolean"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "tenant_user_invite",
+  "column_name": "tenant_id",
+  "data_type": "uuid"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "tenant_user_invite",
+  "column_name": "token_hash",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "tenant_user_notification_pref",
+  "column_name": "allow_email",
+  "data_type": "boolean"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "tenant_user_notification_pref",
+  "column_name": "allow_in_app",
+  "data_type": "boolean"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "tenant_user_notification_pref",
+  "column_name": "is_enabled",
+  "data_type": "boolean"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "tenant_user_notification_pref",
+  "column_name": "notification_type_code",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "tenant_user_notification_pref",
+  "column_name": "tenant_id",
+  "data_type": "uuid"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "tenant_user_notification_pref",
+  "column_name": "user_id",
+  "data_type": "uuid"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "tenant_user_role",
+  "column_name": "code",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "tenant_user_role",
+  "column_name": "is_active",
+  "data_type": "boolean"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "tenant_user_role",
+  "column_name": "is_default",
+  "data_type": "boolean"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "tenant_user_role",
+  "column_name": "name",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "tenant_user_status",
+  "column_name": "code",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "tenant_user_status",
+  "column_name": "is_active",
+  "data_type": "boolean"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "tenant_user_status",
+  "column_name": "is_default",
+  "data_type": "boolean"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "tenant_user_status",
+  "column_name": "name",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "usage_ledger",
+  "column_name": "idempotency_key",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "usage_ledger",
+  "column_name": "occurred_at",
+  "data_type": "timestamp with time zone"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "usage_ledger",
+  "column_name": "product_feature_code",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "usage_ledger",
+  "column_name": "tenant_id",
+  "data_type": "uuid"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "user",
+  "column_name": "email",
+  "data_type": "USER-DEFINED"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "user",
+  "column_name": "failed_login_count",
+  "data_type": "integer"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "user",
+  "column_name": "is_active",
+  "data_type": "boolean"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "user",
+  "column_name": "is_platform_user",
+  "data_type": "boolean"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "user",
+  "column_name": "mfa_enforced",
+  "data_type": "boolean"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "user",
+  "column_name": "require_password_reset",
+  "data_type": "boolean"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "user_endpoint",
+  "column_name": "channel",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "user_endpoint",
+  "column_name": "consent_status",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "user_endpoint",
+  "column_name": "is_active",
+  "data_type": "boolean"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "user_endpoint",
+  "column_name": "is_primary",
+  "data_type": "boolean"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "user_endpoint",
+  "column_name": "user_id",
+  "data_type": "uuid"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "user_endpoint",
+  "column_name": "value",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "user_endpoint",
+  "column_name": "verification_status",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "user_preference",
+  "column_name": "user_id",
+  "data_type": "uuid"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "user_sso_identity",
+  "column_name": "provider_user_id",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "user_sso_identity",
+  "column_name": "sso_provider_code",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "user_sso_identity",
+  "column_name": "user_id",
+  "data_type": "uuid"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "voice_command_log",
+  "column_name": "tenant_id",
+  "data_type": "uuid"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "voice_command_log",
+  "column_name": "user_id",
+  "data_type": "uuid"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "webhook_delivery_attempt",
+  "column_name": "requested_at",
+  "data_type": "timestamp with time zone"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "webhook_delivery_attempt",
+  "column_name": "webhook_endpoint_id",
+  "data_type": "uuid"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "webhook_delivery_attempt",
+  "column_name": "webhook_event_id",
+  "data_type": "uuid"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "webhook_endpoint",
+  "column_name": "enabled",
+  "data_type": "boolean"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "webhook_endpoint",
+  "column_name": "tenant_id",
+  "data_type": "uuid"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "webhook_endpoint",
+  "column_name": "url",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "webhook_event",
+  "column_name": "payload",
+  "data_type": "jsonb"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "webhook_event_type",
+  "column_name": "code",
+  "data_type": "character varying"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "webhook_event_type",
+  "column_name": "is_active",
+  "data_type": "boolean"
+ },
+ {
+  "table_schema": "public",
+  "table_name": "webhook_event_type",
+  "column_name": "name",
+  "data_type": "character varying"
+ }
+]

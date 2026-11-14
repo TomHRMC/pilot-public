@@ -1,0 +1,1430 @@
+{
+  "public.address": [
+    {
+      "name": "audit_address_changes",
+      "definition": "Owner: - -- CREATE TRIGGER audit_address_changes AFTER INSERT OR DELETE OR UPDATE ON public.address FOR EACH ROW EXECUTE FUNCTION audit.log_changes()"
+    },
+    {
+      "name": "trg_address_guard_created_immutable",
+      "definition": "Owner: - -- CREATE TRIGGER trg_address_guard_created_immutable BEFORE UPDATE ON public.address FOR EACH ROW EXECUTE FUNCTION public.guard_created_fields_immutable()"
+    },
+    {
+      "name": "trg_address_set_updated_at",
+      "definition": "Owner: - -- CREATE TRIGGER trg_address_set_updated_at BEFORE UPDATE ON public.address FOR EACH ROW EXECUTE FUNCTION public.set_updated_at()"
+    }
+  ],
+  "public.app_service": [
+    {
+      "name": "audit_app_service_changes",
+      "definition": "Owner: - -- CREATE TRIGGER audit_app_service_changes AFTER INSERT OR DELETE OR UPDATE ON public.app_service FOR EACH ROW EXECUTE FUNCTION audit.log_changes()"
+    },
+    {
+      "name": "trg_app_service_guard_created_immutable",
+      "definition": "Owner: - -- CREATE TRIGGER trg_app_service_guard_created_immutable BEFORE UPDATE ON public.app_service FOR EACH ROW EXECUTE FUNCTION public.guard_created_fields_immutable()"
+    },
+    {
+      "name": "trg_app_service_set_updated_at",
+      "definition": "Owner: - -- CREATE TRIGGER trg_app_service_set_updated_at BEFORE UPDATE ON public.app_service FOR EACH ROW EXECUTE FUNCTION public.set_updated_at()"
+    }
+  ],
+  "public.auth_api_token": [
+    {
+      "name": "audit_auth_api_token_changes",
+      "definition": "Owner: - -- CREATE TRIGGER audit_auth_api_token_changes AFTER INSERT OR DELETE OR UPDATE ON public.auth_api_token FOR EACH ROW EXECUTE FUNCTION audit.log_changes()"
+    },
+    {
+      "name": "trg_auth_api_token_guard_created_immutable",
+      "definition": "Owner: - -- CREATE TRIGGER trg_auth_api_token_guard_created_immutable BEFORE UPDATE ON public.auth_api_token FOR EACH ROW EXECUTE FUNCTION public.guard_created_fields_immutable()"
+    }
+  ],
+  "public.auth_email_verification": [
+    {
+      "name": "audit_auth_email_verification_changes",
+      "definition": "Owner: - -- CREATE TRIGGER audit_auth_email_verification_changes AFTER INSERT OR DELETE OR UPDATE ON public.auth_email_verification FOR EACH ROW EXECUTE FUNCTION audit.log_changes()"
+    },
+    {
+      "name": "trg_auth_email_verification_guard_created_immutable",
+      "definition": "Owner: - -- CREATE TRIGGER trg_auth_email_verification_guard_created_immutable BEFORE UPDATE ON public.auth_email_verification FOR EACH ROW EXECUTE FUNCTION public.guard_created_fields_immutable()"
+    }
+  ],
+  "public.auth_jwk": [
+    {
+      "name": "audit_auth_jwk_changes",
+      "definition": "Owner: - -- CREATE TRIGGER audit_auth_jwk_changes AFTER INSERT OR DELETE OR UPDATE ON public.auth_jwk FOR EACH ROW EXECUTE FUNCTION audit.log_changes()"
+    },
+    {
+      "name": "trg_auth_jwk_guard_created_immutable",
+      "definition": "Owner: - -- CREATE TRIGGER trg_auth_jwk_guard_created_immutable BEFORE UPDATE ON public.auth_jwk FOR EACH ROW EXECUTE FUNCTION public.guard_created_fields_immutable()"
+    }
+  ],
+  "public.auth_mfa_otp": [
+    {
+      "name": "audit_auth_mfa_otp_changes",
+      "definition": "Owner: - -- CREATE TRIGGER audit_auth_mfa_otp_changes AFTER INSERT OR DELETE OR UPDATE ON public.auth_mfa_otp FOR EACH ROW EXECUTE FUNCTION audit.log_changes()"
+    },
+    {
+      "name": "trg_auth_mfa_otp_guard_created_immutable",
+      "definition": "Owner: - -- CREATE TRIGGER trg_auth_mfa_otp_guard_created_immutable BEFORE UPDATE ON public.auth_mfa_otp FOR EACH ROW EXECUTE FUNCTION public.guard_created_fields_immutable()"
+    }
+  ],
+  "public.auth_password_history": [
+    {
+      "name": "audit_auth_password_history_changes",
+      "definition": "Owner: - -- CREATE TRIGGER audit_auth_password_history_changes AFTER INSERT OR DELETE OR UPDATE ON public.auth_password_history FOR EACH ROW EXECUTE FUNCTION audit.log_changes()"
+    },
+    {
+      "name": "trg_auth_password_history_guard_created_immutable",
+      "definition": "Owner: - -- CREATE TRIGGER trg_auth_password_history_guard_created_immutable BEFORE UPDATE ON public.auth_password_history FOR EACH ROW EXECUTE FUNCTION public.guard_created_fields_immutable()"
+    }
+  ],
+  "public.auth_password_reset": [
+    {
+      "name": "audit_auth_password_reset_changes",
+      "definition": "Owner: - -- CREATE TRIGGER audit_auth_password_reset_changes AFTER INSERT OR DELETE OR UPDATE ON public.auth_password_reset FOR EACH ROW EXECUTE FUNCTION audit.log_changes()"
+    },
+    {
+      "name": "trg_auth_password_reset_guard_created_immutable",
+      "definition": "Owner: - -- CREATE TRIGGER trg_auth_password_reset_guard_created_immutable BEFORE UPDATE ON public.auth_password_reset FOR EACH ROW EXECUTE FUNCTION public.guard_created_fields_immutable()"
+    }
+  ],
+  "public.auth_refresh_token": [
+    {
+      "name": "audit_auth_refresh_token_changes",
+      "definition": "Owner: - -- CREATE TRIGGER audit_auth_refresh_token_changes AFTER INSERT OR DELETE OR UPDATE ON public.auth_refresh_token FOR EACH ROW EXECUTE FUNCTION audit.log_changes()"
+    },
+    {
+      "name": "trg_auth_refresh_token_guard_created_immutable",
+      "definition": "Owner: - -- CREATE TRIGGER trg_auth_refresh_token_guard_created_immutable BEFORE UPDATE ON public.auth_refresh_token FOR EACH ROW EXECUTE FUNCTION public.guard_created_fields_immutable()"
+    }
+  ],
+  "public.change_order_attachment": [
+    {
+      "name": "audit_change_order_attachment_changes",
+      "definition": "Owner: - -- CREATE TRIGGER audit_change_order_attachment_changes AFTER INSERT OR DELETE OR UPDATE ON public.change_order_attachment FOR EACH ROW EXECUTE FUNCTION audit.log_changes()"
+    },
+    {
+      "name": "trg_change_order_attachment_guard_created_immutable",
+      "definition": "Owner: - -- CREATE TRIGGER trg_change_order_attachment_guard_created_immutable BEFORE UPDATE ON public.change_order_attachment FOR EACH ROW EXECUTE FUNCTION public.guard_created_fields_immutable()"
+    },
+    {
+      "name": "trg_change_order_attachment_set_updated_at",
+      "definition": "Owner: - -- CREATE TRIGGER trg_change_order_attachment_set_updated_at BEFORE UPDATE ON public.change_order_attachment FOR EACH ROW EXECUTE FUNCTION public.set_updated_at()"
+    }
+  ],
+  "public.change_order": [
+    {
+      "name": "audit_change_order_changes",
+      "definition": "Owner: - -- CREATE TRIGGER audit_change_order_changes AFTER INSERT OR DELETE OR UPDATE ON public.change_order FOR EACH ROW EXECUTE FUNCTION audit.log_changes()"
+    },
+    {
+      "name": "trg_change_order_guard_created_immutable",
+      "definition": "Owner: - -- CREATE TRIGGER trg_change_order_guard_created_immutable BEFORE UPDATE ON public.change_order FOR EACH ROW EXECUTE FUNCTION public.guard_created_fields_immutable()"
+    },
+    {
+      "name": "trg_change_order_set_updated_at",
+      "definition": "Owner: - -- CREATE TRIGGER trg_change_order_set_updated_at BEFORE UPDATE ON public.change_order FOR EACH ROW EXECUTE FUNCTION public.set_updated_at()"
+    }
+  ],
+  "public.change_order_line": [
+    {
+      "name": "audit_change_order_line_changes",
+      "definition": "Owner: - -- CREATE TRIGGER audit_change_order_line_changes AFTER INSERT OR DELETE OR UPDATE ON public.change_order_line FOR EACH ROW EXECUTE FUNCTION audit.log_changes()"
+    },
+    {
+      "name": "recalc_change_order_totals_trigger",
+      "definition": "Owner: - -- CREATE TRIGGER recalc_change_order_totals_trigger AFTER INSERT OR DELETE OR UPDATE ON public.change_order_line FOR EACH ROW EXECUTE FUNCTION public.recalc_change_order_totals_fn()"
+    },
+    {
+      "name": "trg_change_order_line_guard_created_immutable",
+      "definition": "Owner: - -- CREATE TRIGGER trg_change_order_line_guard_created_immutable BEFORE UPDATE ON public.change_order_line FOR EACH ROW EXECUTE FUNCTION public.guard_created_fields_immutable()"
+    },
+    {
+      "name": "trg_change_order_line_recalc_totals",
+      "definition": "Owner: - -- CREATE TRIGGER trg_change_order_line_recalc_totals AFTER INSERT OR DELETE OR UPDATE ON public.change_order_line FOR EACH ROW EXECUTE FUNCTION public.recalc_change_order_totals_fn()"
+    },
+    {
+      "name": "trg_change_order_line_set_updated_at",
+      "definition": "Owner: - -- CREATE TRIGGER trg_change_order_line_set_updated_at BEFORE UPDATE ON public.change_order_line FOR EACH ROW EXECUTE FUNCTION public.set_updated_at()"
+    }
+  ],
+  "public.change_order_line_tax_component": [
+    {
+      "name": "audit_change_order_line_tax_component_changes",
+      "definition": "Owner: - -- CREATE TRIGGER audit_change_order_line_tax_component_changes AFTER INSERT OR DELETE OR UPDATE ON public.change_order_line_tax_component FOR EACH ROW EXECUTE FUNCTION audit.log_changes()"
+    },
+    {
+      "name": "trg_change_order_line_tax_component_guard_created_immutable",
+      "definition": "Owner: - -- CREATE TRIGGER trg_change_order_line_tax_component_guard_created_immutable BEFORE UPDATE ON public.change_order_line_tax_component FOR EACH ROW EXECUTE FUNCTION public.guard_created_fields_immutable()"
+    },
+    {
+      "name": "trg_change_order_line_tax_component_recalc_totals",
+      "definition": "Owner: - -- CREATE TRIGGER trg_change_order_line_tax_component_recalc_totals AFTER INSERT OR DELETE OR UPDATE ON public.change_order_line_tax_component FOR EACH ROW EXECUTE FUNCTION public.recalc_change_order_totals_fn()"
+    }
+  ],
+  "public.connector_config": [
+    {
+      "name": "audit_connector_config_changes",
+      "definition": "Owner: - -- CREATE TRIGGER audit_connector_config_changes AFTER INSERT OR DELETE OR UPDATE ON public.connector_config FOR EACH ROW EXECUTE FUNCTION audit.log_changes()"
+    },
+    {
+      "name": "trg_connector_config_guard_created_immutable",
+      "definition": "Owner: - -- CREATE TRIGGER trg_connector_config_guard_created_immutable BEFORE UPDATE ON public.connector_config FOR EACH ROW EXECUTE FUNCTION public.guard_created_fields_immutable()"
+    },
+    {
+      "name": "trg_connector_config_set_updated_at",
+      "definition": "Owner: - -- CREATE TRIGGER trg_connector_config_set_updated_at BEFORE UPDATE ON public.connector_config FOR EACH ROW EXECUTE FUNCTION public.set_updated_at()"
+    }
+  ],
+  "public.connector_run_log": [
+    {
+      "name": "audit_connector_run_log_changes",
+      "definition": "Owner: - -- CREATE TRIGGER audit_connector_run_log_changes AFTER INSERT OR DELETE OR UPDATE ON public.connector_run_log FOR EACH ROW EXECUTE FUNCTION audit.log_changes()"
+    },
+    {
+      "name": "trg_connector_run_log_guard_created_immutable",
+      "definition": "Owner: - -- CREATE TRIGGER trg_connector_run_log_guard_created_immutable BEFORE UPDATE ON public.connector_run_log FOR EACH ROW EXECUTE FUNCTION public.guard_created_fields_immutable()"
+    }
+  ],
+  "public.contact": [
+    {
+      "name": "audit_contact_changes",
+      "definition": "Owner: - -- CREATE TRIGGER audit_contact_changes AFTER INSERT OR DELETE OR UPDATE ON public.contact FOR EACH ROW EXECUTE FUNCTION audit.log_changes()"
+    },
+    {
+      "name": "trg_contact_guard_created_immutable",
+      "definition": "Owner: - -- CREATE TRIGGER trg_contact_guard_created_immutable BEFORE UPDATE ON public.contact FOR EACH ROW EXECUTE FUNCTION public.guard_created_fields_immutable()"
+    },
+    {
+      "name": "trg_contact_set_updated_at",
+      "definition": "Owner: - -- CREATE TRIGGER trg_contact_set_updated_at BEFORE UPDATE ON public.contact FOR EACH ROW EXECUTE FUNCTION public.set_updated_at()"
+    }
+  ],
+  "public.contact_endpoint": [
+    {
+      "name": "audit_contact_endpoint_changes",
+      "definition": "Owner: - -- CREATE TRIGGER audit_contact_endpoint_changes AFTER INSERT OR DELETE OR UPDATE ON public.contact_endpoint FOR EACH ROW EXECUTE FUNCTION audit.log_changes()"
+    },
+    {
+      "name": "trg_contact_endpoint_guard_created_immutable",
+      "definition": "Owner: - -- CREATE TRIGGER trg_contact_endpoint_guard_created_immutable BEFORE UPDATE ON public.contact_endpoint FOR EACH ROW EXECUTE FUNCTION public.guard_created_fields_immutable()"
+    },
+    {
+      "name": "trg_contact_endpoint_set_updated_at",
+      "definition": "Owner: - -- CREATE TRIGGER trg_contact_endpoint_set_updated_at BEFORE UPDATE ON public.contact_endpoint FOR EACH ROW EXECUTE FUNCTION public.set_updated_at()"
+    }
+  ],
+  "public.contact_notification_pref": [
+    {
+      "name": "audit_contact_notification_pref_changes",
+      "definition": "Owner: - -- CREATE TRIGGER audit_contact_notification_pref_changes AFTER INSERT OR DELETE OR UPDATE ON public.contact_notification_pref FOR EACH ROW EXECUTE FUNCTION audit.log_changes()"
+    },
+    {
+      "name": "trg_contact_notification_pref_guard_created_immutable",
+      "definition": "Owner: - -- CREATE TRIGGER trg_contact_notification_pref_guard_created_immutable BEFORE UPDATE ON public.contact_notification_pref FOR EACH ROW EXECUTE FUNCTION public.guard_created_fields_immutable()"
+    },
+    {
+      "name": "trg_contact_notification_pref_set_updated_at",
+      "definition": "Owner: - -- CREATE TRIGGER trg_contact_notification_pref_set_updated_at BEFORE UPDATE ON public.contact_notification_pref FOR EACH ROW EXECUTE FUNCTION public.set_updated_at()"
+    }
+  ],
+  "public.contact_portal_invite": [
+    {
+      "name": "audit_contact_portal_invite_changes",
+      "definition": "Owner: - -- CREATE TRIGGER audit_contact_portal_invite_changes AFTER INSERT OR DELETE OR UPDATE ON public.contact_portal_invite FOR EACH ROW EXECUTE FUNCTION audit.log_changes()"
+    },
+    {
+      "name": "trg_contact_portal_invite_guard_created_immutable",
+      "definition": "Owner: - -- CREATE TRIGGER trg_contact_portal_invite_guard_created_immutable BEFORE UPDATE ON public.contact_portal_invite FOR EACH ROW EXECUTE FUNCTION public.guard_created_fields_immutable()"
+    }
+  ],
+  "public.conversation_message": [
+    {
+      "name": "audit_conversation_message_changes",
+      "definition": "Owner: - -- CREATE TRIGGER audit_conversation_message_changes AFTER INSERT OR DELETE OR UPDATE ON public.conversation_message FOR EACH ROW EXECUTE FUNCTION audit.log_changes()"
+    },
+    {
+      "name": "trg_conversation_message_guard_created_immutable",
+      "definition": "Owner: - -- CREATE TRIGGER trg_conversation_message_guard_created_immutable BEFORE UPDATE ON public.conversation_message FOR EACH ROW EXECUTE FUNCTION public.guard_created_fields_immutable()"
+    }
+  ],
+  "public.conversation_session": [
+    {
+      "name": "audit_conversation_session_changes",
+      "definition": "Owner: - -- CREATE TRIGGER audit_conversation_session_changes AFTER INSERT OR DELETE OR UPDATE ON public.conversation_session FOR EACH ROW EXECUTE FUNCTION audit.log_changes()"
+    },
+    {
+      "name": "trg_conversation_session_guard_created_immutable",
+      "definition": "Owner: - -- CREATE TRIGGER trg_conversation_session_guard_created_immutable BEFORE UPDATE ON public.conversation_session FOR EACH ROW EXECUTE FUNCTION public.guard_created_fields_immutable()"
+    },
+    {
+      "name": "trg_conversation_session_set_updated_at",
+      "definition": "Owner: - -- CREATE TRIGGER trg_conversation_session_set_updated_at BEFORE UPDATE ON public.conversation_session FOR EACH ROW EXECUTE FUNCTION public.set_updated_at()"
+    }
+  ],
+  "public.customer": [
+    {
+      "name": "audit_customer_changes",
+      "definition": "Owner: - -- CREATE TRIGGER audit_customer_changes AFTER INSERT OR DELETE OR UPDATE ON public.customer FOR EACH ROW EXECUTE FUNCTION audit.log_changes()"
+    },
+    {
+      "name": "trg_customer_guard_created_immutable",
+      "definition": "Owner: - -- CREATE TRIGGER trg_customer_guard_created_immutable BEFORE UPDATE ON public.customer FOR EACH ROW EXECUTE FUNCTION public.guard_created_fields_immutable()"
+    },
+    {
+      "name": "trg_customer_set_updated_at",
+      "definition": "Owner: - -- CREATE TRIGGER trg_customer_set_updated_at BEFORE UPDATE ON public.customer FOR EACH ROW EXECUTE FUNCTION public.set_updated_at()"
+    }
+  ],
+  "public.discount_version": [
+    {
+      "name": "audit_discount_version_changes",
+      "definition": "Owner: - -- CREATE TRIGGER audit_discount_version_changes AFTER INSERT OR DELETE OR UPDATE ON public.discount_version FOR EACH ROW EXECUTE FUNCTION audit.log_changes()"
+    },
+    {
+      "name": "trg_discount_version_guard_created_immutable",
+      "definition": "Owner: - -- CREATE TRIGGER trg_discount_version_guard_created_immutable BEFORE UPDATE ON public.discount_version FOR EACH ROW EXECUTE FUNCTION public.guard_created_fields_immutable()"
+    }
+  ],
+  "public.entity_address": [
+    {
+      "name": "audit_entity_address_changes",
+      "definition": "Owner: - -- CREATE TRIGGER audit_entity_address_changes AFTER INSERT OR DELETE OR UPDATE ON public.entity_address FOR EACH ROW EXECUTE FUNCTION audit.log_changes()"
+    },
+    {
+      "name": "trg_entity_address_guard_created_immutable",
+      "definition": "Owner: - -- CREATE TRIGGER trg_entity_address_guard_created_immutable BEFORE UPDATE ON public.entity_address FOR EACH ROW EXECUTE FUNCTION public.guard_created_fields_immutable()"
+    },
+    {
+      "name": "trg_entity_address_set_updated_at",
+      "definition": "Owner: - -- CREATE TRIGGER trg_entity_address_set_updated_at BEFORE UPDATE ON public.entity_address FOR EACH ROW EXECUTE FUNCTION public.set_updated_at()"
+    }
+  ],
+  "public.entity_contact": [
+    {
+      "name": "audit_entity_contact_changes",
+      "definition": "Owner: - -- CREATE TRIGGER audit_entity_contact_changes AFTER INSERT OR DELETE OR UPDATE ON public.entity_contact FOR EACH ROW EXECUTE FUNCTION audit.log_changes()"
+    },
+    {
+      "name": "trg_entity_contact_guard_created_immutable",
+      "definition": "Owner: - -- CREATE TRIGGER trg_entity_contact_guard_created_immutable BEFORE UPDATE ON public.entity_contact FOR EACH ROW EXECUTE FUNCTION public.guard_created_fields_immutable()"
+    },
+    {
+      "name": "trg_entity_contact_set_updated_at",
+      "definition": "Owner: - -- CREATE TRIGGER trg_entity_contact_set_updated_at BEFORE UPDATE ON public.entity_contact FOR EACH ROW EXECUTE FUNCTION public.set_updated_at()"
+    }
+  ],
+  "public.integration_credential": [
+    {
+      "name": "audit_integration_credential_changes",
+      "definition": "Owner: - -- CREATE TRIGGER audit_integration_credential_changes AFTER INSERT OR DELETE OR UPDATE ON public.integration_credential FOR EACH ROW EXECUTE FUNCTION audit.log_changes()"
+    },
+    {
+      "name": "trg_integration_credential_guard_created_immutable",
+      "definition": "Owner: - -- CREATE TRIGGER trg_integration_credential_guard_created_immutable BEFORE UPDATE ON public.integration_credential FOR EACH ROW EXECUTE FUNCTION public.guard_created_fields_immutable()"
+    },
+    {
+      "name": "trg_integration_credential_set_updated_at",
+      "definition": "Owner: - -- CREATE TRIGGER trg_integration_credential_set_updated_at BEFORE UPDATE ON public.integration_credential FOR EACH ROW EXECUTE FUNCTION public.set_updated_at()"
+    }
+  ],
+  "public.integration_sync_conflict": [
+    {
+      "name": "audit_integration_sync_conflict_changes",
+      "definition": "Owner: - -- CREATE TRIGGER audit_integration_sync_conflict_changes AFTER INSERT OR DELETE OR UPDATE ON public.integration_sync_conflict FOR EACH ROW EXECUTE FUNCTION audit.log_changes()"
+    },
+    {
+      "name": "trg_integration_sync_conflict_guard_created_immutable",
+      "definition": "Owner: - -- CREATE TRIGGER trg_integration_sync_conflict_guard_created_immutable BEFORE UPDATE ON public.integration_sync_conflict FOR EACH ROW EXECUTE FUNCTION public.guard_created_fields_immutable()"
+    },
+    {
+      "name": "trg_integration_sync_conflict_set_updated_at",
+      "definition": "Owner: - -- CREATE TRIGGER trg_integration_sync_conflict_set_updated_at BEFORE UPDATE ON public.integration_sync_conflict FOR EACH ROW EXECUTE FUNCTION public.set_updated_at()"
+    }
+  ],
+  "public.integration_sync_log": [
+    {
+      "name": "audit_integration_sync_log_changes",
+      "definition": "Owner: - -- CREATE TRIGGER audit_integration_sync_log_changes AFTER INSERT OR DELETE OR UPDATE ON public.integration_sync_log FOR EACH ROW EXECUTE FUNCTION audit.log_changes()"
+    },
+    {
+      "name": "trg_integration_sync_log_guard_created_immutable",
+      "definition": "Owner: - -- CREATE TRIGGER trg_integration_sync_log_guard_created_immutable BEFORE UPDATE ON public.integration_sync_log FOR EACH ROW EXECUTE FUNCTION public.guard_created_fields_immutable()"
+    }
+  ],
+  "public.integration_sync_mapping": [
+    {
+      "name": "audit_integration_sync_mapping_changes",
+      "definition": "Owner: - -- CREATE TRIGGER audit_integration_sync_mapping_changes AFTER INSERT OR DELETE OR UPDATE ON public.integration_sync_mapping FOR EACH ROW EXECUTE FUNCTION audit.log_changes()"
+    },
+    {
+      "name": "trg_integration_sync_mapping_guard_created_immutable",
+      "definition": "Owner: - -- CREATE TRIGGER trg_integration_sync_mapping_guard_created_immutable BEFORE UPDATE ON public.integration_sync_mapping FOR EACH ROW EXECUTE FUNCTION public.guard_created_fields_immutable()"
+    },
+    {
+      "name": "trg_integration_sync_mapping_set_updated_at",
+      "definition": "Owner: - -- CREATE TRIGGER trg_integration_sync_mapping_set_updated_at BEFORE UPDATE ON public.integration_sync_mapping FOR EACH ROW EXECUTE FUNCTION public.set_updated_at()"
+    }
+  ],
+  "public.invoice": [
+    {
+      "name": "audit_invoice_changes",
+      "definition": "Owner: - -- CREATE TRIGGER audit_invoice_changes AFTER INSERT OR DELETE OR UPDATE ON public.invoice FOR EACH ROW EXECUTE FUNCTION audit.log_changes()"
+    },
+    {
+      "name": "trg_invoice_guard_created_immutable",
+      "definition": "Owner: - -- CREATE TRIGGER trg_invoice_guard_created_immutable BEFORE UPDATE ON public.invoice FOR EACH ROW EXECUTE FUNCTION public.guard_created_fields_immutable()"
+    },
+    {
+      "name": "trg_invoice_set_updated_at",
+      "definition": "Owner: - -- CREATE TRIGGER trg_invoice_set_updated_at BEFORE UPDATE ON public.invoice FOR EACH ROW EXECUTE FUNCTION public.set_updated_at()"
+    }
+  ],
+  "public.invoice_line": [
+    {
+      "name": "audit_invoice_line_changes",
+      "definition": "Owner: - -- CREATE TRIGGER audit_invoice_line_changes AFTER INSERT OR DELETE OR UPDATE ON public.invoice_line FOR EACH ROW EXECUTE FUNCTION audit.log_changes()"
+    },
+    {
+      "name": "trg_invoice_line_guard_created_immutable",
+      "definition": "Owner: - -- CREATE TRIGGER trg_invoice_line_guard_created_immutable BEFORE UPDATE ON public.invoice_line FOR EACH ROW EXECUTE FUNCTION public.guard_created_fields_immutable()"
+    },
+    {
+      "name": "trg_invoice_line_recalc_totals",
+      "definition": "Owner: - -- CREATE TRIGGER trg_invoice_line_recalc_totals AFTER INSERT OR DELETE OR UPDATE ON public.invoice_line FOR EACH ROW EXECUTE FUNCTION public.recalc_invoice_totals_fn()"
+    }
+  ],
+  "public.invoice_line_tax_component": [
+    {
+      "name": "audit_invoice_line_tax_component_changes",
+      "definition": "Owner: - -- CREATE TRIGGER audit_invoice_line_tax_component_changes AFTER INSERT OR DELETE OR UPDATE ON public.invoice_line_tax_component FOR EACH ROW EXECUTE FUNCTION audit.log_changes()"
+    },
+    {
+      "name": "trg_invoice_line_tax_component_guard_created_immutable",
+      "definition": "Owner: - -- CREATE TRIGGER trg_invoice_line_tax_component_guard_created_immutable BEFORE UPDATE ON public.invoice_line_tax_component FOR EACH ROW EXECUTE FUNCTION public.guard_created_fields_immutable()"
+    },
+    {
+      "name": "trg_invoice_line_tax_component_recalc_totals",
+      "definition": "Owner: - -- CREATE TRIGGER trg_invoice_line_tax_component_recalc_totals AFTER INSERT OR DELETE OR UPDATE ON public.invoice_line_tax_component FOR EACH ROW EXECUTE FUNCTION public.recalc_invoice_totals_fn()"
+    }
+  ],
+  "public.job_assignment": [
+    {
+      "name": "audit_job_assignment_changes",
+      "definition": "Owner: - -- CREATE TRIGGER audit_job_assignment_changes AFTER INSERT OR DELETE OR UPDATE ON public.job_assignment FOR EACH ROW EXECUTE FUNCTION audit.log_changes()"
+    },
+    {
+      "name": "trg_job_assignment_guard_created_immutable",
+      "definition": "Owner: - -- CREATE TRIGGER trg_job_assignment_guard_created_immutable BEFORE UPDATE ON public.job_assignment FOR EACH ROW EXECUTE FUNCTION public.guard_created_fields_immutable()"
+    },
+    {
+      "name": "trg_job_assignment_set_updated_at",
+      "definition": "Owner: - -- CREATE TRIGGER trg_job_assignment_set_updated_at BEFORE UPDATE ON public.job_assignment FOR EACH ROW EXECUTE FUNCTION public.set_updated_at()"
+    }
+  ],
+  "public.job_attachment": [
+    {
+      "name": "audit_job_attachment_changes",
+      "definition": "Owner: - -- CREATE TRIGGER audit_job_attachment_changes AFTER INSERT OR DELETE OR UPDATE ON public.job_attachment FOR EACH ROW EXECUTE FUNCTION audit.log_changes()"
+    },
+    {
+      "name": "trg_job_attachment_guard_created_immutable",
+      "definition": "Owner: - -- CREATE TRIGGER trg_job_attachment_guard_created_immutable BEFORE UPDATE ON public.job_attachment FOR EACH ROW EXECUTE FUNCTION public.guard_created_fields_immutable()"
+    },
+    {
+      "name": "trg_job_attachment_set_updated_at",
+      "definition": "Owner: - -- CREATE TRIGGER trg_job_attachment_set_updated_at BEFORE UPDATE ON public.job_attachment FOR EACH ROW EXECUTE FUNCTION public.set_updated_at()"
+    }
+  ],
+  "public.job": [
+    {
+      "name": "audit_job_changes",
+      "definition": "Owner: - -- CREATE TRIGGER audit_job_changes AFTER INSERT OR DELETE OR UPDATE ON public.job FOR EACH ROW EXECUTE FUNCTION audit.log_changes()"
+    },
+    {
+      "name": "trg_job_guard_created_immutable",
+      "definition": "Owner: - -- CREATE TRIGGER trg_job_guard_created_immutable BEFORE UPDATE ON public.job FOR EACH ROW EXECUTE FUNCTION public.guard_created_fields_immutable()"
+    },
+    {
+      "name": "trg_job_set_updated_at",
+      "definition": "Owner: - -- CREATE TRIGGER trg_job_set_updated_at BEFORE UPDATE ON public.job FOR EACH ROW EXECUTE FUNCTION public.set_updated_at()"
+    }
+  ],
+  "public.job_expense": [
+    {
+      "name": "audit_job_expense_changes",
+      "definition": "Owner: - -- CREATE TRIGGER audit_job_expense_changes AFTER INSERT OR DELETE OR UPDATE ON public.job_expense FOR EACH ROW EXECUTE FUNCTION audit.log_changes()"
+    },
+    {
+      "name": "trg_job_expense_guard_created_immutable",
+      "definition": "Owner: - -- CREATE TRIGGER trg_job_expense_guard_created_immutable BEFORE UPDATE ON public.job_expense FOR EACH ROW EXECUTE FUNCTION public.guard_created_fields_immutable()"
+    },
+    {
+      "name": "trg_job_expense_set_updated_at",
+      "definition": "Owner: - -- CREATE TRIGGER trg_job_expense_set_updated_at BEFORE UPDATE ON public.job_expense FOR EACH ROW EXECUTE FUNCTION public.set_updated_at()"
+    }
+  ],
+  "public.job_notes": [
+    {
+      "name": "audit_job_notes_changes",
+      "definition": "Owner: - -- CREATE TRIGGER audit_job_notes_changes AFTER INSERT OR DELETE OR UPDATE ON public.job_notes FOR EACH ROW EXECUTE FUNCTION audit.log_changes()"
+    },
+    {
+      "name": "trg_job_notes_guard_created_immutable",
+      "definition": "Owner: - -- CREATE TRIGGER trg_job_notes_guard_created_immutable BEFORE UPDATE ON public.job_notes FOR EACH ROW EXECUTE FUNCTION public.guard_created_fields_immutable()"
+    },
+    {
+      "name": "trg_job_notes_set_updated_at",
+      "definition": "Owner: - -- CREATE TRIGGER trg_job_notes_set_updated_at BEFORE UPDATE ON public.job_notes FOR EACH ROW EXECUTE FUNCTION public.set_updated_at()"
+    }
+  ],
+  "public.job_time_entry": [
+    {
+      "name": "audit_job_time_entry_changes",
+      "definition": "Owner: - -- CREATE TRIGGER audit_job_time_entry_changes AFTER INSERT OR DELETE OR UPDATE ON public.job_time_entry FOR EACH ROW EXECUTE FUNCTION audit.log_changes()"
+    },
+    {
+      "name": "trg_job_time_entry_guard_created_immutable",
+      "definition": "Owner: - -- CREATE TRIGGER trg_job_time_entry_guard_created_immutable BEFORE UPDATE ON public.job_time_entry FOR EACH ROW EXECUTE FUNCTION public.guard_created_fields_immutable()"
+    },
+    {
+      "name": "trg_job_time_entry_set_updated_at",
+      "definition": "Owner: - -- CREATE TRIGGER trg_job_time_entry_set_updated_at BEFORE UPDATE ON public.job_time_entry FOR EACH ROW EXECUTE FUNCTION public.set_updated_at()"
+    }
+  ],
+  "public.notification_delivery_attempt": [
+    {
+      "name": "audit_notification_delivery_attempt_changes",
+      "definition": "Owner: - -- CREATE TRIGGER audit_notification_delivery_attempt_changes AFTER INSERT OR DELETE OR UPDATE ON public.notification_delivery_attempt FOR EACH ROW EXECUTE FUNCTION audit.log_changes()"
+    },
+    {
+      "name": "trg_notification_delivery_attempt_guard_created_immutable",
+      "definition": "Owner: - -- CREATE TRIGGER trg_notification_delivery_attempt_guard_created_immutable BEFORE UPDATE ON public.notification_delivery_attempt FOR EACH ROW EXECUTE FUNCTION public.guard_created_fields_immutable()"
+    }
+  ],
+  "public.notification_event": [
+    {
+      "name": "audit_notification_event_changes",
+      "definition": "Owner: - -- CREATE TRIGGER audit_notification_event_changes AFTER INSERT OR DELETE OR UPDATE ON public.notification_event FOR EACH ROW EXECUTE FUNCTION audit.log_changes()"
+    },
+    {
+      "name": "trg_notification_event_guard_created_immutable",
+      "definition": "Owner: - -- CREATE TRIGGER trg_notification_event_guard_created_immutable BEFORE UPDATE ON public.notification_event FOR EACH ROW EXECUTE FUNCTION public.guard_created_fields_immutable()"
+    }
+  ],
+  "public.notification_outbox": [
+    {
+      "name": "audit_notification_outbox_changes",
+      "definition": "Owner: - -- CREATE TRIGGER audit_notification_outbox_changes AFTER INSERT OR DELETE OR UPDATE ON public.notification_outbox FOR EACH ROW EXECUTE FUNCTION audit.log_changes()"
+    },
+    {
+      "name": "trg_notification_outbox_guard_created_immutable",
+      "definition": "Owner: - -- CREATE TRIGGER trg_notification_outbox_guard_created_immutable BEFORE UPDATE ON public.notification_outbox FOR EACH ROW EXECUTE FUNCTION public.guard_created_fields_immutable()"
+    },
+    {
+      "name": "trg_notification_outbox_set_updated_at",
+      "definition": "Owner: - -- CREATE TRIGGER trg_notification_outbox_set_updated_at BEFORE UPDATE ON public.notification_outbox FOR EACH ROW EXECUTE FUNCTION public.set_updated_at()"
+    }
+  ],
+  "public.notification_template": [
+    {
+      "name": "audit_notification_template_changes",
+      "definition": "Owner: - -- CREATE TRIGGER audit_notification_template_changes AFTER INSERT OR DELETE OR UPDATE ON public.notification_template FOR EACH ROW EXECUTE FUNCTION audit.log_changes()"
+    },
+    {
+      "name": "trg_notification_template_guard_created_immutable",
+      "definition": "Owner: - -- CREATE TRIGGER trg_notification_template_guard_created_immutable BEFORE UPDATE ON public.notification_template FOR EACH ROW EXECUTE FUNCTION public.guard_created_fields_immutable()"
+    },
+    {
+      "name": "trg_notification_template_set_updated_at",
+      "definition": "Owner: - -- CREATE TRIGGER trg_notification_template_set_updated_at BEFORE UPDATE ON public.notification_template FOR EACH ROW EXECUTE FUNCTION public.set_updated_at()"
+    }
+  ],
+  "public.password_policy": [
+    {
+      "name": "audit_password_policy_changes",
+      "definition": "Owner: - -- CREATE TRIGGER audit_password_policy_changes AFTER INSERT OR DELETE OR UPDATE ON public.password_policy FOR EACH ROW EXECUTE FUNCTION audit.log_changes()"
+    },
+    {
+      "name": "trg_password_policy_guard_created_immutable",
+      "definition": "Owner: - -- CREATE TRIGGER trg_password_policy_guard_created_immutable BEFORE UPDATE ON public.password_policy FOR EACH ROW EXECUTE FUNCTION public.guard_created_fields_immutable()"
+    },
+    {
+      "name": "trg_password_policy_set_updated_at",
+      "definition": "Owner: - -- CREATE TRIGGER trg_password_policy_set_updated_at BEFORE UPDATE ON public.password_policy FOR EACH ROW EXECUTE FUNCTION public.set_updated_at()"
+    }
+  ],
+  "public.payment": [
+    {
+      "name": "audit_payment_changes",
+      "definition": "Owner: - -- CREATE TRIGGER audit_payment_changes AFTER INSERT OR DELETE OR UPDATE ON public.payment FOR EACH ROW EXECUTE FUNCTION audit.log_changes()"
+    },
+    {
+      "name": "trg_payment_guard_created_immutable",
+      "definition": "Owner: - -- CREATE TRIGGER trg_payment_guard_created_immutable BEFORE UPDATE ON public.payment FOR EACH ROW EXECUTE FUNCTION public.guard_created_fields_immutable()"
+    },
+    {
+      "name": "trg_payment_set_updated_at",
+      "definition": "Owner: - -- CREATE TRIGGER trg_payment_set_updated_at BEFORE UPDATE ON public.payment FOR EACH ROW EXECUTE FUNCTION public.set_updated_at()"
+    }
+  ],
+  "public.payment_method": [
+    {
+      "name": "audit_payment_method_changes",
+      "definition": "Owner: - -- CREATE TRIGGER audit_payment_method_changes AFTER INSERT OR DELETE OR UPDATE ON public.payment_method FOR EACH ROW EXECUTE FUNCTION audit.log_changes()"
+    },
+    {
+      "name": "trg_payment_method_guard_created_immutable",
+      "definition": "Owner: - -- CREATE TRIGGER trg_payment_method_guard_created_immutable BEFORE UPDATE ON public.payment_method FOR EACH ROW EXECUTE FUNCTION public.guard_created_fields_immutable()"
+    },
+    {
+      "name": "trg_payment_method_set_updated_at",
+      "definition": "Owner: - -- CREATE TRIGGER trg_payment_method_set_updated_at BEFORE UPDATE ON public.payment_method FOR EACH ROW EXECUTE FUNCTION public.set_updated_at()"
+    }
+  ],
+  "public.platform_role": [
+    {
+      "name": "audit_platform_role_changes",
+      "definition": "Owner: - -- CREATE TRIGGER audit_platform_role_changes AFTER INSERT OR DELETE OR UPDATE ON public.platform_role FOR EACH ROW EXECUTE FUNCTION audit.log_changes_code_pk()"
+    },
+    {
+      "name": "trg_platform_role_guard_created_immutable",
+      "definition": "Owner: - -- CREATE TRIGGER trg_platform_role_guard_created_immutable BEFORE UPDATE ON public.platform_role FOR EACH ROW EXECUTE FUNCTION public.guard_created_fields_immutable()"
+    },
+    {
+      "name": "trg_platform_role_set_updated_at",
+      "definition": "Owner: - -- CREATE TRIGGER trg_platform_role_set_updated_at BEFORE UPDATE ON public.platform_role FOR EACH ROW EXECUTE FUNCTION public.set_updated_at()"
+    }
+  ],
+  "public.pricebook_item": [
+    {
+      "name": "audit_pricebook_item_changes",
+      "definition": "Owner: - -- CREATE TRIGGER audit_pricebook_item_changes AFTER INSERT OR DELETE OR UPDATE ON public.pricebook_item FOR EACH ROW EXECUTE FUNCTION audit.log_changes()"
+    },
+    {
+      "name": "trg_pricebook_item_guard_created_immutable",
+      "definition": "Owner: - -- CREATE TRIGGER trg_pricebook_item_guard_created_immutable BEFORE UPDATE ON public.pricebook_item FOR EACH ROW EXECUTE FUNCTION public.guard_created_fields_immutable()"
+    },
+    {
+      "name": "trg_pricebook_item_set_updated_at",
+      "definition": "Owner: - -- CREATE TRIGGER trg_pricebook_item_set_updated_at BEFORE UPDATE ON public.pricebook_item FOR EACH ROW EXECUTE FUNCTION public.set_updated_at()"
+    }
+  ],
+  "public.pricebook_item_version": [
+    {
+      "name": "audit_pricebook_item_version_changes",
+      "definition": "Owner: - -- CREATE TRIGGER audit_pricebook_item_version_changes AFTER INSERT OR DELETE OR UPDATE ON public.pricebook_item_version FOR EACH ROW EXECUTE FUNCTION audit.log_changes()"
+    },
+    {
+      "name": "trg_pricebook_item_version_guard_created_immutable",
+      "definition": "Owner: - -- CREATE TRIGGER trg_pricebook_item_version_guard_created_immutable BEFORE UPDATE ON public.pricebook_item_version FOR EACH ROW EXECUTE FUNCTION public.guard_created_fields_immutable()"
+    }
+  ],
+  "public.product_feature": [
+    {
+      "name": "audit_product_feature_changes",
+      "definition": "Owner: - -- CREATE TRIGGER audit_product_feature_changes AFTER INSERT OR DELETE OR UPDATE ON public.product_feature FOR EACH ROW EXECUTE FUNCTION audit.log_changes_code_pk()"
+    },
+    {
+      "name": "trg_product_feature_guard_created_immutable",
+      "definition": "Owner: - -- CREATE TRIGGER trg_product_feature_guard_created_immutable BEFORE UPDATE ON public.product_feature FOR EACH ROW EXECUTE FUNCTION public.guard_created_fields_immutable()"
+    },
+    {
+      "name": "trg_product_feature_set_updated_at",
+      "definition": "Owner: - -- CREATE TRIGGER trg_product_feature_set_updated_at BEFORE UPDATE ON public.product_feature FOR EACH ROW EXECUTE FUNCTION public.set_updated_at()"
+    }
+  ],
+  "public.product_plan": [
+    {
+      "name": "audit_product_plan_changes",
+      "definition": "Owner: - -- CREATE TRIGGER audit_product_plan_changes AFTER INSERT OR DELETE OR UPDATE ON public.product_plan FOR EACH ROW EXECUTE FUNCTION audit.log_changes_code_pk()"
+    },
+    {
+      "name": "trg_product_plan_guard_created_immutable",
+      "definition": "Owner: - -- CREATE TRIGGER trg_product_plan_guard_created_immutable BEFORE UPDATE ON public.product_plan FOR EACH ROW EXECUTE FUNCTION public.guard_created_fields_immutable()"
+    },
+    {
+      "name": "trg_product_plan_set_updated_at",
+      "definition": "Owner: - -- CREATE TRIGGER trg_product_plan_set_updated_at BEFORE UPDATE ON public.product_plan FOR EACH ROW EXECUTE FUNCTION public.set_updated_at()"
+    }
+  ],
+  "public.product_plan_product_feature_version": [
+    {
+      "name": "audit_product_plan_product_feature_version_changes",
+      "definition": "Owner: - -- CREATE TRIGGER audit_product_plan_product_feature_version_changes AFTER INSERT OR DELETE OR UPDATE ON public.product_plan_product_feature_version FOR EACH ROW EXECUTE FUNCTION audit.log_changes()"
+    },
+    {
+      "name": "trg_product_plan_product_feature_version_guard_created_immutabl",
+      "definition": "Owner: - -- CREATE TRIGGER trg_product_plan_product_feature_version_guard_created_immutabl BEFORE UPDATE ON public.product_plan_product_feature_version FOR EACH ROW EXECUTE FUNCTION public.guard_created_fields_immutable()"
+    }
+  ],
+  "public.product_plan_version": [
+    {
+      "name": "audit_product_plan_version_changes",
+      "definition": "Owner: - -- CREATE TRIGGER audit_product_plan_version_changes AFTER INSERT OR DELETE OR UPDATE ON public.product_plan_version FOR EACH ROW EXECUTE FUNCTION audit.log_changes()"
+    },
+    {
+      "name": "trg_product_plan_version_guard_created_immutable",
+      "definition": "Owner: - -- CREATE TRIGGER trg_product_plan_version_guard_created_immutable BEFORE UPDATE ON public.product_plan_version FOR EACH ROW EXECUTE FUNCTION public.guard_created_fields_immutable()"
+    }
+  ],
+  "public.psp_customer": [
+    {
+      "name": "audit_psp_customer_changes",
+      "definition": "Owner: - -- CREATE TRIGGER audit_psp_customer_changes AFTER INSERT OR DELETE OR UPDATE ON public.psp_customer FOR EACH ROW EXECUTE FUNCTION audit.log_changes()"
+    },
+    {
+      "name": "trg_psp_customer_guard_created_immutable",
+      "definition": "Owner: - -- CREATE TRIGGER trg_psp_customer_guard_created_immutable BEFORE UPDATE ON public.psp_customer FOR EACH ROW EXECUTE FUNCTION public.guard_created_fields_immutable()"
+    },
+    {
+      "name": "trg_psp_customer_set_updated_at",
+      "definition": "Owner: - -- CREATE TRIGGER trg_psp_customer_set_updated_at BEFORE UPDATE ON public.psp_customer FOR EACH ROW EXECUTE FUNCTION public.set_updated_at()"
+    }
+  ],
+  "public.psp_transaction_log": [
+    {
+      "name": "audit_psp_transaction_log_changes",
+      "definition": "Owner: - -- CREATE TRIGGER audit_psp_transaction_log_changes AFTER INSERT OR DELETE OR UPDATE ON public.psp_transaction_log FOR EACH ROW EXECUTE FUNCTION audit.log_changes()"
+    },
+    {
+      "name": "trg_psp_transaction_log_guard_created_immutable",
+      "definition": "Owner: - -- CREATE TRIGGER trg_psp_transaction_log_guard_created_immutable BEFORE UPDATE ON public.psp_transaction_log FOR EACH ROW EXECUTE FUNCTION public.guard_created_fields_immutable()"
+    }
+  ],
+  "public.quote_acceptance": [
+    {
+      "name": "audit_quote_acceptance_changes",
+      "definition": "Owner: - -- CREATE TRIGGER audit_quote_acceptance_changes AFTER INSERT OR DELETE OR UPDATE ON public.quote_acceptance FOR EACH ROW EXECUTE FUNCTION audit.log_changes()"
+    },
+    {
+      "name": "trg_quote_acceptance_guard_created_immutable",
+      "definition": "Owner: - -- CREATE TRIGGER trg_quote_acceptance_guard_created_immutable BEFORE UPDATE ON public.quote_acceptance FOR EACH ROW EXECUTE FUNCTION public.guard_created_fields_immutable()"
+    }
+  ],
+  "public.quote": [
+    {
+      "name": "audit_quote_changes",
+      "definition": "Owner: - -- CREATE TRIGGER audit_quote_changes AFTER INSERT OR DELETE OR UPDATE ON public.quote FOR EACH ROW EXECUTE FUNCTION audit.log_changes()"
+    },
+    {
+      "name": "trg_quote_guard_created_immutable",
+      "definition": "Owner: - -- CREATE TRIGGER trg_quote_guard_created_immutable BEFORE UPDATE ON public.quote FOR EACH ROW EXECUTE FUNCTION public.guard_created_fields_immutable()"
+    },
+    {
+      "name": "trg_quote_set_updated_at",
+      "definition": "Owner: - -- CREATE TRIGGER trg_quote_set_updated_at BEFORE UPDATE ON public.quote FOR EACH ROW EXECUTE FUNCTION public.set_updated_at()"
+    }
+  ],
+  "public.quote_line": [
+    {
+      "name": "audit_quote_line_changes",
+      "definition": "Owner: - -- CREATE TRIGGER audit_quote_line_changes AFTER INSERT OR DELETE OR UPDATE ON public.quote_line FOR EACH ROW EXECUTE FUNCTION audit.log_changes()"
+    },
+    {
+      "name": "recalc_quote_totals_trigger",
+      "definition": "Owner: - -- CREATE TRIGGER recalc_quote_totals_trigger AFTER INSERT OR DELETE OR UPDATE ON public.quote_line FOR EACH ROW EXECUTE FUNCTION public.recalc_quote_totals_fn()"
+    },
+    {
+      "name": "trg_quote_line_guard_created_immutable",
+      "definition": "Owner: - -- CREATE TRIGGER trg_quote_line_guard_created_immutable BEFORE UPDATE ON public.quote_line FOR EACH ROW EXECUTE FUNCTION public.guard_created_fields_immutable()"
+    },
+    {
+      "name": "trg_quote_line_recalc_totals",
+      "definition": "Owner: - -- CREATE TRIGGER trg_quote_line_recalc_totals AFTER INSERT OR DELETE OR UPDATE ON public.quote_line FOR EACH ROW EXECUTE FUNCTION public.recalc_quote_totals_fn()"
+    },
+    {
+      "name": "trg_quote_line_set_updated_at",
+      "definition": "Owner: - -- CREATE TRIGGER trg_quote_line_set_updated_at BEFORE UPDATE ON public.quote_line FOR EACH ROW EXECUTE FUNCTION public.set_updated_at()"
+    }
+  ],
+  "public.quote_line_tax_component": [
+    {
+      "name": "audit_quote_line_tax_component_changes",
+      "definition": "Owner: - -- CREATE TRIGGER audit_quote_line_tax_component_changes AFTER INSERT OR DELETE OR UPDATE ON public.quote_line_tax_component FOR EACH ROW EXECUTE FUNCTION audit.log_changes()"
+    },
+    {
+      "name": "trg_quote_line_tax_component_guard_created_immutable",
+      "definition": "Owner: - -- CREATE TRIGGER trg_quote_line_tax_component_guard_created_immutable BEFORE UPDATE ON public.quote_line_tax_component FOR EACH ROW EXECUTE FUNCTION public.guard_created_fields_immutable()"
+    },
+    {
+      "name": "trg_quote_line_tax_component_recalc_totals",
+      "definition": "Owner: - -- CREATE TRIGGER trg_quote_line_tax_component_recalc_totals AFTER INSERT OR DELETE OR UPDATE ON public.quote_line_tax_component FOR EACH ROW EXECUTE FUNCTION public.recalc_quote_totals_fn()"
+    }
+  ],
+  "public.quote_message": [
+    {
+      "name": "audit_quote_message_changes",
+      "definition": "Owner: - -- CREATE TRIGGER audit_quote_message_changes AFTER INSERT OR DELETE OR UPDATE ON public.quote_message FOR EACH ROW EXECUTE FUNCTION audit.log_changes()"
+    },
+    {
+      "name": "trg_quote_message_guard_created_immutable",
+      "definition": "Owner: - -- CREATE TRIGGER trg_quote_message_guard_created_immutable BEFORE UPDATE ON public.quote_message FOR EACH ROW EXECUTE FUNCTION public.guard_created_fields_immutable()"
+    },
+    {
+      "name": "trg_quote_message_set_updated_at",
+      "definition": "Owner: - -- CREATE TRIGGER trg_quote_message_set_updated_at BEFORE UPDATE ON public.quote_message FOR EACH ROW EXECUTE FUNCTION public.set_updated_at()"
+    }
+  ],
+  "public.quote_public_link": [
+    {
+      "name": "audit_quote_public_link_changes",
+      "definition": "Owner: - -- CREATE TRIGGER audit_quote_public_link_changes AFTER INSERT OR DELETE OR UPDATE ON public.quote_public_link FOR EACH ROW EXECUTE FUNCTION audit.log_changes()"
+    },
+    {
+      "name": "trg_quote_public_link_guard_created_immutable",
+      "definition": "Owner: - -- CREATE TRIGGER trg_quote_public_link_guard_created_immutable BEFORE UPDATE ON public.quote_public_link FOR EACH ROW EXECUTE FUNCTION public.guard_created_fields_immutable()"
+    },
+    {
+      "name": "trg_quote_public_link_set_updated_at",
+      "definition": "Owner: - -- CREATE TRIGGER trg_quote_public_link_set_updated_at BEFORE UPDATE ON public.quote_public_link FOR EACH ROW EXECUTE FUNCTION public.set_updated_at()"
+    }
+  ],
+  "public.quote_public_link_contact_action": [
+    {
+      "name": "audit_quote_public_link_contact_action_changes",
+      "definition": "Owner: - -- CREATE TRIGGER audit_quote_public_link_contact_action_changes AFTER INSERT OR DELETE OR UPDATE ON public.quote_public_link_contact_action FOR EACH ROW EXECUTE FUNCTION audit.log_changes()"
+    },
+    {
+      "name": "trg_quote_public_link_contact_action_guard_created_immutable",
+      "definition": "Owner: - -- CREATE TRIGGER trg_quote_public_link_contact_action_guard_created_immutable BEFORE UPDATE ON public.quote_public_link_contact_action FOR EACH ROW EXECUTE FUNCTION public.guard_created_fields_immutable()"
+    }
+  ],
+  "public.quote_version": [
+    {
+      "name": "audit_quote_version_changes",
+      "definition": "Owner: - -- CREATE TRIGGER audit_quote_version_changes AFTER INSERT OR DELETE OR UPDATE ON public.quote_version FOR EACH ROW EXECUTE FUNCTION audit.log_changes()"
+    },
+    {
+      "name": "trg_quote_version_guard_created_immutable",
+      "definition": "Owner: - -- CREATE TRIGGER trg_quote_version_guard_created_immutable BEFORE UPDATE ON public.quote_version FOR EACH ROW EXECUTE FUNCTION public.guard_created_fields_immutable()"
+    }
+  ],
+  "public.site": [
+    {
+      "name": "audit_site_changes",
+      "definition": "Owner: - -- CREATE TRIGGER audit_site_changes AFTER INSERT OR DELETE OR UPDATE ON public.site FOR EACH ROW EXECUTE FUNCTION audit.log_changes()"
+    },
+    {
+      "name": "trg_site_guard_created_immutable",
+      "definition": "Owner: - -- CREATE TRIGGER trg_site_guard_created_immutable BEFORE UPDATE ON public.site FOR EACH ROW EXECUTE FUNCTION public.guard_created_fields_immutable()"
+    },
+    {
+      "name": "trg_site_set_updated_at",
+      "definition": "Owner: - -- CREATE TRIGGER trg_site_set_updated_at BEFORE UPDATE ON public.site FOR EACH ROW EXECUTE FUNCTION public.set_updated_at()"
+    }
+  ],
+  "public.sso_provider": [
+    {
+      "name": "audit_sso_provider_changes",
+      "definition": "Owner: - -- CREATE TRIGGER audit_sso_provider_changes AFTER INSERT OR DELETE OR UPDATE ON public.sso_provider FOR EACH ROW EXECUTE FUNCTION audit.log_changes_code_pk()"
+    },
+    {
+      "name": "trg_sso_provider_guard_created_immutable",
+      "definition": "Owner: - -- CREATE TRIGGER trg_sso_provider_guard_created_immutable BEFORE UPDATE ON public.sso_provider FOR EACH ROW EXECUTE FUNCTION public.guard_created_fields_immutable()"
+    },
+    {
+      "name": "trg_sso_provider_set_updated_at",
+      "definition": "Owner: - -- CREATE TRIGGER trg_sso_provider_set_updated_at BEFORE UPDATE ON public.sso_provider FOR EACH ROW EXECUTE FUNCTION public.set_updated_at()"
+    }
+  ],
+  "public.subscription": [
+    {
+      "name": "audit_subscription_changes",
+      "definition": "Owner: - -- CREATE TRIGGER audit_subscription_changes AFTER INSERT OR DELETE OR UPDATE ON public.subscription FOR EACH ROW EXECUTE FUNCTION audit.log_changes()"
+    },
+    {
+      "name": "trg_subscription_guard_created_immutable",
+      "definition": "Owner: - -- CREATE TRIGGER trg_subscription_guard_created_immutable BEFORE UPDATE ON public.subscription FOR EACH ROW EXECUTE FUNCTION public.guard_created_fields_immutable()"
+    },
+    {
+      "name": "trg_subscription_set_updated_at",
+      "definition": "Owner: - -- CREATE TRIGGER trg_subscription_set_updated_at BEFORE UPDATE ON public.subscription FOR EACH ROW EXECUTE FUNCTION public.set_updated_at()"
+    }
+  ],
+  "public.subscription_usage": [
+    {
+      "name": "audit_subscription_usage_changes",
+      "definition": "Owner: - -- CREATE TRIGGER audit_subscription_usage_changes AFTER INSERT OR DELETE OR UPDATE ON public.subscription_usage FOR EACH ROW EXECUTE FUNCTION audit.log_changes()"
+    },
+    {
+      "name": "trg_subscription_usage_guard_created_immutable",
+      "definition": "Owner: - -- CREATE TRIGGER trg_subscription_usage_guard_created_immutable BEFORE UPDATE ON public.subscription_usage FOR EACH ROW EXECUTE FUNCTION public.guard_created_fields_immutable()"
+    },
+    {
+      "name": "trg_subscription_usage_set_updated_at",
+      "definition": "Owner: - -- CREATE TRIGGER trg_subscription_usage_set_updated_at BEFORE UPDATE ON public.subscription_usage FOR EACH ROW EXECUTE FUNCTION public.set_updated_at()"
+    }
+  ],
+  "public.supplier": [
+    {
+      "name": "audit_supplier_changes",
+      "definition": "Owner: - -- CREATE TRIGGER audit_supplier_changes AFTER INSERT OR DELETE OR UPDATE ON public.supplier FOR EACH ROW EXECUTE FUNCTION audit.log_changes()"
+    },
+    {
+      "name": "trg_supplier_guard_created_immutable",
+      "definition": "Owner: - -- CREATE TRIGGER trg_supplier_guard_created_immutable BEFORE UPDATE ON public.supplier FOR EACH ROW EXECUTE FUNCTION public.guard_created_fields_immutable()"
+    },
+    {
+      "name": "trg_supplier_set_updated_at",
+      "definition": "Owner: - -- CREATE TRIGGER trg_supplier_set_updated_at BEFORE UPDATE ON public.supplier FOR EACH ROW EXECUTE FUNCTION public.set_updated_at()"
+    }
+  ],
+  "public.supplier_item": [
+    {
+      "name": "audit_supplier_item_changes",
+      "definition": "Owner: - -- CREATE TRIGGER audit_supplier_item_changes AFTER INSERT OR DELETE OR UPDATE ON public.supplier_item FOR EACH ROW EXECUTE FUNCTION audit.log_changes()"
+    },
+    {
+      "name": "trg_supplier_item_guard_created_immutable",
+      "definition": "Owner: - -- CREATE TRIGGER trg_supplier_item_guard_created_immutable BEFORE UPDATE ON public.supplier_item FOR EACH ROW EXECUTE FUNCTION public.guard_created_fields_immutable()"
+    },
+    {
+      "name": "trg_supplier_item_set_updated_at",
+      "definition": "Owner: - -- CREATE TRIGGER trg_supplier_item_set_updated_at BEFORE UPDATE ON public.supplier_item FOR EACH ROW EXECUTE FUNCTION public.set_updated_at()"
+    }
+  ],
+  "public.supplier_item_price": [
+    {
+      "name": "audit_supplier_item_price_changes",
+      "definition": "Owner: - -- CREATE TRIGGER audit_supplier_item_price_changes AFTER INSERT OR DELETE OR UPDATE ON public.supplier_item_price FOR EACH ROW EXECUTE FUNCTION audit.log_changes()"
+    },
+    {
+      "name": "trg_supplier_item_price_guard_created_immutable",
+      "definition": "Owner: - -- CREATE TRIGGER trg_supplier_item_price_guard_created_immutable BEFORE UPDATE ON public.supplier_item_price FOR EACH ROW EXECUTE FUNCTION public.guard_created_fields_immutable()"
+    }
+  ],
+  "public.tax_rate_version": [
+    {
+      "name": "audit_tax_rate_version_changes",
+      "definition": "Owner: - -- CREATE TRIGGER audit_tax_rate_version_changes AFTER INSERT OR DELETE OR UPDATE ON public.tax_rate_version FOR EACH ROW EXECUTE FUNCTION audit.log_changes()"
+    },
+    {
+      "name": "trg_tax_rate_version_guard_created_immutable",
+      "definition": "Owner: - -- CREATE TRIGGER trg_tax_rate_version_guard_created_immutable BEFORE UPDATE ON public.tax_rate_version FOR EACH ROW EXECUTE FUNCTION public.guard_created_fields_immutable()"
+    }
+  ],
+  "public.tenant": [
+    {
+      "name": "audit_tenant_changes",
+      "definition": "Owner: - -- CREATE TRIGGER audit_tenant_changes AFTER INSERT OR DELETE OR UPDATE ON public.tenant FOR EACH ROW EXECUTE FUNCTION audit.log_changes()"
+    },
+    {
+      "name": "trg_tenant_guard_created_immutable",
+      "definition": "Owner: - -- CREATE TRIGGER trg_tenant_guard_created_immutable BEFORE UPDATE ON public.tenant FOR EACH ROW EXECUTE FUNCTION public.guard_created_fields_immutable()"
+    },
+    {
+      "name": "trg_tenant_set_updated_at",
+      "definition": "Owner: - -- CREATE TRIGGER trg_tenant_set_updated_at BEFORE UPDATE ON public.tenant FOR EACH ROW EXECUTE FUNCTION public.set_updated_at()"
+    }
+  ],
+  "public.tenant_domain": [
+    {
+      "name": "audit_tenant_domain_changes",
+      "definition": "Owner: - -- CREATE TRIGGER audit_tenant_domain_changes AFTER INSERT OR DELETE OR UPDATE ON public.tenant_domain FOR EACH ROW EXECUTE FUNCTION audit.log_changes()"
+    },
+    {
+      "name": "trg_tenant_domain_guard_created_immutable",
+      "definition": "Owner: - -- CREATE TRIGGER trg_tenant_domain_guard_created_immutable BEFORE UPDATE ON public.tenant_domain FOR EACH ROW EXECUTE FUNCTION public.guard_created_fields_immutable()"
+    },
+    {
+      "name": "trg_tenant_domain_set_updated_at",
+      "definition": "Owner: - -- CREATE TRIGGER trg_tenant_domain_set_updated_at BEFORE UPDATE ON public.tenant_domain FOR EACH ROW EXECUTE FUNCTION public.set_updated_at()"
+    }
+  ],
+  "public.tenant_markup_version": [
+    {
+      "name": "audit_tenant_markup_version_changes",
+      "definition": "Owner: - -- CREATE TRIGGER audit_tenant_markup_version_changes AFTER INSERT OR DELETE OR UPDATE ON public.tenant_markup_version FOR EACH ROW EXECUTE FUNCTION audit.log_changes()"
+    },
+    {
+      "name": "trg_tenant_markup_version_guard_created_immutable",
+      "definition": "Owner: - -- CREATE TRIGGER trg_tenant_markup_version_guard_created_immutable BEFORE UPDATE ON public.tenant_markup_version FOR EACH ROW EXECUTE FUNCTION public.guard_created_fields_immutable()"
+    }
+  ],
+  "public.tenant_notification_default": [
+    {
+      "name": "audit_tenant_notification_default_changes",
+      "definition": "Owner: - -- CREATE TRIGGER audit_tenant_notification_default_changes AFTER INSERT OR DELETE OR UPDATE ON public.tenant_notification_default FOR EACH ROW EXECUTE FUNCTION audit.log_changes()"
+    },
+    {
+      "name": "trg_tenant_notification_default_guard_created_immutable",
+      "definition": "Owner: - -- CREATE TRIGGER trg_tenant_notification_default_guard_created_immutable BEFORE UPDATE ON public.tenant_notification_default FOR EACH ROW EXECUTE FUNCTION public.guard_created_fields_immutable()"
+    },
+    {
+      "name": "trg_tenant_notification_default_set_updated_at",
+      "definition": "Owner: - -- CREATE TRIGGER trg_tenant_notification_default_set_updated_at BEFORE UPDATE ON public.tenant_notification_default FOR EACH ROW EXECUTE FUNCTION public.set_updated_at()"
+    }
+  ],
+  "public.tenant_settings": [
+    {
+      "name": "audit_tenant_settings_changes",
+      "definition": "Owner: - -- CREATE TRIGGER audit_tenant_settings_changes AFTER INSERT OR DELETE OR UPDATE ON public.tenant_settings FOR EACH ROW EXECUTE FUNCTION audit.log_changes()"
+    },
+    {
+      "name": "trg_tenant_settings_guard_created_immutable",
+      "definition": "Owner: - -- CREATE TRIGGER trg_tenant_settings_guard_created_immutable BEFORE UPDATE ON public.tenant_settings FOR EACH ROW EXECUTE FUNCTION public.guard_created_fields_immutable()"
+    },
+    {
+      "name": "trg_tenant_settings_set_updated_at",
+      "definition": "Owner: - -- CREATE TRIGGER trg_tenant_settings_set_updated_at BEFORE UPDATE ON public.tenant_settings FOR EACH ROW EXECUTE FUNCTION public.set_updated_at()"
+    }
+  ],
+  "public.tenant_user_invite": [
+    {
+      "name": "audit_tenant_user_invite_changes",
+      "definition": "Owner: - -- CREATE TRIGGER audit_tenant_user_invite_changes AFTER INSERT OR DELETE OR UPDATE ON public.tenant_user_invite FOR EACH ROW EXECUTE FUNCTION audit.log_changes()"
+    },
+    {
+      "name": "trg_tenant_user_invite_guard_created_immutable",
+      "definition": "Owner: - -- CREATE TRIGGER trg_tenant_user_invite_guard_created_immutable BEFORE UPDATE ON public.tenant_user_invite FOR EACH ROW EXECUTE FUNCTION public.guard_created_fields_immutable()"
+    },
+    {
+      "name": "trg_tenant_user_invite_set_updated_at",
+      "definition": "Owner: - -- CREATE TRIGGER trg_tenant_user_invite_set_updated_at BEFORE UPDATE ON public.tenant_user_invite FOR EACH ROW EXECUTE FUNCTION public.set_updated_at()"
+    }
+  ],
+  "public.tenant_user_notification_pref": [
+    {
+      "name": "audit_tenant_user_notification_pref_changes",
+      "definition": "Owner: - -- CREATE TRIGGER audit_tenant_user_notification_pref_changes AFTER INSERT OR DELETE OR UPDATE ON public.tenant_user_notification_pref FOR EACH ROW EXECUTE FUNCTION audit.log_changes()"
+    },
+    {
+      "name": "trg_tenant_user_notification_pref_guard_created_immutable",
+      "definition": "Owner: - -- CREATE TRIGGER trg_tenant_user_notification_pref_guard_created_immutable BEFORE UPDATE ON public.tenant_user_notification_pref FOR EACH ROW EXECUTE FUNCTION public.guard_created_fields_immutable()"
+    },
+    {
+      "name": "trg_tenant_user_notification_pref_set_updated_at",
+      "definition": "Owner: - -- CREATE TRIGGER trg_tenant_user_notification_pref_set_updated_at BEFORE UPDATE ON public.tenant_user_notification_pref FOR EACH ROW EXECUTE FUNCTION public.set_updated_at()"
+    }
+  ],
+  "public.tenant_user_role": [
+    {
+      "name": "audit_tenant_user_role_changes",
+      "definition": "Owner: - -- CREATE TRIGGER audit_tenant_user_role_changes AFTER INSERT OR DELETE OR UPDATE ON public.tenant_user_role FOR EACH ROW EXECUTE FUNCTION audit.log_changes_code_pk()"
+    },
+    {
+      "name": "trg_tenant_user_role_guard_created_immutable",
+      "definition": "Owner: - -- CREATE TRIGGER trg_tenant_user_role_guard_created_immutable BEFORE UPDATE ON public.tenant_user_role FOR EACH ROW EXECUTE FUNCTION public.guard_created_fields_immutable()"
+    },
+    {
+      "name": "trg_tenant_user_role_set_updated_at",
+      "definition": "Owner: - -- CREATE TRIGGER trg_tenant_user_role_set_updated_at BEFORE UPDATE ON public.tenant_user_role FOR EACH ROW EXECUTE FUNCTION public.set_updated_at()"
+    }
+  ],
+  "public.user": [
+    {
+      "name": "audit_user_changes",
+      "definition": "Owner: - -- CREATE TRIGGER audit_user_changes AFTER INSERT OR DELETE OR UPDATE ON public.\"user\" FOR EACH ROW EXECUTE FUNCTION audit.log_changes()"
+    },
+    {
+      "name": "trg_user_guard_created_immutable",
+      "definition": "Owner: - -- CREATE TRIGGER trg_user_guard_created_immutable BEFORE UPDATE ON public.\"user\" FOR EACH ROW EXECUTE FUNCTION public.guard_created_fields_immutable()"
+    },
+    {
+      "name": "trg_user_set_updated_at",
+      "definition": "Owner: - -- CREATE TRIGGER trg_user_set_updated_at BEFORE UPDATE ON public.\"user\" FOR EACH ROW EXECUTE FUNCTION public.set_updated_at()"
+    }
+  ],
+  "public.user_endpoint": [
+    {
+      "name": "audit_user_endpoint_changes",
+      "definition": "Owner: - -- CREATE TRIGGER audit_user_endpoint_changes AFTER INSERT OR DELETE OR UPDATE ON public.user_endpoint FOR EACH ROW EXECUTE FUNCTION audit.log_changes()"
+    },
+    {
+      "name": "sync_user_email_from_endpoint_trigger",
+      "definition": "Owner: - -- CREATE TRIGGER sync_user_email_from_endpoint_trigger AFTER INSERT OR DELETE OR UPDATE ON public.user_endpoint FOR EACH ROW EXECUTE FUNCTION public.sync_user_email_from_endpoint_fn()"
+    },
+    {
+      "name": "trg_user_endpoint_guard_bd",
+      "definition": "Owner: - -- CREATE TRIGGER trg_user_endpoint_guard_bd BEFORE DELETE ON public.user_endpoint FOR EACH ROW EXECUTE FUNCTION public.guard_user_endpoint_primary_email_fn()"
+    },
+    {
+      "name": "trg_user_endpoint_guard_biu",
+      "definition": "Owner: - -- CREATE TRIGGER trg_user_endpoint_guard_biu BEFORE INSERT OR UPDATE ON public.user_endpoint FOR EACH ROW EXECUTE FUNCTION public.guard_user_endpoint_primary_email_fn()"
+    },
+    {
+      "name": "trg_user_endpoint_guard_created_immutable",
+      "definition": "Owner: - -- CREATE TRIGGER trg_user_endpoint_guard_created_immutable BEFORE UPDATE ON public.user_endpoint FOR EACH ROW EXECUTE FUNCTION public.guard_created_fields_immutable()"
+    },
+    {
+      "name": "trg_user_endpoint_set_updated_at",
+      "definition": "Owner: - -- CREATE TRIGGER trg_user_endpoint_set_updated_at BEFORE UPDATE ON public.user_endpoint FOR EACH ROW EXECUTE FUNCTION public.set_updated_at()"
+    }
+  ],
+  "public.user_preference": [
+    {
+      "name": "audit_user_preference_changes",
+      "definition": "Owner: - -- CREATE TRIGGER audit_user_preference_changes AFTER INSERT OR DELETE OR UPDATE ON public.user_preference FOR EACH ROW EXECUTE FUNCTION audit.log_changes()"
+    },
+    {
+      "name": "trg_user_preference_guard_created_immutable",
+      "definition": "Owner: - -- CREATE TRIGGER trg_user_preference_guard_created_immutable BEFORE UPDATE ON public.user_preference FOR EACH ROW EXECUTE FUNCTION public.guard_created_fields_immutable()"
+    },
+    {
+      "name": "trg_user_preference_set_updated_at",
+      "definition": "Owner: - -- CREATE TRIGGER trg_user_preference_set_updated_at BEFORE UPDATE ON public.user_preference FOR EACH ROW EXECUTE FUNCTION public.set_updated_at()"
+    }
+  ],
+  "public.user_sso_identity": [
+    {
+      "name": "audit_user_sso_identity_changes",
+      "definition": "Owner: - -- CREATE TRIGGER audit_user_sso_identity_changes AFTER INSERT OR DELETE OR UPDATE ON public.user_sso_identity FOR EACH ROW EXECUTE FUNCTION audit.log_changes()"
+    },
+    {
+      "name": "trg_user_sso_identity_guard_created_immutable",
+      "definition": "Owner: - -- CREATE TRIGGER trg_user_sso_identity_guard_created_immutable BEFORE UPDATE ON public.user_sso_identity FOR EACH ROW EXECUTE FUNCTION public.guard_created_fields_immutable()"
+    },
+    {
+      "name": "trg_user_sso_identity_set_updated_at",
+      "definition": "Owner: - -- CREATE TRIGGER trg_user_sso_identity_set_updated_at BEFORE UPDATE ON public.user_sso_identity FOR EACH ROW EXECUTE FUNCTION public.set_updated_at()"
+    }
+  ],
+  "public.voice_command_log": [
+    {
+      "name": "audit_voice_command_log_changes",
+      "definition": "Owner: - -- CREATE TRIGGER audit_voice_command_log_changes AFTER INSERT OR DELETE OR UPDATE ON public.voice_command_log FOR EACH ROW EXECUTE FUNCTION audit.log_changes()"
+    },
+    {
+      "name": "trg_voice_command_log_guard_created_immutable",
+      "definition": "Owner: - -- CREATE TRIGGER trg_voice_command_log_guard_created_immutable BEFORE UPDATE ON public.voice_command_log FOR EACH ROW EXECUTE FUNCTION public.guard_created_fields_immutable()"
+    }
+  ],
+  "public.webhook_delivery_attempt": [
+    {
+      "name": "audit_webhook_delivery_attempt_changes",
+      "definition": "Owner: - -- CREATE TRIGGER audit_webhook_delivery_attempt_changes AFTER INSERT OR DELETE OR UPDATE ON public.webhook_delivery_attempt FOR EACH ROW EXECUTE FUNCTION audit.log_changes()"
+    },
+    {
+      "name": "trg_webhook_delivery_attempt_guard_created_immutable",
+      "definition": "Owner: - -- CREATE TRIGGER trg_webhook_delivery_attempt_guard_created_immutable BEFORE UPDATE ON public.webhook_delivery_attempt FOR EACH ROW EXECUTE FUNCTION public.guard_created_fields_immutable()"
+    }
+  ],
+  "public.webhook_endpoint": [
+    {
+      "name": "audit_webhook_endpoint_changes",
+      "definition": "Owner: - -- CREATE TRIGGER audit_webhook_endpoint_changes AFTER INSERT OR DELETE OR UPDATE ON public.webhook_endpoint FOR EACH ROW EXECUTE FUNCTION audit.log_changes()"
+    },
+    {
+      "name": "trg_webhook_endpoint_guard_created_immutable",
+      "definition": "Owner: - -- CREATE TRIGGER trg_webhook_endpoint_guard_created_immutable BEFORE UPDATE ON public.webhook_endpoint FOR EACH ROW EXECUTE FUNCTION public.guard_created_fields_immutable()"
+    }
+  ],
+  "public.webhook_event": [
+    {
+      "name": "audit_webhook_event_changes",
+      "definition": "Owner: - -- CREATE TRIGGER audit_webhook_event_changes AFTER INSERT OR DELETE OR UPDATE ON public.webhook_event FOR EACH ROW EXECUTE FUNCTION audit.log_changes()"
+    },
+    {
+      "name": "trg_webhook_event_guard_created_immutable",
+      "definition": "Owner: - -- CREATE TRIGGER trg_webhook_event_guard_created_immutable BEFORE UPDATE ON public.webhook_event FOR EACH ROW EXECUTE FUNCTION public.guard_created_fields_immutable()"
+    }
+  ],
+  "public.address_type": [
+    {
+      "name": "trg_address_type_guard_created_immutable",
+      "definition": "Owner: - -- CREATE TRIGGER trg_address_type_guard_created_immutable BEFORE UPDATE ON public.address_type FOR EACH ROW EXECUTE FUNCTION public.guard_created_fields_immutable()"
+    },
+    {
+      "name": "trg_address_type_set_updated_at",
+      "definition": "Owner: - -- CREATE TRIGGER trg_address_type_set_updated_at BEFORE UPDATE ON public.address_type FOR EACH ROW EXECUTE FUNCTION public.set_updated_at()"
+    }
+  ],
+  "public.app_service_category": [
+    {
+      "name": "trg_app_service_category_guard_created_immutable",
+      "definition": "Owner: - -- CREATE TRIGGER trg_app_service_category_guard_created_immutable BEFORE UPDATE ON public.app_service_category FOR EACH ROW EXECUTE FUNCTION public.guard_created_fields_immutable()"
+    },
+    {
+      "name": "trg_app_service_category_set_updated_at",
+      "definition": "Owner: - -- CREATE TRIGGER trg_app_service_category_set_updated_at BEFORE UPDATE ON public.app_service_category FOR EACH ROW EXECUTE FUNCTION public.set_updated_at()"
+    }
+  ],
+  "public.app_service_provider": [
+    {
+      "name": "trg_app_service_provider_guard_created_immutable",
+      "definition": "Owner: - -- CREATE TRIGGER trg_app_service_provider_guard_created_immutable BEFORE UPDATE ON public.app_service_provider FOR EACH ROW EXECUTE FUNCTION public.guard_created_fields_immutable()"
+    },
+    {
+      "name": "trg_app_service_provider_set_updated_at",
+      "definition": "Owner: - -- CREATE TRIGGER trg_app_service_provider_set_updated_at BEFORE UPDATE ON public.app_service_provider FOR EACH ROW EXECUTE FUNCTION public.set_updated_at()"
+    }
+  ],
+  "public.contact_type": [
+    {
+      "name": "trg_contact_type_guard_created_immutable",
+      "definition": "Owner: - -- CREATE TRIGGER trg_contact_type_guard_created_immutable BEFORE UPDATE ON public.contact_type FOR EACH ROW EXECUTE FUNCTION public.guard_created_fields_immutable()"
+    },
+    {
+      "name": "trg_contact_type_set_updated_at",
+      "definition": "Owner: - -- CREATE TRIGGER trg_contact_type_set_updated_at BEFORE UPDATE ON public.contact_type FOR EACH ROW EXECUTE FUNCTION public.set_updated_at()"
+    }
+  ],
+  "public.currency": [
+    {
+      "name": "trg_currency_guard_created_immutable",
+      "definition": "Owner: - -- CREATE TRIGGER trg_currency_guard_created_immutable BEFORE UPDATE ON public.currency FOR EACH ROW EXECUTE FUNCTION public.guard_created_fields_immutable()"
+    },
+    {
+      "name": "trg_currency_set_updated_at",
+      "definition": "Owner: - -- CREATE TRIGGER trg_currency_set_updated_at BEFORE UPDATE ON public.currency FOR EACH ROW EXECUTE FUNCTION public.set_updated_at()"
+    }
+  ],
+  "public.customer_lifecycle_status": [
+    {
+      "name": "trg_customer_lifecycle_status_guard_created_immutable",
+      "definition": "Owner: - -- CREATE TRIGGER trg_customer_lifecycle_status_guard_created_immutable BEFORE UPDATE ON public.customer_lifecycle_status FOR EACH ROW EXECUTE FUNCTION public.guard_created_fields_immutable()"
+    },
+    {
+      "name": "trg_customer_lifecycle_status_set_updated_at",
+      "definition": "Owner: - -- CREATE TRIGGER trg_customer_lifecycle_status_set_updated_at BEFORE UPDATE ON public.customer_lifecycle_status FOR EACH ROW EXECUTE FUNCTION public.set_updated_at()"
+    }
+  ],
+  "public.entity_type": [
+    {
+      "name": "trg_entity_type_guard_created_immutable",
+      "definition": "Owner: - -- CREATE TRIGGER trg_entity_type_guard_created_immutable BEFORE UPDATE ON public.entity_type FOR EACH ROW EXECUTE FUNCTION public.guard_created_fields_immutable()"
+    },
+    {
+      "name": "trg_entity_type_set_updated_at",
+      "definition": "Owner: - -- CREATE TRIGGER trg_entity_type_set_updated_at BEFORE UPDATE ON public.entity_type FOR EACH ROW EXECUTE FUNCTION public.set_updated_at()"
+    }
+  ],
+  "public.idempotency_key": [
+    {
+      "name": "trg_idempotency_key_guard_created_immutable",
+      "definition": "Owner: - -- CREATE TRIGGER trg_idempotency_key_guard_created_immutable BEFORE UPDATE ON public.idempotency_key FOR EACH ROW EXECUTE FUNCTION public.guard_created_fields_immutable()"
+    }
+  ],
+  "public.invoice_status": [
+    {
+      "name": "trg_invoice_status_guard_created_immutable",
+      "definition": "Owner: - -- CREATE TRIGGER trg_invoice_status_guard_created_immutable BEFORE UPDATE ON public.invoice_status FOR EACH ROW EXECUTE FUNCTION public.guard_created_fields_immutable()"
+    },
+    {
+      "name": "trg_invoice_status_set_updated_at",
+      "definition": "Owner: - -- CREATE TRIGGER trg_invoice_status_set_updated_at BEFORE UPDATE ON public.invoice_status FOR EACH ROW EXECUTE FUNCTION public.set_updated_at()"
+    }
+  ],
+  "public.job_expense_category": [
+    {
+      "name": "trg_job_expense_category_guard_created_immutable",
+      "definition": "Owner: - -- CREATE TRIGGER trg_job_expense_category_guard_created_immutable BEFORE UPDATE ON public.job_expense_category FOR EACH ROW EXECUTE FUNCTION public.guard_created_fields_immutable()"
+    },
+    {
+      "name": "trg_job_expense_category_set_updated_at",
+      "definition": "Owner: - -- CREATE TRIGGER trg_job_expense_category_set_updated_at BEFORE UPDATE ON public.job_expense_category FOR EACH ROW EXECUTE FUNCTION public.set_updated_at()"
+    }
+  ],
+  "public.job_status": [
+    {
+      "name": "trg_job_status_guard_created_immutable",
+      "definition": "Owner: - -- CREATE TRIGGER trg_job_status_guard_created_immutable BEFORE UPDATE ON public.job_status FOR EACH ROW EXECUTE FUNCTION public.guard_created_fields_immutable()"
+    },
+    {
+      "name": "trg_job_status_set_updated_at",
+      "definition": "Owner: - -- CREATE TRIGGER trg_job_status_set_updated_at BEFORE UPDATE ON public.job_status FOR EACH ROW EXECUTE FUNCTION public.set_updated_at()"
+    }
+  ],
+  "public.jwk_status": [
+    {
+      "name": "trg_jwk_status_guard_created_immutable",
+      "definition": "Owner: - -- CREATE TRIGGER trg_jwk_status_guard_created_immutable BEFORE UPDATE ON public.jwk_status FOR EACH ROW EXECUTE FUNCTION public.guard_created_fields_immutable()"
+    }
+  ],
+  "public.notification_channel": [
+    {
+      "name": "trg_notification_channel_guard_created_immutable",
+      "definition": "Owner: - -- CREATE TRIGGER trg_notification_channel_guard_created_immutable BEFORE UPDATE ON public.notification_channel FOR EACH ROW EXECUTE FUNCTION public.guard_created_fields_immutable()"
+    },
+    {
+      "name": "trg_notification_channel_set_updated_at",
+      "definition": "Owner: - -- CREATE TRIGGER trg_notification_channel_set_updated_at BEFORE UPDATE ON public.notification_channel FOR EACH ROW EXECUTE FUNCTION public.set_updated_at()"
+    }
+  ],
+  "public.notification_type": [
+    {
+      "name": "trg_notification_type_guard_created_immutable",
+      "definition": "Owner: - -- CREATE TRIGGER trg_notification_type_guard_created_immutable BEFORE UPDATE ON public.notification_type FOR EACH ROW EXECUTE FUNCTION public.guard_created_fields_immutable()"
+    },
+    {
+      "name": "trg_notification_type_set_updated_at",
+      "definition": "Owner: - -- CREATE TRIGGER trg_notification_type_set_updated_at BEFORE UPDATE ON public.notification_type FOR EACH ROW EXECUTE FUNCTION public.set_updated_at()"
+    }
+  ],
+  "public.payment_status": [
+    {
+      "name": "trg_payment_status_guard_created_immutable",
+      "definition": "Owner: - -- CREATE TRIGGER trg_payment_status_guard_created_immutable BEFORE UPDATE ON public.payment_status FOR EACH ROW EXECUTE FUNCTION public.guard_created_fields_immutable()"
+    },
+    {
+      "name": "trg_payment_status_set_updated_at",
+      "definition": "Owner: - -- CREATE TRIGGER trg_payment_status_set_updated_at BEFORE UPDATE ON public.payment_status FOR EACH ROW EXECUTE FUNCTION public.set_updated_at()"
+    }
+  ],
+  "public.payment_type": [
+    {
+      "name": "trg_payment_type_guard_created_immutable",
+      "definition": "Owner: - -- CREATE TRIGGER trg_payment_type_guard_created_immutable BEFORE UPDATE ON public.payment_type FOR EACH ROW EXECUTE FUNCTION public.guard_created_fields_immutable()"
+    },
+    {
+      "name": "trg_payment_type_set_updated_at",
+      "definition": "Owner: - -- CREATE TRIGGER trg_payment_type_set_updated_at BEFORE UPDATE ON public.payment_type FOR EACH ROW EXECUTE FUNCTION public.set_updated_at()"
+    }
+  ],
+  "public.pricing_cache": [
+    {
+      "name": "trg_pricing_cache_guard_created_immutable",
+      "definition": "Owner: - -- CREATE TRIGGER trg_pricing_cache_guard_created_immutable BEFORE UPDATE ON public.pricing_cache FOR EACH ROW EXECUTE FUNCTION public.guard_created_fields_immutable()"
+    }
+  ],
+  "public.qco_line_type": [
+    {
+      "name": "trg_qco_line_type_guard_created_immutable",
+      "definition": "Owner: - -- CREATE TRIGGER trg_qco_line_type_guard_created_immutable BEFORE UPDATE ON public.qco_line_type FOR EACH ROW EXECUTE FUNCTION public.guard_created_fields_immutable()"
+    },
+    {
+      "name": "trg_qco_line_type_set_updated_at",
+      "definition": "Owner: - -- CREATE TRIGGER trg_qco_line_type_set_updated_at BEFORE UPDATE ON public.qco_line_type FOR EACH ROW EXECUTE FUNCTION public.set_updated_at()"
+    }
+  ],
+  "public.qpl_contact_action_type": [
+    {
+      "name": "trg_qpl_contact_action_type_guard_created_immutable",
+      "definition": "Owner: - -- CREATE TRIGGER trg_qpl_contact_action_type_guard_created_immutable BEFORE UPDATE ON public.qpl_contact_action_type FOR EACH ROW EXECUTE FUNCTION public.guard_created_fields_immutable()"
+    },
+    {
+      "name": "trg_qpl_contact_action_type_set_updated_at",
+      "definition": "Owner: - -- CREATE TRIGGER trg_qpl_contact_action_type_set_updated_at BEFORE UPDATE ON public.qpl_contact_action_type FOR EACH ROW EXECUTE FUNCTION public.set_updated_at()"
+    }
+  ],
+  "public.quote_link_status": [
+    {
+      "name": "trg_quote_link_status_guard_created_immutable",
+      "definition": "Owner: - -- CREATE TRIGGER trg_quote_link_status_guard_created_immutable BEFORE UPDATE ON public.quote_link_status FOR EACH ROW EXECUTE FUNCTION public.guard_created_fields_immutable()"
+    },
+    {
+      "name": "trg_quote_link_status_set_updated_at",
+      "definition": "Owner: - -- CREATE TRIGGER trg_quote_link_status_set_updated_at BEFORE UPDATE ON public.quote_link_status FOR EACH ROW EXECUTE FUNCTION public.set_updated_at()"
+    }
+  ],
+  "public.quote_status": [
+    {
+      "name": "trg_quote_status_guard_created_immutable",
+      "definition": "Owner: - -- CREATE TRIGGER trg_quote_status_guard_created_immutable BEFORE UPDATE ON public.quote_status FOR EACH ROW EXECUTE FUNCTION public.guard_created_fields_immutable()"
+    },
+    {
+      "name": "trg_quote_status_set_updated_at",
+      "definition": "Owner: - -- CREATE TRIGGER trg_quote_status_set_updated_at BEFORE UPDATE ON public.quote_status FOR EACH ROW EXECUTE FUNCTION public.set_updated_at()"
+    }
+  ],
+  "public.site_lifecycle_status": [
+    {
+      "name": "trg_site_lifecycle_status_guard_created_immutable",
+      "definition": "Owner: - -- CREATE TRIGGER trg_site_lifecycle_status_guard_created_immutable BEFORE UPDATE ON public.site_lifecycle_status FOR EACH ROW EXECUTE FUNCTION public.guard_created_fields_immutable()"
+    },
+    {
+      "name": "trg_site_lifecycle_status_set_updated_at",
+      "definition": "Owner: - -- CREATE TRIGGER trg_site_lifecycle_status_set_updated_at BEFORE UPDATE ON public.site_lifecycle_status FOR EACH ROW EXECUTE FUNCTION public.set_updated_at()"
+    }
+  ],
+  "public.subscription_status": [
+    {
+      "name": "trg_subscription_status_guard_created_immutable",
+      "definition": "Owner: - -- CREATE TRIGGER trg_subscription_status_guard_created_immutable BEFORE UPDATE ON public.subscription_status FOR EACH ROW EXECUTE FUNCTION public.guard_created_fields_immutable()"
+    },
+    {
+      "name": "trg_subscription_status_set_updated_at",
+      "definition": "Owner: - -- CREATE TRIGGER trg_subscription_status_set_updated_at BEFORE UPDATE ON public.subscription_status FOR EACH ROW EXECUTE FUNCTION public.set_updated_at()"
+    }
+  ],
+  "public.supplier_item_category": [
+    {
+      "name": "trg_supplier_item_category_guard_created_immutable",
+      "definition": "Owner: - -- CREATE TRIGGER trg_supplier_item_category_guard_created_immutable BEFORE UPDATE ON public.supplier_item_category FOR EACH ROW EXECUTE FUNCTION public.guard_created_fields_immutable()"
+    },
+    {
+      "name": "trg_supplier_item_category_set_updated_at",
+      "definition": "Owner: - -- CREATE TRIGGER trg_supplier_item_category_set_updated_at BEFORE UPDATE ON public.supplier_item_category FOR EACH ROW EXECUTE FUNCTION public.set_updated_at()"
+    }
+  ],
+  "public.supplier_item_uom": [
+    {
+      "name": "trg_supplier_item_uom_guard_created_immutable",
+      "definition": "Owner: - -- CREATE TRIGGER trg_supplier_item_uom_guard_created_immutable BEFORE UPDATE ON public.supplier_item_uom FOR EACH ROW EXECUTE FUNCTION public.guard_created_fields_immutable()"
+    },
+    {
+      "name": "trg_supplier_item_uom_set_updated_at",
+      "definition": "Owner: - -- CREATE TRIGGER trg_supplier_item_uom_set_updated_at BEFORE UPDATE ON public.supplier_item_uom FOR EACH ROW EXECUTE FUNCTION public.set_updated_at()"
+    }
+  ],
+  "public.supplier_lifecycle_status": [
+    {
+      "name": "trg_supplier_lifecycle_status_guard_created_immutable",
+      "definition": "Owner: - -- CREATE TRIGGER trg_supplier_lifecycle_status_guard_created_immutable BEFORE UPDATE ON public.supplier_lifecycle_status FOR EACH ROW EXECUTE FUNCTION public.guard_created_fields_immutable()"
+    },
+    {
+      "name": "trg_supplier_lifecycle_status_set_updated_at",
+      "definition": "Owner: - -- CREATE TRIGGER trg_supplier_lifecycle_status_set_updated_at BEFORE UPDATE ON public.supplier_lifecycle_status FOR EACH ROW EXECUTE FUNCTION public.set_updated_at()"
+    }
+  ],
+  "public.taxability_code": [
+    {
+      "name": "trg_taxability_code_guard_created_immutable",
+      "definition": "Owner: - -- CREATE TRIGGER trg_taxability_code_guard_created_immutable BEFORE UPDATE ON public.taxability_code FOR EACH ROW EXECUTE FUNCTION public.guard_created_fields_immutable()"
+    },
+    {
+      "name": "trg_taxability_code_set_updated_at",
+      "definition": "Owner: - -- CREATE TRIGGER trg_taxability_code_set_updated_at BEFORE UPDATE ON public.taxability_code FOR EACH ROW EXECUTE FUNCTION public.set_updated_at()"
+    }
+  ],
+  "public.tenant_product_feature_override": [
+    {
+      "name": "trg_tenant_product_feature_override_guard_created_immutable",
+      "definition": "Owner: - -- CREATE TRIGGER trg_tenant_product_feature_override_guard_created_immutable BEFORE UPDATE ON public.tenant_product_feature_override FOR EACH ROW EXECUTE FUNCTION public.guard_created_fields_immutable()"
+    },
+    {
+      "name": "trg_tenant_product_feature_override_set_updated_at",
+      "definition": "Owner: - -- CREATE TRIGGER trg_tenant_product_feature_override_set_updated_at BEFORE UPDATE ON public.tenant_product_feature_override FOR EACH ROW EXECUTE FUNCTION public.set_updated_at()"
+    }
+  ],
+  "public.tenant_user": [
+    {
+      "name": "trg_tenant_user_guard_created_immutable",
+      "definition": "Owner: - -- CREATE TRIGGER trg_tenant_user_guard_created_immutable BEFORE UPDATE ON public.tenant_user FOR EACH ROW EXECUTE FUNCTION public.guard_created_fields_immutable()"
+    },
+    {
+      "name": "trg_tenant_user_guard_platform_biu",
+      "definition": "Owner: - -- CREATE TRIGGER trg_tenant_user_guard_platform_biu BEFORE INSERT OR UPDATE ON public.tenant_user FOR EACH ROW EXECUTE FUNCTION public.guard_tenant_user_platform_isolation()"
+    },
+    {
+      "name": "trg_tenant_user_set_updated_at",
+      "definition": "Owner: - -- CREATE TRIGGER trg_tenant_user_set_updated_at BEFORE UPDATE ON public.tenant_user FOR EACH ROW EXECUTE FUNCTION public.set_updated_at()"
+    }
+  ],
+  "public.tenant_user_status": [
+    {
+      "name": "trg_tenant_user_status_guard_created_immutable",
+      "definition": "Owner: - -- CREATE TRIGGER trg_tenant_user_status_guard_created_immutable BEFORE UPDATE ON public.tenant_user_status FOR EACH ROW EXECUTE FUNCTION public.guard_created_fields_immutable()"
+    },
+    {
+      "name": "trg_tenant_user_status_set_updated_at",
+      "definition": "Owner: - -- CREATE TRIGGER trg_tenant_user_status_set_updated_at BEFORE UPDATE ON public.tenant_user_status FOR EACH ROW EXECUTE FUNCTION public.set_updated_at()"
+    }
+  ],
+  "public.usage_ledger": [
+    {
+      "name": "trg_usage_ledger_guard_created_immutable",
+      "definition": "Owner: - -- CREATE TRIGGER trg_usage_ledger_guard_created_immutable BEFORE UPDATE ON public.usage_ledger FOR EACH ROW EXECUTE FUNCTION public.guard_created_fields_immutable()"
+    }
+  ],
+  "public.webhook_event_type": [
+    {
+      "name": "trg_webhook_event_type_guard_created_immutable",
+      "definition": "Owner: - -- CREATE TRIGGER trg_webhook_event_type_guard_created_immutable BEFORE UPDATE ON public.webhook_event_type FOR EACH ROW EXECUTE FUNCTION public.guard_created_fields_immutable()"
+    },
+    {
+      "name": "trg_webhook_event_type_set_updated_at",
+      "definition": "Owner: - -- CREATE TRIGGER trg_webhook_event_type_set_updated_at BEFORE UPDATE ON public.webhook_event_type FOR EACH ROW EXECUTE FUNCTION public.set_updated_at()"
+    }
+  ]
+}

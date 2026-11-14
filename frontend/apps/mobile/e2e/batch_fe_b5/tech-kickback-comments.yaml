@@ -1,0 +1,72 @@
+# Tech kickback comments E2E flow — FE-B5
+# Location: apps/mobile/e2e/batch_fe_b5/tech-kickback-comments.yaml
+#
+# Scenario: Tech opens a kicked-back quote and sees owner's kickback comments
+#
+# Flow:
+#   1. Launch app as tech role (MSW mock auth)
+#   2. MSW returns a quote with status=draft (kicked back) + kickback comments
+#   3. Navigate to that quote's detail screen
+#   4. Assert: "Returned to tech" or "Awaiting revision" status visible
+#   5. Assert: KickbackCommentThread renders (testID="kickback-comment-thread")
+#   6. Assert: Overall comment from owner is visible
+#   7. Assert: Changes tab is NOT present (has_owner_edits=false for kicked-back quotes)
+#
+# Run via: maestro test e2e/batch_fe_b5/tech-kickback-comments.yaml
+
+appId: com.pilotfortrades.mobile
+---
+- launchApp:
+    clearState: true
+    launchArguments:
+      MOCK_AUTH_ROLE: tech
+      USE_MOCK_AUTH: "true"
+      # Tells MSW to return status=draft with kickback annotation for quote-uuid-3
+      MOCK_QUOTE_SCENARIO: kicked_back
+
+# Navigate directly to the kicked-back quote detail
+- openLink: "pilotfortrades://quotes/quote-uuid-3"
+
+# Wait for detail screen to load
+- waitForAnimationToEnd:
+    timeout: 4000
+
+# Assert Status tab is active (default)
+- assertVisible:
+    text: "Status"
+
+# Assert Changes tab is NOT visible — kicked-back quotes have has_owner_edits=false
+- assertNotVisible:
+    text: "Changes"
+
+# Assert the reviewer feedback section header is visible
+- assertVisible:
+    text: "Reviewer feedback"
+
+# Assert the KickbackCommentThread component rendered
+# testID from KickbackCommentThread: "kickback-comment-thread"
+- assertVisible:
+    id: "kickback-comment-thread"
+
+# Assert the "Overall feedback" section label is visible
+# (annotation_type="overall" comments appear under this section)
+- assertVisible:
+    text: "Overall feedback"
+
+# Assert the mock kickback comment text is visible
+# MSW returns: "Please update the labor rate — current schedule is $135/hr"
+- assertVisible:
+    text: "Please update the labor rate"
+
+# Assert the reviewer name is shown on the comment bubble
+- assertVisible:
+    text: "Owner"
+
+# Scroll down to ensure no content is clipped below the fold
+- scroll:
+    direction: down
+    duration: 500
+
+# Re-assert comment still visible after scroll
+- assertVisible:
+    id: "kickback-comment-thread"

@@ -1,0 +1,49 @@
+# Voice quote creation E2E flow — FE-B3
+# Location: apps/mobile/e2e/batch_fe_b3/voice-quote-creation.flow.yaml
+#
+# Happy path: real mic on device, full voice quote creation.
+# REQUIRES: real device with microphone.
+# Run via: maestro test e2e/batch_fe_b3/voice-quote-creation.flow.yaml
+
+appId: com.pilotfortrades.mobile
+---
+- launchApp:
+    clearState: true
+
+# Navigate to Home tab
+- tapOn:
+    text: "Home"
+
+# Tap the voice session CTA
+- assertVisible:
+    id: "start-voice-session-btn"
+- tapOn:
+    id: "start-voice-session-btn"
+
+# Verify the voice trigger button is visible
+- assertVisible:
+    id: "voice-trigger-btn"
+
+# Tap to start recording
+- tapOn:
+    id: "voice-trigger-btn"
+
+# Verify we are in listening state
+- assertVisible:
+    id: "listening-waveform-anim"
+
+# Wait for voice processing (5s timeout for mock or real mic response)
+- waitForAnimationToEnd:
+    timeout: 5000
+
+# Verify AI response text appears
+- assertVisible:
+    text: "Matched Tom Johnson"
+
+# Verify voice quote preview card renders
+- assertVisible:
+    id: "voice-quote-preview-card"
+
+# Verify the session title is shown in header
+- assertVisible:
+    id: "session-drawer-trigger"

@@ -1,0 +1,126 @@
+<title>Drift &amp; Guardrails</title>
+<style>
+  /* Layout: seven before/after rows — a real AI failure mode (left) paired with the guardrail that contains it (right, accent). */
+  :root{
+    --bg:#f6f8f8; --surface:#ffffff; --fg:#192024; --muted:#59656d; --line:#d2d9dc;
+    --accent:#0d7d74; --accent-soft:#e4f1ef; --accent-strong:#0a5d56;
+    --sans:"IBM Plex Sans",ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  }
+  @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+    --bg:#0e1416; --surface:#161d20; --fg:#e9eef0; --muted:#9aa7ad; --line:#2a343a;
+    --accent:#3fd0c2; --accent-soft:#10302e; --accent-strong:#63e2d5; color-scheme:dark;
+  }}
+  :root[data-theme="dark"]{
+    --bg:#0e1416; --surface:#161d20; --fg:#e9eef0; --muted:#9aa7ad; --line:#2a343a;
+    --accent:#3fd0c2; --accent-soft:#10302e; --accent-strong:#63e2d5; color-scheme:dark;
+  }
+  body{background:var(--bg);color:var(--fg);font-family:var(--sans);line-height:1.5;}
+  .wrap{max-width:1120px;margin:0 auto;padding-block:32px 40px;padding-inline:16px;}
+  .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-strong);margin:0 0 6px;}
+  h1{font-size:clamp(22px,3.2vw,30px);line-height:1.12;text-wrap:balance;margin:0 0 8px;font-weight:700;letter-spacing:-.01em;}
+  .lede{color:var(--muted);font-size:15px;max-width:68ch;margin:0 0 22px;}
+  figure{margin:0;}
+  .diagram{width:100%;height:auto;display:block;background:var(--surface);border:1px solid var(--line);border-radius:14px;}
+  figcaption{color:var(--muted);font-size:13px;margin-top:12px;max-width:72ch;}
+  .foot{margin-top:18px;font-size:12.5px;color:var(--muted);font-family:var(--mono);}
+  svg{color:var(--fg);}
+  .h1{fill:var(--fg);font-weight:700;font-size:25px;letter-spacing:-.01em;}
+  .sub{fill:var(--muted);font-size:14.5px;}
+  .colh-d{fill:var(--muted);font-weight:700;font-size:13px;letter-spacing:.04em;text-transform:uppercase;}
+  .colh-g{fill:var(--accent-strong);font-weight:700;font-size:13px;letter-spacing:.04em;text-transform:uppercase;}
+  .nb{fill:var(--fg);font-size:12.5px;}
+  .close{fill:var(--accent-strong);font-size:14px;font-weight:600;}
+  .node{fill:var(--surface);stroke:var(--line);stroke-width:1.5;}
+  .gate{fill:var(--accent-soft);stroke:var(--accent);stroke-width:2;}
+</style>
+
+<div class="wrap">
+  <p class="eyebrow">HotRMC · Why judgment matters</p>
+  <h1>Where senior judgment pays off</h1>
+  <p class="lede">AI is a brilliant, tireless junior that will confidently do the wrong thing at superhuman speed. Each row is a real failure mode from the build — paired with the guardrail that contained it. The guardrails are the judgment.</p>
+
+  <figure>
+    <svg class="diagram" viewBox="0 0 1200 704" role="img"
+      aria-label="Seven AI failure modes, each paired with the guardrail that contains it: running Python outside the venv to a mandatory venv prefix; schema drift to a golden-master schema with a diff gate; declaring done without tests to a zero-regression ratchet; hallucinated DB state to verifying the live DB; skipped docs to a done-equals-code-plus-docs template; the AI making its own architecture calls to the human owning the expensive-to-reverse decisions; omitting the /test twins to a dual-endpoint pattern enforced by the closeout template.">
+      <defs>
+        <marker id="da" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto-start-reverse">
+          <path d="M1,1 L9,5 L1,9 Z" fill="var(--accent)"/>
+        </marker>
+      </defs>
+      <text class="h1" x="600" y="40" text-anchor="middle">The drift, and the guardrail that contained it</text>
+      <text class="sub" x="600" y="68" text-anchor="middle">Real failure modes from the build — each one is why a senior stays in the loop</text>
+
+      <text class="colh-d" x="298" y="112" text-anchor="middle">The drift — what the AI did</text>
+      <text class="colh-g" x="895" y="112" text-anchor="middle">The guardrail — what contains it</text>
+
+      <!-- Row 1 -->
+      <rect class="node" x="40" y="128" width="516" height="62" rx="10"/>
+      <text class="nb" x="58" y="154">Ran Python outside the project venv,</text>
+      <text class="nb" x="58" y="174">then chased the wrong error.</text>
+      <line x1="560" y1="159" x2="626" y2="159" stroke="var(--accent)" stroke-width="2" marker-end="url(#da)"/>
+      <rect class="gate" x="630" y="128" width="530" height="62" rx="10"/>
+      <text class="nb" x="648" y="154">Mandatory venv command prefix —</text>
+      <text class="nb" x="648" y="174">no agent runs Python any other way.</text>
+
+      <!-- Row 2 -->
+      <rect class="node" x="40" y="200" width="516" height="62" rx="10"/>
+      <text class="nb" x="58" y="226">Let the live database and the master</text>
+      <text class="nb" x="58" y="246">schema definition drift apart.</text>
+      <line x1="560" y1="231" x2="626" y2="231" stroke="var(--accent)" stroke-width="2" marker-end="url(#da)"/>
+      <rect class="gate" x="630" y="200" width="530" height="62" rx="10"/>
+      <text class="nb" x="648" y="226">Golden-master JSON + a diff gate —</text>
+      <text class="nb" x="648" y="246">must reconcile before work proceeds.</text>
+
+      <!-- Row 3 -->
+      <rect class="node" x="40" y="272" width="516" height="62" rx="10"/>
+      <text class="nb" x="58" y="298">Declared work &quot;done&quot; without</text>
+      <text class="nb" x="58" y="318">actually running the test suite.</text>
+      <line x1="560" y1="303" x2="626" y2="303" stroke="var(--accent)" stroke-width="2" marker-end="url(#da)"/>
+      <rect class="gate" x="630" y="272" width="530" height="62" rx="10"/>
+      <text class="nb" x="648" y="298">Zero-regression ratchet — baseline</text>
+      <text class="nb" x="648" y="318">first; every batch reports against it.</text>
+
+      <!-- Row 4 -->
+      <rect class="node" x="40" y="344" width="516" height="62" rx="10"/>
+      <text class="nb" x="58" y="370">Assumed column names and</text>
+      <text class="nb" x="58" y="390">hallucinated the database state.</text>
+      <line x1="560" y1="375" x2="626" y2="375" stroke="var(--accent)" stroke-width="2" marker-end="url(#da)"/>
+      <rect class="gate" x="630" y="344" width="530" height="62" rx="10"/>
+      <text class="nb" x="648" y="370">Verify the live DB before any query —</text>
+      <text class="nb" x="648" y="390">never hand-trace, never assume.</text>
+
+      <!-- Row 5 -->
+      <rect class="node" x="40" y="416" width="516" height="62" rx="10"/>
+      <text class="nb" x="58" y="442">Skipped the paired docs and</text>
+      <text class="nb" x="58" y="462">bookkeeping when closing a batch.</text>
+      <line x1="560" y1="447" x2="626" y2="447" stroke="var(--accent)" stroke-width="2" marker-end="url(#da)"/>
+      <rect class="gate" x="630" y="416" width="530" height="62" rx="10"/>
+      <text class="nb" x="648" y="442">&quot;Done&quot; = code + migration +</text>
+      <text class="nb" x="648" y="462">schema + docs, enforced by template.</text>
+
+      <!-- Row 6 -->
+      <rect class="node" x="40" y="488" width="516" height="62" rx="10"/>
+      <text class="nb" x="58" y="514">Tried to make its own architecture</text>
+      <text class="nb" x="58" y="534">and data-model decisions.</text>
+      <line x1="560" y1="519" x2="626" y2="519" stroke="var(--accent)" stroke-width="2" marker-end="url(#da)"/>
+      <rect class="gate" x="630" y="488" width="530" height="62" rx="10"/>
+      <text class="nb" x="648" y="514">The human owns the expensive-to-</text>
+      <text class="nb" x="648" y="534">reverse calls; the AI drafts to them.</text>
+
+      <!-- Row 7 -->
+      <rect class="node" x="40" y="560" width="516" height="62" rx="10"/>
+      <text class="nb" x="58" y="586">Built secured routes but kept</text>
+      <text class="nb" x="58" y="606">omitting their /test twins.</text>
+      <line x1="560" y1="591" x2="626" y2="591" stroke="var(--accent)" stroke-width="2" marker-end="url(#da)"/>
+      <rect class="gate" x="630" y="560" width="530" height="62" rx="10"/>
+      <text class="nb" x="648" y="586">Dual-endpoint pattern in the closeout</text>
+      <text class="nb" x="648" y="606">template — env-gated, prod-blocked.</text>
+
+      <text class="close" x="600" y="668" text-anchor="middle">The leverage is real — but the judgment is what makes it correct. That's the product.</text>
+    </svg>
+    <figcaption>Seven real AI failure modes from the build (see AI-PITFALLS.md), each paired with the guardrail that contains it. The method isn't "let the AI build it" — it's the system of judgment and guardrails that turns fast, confident output into correct work.</figcaption>
+  </figure>
+
+  <p class="foot">Pilot for Trades proof suite · 2026</p>
+</div>

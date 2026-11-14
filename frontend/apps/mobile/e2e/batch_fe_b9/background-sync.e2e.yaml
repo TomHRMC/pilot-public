@@ -1,0 +1,46 @@
+appId: com.pilotfortrades.mobile
+tags:
+  - batch_fe_b9
+  - background-sync
+
+---
+
+# E2E: Background sync status row — FE-B9
+# Maestro YAML spec
+# Tests: force-queue items → kill app → wait → reopen → confirm bg sync row renders
+
+name: "Background Sync Status Row — FE-B9"
+
+flows:
+  - name: "Background sync row renders in SyncQueueDrawer"
+    steps:
+      # Navigate to owner tab
+      - tapOn:
+          text: "Owner"
+      - assertVisible:
+          id: "sync-queue-drawer"
+          maxWait: 5000
+        # Drawer should show BackgroundSyncStatusRow above queue sections
+      - assertVisible:
+          id: "background-sync-status-row"
+          maxWait: 5000
+
+  - name: "Background sync row shows correct state"
+    steps:
+      - tapOn:
+          text: "Owner"
+      - assertVisible:
+          id: "background-sync-status-row"
+      # Verify status label is present
+      - assertVisible:
+          text: "Background sync"
+
+  - name: "Background sync no-permission state shows notification copy"
+    env:
+      PILOT_TEST_BG_SYNC_STATE: "no_permission"
+    steps:
+      - tapOn:
+          text: "Owner"
+      - assertVisible:
+          id: "background-sync-status-row-pressable"
+          maxWait: 5000

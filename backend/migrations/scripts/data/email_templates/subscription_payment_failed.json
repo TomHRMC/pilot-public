@@ -1,0 +1,9 @@
+{
+  "template_id": "subscription_payment_failed",
+  "display_name": "Subscription Payment Failed",
+  "category": "internal",
+  "subject_template": "Action required: subscription payment failed",
+  "body_html_template": "<p>Your subscription payment failed.</p>",
+  "body_plain_template": "Your subscription payment failed.",
+  "variables": ["tenant_name", "plan_name", "update_url"]
+}

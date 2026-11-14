@@ -1,0 +1,9 @@
+{
+  "template_id": "payment_received_tenant",
+  "display_name": "Payment Received (Tenant)",
+  "category": "internal",
+  "subject_template": "Payment received from {{customer_name}}",
+  "body_html_template": "<p>Payment received!</p>",
+  "body_plain_template": "Payment received!",
+  "variables": ["customer_name", "amount", "invoice_id"]
+}

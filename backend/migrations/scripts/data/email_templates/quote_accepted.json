@@ -1,0 +1,9 @@
+{
+  "template_id": "quote_accepted",
+  "display_name": "Quote Accepted Notification",
+  "category": "internal",
+  "subject_template": "Customer accepted your quote",
+  "body_html_template": "<p>Your quote was accepted!</p>",
+  "body_plain_template": "Your quote was accepted!",
+  "variables": ["customer_name", "quote_id", "company_name"]
+}

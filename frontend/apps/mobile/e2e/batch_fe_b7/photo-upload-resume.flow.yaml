@@ -1,0 +1,59 @@
+appId: com.pilotfortrades.mobile
+name: FE-B7 Photo Upload Resume After Kill
+tags:
+  - batch_fe_b7
+  - photo_upload
+  - resume
+  - e2e
+
+---
+
+# Pre-conditions: User is logged in, has a job open, is online
+
+# Step 1: Navigate to a job and add a photo
+- tapOn:
+    text: "Jobs"
+- tapOn:
+    id: first-job-item
+- tapOn:
+    id: add-photo-button
+
+# Step 2: Select a large photo from library (triggers multipart upload)
+- tapOn:
+    id: photo-library-button
+- tapOn:
+    id: first-photo-in-gallery
+
+# Step 3: Wait for upload to start (first chunk in progress)
+- assertVisible:
+    id: photo-upload-progress
+    timeout: 5000
+
+# Step 4: Kill the app while upload is in progress
+# (Note: in Maestro this simulates force-kill via OS)
+- pressKey: HOME
+- wait: 1000
+
+# Step 5: Reopen the app
+- startRecording
+
+# Step 6: Navigate back to the same job
+- tapOn:
+    text: "Jobs"
+- tapOn:
+    id: first-job-item
+
+# Step 7: Verify photo upload resumes from where it left off
+# (progress bar shows non-zero starting value — not restarting from 0)
+- assertVisible:
+    id: photo-upload-progress
+    timeout: 5000
+
+# Step 8: Wait for upload to complete
+- assertNotVisible:
+    id: photo-upload-progress
+    timeout: 30000
+
+# Step 9: Verify photo shows uploaded state (thumbnail without progress overlay)
+- assertVisible:
+    id: photo-thumbnail

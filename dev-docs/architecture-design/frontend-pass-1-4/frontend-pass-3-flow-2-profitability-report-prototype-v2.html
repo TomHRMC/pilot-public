@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AevoFab · Profitability Report v2 (Pass 3 Flow 2 Prototype)</title>
+<style>
+  :root {
+    --bg-page: #FAFAF9;
+    --bg-surface: #FFFFFF;
+    --bg-muted: #F5F5F4;
+    --bg-hover: #EFEDEC;
+
+    --text-primary: #1C1917;
+    --text-secondary: #57534E;
+    --text-tertiary: #A8A29E;
+    --text-inverse: #FAFAF9;
+
+    --border-subtle: #E7E5E4;
+    --border-default: #D6D3D1;
+
+    --brand: #3B43D6;
+    --brand-hover: #232AA3;
+    --brand-muted-bg: #EEF1FF;
+    --brand-muted-text: #232AA3;
+
+    --fault: #DC2626;
+    --fault-muted-bg: #FCEBEB;
+    --fault-muted-text: #791F1F;
+
+    --alert: #F59E0B;
+    --alert-muted-bg: #FAEEDA;
+    --alert-muted-text: #633806;
+
+    --margin-low: #97C459;
+    --margin-low-muted-bg: #EAF3DE;
+    --margin-low-muted-text: #27500A;
+
+    --margin-high: #639922;
+    --margin-high-muted-bg: #C0DD97;
+    --margin-high-muted-text: #173404;
+
+    --margin-positive: #0F6E56;
+    --margin-negative: #A32D2D;
+
+    --shadow-sm: 0 1px 2px rgba(28, 25, 23, 0.04);
+    --shadow-md: 0 2px 8px rgba(28, 25, 23, 0.06);
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: var(--bg-page);
+    color: var(--text-primary);
+    font-size: 14px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .app-shell { display: flex; min-height: 100vh; }
+  .sidebar {
+    width: 220px;
+    background: var(--bg-surface);
+    border-right: 0.5px solid var(--border-subtle);
+    padding: 16px 12px;
+    flex-shrink: 0;
+  }
+  .sb-brand {
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--text-primary);
+    padding: 6px 10px 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .sb-brand-mark {
+    width: 22px; height: 22px;
+    background: var(--brand);
+    border-radius: 5px;
+    display: flex; align-items: center; justify-content: center;
+    color: #fff; font-weight: 500; font-size: 12px;
+  }
+  .sb-nav { display: flex; flex-direction: column; gap: 1px; }
+  .sb-item {
+    padding: 7px 10px;
+    font-size: 13px;
+    color: var(--text-secondary);
+    border-radius: 6px;
+    cursor: pointer;
+    display: flex; align-items: center; gap: 9px;
+  }
+  .sb-item:hover { background: var(--bg-muted); color: var(--text-primary); }
+  .sb-item.active { background: var(--brand-muted-bg); color: var(--brand-muted-text); font-weight: 500; }
+  .sb-item svg { width: 15px; height: 15px; }
+  .sb-section-label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-tertiary);
+    padding: 14px 10px 6px;
+    font-weight: 500;
+  }
+
+  .main { flex: 1; padding: 28px 40px 40px; max-width: 1400px; }
+
+  .page-header { margin-bottom: 24px; }
+  .breadcrumb { font-size: 12px; color: var(--text-tertiary); margin-bottom: 6px; }
+  .breadcrumb span { color: var(--text-secondary); }
+  .breadcrumb .sep { margin: 0 6px; }
+  .page-title-row { display: flex; justify-content: space-between; align-items: flex-start; }
+  .page-title { font-size: 26px; font-weight: 500; margin: 0; letter-spacing: -0.01em; }
+  .page-subtitle { font-size: 13px; color: var(--text-secondary); margin: 4px 0 0; }
+
+  .page-controls { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; justify-content: flex-end; max-width: 60%; }
+
+  .pill {
+    font-size: 12px;
+    padding: 7px 13px;
+    border-radius: 6px;
+    border: 0.5px solid var(--border-subtle);
+    background: var(--bg-surface);
+    cursor: pointer;
+    color: var(--text-secondary);
+    font-family: inherit;
+    transition: all 100ms ease;
+  }
+  .pill:hover { background: var(--bg-muted); color: var(--text-primary); }
+  .pill.active { background: var(--text-primary); color: var(--text-inverse); border-color: var(--text-primary); }
+
+  .pin-btn {
+    font-size: 12px;
+    padding: 7px 12px 7px 10px;
+    border-radius: 6px;
+    border: 0.5px solid var(--border-subtle);
+    background: var(--bg-surface);
+    cursor: pointer;
+    color: var(--text-secondary);
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-family: inherit;
+    transition: all 100ms ease;
+  }
+  .pin-btn:hover { background: var(--bg-muted); color: var(--text-primary); }
+  .pin-btn.pinned { background: var(--brand); color: #fff; border-color: var(--brand); }
+  .pin-btn svg { width: 13px; height: 13px; }
+
+  .demo-toggle {
+    background: var(--bg-surface);
+    border: 0.5px dashed var(--brand);
+    border-radius: 8px;
+    padding: 10px 14px;
+    margin-bottom: 16px;
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    font-size: 12px;
+    color: var(--text-secondary);
+  }
+  .demo-toggle strong { color: var(--brand); font-weight: 500; }
+  .demo-toggle .pill { padding: 5px 10px; font-size: 11px; }
+
+  .section {
+    background: var(--bg-surface);
+    border: 0.5px solid var(--border-subtle);
+    border-radius: 10px;
+    padding: 20px 24px;
+    margin-bottom: 20px;
+  }
+  .section-head { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px; }
+  .section-title { font-size: 15px; font-weight: 500; margin: 0; }
+  .section-sub { font-size: 12px; color: var(--text-secondary); margin: 3px 0 0; }
+
+  .target-config { font-size: 12px; color: var(--text-secondary); }
+  .target-link { color: var(--brand); cursor: pointer; text-decoration: none; }
+  .target-link:hover { text-decoration: underline; }
+
+  .live-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .live-table thead th {
+    text-align: left;
+    padding: 8px 10px 10px;
+    font-weight: 500;
+    color: var(--text-tertiary);
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-bottom: 0.5px solid var(--border-subtle);
+  }
+  .live-table thead th.num { text-align: right; }
+  .live-table tbody td {
+    padding: 12px 10px;
+    border-bottom: 0.5px solid var(--border-subtle);
+    vertical-align: middle;
+  }
+  .live-table tbody tr:last-child td { border-bottom: none; }
+  .live-table tbody td.num {
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+    font-family: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+    font-size: 12px;
+  }
+  .live-table tbody tr { cursor: pointer; transition: background 80ms ease; }
+  .live-table tbody tr:hover { background: var(--bg-muted); }
+  .live-table tbody tr.row-hot { background: rgba(220, 38, 38, 0.035); }
+  .live-table tbody tr.row-hot:hover { background: rgba(220, 38, 38, 0.08); }
+
+  .job-name { font-weight: 500; color: var(--text-primary); }
+  .job-customer { font-size: 11px; color: var(--text-secondary); margin-top: 2px; }
+
+  .margin-chip {
+    display: inline-flex;
+    align-items: center;
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-weight: 500;
+    font-variant-numeric: tabular-nums;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+  }
+  .margin-chip.red { background: var(--fault-muted-bg); color: var(--fault-muted-text); }
+  .margin-chip.amber { background: var(--alert-muted-bg); color: var(--alert-muted-text); }
+  .margin-chip.green { background: var(--margin-low-muted-bg); color: var(--margin-low-muted-text); }
+  .margin-chip.deep-green { background: var(--margin-high-muted-bg); color: var(--margin-high-muted-text); }
+
+  .progress-wrap { display: flex; align-items: center; gap: 8px; min-width: 110px; }
+  .progress-track { flex: 1; height: 4px; background: var(--border-subtle); border-radius: 2px; overflow: hidden; }
+  .progress-fill { height: 100%; background: var(--text-secondary); border-radius: 2px; }
+  .progress-fill.over { background: var(--fault); }
+  .progress-label { font-size: 11px; color: var(--text-secondary); min-width: 40px; text-align: right; font-variant-numeric: tabular-nums; }
+  .progress-label.over { color: var(--fault); font-weight: 500; }
+
+  .hot-indicator {
+    display: inline-block;
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--fault);
+    margin-right: 6px;
+    vertical-align: middle;
+  }
+
+  .metrics-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 20px; }
+  .metric-card {
+    background: var(--bg-muted);
+    padding: 16px 18px;
+    border-radius: 8px;
+  }
+  .metric-label { font-size: 12px; color: var(--text-secondary); margin: 0; }
+  .metric-value { font-size: 26px; font-weight: 500; margin: 4px 0 0; font-variant-numeric: tabular-nums; letter-spacing: -0.01em; }
+  .metric-delta { font-size: 11px; margin: 3px 0 0; font-variant-numeric: tabular-nums; display: flex; align-items: center; gap: 4px; }
+  .metric-delta.up { color: var(--margin-positive); }
+  .metric-delta.down { color: var(--margin-negative); }
+  .metric-delta.neutral { color: var(--text-secondary); }
+
+  .charts-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .chart-card {
+    background: var(--bg-muted);
+    border-radius: 8px;
+    padding: 18px 20px 16px;
+  }
+  .chart-title { font-size: 13px; font-weight: 500; margin: 0 0 2px; }
+  .chart-sub { font-size: 11px; color: var(--text-secondary); margin: 0 0 18px; }
+
+  .bars-container {
+    position: relative;
+    height: 160px;
+    padding: 20px 0 0;
+    margin-bottom: 12px;
+  }
+  .bars {
+    display: flex;
+    align-items: flex-end;
+    gap: 14px;
+    height: 100%;
+    padding: 0 8px;
+  }
+  .bar-col {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    height: 100%;
+    cursor: pointer;
+    position: relative;
+  }
+  .bar {
+    width: 100%;
+    min-width: 40px;
+    max-width: 70px;
+    border-radius: 4px 4px 0 0;
+    transition: opacity 120ms ease;
+    position: relative;
+  }
+  .bar-col:hover .bar { opacity: 0.82; }
+  .bar.red { background: #E24B4A; }
+  .bar.amber { background: #EF9F27; }
+  .bar.green { background: #97C459; }
+  .bar.deep-green { background: #639922; }
+  .bar-col.active .bar { box-shadow: 0 0 0 2px var(--text-primary), 0 0 0 4px var(--bg-muted); }
+  .bar-value {
+    position: absolute;
+    top: -18px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 11px;
+    color: var(--text-primary);
+    font-variant-numeric: tabular-nums;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    white-space: nowrap;
+    font-weight: 500;
+  }
+  .bar-labels { display: flex; gap: 14px; padding: 0 8px; }
+  .bar-label-cell {
+    flex: 1;
+    text-align: center;
+    font-size: 10.5px;
+    color: var(--text-secondary);
+  }
+
+  .threshold-note {
+    font-size: 11px;
+    color: var(--text-tertiary);
+    margin: 12px 4px 0;
+    padding: 8px 12px;
+    background: var(--bg-page);
+    border-radius: 6px;
+    border-left: 2px solid var(--border-default);
+  }
+
+  .drilldown {
+    margin-top: 20px;
+    padding: 18px 20px;
+    background: var(--bg-muted);
+    border-radius: 8px;
+    border: 0.5px solid var(--border-subtle);
+  }
+  .drilldown-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+  .drilldown-title { font-size: 13px; font-weight: 500; margin: 0; }
+  .drilldown-close {
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    cursor: pointer;
+    font-size: 18px;
+    line-height: 1;
+    padding: 0 4px;
+  }
+  .drilldown-close:hover { color: var(--text-primary); }
+
+  .empty-state {
+    text-align: center;
+    padding: 24px;
+    color: var(--text-secondary);
+    font-size: 12px;
+  }
+
+  .prototype-banner {
+    background: var(--brand-muted-bg);
+    color: var(--brand-muted-text);
+    padding: 8px 16px;
+    font-size: 12px;
+    text-align: center;
+    border-bottom: 0.5px solid var(--border-subtle);
+  }
+  .prototype-banner strong { font-weight: 500; }
+</style>
+</head>
+<body>
+  <div class="prototype-banner">
+    <strong>Pass 3 Flow 2 prototype v2</strong> · use the demo toggles below to switch between job-volume scenarios and see the chart-threshold pattern
+  </div>
+
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="sb-brand">
+        <div class="sb-brand-mark">A</div>
+        <span>AevoFab</span>
+      </div>
+      <div class="sb-section-label">Workspace</div>
+      <nav class="sb-nav">
+        <div class="sb-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>Dashboard</div>
+        <div class="sb-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M3 10h18M8 2v4M16 2v4"/></svg>Schedule</div>
+        <div class="sb-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 13h6M9 17h6"/></svg>Quotes</div>
+        <div class="sb-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18"/></svg>Jobs</div>
+        <div class="sb-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 21v-2a4 4 0 0 0-3-3.87M4 21v-2a4 4 0 0 1 3-3.87"/><circle cx="12" cy="7" r="4"/></svg>Customers</div>
+        <div class="sb-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 10h18"/></svg>Billing</div>
+      </nav>
+      <div class="sb-section-label">Analysis</div>
+      <nav class="sb-nav">
+        <div class="sb-item active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 20h18M7 16v-5M12 16V8M17 16v-3"/></svg>Reports</div>
+      </nav>
+      <div class="sb-section-label">Admin</div>
+      <nav class="sb-nav">
+        <div class="sb-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33h0a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51h0a1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82v0a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>Settings</div>
+      </nav>
+    </aside>
+
+    <main class="main">
+      <div class="page-header">
+        <div class="breadcrumb">
+          <span>Reports</span><span class="sep">›</span>Profitability
+        </div>
+        <div class="page-title-row">
+          <div>
+            <h1 class="page-title">Profitability</h1>
+            <p class="page-subtitle" id="period-sub">Last 30 days · Apr 24 – May 24</p>
+          </div>
+          <div class="page-controls">
+            <button class="pin-btn" id="pin-btn">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l1.5 5.5h5.5l-4.5 3.5 1.5 5.5-4-3.5-4 3.5 1.5-5.5-4.5-3.5h5.5z"/></svg>
+              <span id="pin-btn-label">Pin to dashboard</span>
+            </button>
+            <button class="pill" data-period="7d">7 days</button>
+            <button class="pill active" data-period="30d">30 days</button>
+            <button class="pill" data-period="mtd">MTD</button>
+            <button class="pill" data-period="ytd">YTD</button>
+            <button class="pill" data-period="custom">Custom...</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="demo-toggle">
+        <strong>Prototype demo:</strong>
+        <span>Job volume scenario:</span>
+        <button class="pill active" data-scenario="small">Small shop (4 live · 4 closed)</button>
+        <button class="pill" data-scenario="growing">Growing shop (4 live · 18 closed)</button>
+        <button class="pill" data-scenario="busy">Busy shop (12 live · 32 closed)</button>
+        <span style="margin-left:auto; font-size: 11px;">Threshold for charts: 8 jobs (tenant-configurable)</span>
+      </div>
+
+      <section class="section">
+        <div class="section-head">
+          <div>
+            <h2 class="section-title">Live jobs</h2>
+            <p class="section-sub" id="live-meta">4 jobs in progress · 1 below target · projected margin uses tech ETC</p>
+          </div>
+          <p class="target-config">Target: <a class="target-link" id="target-link">20%</a> · <a class="target-link">configure</a></p>
+        </div>
+        <div id="live-content"></div>
+      </section>
+
+      <section class="section">
+        <div class="section-head">
+          <div>
+            <h2 class="section-title">Closed in period</h2>
+            <p class="section-sub" id="closed-sub">jobs are bucketed by close date</p>
+          </div>
+        </div>
+
+        <div class="metrics-row" id="metrics-slot"></div>
+        <div id="closed-content"></div>
+        <div id="drilldown-slot"></div>
+      </section>
+    </main>
+  </div>
+
+<script>
+(function() {
+  const CHART_THRESHOLD = 8;
+
+  const scenarios = {
+    small: {
+      live: [
+        { id: 'j1', name: 'Johnson — 200A panel upgrade', customer: 'Tom Johnson · 42 Oak St', tech: 'Mike R.', quote: 2264, projected: 2283, progress: 40, marginPct: 19.8, bucket: 'amber' },
+        { id: 'j2', name: 'Patel — basement subpanel', customer: 'Ash Patel · 87 Maple Dr', tech: 'Luis F.', quote: 1180, projected: 1180, progress: 70, marginPct: 24.2, bucket: 'green' },
+        { id: 'j3', name: 'Williams — service entrance', customer: 'D. Williams · 12 Cedar Ln', tech: 'Mike R.', quote: 3420, projected: 3780, progress: 110, marginPct: 8.1, bucket: 'red', hot: true, over: true },
+        { id: 'j4', name: 'Chen — EV charger install', customer: 'Jen Chen · 204 Pine Ave', tech: 'Luis F.', quote: 940, projected: 940, progress: 15, marginPct: 31.4, bucket: 'deep-green' }
+      ],
+      closed: {
+        count: [1, 1, 2, 0],
+        revenue: [2840, 920, 5060, 0],
+        totalRev: 8820,
+        totalProfit: 1820,
+        avgMargin: 20.6,
+        revDelta: 880,
+        profitDelta: 220,
+        marginDelta: 0.2,
+        jobs: {
+          0: [{ name: 'Rodriguez — rewire', closed: 'May 18', margin: 6.2, revenue: 2840 }],
+          1: [{ name: 'Akbar — GFCI install', closed: 'May 14', margin: 16.2, revenue: 920 }],
+          2: [
+            { name: 'Campbell — full rewire', closed: 'May 22', margin: 22.1, revenue: 5240 },
+            { name: 'Foster — switch repair', closed: 'May 13', margin: 24.8, revenue: 380 }
+          ],
+          3: []
+        }
+      }
+    },
+    growing: {
+      live: [
+        { id: 'j1', name: 'Johnson — 200A panel upgrade', customer: 'Tom Johnson · 42 Oak St', tech: 'Mike R.', quote: 2264, projected: 2283, progress: 40, marginPct: 19.8, bucket: 'amber' },
+        { id: 'j2', name: 'Patel — basement subpanel', customer: 'Ash Patel · 87 Maple Dr', tech: 'Luis F.', quote: 1180, projected: 1180, progress: 70, marginPct: 24.2, bucket: 'green' },
+        { id: 'j3', name: 'Williams — service entrance', customer: 'D. Williams · 12 Cedar Ln', tech: 'Mike R.', quote: 3420, projected: 3780, progress: 110, marginPct: 8.1, bucket: 'red', hot: true, over: true },
+        { id: 'j4', name: 'Chen — EV charger install', customer: 'Jen Chen · 204 Pine Ave', tech: 'Luis F.', quote: 940, projected: 940, progress: 15, marginPct: 31.4, bucket: 'deep-green' }
+      ],
+      closed: {
+        count: [2, 4, 9, 3],
+        revenue: [4280, 11320, 24640, 7000],
+        totalRev: 47240,
+        totalProfit: 10299,
+        avgMargin: 21.8,
+        revDelta: 4860,
+        profitDelta: 1120,
+        marginDelta: 0.4,
+        jobs: {
+          0: [
+            { name: 'Rodriguez — rewire', closed: 'May 18', margin: 6.2, revenue: 2840 },
+            { name: 'Shah — panel swap', closed: 'May 9', margin: 9.1, revenue: 1440 }
+          ],
+          1: [
+            { name: 'Green — service call', closed: 'May 21', margin: 14.8, revenue: 780 },
+            { name: 'Akbar — GFCI install', closed: 'May 14', margin: 16.2, revenue: 920 },
+            { name: "O'Neill — panel repair", closed: 'May 10', margin: 11.9, revenue: 4680 },
+            { name: 'Brown — EVSE install', closed: 'May 4', margin: 18.4, revenue: 4940 }
+          ],
+          2: [
+            { name: 'Campbell — full rewire', closed: 'May 22', margin: 22.1, revenue: 5240 },
+            { name: 'Foster — subpanel add', closed: 'May 20', margin: 23.8, revenue: 2180 },
+            { name: 'Martinez — can lights', closed: 'May 17', margin: 24.5, revenue: 1640 },
+            { name: 'Anderson — kitchen circuits', closed: 'May 15', margin: 21.2, revenue: 3420 },
+            { name: 'Nguyen — GFCI retrofits', closed: 'May 12', margin: 26.8, revenue: 1280 },
+            { name: 'Park — meter relocation', closed: 'May 8', margin: 22.9, revenue: 3840 },
+            { name: 'Torres — attic rewire', closed: 'May 6', margin: 25.1, revenue: 2680 },
+            { name: 'Hassan — outdoor lighting', closed: 'May 3', margin: 20.4, revenue: 1980 },
+            { name: 'Kim — surge protector', closed: 'May 1', margin: 28.2, revenue: 1380 }
+          ],
+          3: [
+            { name: 'Lee — fixture replacement', closed: 'May 19', margin: 34.6, revenue: 880 },
+            { name: 'Bhatt — outlet install (3)', closed: 'May 13', margin: 38.2, revenue: 540 },
+            { name: 'Singh — switch replacement', closed: 'May 7', margin: 42.1, revenue: 380 }
+          ]
+        }
+      }
+    },
+    busy: {
+      live: [
+        { id: 'j1', name: 'Johnson — 200A panel upgrade', customer: 'Tom Johnson · 42 Oak St', tech: 'Mike R.', quote: 2264, projected: 2283, progress: 40, marginPct: 19.8, bucket: 'amber' },
+        { id: 'j2', name: 'Patel — basement subpanel', customer: 'Ash Patel · 87 Maple Dr', tech: 'Luis F.', quote: 1180, projected: 1180, progress: 70, marginPct: 24.2, bucket: 'green' },
+        { id: 'j3', name: 'Williams — service entrance', customer: 'D. Williams · 12 Cedar Ln', tech: 'Mike R.', quote: 3420, projected: 3780, progress: 110, marginPct: 8.1, bucket: 'red', hot: true, over: true },
+        { id: 'j4', name: 'Chen — EV charger install', customer: 'Jen Chen · 204 Pine Ave', tech: 'Luis F.', quote: 940, projected: 940, progress: 15, marginPct: 31.4, bucket: 'deep-green' },
+        { id: 'j5', name: 'Allen — recessed lighting', customer: 'Beth Allen · 15 Birch Ct', tech: 'Mike R.', quote: 1620, projected: 1620, progress: 60, marginPct: 22.3, bucket: 'green' },
+        { id: 'j6', name: 'Murphy — service call', customer: 'P. Murphy · 88 Elm St', tech: 'Luis F.', quote: 480, projected: 510, progress: 100, marginPct: 11.8, bucket: 'amber' },
+        { id: 'j7', name: 'Diaz — panel relocate', customer: 'C. Diaz · 22 Walnut Way', tech: 'Mike R.', quote: 2890, projected: 2890, progress: 25, marginPct: 23.9, bucket: 'green' },
+        { id: 'j8', name: 'Wang — generator hookup', customer: 'L. Wang · 199 Ash Pl', tech: 'Luis F.', quote: 4200, projected: 4500, progress: 95, marginPct: 7.4, bucket: 'red', hot: true, over: true },
+        { id: 'j9', name: 'Reed — outdoor outlets', customer: 'J. Reed · 7 Spruce Rd', tech: 'Mike R.', quote: 720, projected: 720, progress: 50, marginPct: 26.7, bucket: 'green' },
+        { id: 'j10', name: 'Tate — knob and tube replace', customer: 'M. Tate · 318 Hickory', tech: 'Luis F.', quote: 6800, projected: 6850, progress: 35, marginPct: 19.4, bucket: 'amber' },
+        { id: 'j11', name: 'Moss — bath fan circuit', customer: 'D. Moss · 81 Magnolia', tech: 'Mike R.', quote: 460, projected: 460, progress: 80, marginPct: 32.1, bucket: 'deep-green' },
+        { id: 'j12', name: 'Nash — panel sub-feed', customer: 'R. Nash · 456 Sycamore', tech: 'Luis F.', quote: 1850, projected: 1850, progress: 5, marginPct: 24.6, bucket: 'green' }
+      ],
+      closed: {
+        count: [4, 7, 16, 5],
+        revenue: [9420, 18800, 41200, 11240],
+        totalRev: 80660,
+        totalProfit: 19200,
+        avgMargin: 23.8,
+        revDelta: 12400,
+        profitDelta: 3200,
+        marginDelta: 1.1,
+        jobs: {
+          0: [
+            { name: 'Rodriguez — rewire', closed: 'May 22', margin: 6.2, revenue: 2840 },
+            { name: 'Shah — panel swap', closed: 'May 19', margin: 9.1, revenue: 1440 },
+            { name: 'Park — service call', closed: 'May 11', margin: 4.8, revenue: 1860 },
+            { name: 'Ortega — emergency call', closed: 'May 6', margin: 7.3, revenue: 3280 }
+          ],
+          1: [
+            { name: 'Green — service call', closed: 'May 23', margin: 14.8, revenue: 780 },
+            { name: 'Akbar — GFCI install', closed: 'May 18', margin: 16.2, revenue: 920 },
+            { name: "O'Neill — panel repair", closed: 'May 15', margin: 11.9, revenue: 4680 },
+            { name: 'Brown — EVSE install', closed: 'May 9', margin: 18.4, revenue: 4940 },
+            { name: 'Vance — subpanel', closed: 'May 7', margin: 13.2, revenue: 2180 },
+            { name: 'Iyer — circuits', closed: 'May 4', margin: 17.1, revenue: 1820 },
+            { name: 'Cole — generator install', closed: 'May 2', margin: 19.8, revenue: 3480 }
+          ],
+          2: [
+            { name: 'Campbell — full rewire', closed: 'May 22', margin: 22.1, revenue: 5240 },
+            { name: 'Foster — subpanel add', closed: 'May 21', margin: 23.8, revenue: 2180 },
+            { name: 'Martinez — can lights', closed: 'May 17', margin: 24.5, revenue: 1640 },
+            { name: 'Anderson — kitchen circuits', closed: 'May 16', margin: 21.2, revenue: 3420 },
+            { name: 'Nguyen — GFCI retrofits', closed: 'May 14', margin: 26.8, revenue: 1280 },
+            { name: 'Park — meter relocation', closed: 'May 11', margin: 22.9, revenue: 3840 },
+            { name: 'Torres — attic rewire', closed: 'May 9', margin: 25.1, revenue: 2680 },
+            { name: 'Hassan — outdoor lighting', closed: 'May 5', margin: 20.4, revenue: 1980 },
+            { name: 'Kim — surge protector', closed: 'May 3', margin: 28.2, revenue: 1380 },
+            { name: 'Patel — panel upgrade', closed: 'May 23', margin: 24.6, revenue: 3940 },
+            { name: 'Diaz — kitchen wiring', closed: 'May 20', margin: 22.8, revenue: 2820 },
+            { name: 'Lin — basement circuits', closed: 'May 18', margin: 21.9, revenue: 1840 },
+            { name: 'Quinn — service entrance', closed: 'May 14', margin: 23.4, revenue: 4280 },
+            { name: 'Hayes — recessed lights', closed: 'May 10', margin: 27.5, revenue: 1620 },
+            { name: 'Walsh — fan installs', closed: 'May 7', margin: 25.8, revenue: 1180 },
+            { name: 'Yates — fixture upgrade', closed: 'May 4', margin: 28.4, revenue: 1880 }
+          ],
+          3: [
+            { name: 'Lee — fixture replacement', closed: 'May 19', margin: 34.6, revenue: 880 },
+            { name: 'Bhatt — outlet install (3)', closed: 'May 13', margin: 38.2, revenue: 540 },
+            { name: 'Singh — switch replacement', closed: 'May 7', margin: 42.1, revenue: 380 },
+            { name: 'Cohen — small repairs', closed: 'May 16', margin: 36.8, revenue: 2240 },
+            { name: 'Webb — service call', closed: 'May 5', margin: 44.5, revenue: 7200 }
+          ]
+        }
+      }
+    }
+  };
+
+  const bucketLabels = ['Below 10%', '10 – 20%', '20 – 30%', '30%+'];
+  const bucketColors = ['red', 'amber', 'green', 'deep-green'];
+
+  let activeScenario = 'small';
+
+  function fmtCurrency(n) { return '$' + Math.round(n).toLocaleString(); }
+
+  function renderLiveSection() {
+    const data = scenarios[activeScenario];
+    const live = data.live;
+    const meta = document.getElementById('live-meta');
+    const belowTarget = live.filter(j => j.bucket === 'red' || j.bucket === 'amber').length;
+    meta.textContent = `${live.length} jobs in progress · ${belowTarget} below target · projected margin uses tech ETC`;
+
+    const content = document.getElementById('live-content');
+    if (live.length >= CHART_THRESHOLD) {
+      const liveBuckets = { count: [0,0,0,0], revenue: [0,0,0,0] };
+      live.forEach(j => {
+        const idx = j.bucket === 'red' ? 0 : j.bucket === 'amber' ? 1 : j.bucket === 'green' ? 2 : 3;
+        liveBuckets.count[idx]++;
+        liveBuckets.revenue[idx] += j.projected;
+      });
+
+      content.innerHTML = `
+        <div class="charts-row">
+          <div class="chart-card">
+            <h3 class="chart-title">Live jobs by margin</h3>
+            <p class="chart-sub">projected margin from tech ETC</p>
+            <div class="bars-container"><div class="bars" id="live-count-bars"></div></div>
+            <div class="bar-labels">
+              <span class="bar-label-cell">Below 10%</span>
+              <span class="bar-label-cell">10 – 20%</span>
+              <span class="bar-label-cell">20 – 30%</span>
+              <span class="bar-label-cell">30%+</span>
+            </div>
+          </div>
+          <div class="chart-card">
+            <h3 class="chart-title">Live revenue by margin</h3>
+            <p class="chart-sub">projected revenue weighted by health</p>
+            <div class="bars-container"><div class="bars" id="live-revenue-bars"></div></div>
+            <div class="bar-labels">
+              <span class="bar-label-cell">Below 10%</span>
+              <span class="bar-label-cell">10 – 20%</span>
+              <span class="bar-label-cell">20 – 30%</span>
+              <span class="bar-label-cell">30%+</span>
+            </div>
+          </div>
+        </div>
+        <details style="margin-top: 16px;">
+          <summary style="font-size: 12px; color: var(--text-secondary); cursor: pointer; padding: 6px 0;">Show all live jobs as a table</summary>
+          <div id="live-table-slot" style="margin-top: 8px;"></div>
+        </details>
+      `;
+      renderBars('live-count-bars', liveBuckets.count, v => v.toString(), null);
+      renderBars('live-revenue-bars', liveBuckets.revenue, v => '$' + Math.round(v / 1000) + 'k', null);
+      document.getElementById('live-table-slot').innerHTML = liveTableMarkup(live);
+    } else {
+      content.innerHTML = `
+        ${liveTableMarkup(live)}
+        <p class="threshold-note">Charts appear when ${CHART_THRESHOLD}+ jobs are in scope. Adjust threshold in <a href="#" style="color: var(--brand);">Settings → Reports</a>.</p>
+      `;
+    }
+  }
+
+  function liveTableMarkup(live) {
+    return `
+      <table class="live-table">
+        <thead>
+          <tr>
+            <th>Job</th>
+            <th>Tech</th>
+            <th class="num">Quote</th>
+            <th>Progress</th>
+            <th class="num">Projected</th>
+            <th class="num">Margin</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${live.map(j => `
+            <tr class="${j.hot ? 'row-hot' : ''}">
+              <td>
+                ${j.hot ? '<span class="hot-indicator" aria-label="Below target"></span>' : ''}
+                <span class="job-name">${j.name}</span>
+                <div class="job-customer">${j.customer}</div>
+              </td>
+              <td>${j.tech}</td>
+              <td class="num">${fmtCurrency(j.quote)}</td>
+              <td>
+                <div class="progress-wrap">
+                  <div class="progress-track"><div class="progress-fill ${j.over ? 'over' : ''}" style="width: ${Math.min(j.progress, 100)}%;"></div></div>
+                  <span class="progress-label ${j.over ? 'over' : ''}">${j.progress}%${j.over ? ' ⚠' : ''}</span>
+                </div>
+              </td>
+              <td class="num">${fmtCurrency(j.projected)}</td>
+              <td class="num"><span class="margin-chip ${j.bucket}">${j.marginPct.toFixed(1)}%</span></td>
+            </tr>
+          `).join('')}
+        </tbody>
+      </table>
+    `;
+  }
+
+  function renderClosedSection() {
+    const data = scenarios[activeScenario].closed;
+    const totalCount = data.count.reduce((s, c) => s + c, 0);
+    document.getElementById('closed-sub').textContent = `${totalCount} jobs closed · jobs are bucketed by close date`;
+
+    document.getElementById('metrics-slot').innerHTML = `
+      <div class="metric-card">
+        <p class="metric-label">Revenue</p>
+        <p class="metric-value">${fmtCurrency(data.totalRev)}</p>
+        <p class="metric-delta up">▲ ${fmtCurrency(data.revDelta)} vs prior 30d</p>
+      </div>
+      <div class="metric-card">
+        <p class="metric-label">Profit</p>
+        <p class="metric-value">${fmtCurrency(data.totalProfit)}</p>
+        <p class="metric-delta up">▲ ${fmtCurrency(data.profitDelta)} vs prior 30d</p>
+      </div>
+      <div class="metric-card">
+        <p class="metric-label">Avg margin</p>
+        <p class="metric-value">${data.avgMargin.toFixed(1)}%</p>
+        <p class="metric-delta neutral">▲ ${data.marginDelta.toFixed(1)} pts vs prior 30d</p>
+      </div>
+    `;
+
+    const content = document.getElementById('closed-content');
+    if (totalCount >= CHART_THRESHOLD) {
+      content.innerHTML = `
+        <div class="charts-row">
+          <div class="chart-card">
+            <h3 class="chart-title">Jobs by margin</h3>
+            <p class="chart-sub">how many jobs landed in each bucket</p>
+            <div class="bars-container"><div class="bars" id="count-bars"></div></div>
+            <div class="bar-labels">
+              <span class="bar-label-cell">Below 10%</span>
+              <span class="bar-label-cell">10 – 20%</span>
+              <span class="bar-label-cell">20 – 30%</span>
+              <span class="bar-label-cell">30%+</span>
+            </div>
+          </div>
+          <div class="chart-card">
+            <h3 class="chart-title">Revenue by margin</h3>
+            <p class="chart-sub">where the money actually sits</p>
+            <div class="bars-container"><div class="bars" id="revenue-bars"></div></div>
+            <div class="bar-labels">
+              <span class="bar-label-cell">Below 10%</span>
+              <span class="bar-label-cell">10 – 20%</span>
+              <span class="bar-label-cell">20 – 30%</span>
+              <span class="bar-label-cell">30%+</span>
+            </div>
+          </div>
+        </div>
+      `;
+      renderBars('count-bars', data.count, v => v.toString(), 'closed');
+      renderBars('revenue-bars', data.revenue, v => '$' + Math.round(v / 1000) + 'k', 'closed');
+    } else {
+      const allClosed = [];
+      [0,1,2,3].forEach(b => (data.jobs[b] || []).forEach(j => allClosed.push({...j, bucket: b})));
+      allClosed.sort((a, b) => b.revenue - a.revenue);
+
+      content.innerHTML = `
+        <table class="live-table">
+          <thead>
+            <tr>
+              <th>Job</th>
+              <th>Closed</th>
+              <th class="num">Revenue</th>
+              <th class="num">Margin</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${allClosed.map(j => `
+              <tr>
+                <td><span class="job-name">${j.name}</span></td>
+                <td>${j.closed}</td>
+                <td class="num">${fmtCurrency(j.revenue)}</td>
+                <td class="num"><span class="margin-chip ${bucketColors[j.bucket]}">${j.margin.toFixed(1)}%</span></td>
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
+        <p class="threshold-note">Charts appear when ${CHART_THRESHOLD}+ jobs are in scope. Adjust threshold in <a href="#" style="color: var(--brand);">Settings → Reports</a>.</p>
+      `;
+    }
+    document.getElementById('drilldown-slot').innerHTML = '';
+  }
+
+  function renderBars(containerId, values, formatter, drillScope) {
+    const max = Math.max(...values, 1);
+    const container = document.getElementById(containerId);
+    container.innerHTML = values.map((v, i) => {
+      const heightPct = (v / max * 100);
+      return `
+        <div class="bar-col" data-bucket="${i}" data-scope="${drillScope || ''}">
+          <div class="bar ${bucketColors[i]}" style="height: ${heightPct}%; ${v === 0 ? 'min-height: 2px; opacity: 0.3;' : ''}">
+            ${v > 0 ? `<span class="bar-value">${formatter(v)}</span>` : ''}
+          </div>
+        </div>
+      `;
+    }).join('');
+
+    if (drillScope === 'closed') {
+      container.querySelectorAll('.bar-col').forEach(col => {
+        col.addEventListener('click', () => {
+          const bucket = parseInt(col.dataset.bucket, 10);
+          showDrilldown(bucket);
+          document.querySelectorAll('.bar-col[data-scope="closed"]').forEach(c => c.classList.remove('active'));
+          document.querySelectorAll(`.bar-col[data-scope="closed"][data-bucket="${bucket}"]`).forEach(c => c.classList.add('active'));
+        });
+      });
+    }
+  }
+
+  function showDrilldown(bucket) {
+    const slot = document.getElementById('drilldown-slot');
+    const data = scenarios[activeScenario].closed;
+    const jobs = data.jobs[bucket] || [];
+    const totalRev = jobs.reduce((s, j) => s + j.revenue, 0);
+    slot.innerHTML = `
+      <div class="drilldown">
+        <div class="drilldown-head">
+          <h3 class="drilldown-title">${bucketLabels[bucket]} — ${jobs.length} ${jobs.length === 1 ? 'job' : 'jobs'} · ${fmtCurrency(totalRev)} revenue</h3>
+          <button class="drilldown-close" id="drill-close" aria-label="Close drill-down">✕</button>
+        </div>
+        ${jobs.length === 0
+          ? '<p class="empty-state">No jobs closed in this bucket this period.</p>'
+          : `<table class="live-table" style="font-size: 12px;">
+              <thead>
+                <tr>
+                  <th>Job</th>
+                  <th>Closed</th>
+                  <th class="num">Revenue</th>
+                  <th class="num">Margin</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${jobs.map(j => `
+                  <tr>
+                    <td><span class="job-name">${j.name}</span></td>
+                    <td>${j.closed}</td>
+                    <td class="num">${fmtCurrency(j.revenue)}</td>
+                    <td class="num"><span class="margin-chip ${bucketColors[bucket]}">${j.margin.toFixed(1)}%</span></td>
+                  </tr>
+                `).join('')}
+              </tbody>
+            </table>`
+        }
+      </div>
+    `;
+    document.getElementById('drill-close').addEventListener('click', () => {
+      slot.innerHTML = '';
+      document.querySelectorAll('.bar-col').forEach(c => c.classList.remove('active'));
+    });
+    slot.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+
+  function setScenario(s) {
+    activeScenario = s;
+    document.querySelectorAll('.pill[data-scenario]').forEach(p => {
+      p.classList.toggle('active', p.dataset.scenario === s);
+    });
+    renderLiveSection();
+    renderClosedSection();
+  }
+
+  document.querySelectorAll('.pill[data-scenario]').forEach(p => {
+    p.addEventListener('click', () => setScenario(p.dataset.scenario));
+  });
+
+  document.querySelectorAll('.pill[data-period]').forEach(p => {
+    p.addEventListener('click', () => {
+      if (p.dataset.period === 'custom') return;
+      document.querySelectorAll('.pill[data-period]').forEach(x => x.classList.remove('active'));
+      p.classList.add('active');
+    });
+  });
+
+  const pinBtn = document.getElementById('pin-btn');
+  const pinLabel = document.getElementById('pin-btn-label');
+  pinBtn.addEventListener('click', () => {
+    pinBtn.classList.toggle('pinned');
+    pinLabel.textContent = pinBtn.classList.contains('pinned') ? 'Pinned' : 'Pin to dashboard';
+  });
+
+  setScenario('small');
+})();
+</script>
+</body>
+</html>

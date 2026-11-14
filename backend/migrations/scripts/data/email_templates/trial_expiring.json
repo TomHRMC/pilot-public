@@ -1,0 +1,9 @@
+{
+  "template_id": "trial_expiring",
+  "display_name": "Trial Expiring Soon",
+  "category": "internal",
+  "subject_template": "Your free trial ends soon",
+  "body_html_template": "<p>Your trial ends in {{days_remaining}} days.</p>",
+  "body_plain_template": "Your trial ends in {{days_remaining}} days.",
+  "variables": ["tenant_name", "days_remaining", "upgrade_url"]
+}

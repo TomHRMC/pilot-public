@@ -1,0 +1,124 @@
+<title>Governed Delivery</title>
+<style>
+  /* Layout: a 4-step propose-implement-verify-close loop over a governance-rigor stat band. */
+  :root{
+    --bg:#f6f8f8; --surface:#ffffff; --fg:#192024; --muted:#59656d; --line:#d2d9dc;
+    --accent:#0d7d74; --accent-soft:#e4f1ef; --accent-strong:#0a5d56;
+    --sans:"IBM Plex Sans",ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  }
+  @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+    --bg:#0e1416; --surface:#161d20; --fg:#e9eef0; --muted:#9aa7ad; --line:#2a343a;
+    --accent:#3fd0c2; --accent-soft:#10302e; --accent-strong:#63e2d5; color-scheme:dark;
+  }}
+  :root[data-theme="dark"]{
+    --bg:#0e1416; --surface:#161d20; --fg:#e9eef0; --muted:#9aa7ad; --line:#2a343a;
+    --accent:#3fd0c2; --accent-soft:#10302e; --accent-strong:#63e2d5; color-scheme:dark;
+  }
+  body{background:var(--bg);color:var(--fg);font-family:var(--sans);line-height:1.5;}
+  .wrap{max-width:1120px;margin:0 auto;padding-block:32px 40px;padding-inline:16px;}
+  .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-strong);margin:0 0 6px;}
+  h1{font-size:clamp(22px,3.2vw,30px);line-height:1.12;text-wrap:balance;margin:0 0 8px;font-weight:700;letter-spacing:-.01em;}
+  .lede{color:var(--muted);font-size:15px;max-width:66ch;margin:0 0 22px;}
+  figure{margin:0;}
+  .diagram{width:100%;height:auto;display:block;background:var(--surface);border:1px solid var(--line);border-radius:14px;}
+  figcaption{color:var(--muted);font-size:13px;margin-top:12px;max-width:72ch;}
+  .foot{margin-top:18px;font-size:12.5px;color:var(--muted);font-family:var(--mono);}
+  svg{color:var(--fg);}
+  .h1{fill:var(--fg);font-weight:700;font-size:25px;letter-spacing:-.01em;}
+  .sub{fill:var(--muted);font-size:14.5px;}
+  .nt{fill:var(--fg);font-weight:700;font-size:16px;}
+  .gt{fill:var(--accent-strong);font-weight:700;font-size:16px;}
+  .nb{fill:var(--fg);font-size:12.5px;}
+  .ns{fill:var(--muted);font-size:12px;}
+  .lbl{fill:var(--muted);font-family:var(--mono);font-size:12px;}
+  .node{fill:var(--surface);stroke:var(--line);stroke-width:1.5;}
+  .gate{fill:var(--accent-soft);stroke:var(--accent);stroke-width:2.5;}
+  .band{fill:var(--accent-soft);stroke:var(--accent);stroke-width:1.5;}
+  .bandt{fill:var(--accent-strong);font-weight:700;font-size:16px;}
+  .gtile{fill:var(--surface);stroke:var(--line);stroke-width:1.5;}
+  .gval{fill:var(--accent-strong);font-weight:700;font-size:30px;font-variant-numeric:tabular-nums;letter-spacing:-.01em;}
+  .glbl{fill:var(--muted);font-size:12px;}
+</style>
+
+<div class="wrap">
+  <p class="eyebrow">HotRMC · Governance</p>
+  <h1>Governed delivery, one batch at a time</h1>
+  <p class="lede">Every unit of work moves through the same human-owned loop under hard guardrails — scoped, tested, verified, and logged. This is engineering management, not vibes.</p>
+
+  <figure>
+    <svg class="diagram" viewBox="0 0 1200 596" role="img"
+      aria-label="A four-step loop — propose, implement, verify, close — repeats one batch at a time under a zero-regression ratchet; the human owns the verify step. Below it, a governance-rigor band: 100-plus gated batches closed, a zero-regression gate on every batch, 21 architectural decisions logged and owned, and a human verification gate on every batch — carried to a founder-ready state and then deliberately hibernated; restarting is about one day of runbook work, allowing about a week of calendar time.">
+      <defs>
+        <marker id="ga" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto-start-reverse">
+          <path d="M1,1 L9,5 L1,9 Z" fill="var(--muted)"/>
+        </marker>
+      </defs>
+      <text class="h1" x="600" y="42" text-anchor="middle">Propose → implement → verify → close, on a loop</text>
+      <text class="sub" x="600" y="70" text-anchor="middle">The AI drafts and builds; the human verifies and owns every decision</text>
+
+      <!-- loop boxes -->
+      <rect class="node" x="60" y="110" width="240" height="120" rx="12"/>
+      <text class="nt" x="180" y="148" text-anchor="middle">1 · Propose</text>
+      <text class="nb" x="180" y="174" text-anchor="middle">architect writes the</text>
+      <text class="nb" x="180" y="192" text-anchor="middle">design + engineer prompt</text>
+
+      <rect class="node" x="350" y="110" width="240" height="120" rx="12"/>
+      <text class="nt" x="470" y="148" text-anchor="middle">2 · Implement</text>
+      <text class="nb" x="470" y="174" text-anchor="middle">AI engineer executes,</text>
+      <text class="nb" x="470" y="192" text-anchor="middle">appends completion summary</text>
+
+      <rect class="gate" x="640" y="110" width="240" height="120" rx="12"/>
+      <text class="gt" x="760" y="148" text-anchor="middle">3 · Verify</text>
+      <text class="nb" x="760" y="174" text-anchor="middle">human runs migrations,</text>
+      <text class="nb" x="760" y="192" text-anchor="middle">diffs &amp; tests — confirms</text>
+
+      <rect class="node" x="930" y="110" width="230" height="120" rx="12"/>
+      <text class="nt" x="1045" y="148" text-anchor="middle">4 · Close</text>
+      <text class="nb" x="1045" y="174" text-anchor="middle">flip status · ADR</text>
+      <text class="nb" x="1045" y="192" text-anchor="middle">+ registry row</text>
+
+      <!-- forward arrows -->
+      <line x1="300" y1="170" x2="348" y2="170" stroke="var(--muted)" stroke-width="2" marker-end="url(#ga)"/>
+      <line x1="590" y1="170" x2="638" y2="170" stroke="var(--muted)" stroke-width="2" marker-end="url(#ga)"/>
+      <line x1="880" y1="170" x2="928" y2="170" stroke="var(--muted)" stroke-width="2" marker-end="url(#ga)"/>
+
+      <!-- return loop -->
+      <polyline points="1045,230 1045,270 180,270 180,232" fill="none" stroke="var(--muted)" stroke-width="2" marker-end="url(#ga)"/>
+      <text class="lbl" x="612" y="262" text-anchor="middle">next batch · one unit at a time · zero-regression ratchet</text>
+
+      <!-- Governance-rigor band -->
+      <rect class="band" x="60" y="320" width="1100" height="232" rx="12"/>
+      <text class="bandt" x="610" y="356" text-anchor="middle">Governed like a funded org — run by one person</text>
+      <text class="nb" x="610" y="380" text-anchor="middle">every unit of work held to the same bar, start to finish</text>
+
+      <!-- 4 rigor tiles -->
+      <rect class="gtile" x="100" y="400" width="246" height="94" rx="10"/>
+      <text class="gval" x="223" y="446" text-anchor="middle">100+</text>
+      <text class="glbl" x="223" y="470" text-anchor="middle">gated batches closed</text>
+      <text class="glbl" x="223" y="486" text-anchor="middle">(explicit exit criteria)</text>
+
+      <rect class="gtile" x="358" y="400" width="246" height="94" rx="10"/>
+      <text class="gval" x="481" y="446" text-anchor="middle">Ratchet</text>
+      <text class="glbl" x="481" y="470" text-anchor="middle">zero-regression gate</text>
+      <text class="glbl" x="481" y="486" text-anchor="middle">(on every batch)</text>
+
+      <rect class="gtile" x="616" y="400" width="246" height="94" rx="10"/>
+      <text class="gval" x="739" y="446" text-anchor="middle">21</text>
+      <text class="glbl" x="739" y="470" text-anchor="middle">architectural decisions</text>
+      <text class="glbl" x="739" y="486" text-anchor="middle">logged &amp; owned (ADRs)</text>
+
+      <rect class="gtile" x="874" y="400" width="246" height="94" rx="10"/>
+      <text class="gval" x="997" y="446" text-anchor="middle">Human</text>
+      <text class="glbl" x="997" y="470" text-anchor="middle">gate on every batch</text>
+      <text class="glbl" x="997" y="486" text-anchor="middle">(the loop's verify step)</text>
+
+      <!-- honest status footer -->
+      <text class="ns" x="610" y="518" text-anchor="middle">Status-flip close protocol · ADR log · 5 dated phase archives — an auditable paper trail.</text>
+      <text class="ns" x="610" y="538" text-anchor="middle">Carried to a founder-ready state, then hibernated — about a day of runbook work to restart; allow about a week of calendar time.</text>
+    </svg>
+    <figcaption>Work advances through a propose → implement → verify → close loop, one batch at a time under a zero-regression ratchet, with the human owning verification — 100+ gated batches, 21 logged architectural decisions, an auditable paper trail. Carried to a founder-ready state, then deliberately hibernated (about one day of runbook work to restart; allow about a week of calendar time).</figcaption>
+  </figure>
+
+  <p class="foot">Pilot for Trades proof suite · 2026</p>
+</div>

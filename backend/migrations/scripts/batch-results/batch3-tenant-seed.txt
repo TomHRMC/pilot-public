@@ -1,0 +1,12 @@
+=== seed_test_tenant: seed mode ===
+    Tenant ID: 00000000-0000-0000-0000-000000000001
+
+  ✅ [user] Upserted dev@pilot.local (00000000-0000-0000-0000-000000000002)
+  ✅ [user] Upserted tech@pilot.local (00000000-0000-0000-0000-000000000003)
+  ✅ [user] Upserted office@pilot.local (00000000-0000-0000-0000-000000000004)
+  ✅ [user] Upserted accountant@pilot.local (00000000-0000-0000-0000-000000000005)
+  ✅ [tenant] Upserted 'Pilot Dev Tenant' (00000000-0000-0000-0000-000000000001)
+  ✅ [user_endpoint] Updated email → dev@pilot.local
+  ✅ [user_endpoint] Updated email → tech@pilot.local
+  ✅ [user_endpoint] Updated email → office@pilot.local
+  ✅ [user_endpoint] Updated email → accountant@pilot.local

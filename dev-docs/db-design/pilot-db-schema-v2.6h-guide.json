@@ -1,0 +1,61 @@
+{
+  "_meta": {
+    "purpose": "Guide for AI agents to navigate and parse the Pilot for Trades DB Schema JSON.",
+    "target_schema_version": "v2.6h-b5",
+    "description": "This document outlines the hierarchical structure of the schema file and provides exact JSON paths and search strategies for extracting entity relationships, constraints, and operational logic."
+  },
+  "root_structure": {
+    "version": "String - Schema version.",
+    "dialect": "String - Target SQL dialect (e.g., postgresql-17).",
+    "design_decisions": "Array - Historical architecture choices and rationales.",
+    "functions": "Array - Stored procedures and trigger functions (keys: name, language, returns, definition).",
+    "tables": "Object - The primary dictionary of public schema tables. Keys are table names.",
+    "schemas": "Object - Non-public schemas (e.g., 'audit') containing their own 'tables' objects."
+  },
+  "table_structure": {
+    "_description": "Each key inside the root 'tables' object represents a table name. The value is an object containing:",
+    "comment": "String - Business context and purpose of the table.",
+    "columns": "Object - Dictionary of columns where keys are column names.",
+    "primary_key": "Array - List of column names forming the PK.",
+    "foreign_keys": "Array - Objects defining relations (keys: name, columns, ref_table, ref_columns, on_delete).",
+    "indexes": "Array - Objects defining indexes (keys: name, definition, comment).",
+    "unique": "Array of Arrays - Sets of columns that must be unique together.",
+    "check_constraints": "Array - Objects defining row-level checks (keys: name, definition).",
+    "triggers": "Array - Objects binding functions to table events (keys: name, definition).",
+    "seed_rows": "Array - Default data rows inserted upon migration."
+  },
+  "column_structure": {
+    "_description": "Each key inside a table's 'columns' object represents a column name. The value is an object containing:",
+    "type": "String - PostgreSQL data type (e.g., 'uuid', 'text', 'integer', 'timestamptz').",
+    "nullable": "Boolean - Whether the column accepts NULL.",
+    "default": "String - Default SQL value/expression.",
+    "description": "String - Business rules, cross-references, or usage notes.",
+    "example": "Any - Sample data for the column."
+  },
+  "ai_search_and_navigation_guide": {
+    "find_table_definition": {
+      "path": "tables[\"<table_name>\"]",
+      "strategy": "Always check the root 'tables' object first. If not found, check inside 'schemas[\"<schema_name>\"].tables'."
+    },
+    "find_column_details": {
+      "path": "tables[\"<table_name>\"].columns[\"<column_name>\"]",
+      "strategy": "Use this to check data types, nullability, and business rule descriptions."
+    },
+    "trace_relationships_and_fks": {
+      "path": "tables[\"<table_name>\"].foreign_keys",
+      "strategy": "Look here for explicit constraints. NOTE: Polymorphic relationships (like 'entity_id' + 'entity_type_code') do not use strict FK constraints. Look at column descriptions for 'Polymorphic association' clues."
+    },
+    "identify_soft_deletes": {
+      "strategy": "Check if `tables[\"<table_name>\"].columns` contains an `is_active` boolean column. If true, the table uses soft deletes."
+    },
+    "find_business_logic": {
+      "strategy": "Search `tables[\"<table_name>\"].triggers` to see what functions execute on mutation. Then cross-reference the function name in the root `functions` array to read the actual plpgsql logic."
+    },
+    "find_tenant_isolation": {
+      "strategy": "Check if `tables[\"<table_name>\"].columns` contains `tenant_id`. If present, all queries must be scoped to this UUID to prevent Insecure Direct Object Reference (IDOR)."
+    },
+    "find_temporal_data": {
+      "strategy": "Search for columns of type `tstzrange` (usually named `valid_period`). These tables are append-only ledgers for historical accuracy (e.g., pricing, markups)."
+    }
+  }
+}

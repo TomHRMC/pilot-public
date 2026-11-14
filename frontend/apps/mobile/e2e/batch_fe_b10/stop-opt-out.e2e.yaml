@@ -1,0 +1,53 @@
+# stop-opt-out E2E — Mobile Maestro
+#
+# STOP handling end-to-end: customer texts STOP → opted_out status → next reply attempt blocked (mobile).
+# Design doc G.3, Decision 7
+appId: com.pilot.mobile
+---
+- launchApp:
+    clearState: true
+
+# Login as tech
+- tapOn: "Email"
+- inputText: "tech@test.com"
+- tapOn: "Password"
+- inputText: "test-password"
+- tapOn: "Sign In"
+- assertVisible: "Pilot for Trades"
+
+# Navigate to inbox
+- tapOn:
+    id: "view-all-inbox"
+- assertVisible: "Customer Messages"
+
+# Open opted-out thread (Robert Davis - thread-003)
+- tapOn:
+    id: "thread-row-thread-003"
+- assertVisible:
+    id: "thread-header"
+
+# Opted-out badge should be visible in thread header
+- assertVisible:
+    id: "thread-opt-out-badge"
+
+# Opted-out banner should be visible in composer
+- assertVisible:
+    id: "opted-out-banner"
+
+# Send button must be disabled
+- assertNotVisible:
+    id: "send-button"
+    enabled: true
+
+# Attempt to type in composer (should be disabled)
+- tapOn:
+    id: "composer-text-input"
+- inputText: "Can you come back?"
+
+# Send button still disabled
+- assertNotVisible:
+    text: "Force send"
+- assertNotVisible:
+    text: "Send anyway"
+- assertNotVisible:
+    text: "Override"

@@ -1,0 +1,103 @@
+=== seed_scenario_reporting: seed mode ===
+    Tenant ID: 00000000-0000-0000-0000-000000000001
+
+  ℹ️  Labor rates found: {'apprentice': 5500, 'journeyman': 8500, 'master': 12000}
+  ℹ️  Pricebook items found: ['OUTLET-STD-01', 'PANEL-200A-01', 'BRKR-15A-01', 'COND-EMT-01', 'PERMIT-RES-01', 'WNUT-BAG-01']
+  ℹ️  Found 5 existing customer(s)
+  ℹ️  [job] 'Panel Upgrade — Completed Job A' (RPT-001) already exists (325e517b-c6a5-4a35-b0b9-36fe0678eec2)
+  ℹ️  [job] 'Service Call — Completed Job B' (RPT-002) already exists (aaf81c1c-5089-4d59-aa8d-323c76644f2a)
+  ℹ️  [job] 'Commercial Inspection — Completed Job C' (RPT-003) already exists (15478800-a10e-480a-ad19-c83d2a376221)
+  ℹ️  [job] 'Outlet Installation — Completed Job D' (RPT-004) already exists (3db645bf-d1b6-4e23-9115-fe49c309d13a)
+  ℹ️  [job] 'HVAC Coordination — Completed Job E' (RPT-005) already exists (811f0125-614e-4a40-b916-961a8c34e3af)
+  ℹ️  [job] 'Generator Hookup — Completed Job F' (RPT-006) already exists (8945d869-52ee-447c-b8cd-4eda55eb1fd9)
+  ℹ️  [job] 'Commercial Rewire — Completed Job G' (RPT-007) already exists (0a66fb7a-88ff-4b66-815c-17294b428fd5)
+  ℹ️  [job_time_entry] master entry already exists for job 325e517b-c6a5-4a35-b0b9-36fe0678eec2
+  ℹ️  [job_time_entry] journeyman entry already exists for job 325e517b-c6a5-4a35-b0b9-36fe0678eec2
+  ℹ️  [job_expense] '200A Main Panel + Breakers' already exists
+  ℹ️  [job_tech_assignment] Already assigned to job 325e517b-c6a5-4a35-b0b9-36fe0678eec2
+  ℹ️  [job_time_entry] journeyman entry already exists for job aaf81c1c-5089-4d59-aa8d-323c76644f2a
+  ℹ️  [job_time_entry] journeyman entry already exists for job aaf81c1c-5089-4d59-aa8d-323c76644f2a
+  ℹ️  [job_expense] 'GFCI Outlets (qty 4)' already exists
+  ℹ️  [job_tech_assignment] Already assigned to job aaf81c1c-5089-4d59-aa8d-323c76644f2a
+  ℹ️  [job_time_entry] master entry already exists for job 15478800-a10e-480a-ad19-c83d2a376221
+  ℹ️  [job_time_entry] journeyman entry already exists for job 15478800-a10e-480a-ad19-c83d2a376221
+  ℹ️  [job_expense] 'Conduit fittings and hardware' already exists
+  ℹ️  [job_expense] 'Commercial electrical permit' already exists
+  ℹ️  [job_tech_assignment] Already assigned to job 15478800-a10e-480a-ad19-c83d2a376221
+  ℹ️  [job_time_entry] journeyman entry already exists for job 3db645bf-d1b6-4e23-9115-fe49c309d13a
+  ℹ️  [job_expense] 'Duplex outlets and wall plates (qty 6)' already exists
+  ℹ️  [job_tech_assignment] Already assigned to job 3db645bf-d1b6-4e23-9115-fe49c309d13a
+  ℹ️  [job_time_entry] journeyman entry already exists for job 811f0125-614e-4a40-b916-961a8c34e3af
+  ℹ️  [job_expense] 'Electrical supplies' already exists
+  ℹ️  [job_tech_assignment] Already assigned to job 811f0125-614e-4a40-b916-961a8c34e3af
+  ℹ️  [job_time_entry] master entry already exists for job 8945d869-52ee-447c-b8cd-4eda55eb1fd9
+  ℹ️  [job_expense] 'Transfer switch hardware' already exists
+  ℹ️  [job_tech_assignment] Already assigned to job 8945d869-52ee-447c-b8cd-4eda55eb1fd9
+  ℹ️  [job_time_entry] master entry already exists for job 0a66fb7a-88ff-4b66-815c-17294b428fd5
+  ℹ️  [job_time_entry] journeyman entry already exists for job 0a66fb7a-88ff-4b66-815c-17294b428fd5
+  ℹ️  [job_expense] 'Commercial wiring materials' already exists
+  ℹ️  [job_expense] 'Commercial electrical permit' already exists
+  ℹ️  [job_tech_assignment] Already assigned to job 0a66fb7a-88ff-4b66-815c-17294b428fd5
+  ℹ️  [invoice] Already exists for job 325e517b-c6a5-4a35-b0b9-36fe0678eec2
+  ℹ️  [invoice] Already exists for job aaf81c1c-5089-4d59-aa8d-323c76644f2a
+  ℹ️  [invoice] Already exists for job 15478800-a10e-480a-ad19-c83d2a376221
+  ℹ️  [invoice] Already exists for job 3db645bf-d1b6-4e23-9115-fe49c309d13a
+  ℹ️  [invoice] Already exists for job 811f0125-614e-4a40-b916-961a8c34e3af
+  ℹ️  [invoice] Already exists for job 8945d869-52ee-447c-b8cd-4eda55eb1fd9
+  ℹ️  [invoice] Already exists for job 0a66fb7a-88ff-4b66-815c-17294b428fd5
+  ℹ️  [payment] Refund row for INV-900003 already exists
+
+  -- Seeding invoice lines for reporting invoices (SD-6) --
+  ℹ️  [invoice_line] INV-900002 already has 4 line(s)
+  ✅ [invoice] INV-900002 totals updated: total=226135¢  balance=0¢
+  ✅ [payment] INV-900002 payment updated → 226135¢
+  ℹ️  [invoice_line] INV-900003 already has 3 line(s)
+  ✅ [invoice] INV-900003 totals updated: total=43778¢  balance=0¢
+  ✅ [payment] INV-900003 payment updated → 43778¢
+  ℹ️  [invoice_line] INV-900004 already has 3 line(s)
+  ✅ [invoice] INV-900004 totals updated: total=115630¢  balance=115630¢
+  ℹ️  [invoice_line] INV-900005 already has 2 line(s)
+  ✅ [invoice] INV-900005 totals updated: total=16960¢  balance=16960¢
+  ℹ️  [invoice_line] INV-900006 already has 2 line(s)
+  ✅ [invoice] INV-900006 totals updated: total=215800¢  balance=135800¢
+  ✅ [payment] INV-900006 payment updated → 80000¢
+  ℹ️  [invoice_line] INV-900007 already has 3 line(s)
+  ✅ [invoice] INV-900007 totals updated: total=234350¢  balance=234350¢
+  ℹ️  [invoice_line] INV-900008 already has 4 line(s)
+  ✅ [invoice] INV-900008 totals updated: total=506860¢  balance=506860¢
+
+  -- Seeding loto_confirmation rows (SD-6) --
+  ℹ️  [loto_confirmation] Already exists for INV-900002 job
+  ℹ️  [loto_confirmation] Already exists for INV-900008 job
+
+  -- FIX-007: Seeding AR aging invoices --
+  ℹ️  [invoice] INV-900009 already exists
+  ℹ️  [invoice] INV-900010 already exists
+  ℹ️  [invoice] INV-900011 already exists
+  ℹ️  [invoice] INV-900012 already exists
+  ℹ️  [invoice] INV-900013 already exists
+  ℹ️  [invoice] INV-900014 already exists
+
+  -- SD-7 Batch 2: usage_ledger rows --
+  ℹ️  [usage_ledger] 'ul-voice-ai-2026-07-03-001' already exists
+  ℹ️  [usage_ledger] 'ul-voice-ai-2026-07-06-001' already exists
+  ℹ️  [usage_ledger] 'ul-voice-ai-2026-07-10-001' already exists
+  ℹ️  [usage_ledger] 'ul-voice-ai-2026-07-13-001' already exists
+  ℹ️  [usage_ledger] 'ul-voice-ai-2026-07-17-001' already exists
+  ℹ️  [usage_ledger] 'ul-voice-ai-2026-07-20-001' already exists
+  ℹ️  [usage_ledger] 'ul-voice-ai-2026-07-24-001' already exists
+  ℹ️  [usage_ledger] 'ul-voice-ai-2026-07-28-001' already exists
+  ℹ️  [usage_ledger] 'ul-sms-2026-07-05-001' already exists
+  ℹ️  [usage_ledger] 'ul-sms-2026-07-09-001' already exists
+  ℹ️  [usage_ledger] 'ul-sms-2026-07-14-001' already exists
+  ℹ️  [usage_ledger] 'ul-sms-2026-07-19-001' already exists
+  ℹ️  [usage_ledger] 'ul-sms-2026-07-26-001' already exists
+
+  -- SD-7 B3: Updating job_time_entry GPS/ETC/capture fields --
+  ✅ [job_time_entry] Updated 15 entries with GPS coords, ETC, mobile capture timestamps
+      Row 1 gps_variance=450 (threshold test)  |  NY coords (40.6892, -74.0445)  |  TX (30.2672, -97.7431) on rows 5-7
+
+  -- SD-7 B3: Updating job_expense vendor_name and capture timestamps --
+  ✅ [job_expense] Updated 13 expenses with vendor_name and mobile capture timestamps
+
+🎉 seed_scenario_reporting complete — Group D reporting data present for 00000000-0000-0000-0000-000000000001

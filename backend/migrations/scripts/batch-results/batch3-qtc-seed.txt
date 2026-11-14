@@ -1,0 +1,74 @@
+=== seed_scenario_quote_to_cash: seed mode ===
+    Tenant ID: 00000000-0000-0000-0000-000000000001
+
+  ℹ️  [customer] 'John Smith' already exists
+  ℹ️  [customer] 'Mary Johnson' already exists
+  ℹ️  [customer] 'Apex Commercial LLC' already exists
+  ℹ️  [customer] 'Bob Davis' already exists
+  ℹ️  [customer] 'Inactive Customer' already exists
+  ℹ️  [customer] 'Rachel Kim' already exists
+  ℹ️  [customer] 'Metro Properties LLC' already exists
+  ℹ️  [customer] 'James Torres' already exists
+  ℹ️  [site] 'Smith Residence' already exists
+  ℹ️  [site] 'Johnson Home' already exists
+  ℹ️  [site] 'Apex HQ' already exists
+  ℹ️  [site] 'Davis Property' already exists
+  ℹ️  [site] 'Kim Residence' already exists
+  ℹ️  [site] 'Metro Office Park' already exists
+  ℹ️  [site] 'Torres Home' already exists
+  ℹ️  [pricebook_item] 'Standard Outlet Installation' already exists
+  ℹ️  [pricebook_item] '200A Panel Upgrade' already exists
+  ℹ️  [pricebook_item] '15A Circuit Breaker' already exists
+  ℹ️  [pricebook_item] 'EMT Conduit' already exists
+  ℹ️  [pricebook_item] 'Residential Permit Fee' already exists
+  ℹ️  [pricebook_item] 'Wire Nuts (bag of 50)' already exists
+  ℹ️  [quote] Draft quote QTC-001 for John Smith already exists
+  ℹ️  [quote_version] Version already exists for draft quote
+
+  -- Seeding additional quotes (all statuses) --
+  ℹ️  [quote] 'QUO-900001' already exists
+  ℹ️  [quote] 'QUO-900002' already exists
+  ℹ️  [quote] 'QUO-900003' already exists
+  ℹ️  [quote] 'QUO-900004' already exists
+  ℹ️  [quote] 'QUO-900005' already exists
+  ℹ️  [quote] 'QUO-900006' already exists
+  ℹ️  [job] JOB-900001 already exists
+  ℹ️  [invoice] INV-900001 already exists
+  ℹ️  [invoice_line] 3 line(s) already exist for INV-900001
+  ✅ [invoice] Updated INV-900001 totals: subtotal=916.00, tax=39.96, total=955.96
+  ✅ [payment] Updated INV-900001 payment → 95596¢ ($955.96)
+  ℹ️  [quote] 'QUO-900007' already exists
+  ℹ️  [quote] 'QUO-900008' already exists
+  ℹ️  [quote] 'QUO-900009' already exists
+
+  -- Seeding change orders for JOB-900001 --
+  ℹ️  [change_order] CO-001 already exists
+  ℹ️  [change_order] CO-002 already exists
+  ✅ [change_order] 2 change orders + 5 lines seeded for JOB-900001
+
+  -- SD-7 Batch 1: populating optional fields --
+  ✅ [quote_line] tax fields set on 28 lines — 22 tax component(s) inserted
+  ✅ [change_order_line_tax_component] 4 component(s) present
+  ℹ️  [quote_acceptance] QUO-900005 acceptance already exists
+  ℹ️  [quote_approval_comment] QUO-900001 comment already exists
+  ℹ️  [quote_message] QUO-900004 message already exists
+  ✅ [customer] dba_name/notes/taxability_code/locale/timezone set on 3 customers
+  ✅ [site] notes/hazard_notes/jurisdiction_code/gate_code/access_instructions set on 4 sites
+  ✅ [invoice] payment_terms + customer_notes set on INV-900001
+  ✅ SD-7 Batch 1 optional fields complete
+
+  -- SD-7 Batch 3: job/invoice optional fields --
+  ✅ [job] JOB-900001 estimated_duration_minutes=480  quote_version_id=82756763-21ac-465f-a3a8-73416ba016e4
+  ✅ [invoice] INV-900001 issued_at=set  payment_terms=net_30  customer_notes=set
+  ✅ [invoice] INV-900002 issued_at=set  payment_terms=net_30
+  ✅ [invoice] INV-900003 issued_at=set  payment_terms=net_30
+  ✅ [invoice] INV-900004 issued_at=set  payment_terms=net_30
+  ✅ [invoice] INV-900006 issued_at=set  payment_terms=net_30
+  ✅ [invoice] INV-900009 issued_at=set  payment_terms=net_30
+  ✅ [invoice] INV-900010 issued_at=set  payment_terms=net_30
+  ✅ [invoice] INV-900011 issued_at=set  payment_terms=net_30
+  ✅ [invoice] INV-900012 issued_at=set  payment_terms=net_30
+  ✅ [invoice] INV-900013 issued_at=set  payment_terms=net_30
+  ✅ [invoice] INV-900014 issued_at=set  payment_terms=net_30
+
+🎉 seed_scenario_quote_to_cash complete — Group D data present for 00000000-0000-0000-0000-000000000001

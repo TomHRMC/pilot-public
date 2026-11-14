@@ -1,0 +1,275 @@
+{
+  "_meta": {
+    "description": "Cached template catalog for test_fire_templates.py --help display and --db-update refresh.",
+    "last_updated": "2026-07-24",
+    "note": "Run: python migrations/scripts/test_fire_templates.py --db-update to refresh from live DB.",
+    "active_channels": [
+      "email"
+    ],
+    "active_channels_note": "Manually maintained list of channels the script can fire. Only add a channel here when fire logic for it is implemented in test_fire_templates.py. Valid values come from all_channels below (sourced from the notification_channel DB table). Current valid values: email, in_app, push, sms. Today only 'email' has a send implementation \u2014 add 'push', 'in_app', or 'sms' here once their _fire_*() functions are written.",
+    "all_channels": [
+      "email",
+      "in_app",
+      "push",
+      "sms"
+    ],
+    "all_channels_note": "All channels in notification_channel DB table. Auto-refreshed by --db-update. Do not edit manually."
+  },
+  "email_templates": [
+    {
+      "template_id": "email_verification",
+      "display_name": "Email Verification",
+      "category": "internal",
+      "is_active": true
+    },
+    {
+      "template_id": "invoice_sent",
+      "display_name": "Invoice Sent to Customer",
+      "category": "customer_facing",
+      "is_active": true
+    },
+    {
+      "template_id": "mfa_reset_by_owner",
+      "display_name": "MFA Reset by Account Owner",
+      "category": "internal",
+      "is_active": true
+    },
+    {
+      "template_id": "password_reset",
+      "display_name": "Password Reset",
+      "category": "internal",
+      "is_active": true
+    },
+    {
+      "template_id": "payment_failed",
+      "display_name": "Payment Failed",
+      "category": "customer_facing",
+      "is_active": true
+    },
+    {
+      "template_id": "payment_received_customer",
+      "display_name": "Payment Receipt",
+      "category": "customer_facing",
+      "is_active": true
+    },
+    {
+      "template_id": "payment_received_tenant",
+      "display_name": "Payment Received (Tenant)",
+      "category": "internal",
+      "is_active": true
+    },
+    {
+      "template_id": "quote_accepted",
+      "display_name": "Quote Accepted Notification",
+      "category": "internal",
+      "is_active": true
+    },
+    {
+      "template_id": "quote_declined",
+      "display_name": "Quote Declined Notification",
+      "category": "internal",
+      "is_active": true
+    },
+    {
+      "template_id": "quote_expiring",
+      "display_name": "Quote Expiring Soon",
+      "category": "customer_facing",
+      "is_active": true
+    },
+    {
+      "template_id": "quote_sent",
+      "display_name": "Quote Sent to Customer",
+      "category": "customer_facing",
+      "is_active": true
+    },
+    {
+      "template_id": "subscription_payment_failed",
+      "display_name": "Subscription Payment Failed",
+      "category": "internal",
+      "is_active": true
+    },
+    {
+      "template_id": "subscription_renewal",
+      "display_name": "Subscription Renewal",
+      "category": "internal",
+      "is_active": true
+    },
+    {
+      "template_id": "trial_expired",
+      "display_name": "Trial Expired",
+      "category": "internal",
+      "is_active": true
+    },
+    {
+      "template_id": "trial_expiring",
+      "display_name": "Trial Expiring Soon",
+      "category": "internal",
+      "is_active": true
+    },
+    {
+      "template_id": "welcome",
+      "display_name": "Welcome",
+      "category": "internal",
+      "is_active": true
+    }
+  ],
+  "notification_templates": [
+    {
+      "type_code": "customer_communication_sent",
+      "channels": [
+        "email",
+        "in_app",
+        "push"
+      ]
+    },
+    {
+      "type_code": "dunning_reminder",
+      "channels": [
+        "email",
+        "in_app",
+        "push"
+      ]
+    },
+    {
+      "type_code": "gps_variance_alert",
+      "channels": [
+        "email",
+        "in_app",
+        "push"
+      ]
+    },
+    {
+      "type_code": "job_assigned",
+      "channels": [
+        "email",
+        "in_app",
+        "push"
+      ]
+    },
+    {
+      "type_code": "qb_conflict_pre_warning",
+      "channels": [
+        "email",
+        "in_app",
+        "push"
+      ]
+    },
+    {
+      "type_code": "qb_sync_conflict",
+      "channels": [
+        "email",
+        "in_app",
+        "push"
+      ]
+    },
+    {
+      "type_code": "quote_accepted",
+      "channels": [
+        "email",
+        "in_app",
+        "push"
+      ]
+    },
+    {
+      "type_code": "schedule_changed",
+      "channels": [
+        "email",
+        "in_app",
+        "push"
+      ]
+    },
+    {
+      "type_code": "system_template_updated",
+      "channels": [
+        "email",
+        "in_app",
+        "push"
+      ]
+    }
+  ],
+  "communication_templates": [
+    {
+      "template_code": "appointment_reminder_1h",
+      "channels": [
+        "email",
+        "sms"
+      ],
+      "is_active": true
+    },
+    {
+      "template_code": "appointment_reminder_24h",
+      "channels": [
+        "email",
+        "sms"
+      ],
+      "is_active": true
+    },
+    {
+      "template_code": "arrived",
+      "channels": [
+        "sms"
+      ],
+      "is_active": true
+    },
+    {
+      "template_code": "confirm_appointment",
+      "channels": [
+        "sms"
+      ],
+      "is_active": true
+    },
+    {
+      "template_code": "invoice_sent",
+      "channels": [
+        "email",
+        "sms"
+      ],
+      "is_active": true
+    },
+    {
+      "template_code": "job_complete",
+      "channels": [
+        "sms"
+      ],
+      "is_active": true
+    },
+    {
+      "template_code": "on_my_way",
+      "channels": [
+        "email",
+        "sms"
+      ],
+      "is_active": true
+    },
+    {
+      "template_code": "parts_delay",
+      "channels": [
+        "sms"
+      ],
+      "is_active": true
+    },
+    {
+      "template_code": "payment_received",
+      "channels": [
+        "email",
+        "sms"
+      ],
+      "is_active": true
+    },
+    {
+      "template_code": "recurring_job_scheduled",
+      "channels": [
+        "email",
+        "sms"
+      ],
+      "is_active": true
+    },
+    {
+      "template_code": "running_late",
+      "channels": [
+        "sms"
+      ],
+      "is_active": true
+    }
+  ]
+}

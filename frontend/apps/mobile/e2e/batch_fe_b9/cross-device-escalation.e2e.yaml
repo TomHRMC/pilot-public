@@ -1,0 +1,63 @@
+appId: com.pilotfortrades.mobile
+tags:
+  - batch_fe_b9
+  - cross-device
+  - escalation
+
+---
+
+# E2E: Cross-device escalation — FE-B9
+# Maestro YAML spec
+# Tests: mobile creates escalation (offline capture + force-escalation) → owner resolves on web → mobile confirms
+
+name: "Cross-device escalation — FE-B9"
+
+flows:
+  - name: "Owner tab shows field issues sync status row"
+    steps:
+      # Navigate to owner tab
+      - tapOn:
+          text: "Owner"
+      - assertVisible:
+          text: "Field issues"
+          maxWait: 5000
+      # Both healthy and pending states are valid initial states
+      - assertVisible:
+          id: "field-issues-sync-status-row"
+
+  - name: "Field issues pending state shows 'Resolve on web' link"
+    env:
+      PILOT_TEST_PENDING_COUNT: "2"
+    steps:
+      - tapOn:
+          text: "Owner"
+      - assertVisible:
+          id: "field-issues-sync-status-row"
+      - assertVisible:
+          text: "pending"
+          maxWait: 5000
+      - assertVisible:
+          text: "Resolve on web"
+
+  - name: "EscalationResolutionOutcome renders resolved_in_favor_of_tech"
+    env:
+      PILOT_TEST_OUTCOME: "resolved_in_favor_of_tech"
+    steps:
+      - assertVisible:
+          id: "escalation-outcome-resolved_in_favor_of_tech"
+          maxWait: 5000
+      - assertVisible:
+          text: "Your data was kept"
+
+  - name: "SyncQueueDrawer shows BackgroundSyncStatusRow above four sections"
+    steps:
+      - tapOn:
+          id: "connection-state-pill"
+      - assertVisible:
+          id: "sync-queue-drawer"
+          maxWait: 5000
+      - assertVisible:
+          id: "background-sync-status-row"
+      # Ensure it appears BEFORE the action-needed section
+      - assertVisible:
+          id: "section-action-needed"

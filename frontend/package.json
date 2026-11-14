@@ -1,0 +1,30 @@
+{
+  "name": "frontend",
+  "private": true,
+  "scripts": {
+    "prepare": "cd .. && husky frontend/.husky",
+    "build": "turbo run build",
+    "dev": "turbo run dev",
+    "dev:clean": "for port in 3000 3001 8081; do lsof -ti tcp:$port 2>/dev/null | xargs kill 2>/dev/null; done; sleep 1; turbo run dev",
+    "sync-api-types": "cd ../backend && source .venv/bin/activate && python export_openapi_json.py && cd ../frontend && npx openapi-typescript ../backend/openapi.json -o ./packages/shared-types/src/api-schema.d.ts",
+    "lint": "turbo run lint",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "check-types": "turbo run check-types"
+  },
+  "devDependencies": {
+    "husky": "^9.1.7",
+    "lint-staged": "^16.4.0",
+    "prettier": "^3.7.4",
+    "turbo": "^2.9.6",
+    "typescript": "5.9.2"
+  },
+  "packageManager": "pnpm@9.0.0",
+  "engines": {
+    "node": ">=18"
+  },
+  "pnpm": {
+    "overrides": {
+      "@babel/runtime": "^7.25.0"
+    }
+  }
+}

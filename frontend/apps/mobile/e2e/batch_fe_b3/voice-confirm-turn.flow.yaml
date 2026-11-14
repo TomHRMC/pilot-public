@@ -1,0 +1,40 @@
+# Voice confirm-as-turn E2E flow — FE-B3
+# Location: apps/mobile/e2e/batch_fe_b3/voice-confirm-turn.flow.yaml
+#
+# Tests: voice command → intent requiring confirmation → user says "yes"
+#        → action executes → confirm success
+
+appId: com.pilotfortrades.mobile
+---
+- launchApp:
+    clearState: true
+
+- tapOn:
+    text: "Home"
+- tapOn:
+    id: "start-voice-session-btn"
+
+# Start voice session
+- assertVisible:
+    id: "voice-trigger-btn"
+- tapOn:
+    id: "voice-trigger-btn"
+
+# Wait for AI to present a confirmation request
+# (In MSW mock: this happens after audio_chunk → response_final with waiting-confirm)
+- waitForAnimationToEnd:
+    timeout: 6000
+
+# Verify VoiceConfirmTurn renders
+- assertVisible:
+    id: "voice-confirm-turn"
+
+# Tap the confirm button
+- tapOn:
+    id: "voice-confirm-confirm-btn"
+
+# Verify action executed — session returns to idle state
+- assertNotVisible:
+    id: "voice-confirm-turn"
+- assertVisible:
+    id: "voice-trigger-btn"

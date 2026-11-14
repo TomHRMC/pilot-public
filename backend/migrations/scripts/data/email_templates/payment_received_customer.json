@@ -1,0 +1,9 @@
+{
+  "template_id": "payment_received_customer",
+  "display_name": "Payment Receipt",
+  "category": "customer_facing",
+  "subject_template": "Payment confirmed \u2014 ${{amount}} received by {{company_name}}",
+  "body_html_template": "<p>Hi {{customer_name}},</p>\n\n<p>We've received your payment. Here's your receipt.</p>\n\n<table style=\"border-collapse:collapse;width:100%;max-width:480px;margin:16px 0;\">\n  <tr>\n    <td style=\"padding:8px 0;color:#6b7280;font-size:14px;\">Amount paid</td>\n    <td style=\"padding:8px 0;font-weight:600;text-align:right;\">${{amount}}</td>\n  </tr>\n  <tr>\n    <td style=\"padding:8px 0;color:#6b7280;font-size:14px;\">Payment date</td>\n    <td style=\"padding:8px 0;text-align:right;\">{{payment_date}}</td>\n  </tr>\n  <tr>\n    <td style=\"padding:8px 0;color:#6b7280;font-size:14px;\">Paid to</td>\n    <td style=\"padding:8px 0;text-align:right;\">{{company_name}}</td>\n  </tr>\n</table>\n\n<p style=\"color:#6b7280;font-size:13px;\">Please keep this email as your receipt. If you have any questions about this payment, contact us at <a href=\"mailto:support@{{company_domain}}\">support@{{company_domain}}</a>.</p>\n\n<p>Thank you for your business,<br><strong>{{company_name}}</strong></p>\n\n<p style=\"color:#9ca3af;font-size:11px;margin-top:32px;\">Do not reply directly to this email \u2014 contact support@pilotfortrades.com for help.</p>",
+  "body_plain_template": "Hi {{customer_name}},\n\nWe've received your payment. Here's your receipt.\n\nAmount paid: ${{amount}}\nPayment date: {{payment_date}}\nPaid to: {{company_name}}\n\nPlease keep this email as your receipt. Questions? Contact us at support@{{company_domain}}.\n\nThank you for your business,\n{{company_name}}",
+  "variables": ["customer_name", "company_name", "amount", "payment_date", "company_domain"]
+}

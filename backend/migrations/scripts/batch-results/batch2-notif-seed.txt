@@ -1,0 +1,29 @@
+=== seed_scenario_notifications: seed mode ===
+    Tenant ID: 00000000-0000-0000-0000-000000000001
+
+  ℹ️  [in_app_notification] 5 notification(s) already exist for owner user
+
+  -- SD-7 Batch 2: notification_event / outbox / delivery_attempt --
+  ✅ [notification_event] quote_accepted → entity=QUO-900005
+  ✅ [notification_outbox] channel=email  event=quote_accepted
+  ✅ [notification_delivery_attempt] channel=email  status=delivered
+  ✅ [notification_outbox] channel=in_app  event=quote_accepted
+  ✅ [notification_delivery_attempt] channel=in_app  status=delivered
+  ✅ [notification_outbox] channel=push  event=quote_accepted
+  ✅ [notification_delivery_attempt] channel=push  status=delivered
+  ✅ [notification_event] dunning_reminder → entity=INV-900004
+  ✅ [notification_outbox] channel=email  event=dunning_reminder
+  ✅ [notification_delivery_attempt] channel=email  status=delivered
+  ✅ [notification_outbox] channel=in_app  event=dunning_reminder
+  ✅ [notification_delivery_attempt] channel=in_app  status=delivered
+  ✅ [notification_outbox] channel=push  event=dunning_reminder
+  ✅ [notification_delivery_attempt] channel=push  status=delivered
+  ✅ [notification_event] job_assigned → entity=JOB-SEED-A
+  ✅ [notification_outbox] channel=email  event=job_assigned
+  ✅ [notification_delivery_attempt] channel=email  status=delivered
+  ✅ [notification_outbox] channel=in_app  event=job_assigned
+  ✅ [notification_delivery_attempt] channel=in_app  status=delivered
+  ✅ [notification_outbox] channel=push  event=job_assigned
+  ✅ [notification_delivery_attempt] channel=push  status=delivered
+
+🎉 seed_scenario_notifications complete — data present for 00000000-0000-0000-0000-000000000001

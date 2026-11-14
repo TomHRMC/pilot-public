@@ -1,0 +1,221 @@
+{
+  "supplier": {
+    "name": "Platt Electric Supply",
+    "website": "https://platt.com",
+    "api_auth_type": null,
+    "api_base_url": null,
+    "lifecycle_status_code": "active"
+  },
+  "items": [
+    {
+      "sku": "PLT-LED-2X4-PANEL-50W",
+      "name": "LED Panel Light 2x4 50W 4000K",
+      "description": "Lithonia LBL 50W 2x4 LED flat panel, 4000K neutral white, 0-10V dimmable — office and commercial",
+      "uom_code": "each",
+      "category_code": "lighting",
+      "taxability_code": "taxable",
+      "is_active": true,
+      "current_price_dollars": 75.99
+    },
+    {
+      "sku": "PLT-LED-DOWNLIGHT-6IN",
+      "name": "6\" LED Recessed Downlight 12W",
+      "description": "Halo 6\" LED retrofit recessed downlight, 12W, 3000K/4000K selectable, 900 lumens — residential remodel",
+      "uom_code": "each",
+      "category_code": "lighting",
+      "taxability_code": "taxable",
+      "is_active": true,
+      "current_price_dollars": 22.99
+    },
+    {
+      "sku": "PLT-LED-EXITSGN-RED",
+      "name": "LED Exit Sign, Red Letters",
+      "description": "Lithonia LRP 2W LED exit sign, red letters, battery backup, universal mount — UL listed",
+      "uom_code": "each",
+      "category_code": "lighting",
+      "taxability_code": "taxable",
+      "is_active": true,
+      "current_price_dollars": 49.99
+    },
+    {
+      "sku": "PLT-LED-EMERG-TWIN",
+      "name": "LED Emergency Light Twin Head",
+      "description": "Lithonia ELM2 LED emergency light, twin adjustable heads, battery backup, 90-min rated",
+      "uom_code": "each",
+      "category_code": "lighting",
+      "taxability_code": "taxable",
+      "is_active": true,
+      "current_price_dollars": 64.99
+    },
+    {
+      "sku": "PLT-12-3NM-250",
+      "name": "12/3 NM-B Wire 250ft Roll",
+      "description": "Southwire 12/3 NM-B with ground, 250ft — 20A multi-wire branch circuits, 3-way switch loops",
+      "uom_code": "roll",
+      "category_code": "wire_cable",
+      "taxability_code": "taxable",
+      "is_active": true,
+      "current_price_dollars": 129.99
+    },
+    {
+      "sku": "PLT-LOWVOLT-CAT6-1000",
+      "name": "Cat6 UTP Cable 1000ft Pull Box",
+      "description": "Belden Cat6 24 AWG UTP, 1000ft pull box, blue — structured wiring, data runs",
+      "uom_code": "spool",
+      "category_code": "wire_cable",
+      "taxability_code": "taxable",
+      "is_active": true,
+      "current_price_dollars": 149.99
+    },
+    {
+      "sku": "PLT-BR120",
+      "name": "Eaton BR120 20A Single Pole Breaker",
+      "description": "Eaton BR series 20A 1-pole 120V plug-on breaker — for Eaton BR/CH load centers",
+      "uom_code": "each",
+      "category_code": "dist_equip",
+      "taxability_code": "taxable",
+      "is_active": true,
+      "current_price_dollars": 11.25
+    },
+    {
+      "sku": "PLT-BR250",
+      "name": "Eaton BR250 50A Double Pole Breaker",
+      "description": "Eaton BR series 50A 2-pole 240V plug-on breaker — EV charger Level 2, hot tub circuits",
+      "uom_code": "each",
+      "category_code": "dist_equip",
+      "taxability_code": "taxable",
+      "is_active": true,
+      "current_price_dollars": 38.99
+    },
+    {
+      "sku": "PLT-XFMR-1KVA-480-120",
+      "name": "1 KVA Dry Type Transformer 480V/120-240V",
+      "description": "Square D 1 KVA 1-phase dry type transformer, 480V primary / 120-240V secondary — control circuits",
+      "uom_code": "each",
+      "category_code": "dist_equip",
+      "taxability_code": "taxable",
+      "is_active": true,
+      "current_price_dollars": 189.99
+    },
+    {
+      "sku": "PLT-3WAY-SW-15A",
+      "name": "3-Way Toggle Switch 15A, White",
+      "description": "Leviton 15A 120/277V 3-way toggle switch, white — stairways, hallways, multi-point control",
+      "uom_code": "each",
+      "category_code": "wiring_devices",
+      "taxability_code": "taxable",
+      "is_active": true,
+      "current_price_dollars": 5.75
+    },
+    {
+      "sku": "PLT-DRYER-OUTLET-30A",
+      "name": "Dryer Outlet 30A 3-Wire NEMA 10-30R",
+      "description": "Leviton 30A 125/250V 3-wire dryer outlet, NEMA 10-30R — older dryer circuits (no ground)",
+      "uom_code": "each",
+      "category_code": "wiring_devices",
+      "taxability_code": "taxable",
+      "is_active": true,
+      "current_price_dollars": 14.99
+    },
+    {
+      "sku": "PLT-RANGE-OUTLET-50A",
+      "name": "Range Outlet 50A 4-Wire NEMA 14-50R",
+      "description": "Leviton 50A 125/250V 4-wire range outlet, NEMA 14-50R — electric ranges and EV charger EVSE",
+      "uom_code": "each",
+      "category_code": "wiring_devices",
+      "taxability_code": "taxable",
+      "is_active": true,
+      "current_price_dollars": 22.99
+    },
+    {
+      "sku": "PLT-CONDUIT-BODY-LB-0.75IN",
+      "name": "3/4\" EMT Conduit Body LB",
+      "description": "Crouse-Hinds 3/4\" EMT LB conduit body with cover and gasket — 90-degree directional change",
+      "uom_code": "each",
+      "category_code": "fittings",
+      "taxability_code": "taxable",
+      "is_active": true,
+      "current_price_dollars": 8.50
+    },
+    {
+      "sku": "PLT-STRUT-1-5-8-10FT",
+      "name": "Unistrut 1-5/8\" x 1-5/8\" Channel 10ft",
+      "description": "Unistrut P1000 12 gauge galvanized steel strut channel, 10ft — conduit/equipment support",
+      "uom_code": "foot",
+      "category_code": "fasteners",
+      "taxability_code": "taxable",
+      "is_active": true,
+      "current_price_dollars": 4.25
+    },
+    {
+      "sku": "PLT-TAPE-ELEC-33PLUS",
+      "name": "Electrical Tape 3/4\" x 66ft Roll",
+      "description": "3M Scotch 33+ professional grade vinyl electrical tape, 3/4\" x 66ft — -18C to 105C rated",
+      "uom_code": "roll",
+      "category_code": "wiring_devices",
+      "taxability_code": "taxable",
+      "is_active": true,
+      "current_price_dollars": 5.99
+    },
+    {
+      "sku": "PLT-WIRE-STAPLES-NM",
+      "name": "NM Cable Staples 1\" (Box of 100)",
+      "description": "Gardner Bender NM Romex cable staples, 1\", 100 per box — securing NM-B cable to framing",
+      "uom_code": "box",
+      "category_code": "fasteners",
+      "taxability_code": "taxable",
+      "is_active": true,
+      "current_price_dollars": 8.99
+    },
+    {
+      "sku": "PLT-SCREWS-GRND-GRN-100",
+      "name": "Ground Screws #10-32 Green (Box of 100)",
+      "description": "Hubbell #10-32 green ground screws, 100 per box — for bonding equipment grounding conductors",
+      "uom_code": "box",
+      "category_code": "fasteners",
+      "taxability_code": "taxable",
+      "is_active": true,
+      "current_price_dollars": 9.99
+    },
+    {
+      "sku": "PLT-METER-CLAMP-400A",
+      "name": "Digital Clamp Meter 400A AC/DC",
+      "description": "Fluke 323 True-RMS clamp meter, 400A AC/DC, 600V — essential electrical diagnostic tool",
+      "uom_code": "each",
+      "category_code": "tools_equip",
+      "taxability_code": "taxable",
+      "is_active": true,
+      "current_price_dollars": 159.99
+    },
+    {
+      "sku": "PLT-TESTER-CIRCUIT-3LED",
+      "name": "Circuit Tester 3-Light GFCI",
+      "description": "Sperry Instruments STK001 3-wire circuit and GFCI tester — outlet polarity and GFCI trip test",
+      "uom_code": "each",
+      "category_code": "tools_equip",
+      "taxability_code": "taxable",
+      "is_active": true,
+      "current_price_dollars": 12.99
+    },
+    {
+      "sku": "PLT-FISH-TAPE-50FT",
+      "name": "Fish Tape 50ft Steel",
+      "description": "Ideal Industries 50ft steel fish tape with hook — pulling wire through conduit and walls",
+      "uom_code": "each",
+      "category_code": "tools_equip",
+      "taxability_code": "taxable",
+      "is_active": true,
+      "current_price_dollars": 44.99
+    },
+    {
+      "sku": "PLT-INCAND-60W-BULB",
+      "name": "60W Incandescent A19 Bulb (discontinued)",
+      "description": "GE 60W A19 incandescent bulb — legacy stock, discontinued per DOE energy efficiency regulations",
+      "uom_code": "each",
+      "category_code": "lighting",
+      "taxability_code": "taxable",
+      "is_active": false,
+      "current_price_dollars": 1.50
+    }
+  ]
+}

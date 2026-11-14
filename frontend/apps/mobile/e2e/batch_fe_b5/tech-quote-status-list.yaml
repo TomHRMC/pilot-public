@@ -1,0 +1,68 @@
+# Tech quote status list E2E flow — FE-B5
+# Location: apps/mobile/e2e/batch_fe_b5/tech-quote-status-list.yaml
+#
+# Scenario: Tech opens pending quotes list and sees status pills
+#
+# Flow:
+#   1. Launch app as tech role (MSW mock auth)
+#   2. Navigate to (home)/quotes/pending
+#   3. Assert: TechPendingQuotesList renders with at least one quote card
+#   4. Assert: Status pill visible on first card
+#   5. Tap first quote card
+#   6. Assert: TechQuoteStatusDetail renders
+#
+# Run via: maestro test e2e/batch_fe_b5/tech-quote-status-list.yaml
+
+appId: com.pilotfortrades.mobile
+---
+- launchApp:
+    clearState: true
+    launchArguments:
+      MOCK_AUTH_ROLE: tech
+      USE_MOCK_AUTH: "true"
+
+# Land on the Home tab (default after login as tech)
+- assertVisible:
+    text: "Home"
+
+# Navigate to the tech pending quotes list via deep link
+# In dev/MSW mode the tab renders a link or the route is accessible
+- openLink: "pilotfortrades://quotes/pending"
+
+# Wait for the quote list to load from MSW
+- waitForAnimationToEnd:
+    timeout: 4000
+
+# Assert the quote list screen is visible
+- assertVisible:
+    text: "My Quotes"
+
+# Assert at least one quote card is visible
+# MSW returns Q-2025-001 (Johnson Electric, pending_approval)
+- assertVisible:
+    text: "Johnson Electric"
+
+# Assert the status pill is rendered on the first card
+# testID pattern: status-pill-{quoteId} — from TechQuoteStatusCard
+- assertVisible:
+    id: "status-pill-quote-uuid-1"
+
+# Tap the first quote card to open detail view
+- tapOn:
+    id: "tech-quote-card-quote-uuid-1"
+
+# Wait for navigation and detail render
+- waitForAnimationToEnd:
+    timeout: 3000
+
+# Assert TechQuoteStatusDetail renders with quote number
+- assertVisible:
+    text: "#Q-2025-001"
+
+# Assert Status tab is visible and active by default
+- assertVisible:
+    text: "Status"
+
+# Assert customer name shown in header
+- assertVisible:
+    text: "Johnson Electric"

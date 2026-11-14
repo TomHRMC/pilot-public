@@ -1,0 +1,960 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AevoFab · Dispatch Board (Pass 3 Flow 3 Prototype)</title>
+<style>
+  :root {
+    --bg-page: #FAFAF9;
+    --bg-surface: #FFFFFF;
+    --bg-muted: #F5F5F4;
+    --bg-hover: #EFEDEC;
+
+    --text-primary: #1C1917;
+    --text-secondary: #57534E;
+    --text-tertiary: #A8A29E;
+    --text-inverse: #FAFAF9;
+
+    --border-subtle: #E7E5E4;
+    --border-default: #D6D3D1;
+
+    --brand: #3B43D6;
+    --brand-hover: #232AA3;
+    --brand-muted-bg: #EEF1FF;
+    --brand-muted-text: #232AA3;
+
+    --fault: #DC2626;
+    --fault-muted-bg: #FCEBEB;
+    --fault-muted-text: #791F1F;
+
+    --alert: #F59E0B;
+    --alert-muted-bg: #FAEEDA;
+    --alert-muted-text: #633806;
+
+    --margin-positive: #0F6E56;
+    --margin-positive-bg: #E1F5EE;
+
+    --tech-mike: #3B43D6;
+    --tech-mike-bg: #EEF1FF;
+    --tech-mike-bg-hover: #D8DEFE;
+    --tech-luis: #0F6E56;
+    --tech-luis-bg: #E1F5EE;
+    --tech-luis-bg-hover: #C9EAD9;
+    --tech-jamal: #B45309;
+    --tech-jamal-bg: #FAEEDA;
+    --tech-jamal-bg-hover: #F5DCB1;
+    --tech-luna: #7C3AED;
+    --tech-luna-bg: #F0E9FE;
+    --tech-luna-bg-hover: #E2D2FC;
+
+    --shadow-sm: 0 1px 2px rgba(28, 25, 23, 0.04);
+    --shadow-md: 0 2px 8px rgba(28, 25, 23, 0.06);
+    --shadow-lg: 0 4px 16px rgba(28, 25, 23, 0.10);
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; height: 100%; }
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: var(--bg-page);
+    color: var(--text-primary);
+    font-size: 14px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    overflow: hidden;
+  }
+
+  .app-shell { display: flex; height: 100vh; }
+  .sidebar-nav {
+    width: 220px;
+    background: var(--bg-surface);
+    border-right: 0.5px solid var(--border-subtle);
+    padding: 16px 12px;
+    flex-shrink: 0;
+    overflow-y: auto;
+  }
+  .sb-brand {
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--text-primary);
+    padding: 6px 10px 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .sb-brand-mark {
+    width: 22px; height: 22px;
+    background: var(--brand);
+    border-radius: 5px;
+    display: flex; align-items: center; justify-content: center;
+    color: #fff; font-weight: 500; font-size: 12px;
+  }
+  .sb-nav { display: flex; flex-direction: column; gap: 1px; }
+  .sb-item {
+    padding: 7px 10px;
+    font-size: 13px;
+    color: var(--text-secondary);
+    border-radius: 6px;
+    cursor: pointer;
+    display: flex; align-items: center; gap: 9px;
+  }
+  .sb-item:hover { background: var(--bg-muted); color: var(--text-primary); }
+  .sb-item.active { background: var(--brand-muted-bg); color: var(--brand-muted-text); font-weight: 500; }
+  .sb-item svg { width: 15px; height: 15px; }
+  .sb-section-label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-tertiary);
+    padding: 14px 10px 6px;
+    font-weight: 500;
+  }
+
+  .main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+
+  .top-bar {
+    background: var(--bg-surface);
+    border-bottom: 0.5px solid var(--border-subtle);
+    padding: 14px 24px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-shrink: 0;
+  }
+  .breadcrumb-block { display: flex; flex-direction: column; }
+  .breadcrumb { font-size: 11px; color: var(--text-tertiary); margin-bottom: 2px; }
+  .breadcrumb span { color: var(--text-secondary); }
+  .page-title { font-size: 18px; font-weight: 500; margin: 0; letter-spacing: -0.01em; }
+
+  .date-nav { display: flex; align-items: center; gap: 6px; }
+  .date-btn {
+    width: 28px; height: 28px;
+    background: var(--bg-surface);
+    border: 0.5px solid var(--border-subtle);
+    border-radius: 6px;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--text-secondary);
+  }
+  .date-btn:hover { background: var(--bg-muted); color: var(--text-primary); }
+  .date-btn svg { width: 14px; height: 14px; }
+  .date-display {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-primary);
+    padding: 0 10px;
+    min-width: 200px;
+    text-align: center;
+  }
+  .today-btn {
+    height: 28px;
+    padding: 0 12px;
+    background: var(--bg-surface);
+    border: 0.5px solid var(--border-subtle);
+    border-radius: 6px;
+    cursor: pointer;
+    color: var(--text-secondary);
+    font-size: 12px;
+    font-weight: 500;
+    margin-left: 4px;
+  }
+  .today-btn:hover { background: var(--bg-muted); color: var(--text-primary); }
+
+  .scale-tabs {
+    display: flex;
+    background: var(--bg-muted);
+    border-radius: 7px;
+    padding: 2px;
+  }
+  .scale-tab {
+    padding: 5px 14px;
+    font-size: 12px;
+    font-weight: 500;
+    border-radius: 5px;
+    cursor: pointer;
+    color: var(--text-secondary);
+    border: none;
+    background: transparent;
+    transition: all 100ms ease;
+  }
+  .scale-tab:hover { color: var(--text-primary); }
+  .scale-tab.active { background: var(--bg-surface); color: var(--text-primary); box-shadow: var(--shadow-sm); }
+
+  .top-bar-spacer { flex: 1; }
+
+  .voice-btn {
+    height: 32px;
+    padding: 0 14px;
+    background: var(--alert-muted-bg);
+    border: 0.5px solid #FDD997;
+    border-radius: 8px;
+    color: var(--alert-muted-text);
+    font-size: 12px;
+    font-weight: 500;
+    display: flex; align-items: center; gap: 6px;
+    cursor: pointer;
+  }
+  .voice-btn:hover { background: #F5DCB1; }
+  .voice-btn svg { width: 14px; height: 14px; }
+
+  .calendar-status {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 11px;
+    color: var(--text-secondary);
+    padding: 5px 10px;
+    background: var(--bg-muted);
+    border-radius: 6px;
+  }
+  .calendar-status .dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--margin-positive);
+  }
+
+  .board-area { flex: 1; display: flex; overflow: hidden; }
+
+  .filters-panel {
+    width: 240px;
+    background: var(--bg-surface);
+    border-right: 0.5px solid var(--border-subtle);
+    padding: 16px 14px 16px 18px;
+    flex-shrink: 0;
+    overflow-y: auto;
+  }
+  .filters-section { margin-bottom: 18px; }
+  .filters-section-title {
+    font-size: 10.5px;
+    font-weight: 500;
+    color: var(--text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin: 0 0 8px;
+  }
+  .filter-item {
+    display: flex; align-items: center; gap: 8px;
+    padding: 5px 6px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 12.5px;
+    color: var(--text-primary);
+  }
+  .filter-item:hover { background: var(--bg-muted); }
+  .filter-checkbox {
+    width: 13px; height: 13px;
+    border-radius: 3px;
+    border: 1.5px solid var(--border-default);
+    background: var(--bg-surface);
+    flex-shrink: 0;
+    position: relative;
+  }
+  .filter-item.checked .filter-checkbox {
+    background: currentColor;
+    border-color: currentColor;
+  }
+  .filter-item.checked .filter-checkbox::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M3 6 L5 8 L9 4' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-size: contain;
+  }
+  .filter-color-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    margin-left: -2px;
+  }
+  .filter-label { flex: 1; font-size: 12.5px; }
+  .filter-count { font-size: 10.5px; color: var(--text-tertiary); font-variant-numeric: tabular-nums; }
+
+  .filter-tech-mike { color: var(--tech-mike); }
+  .filter-tech-luis { color: var(--tech-luis); }
+  .filter-tech-jamal { color: var(--tech-jamal); }
+  .filter-tech-luna { color: var(--tech-luna); }
+  .filter-status-unassigned { color: var(--text-secondary); }
+  .filter-status-scheduled { color: var(--brand); }
+  .filter-status-inprogress { color: var(--alert); }
+  .filter-status-confirmed { color: var(--margin-positive); }
+  .filter-customer { color: var(--text-secondary); }
+  .filter-jobtype { color: var(--text-secondary); }
+  .filter-priority-rush { color: var(--fault); }
+  .filter-priority-standard { color: var(--text-secondary); }
+  .filter-priority-warranty { color: var(--brand); }
+
+  .grid-area {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    background: var(--bg-page);
+  }
+
+  .grid-header {
+    display: flex;
+    background: var(--bg-surface);
+    border-bottom: 0.5px solid var(--border-default);
+    flex-shrink: 0;
+  }
+  .grid-header-corner {
+    width: 78px;
+    flex-shrink: 0;
+    border-right: 0.5px solid var(--border-subtle);
+    background: var(--bg-surface);
+  }
+  .grid-header-tech {
+    flex: 1;
+    padding: 10px 12px;
+    border-right: 0.5px solid var(--border-subtle);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-width: 0;
+  }
+  .grid-header-tech:last-child { border-right: none; }
+  .tech-avatar {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px;
+    font-weight: 500;
+    color: #fff;
+    flex-shrink: 0;
+  }
+  .tech-avatar.mike { background: var(--tech-mike); }
+  .tech-avatar.luis { background: var(--tech-luis); }
+  .tech-avatar.jamal { background: var(--tech-jamal); }
+  .tech-avatar.luna { background: var(--tech-luna); }
+  .tech-name { font-size: 13px; font-weight: 500; color: var(--text-primary); }
+  .tech-meta { font-size: 10.5px; color: var(--text-tertiary); margin-top: 1px; }
+
+  .grid-scroll {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    position: relative;
+  }
+  .grid-body {
+    display: flex;
+    position: relative;
+    min-height: 100%;
+  }
+  .time-column {
+    width: 78px;
+    flex-shrink: 0;
+    border-right: 0.5px solid var(--border-subtle);
+    background: var(--bg-surface);
+    position: sticky;
+    left: 0;
+    z-index: 2;
+  }
+  .time-cell {
+    height: 60px;
+    border-bottom: 0.5px solid var(--border-subtle);
+    padding: 4px 10px 0 0;
+    text-align: right;
+    font-size: 11px;
+    color: var(--text-tertiary);
+    font-variant-numeric: tabular-nums;
+  }
+  .time-cell.first { border-top: none; padding-top: 0; }
+
+  .tech-column {
+    flex: 1;
+    border-right: 0.5px solid var(--border-subtle);
+    position: relative;
+    background: var(--bg-surface);
+    min-width: 0;
+  }
+  .tech-column:last-child { border-right: none; }
+  .hour-row {
+    height: 60px;
+    border-bottom: 0.5px solid var(--border-subtle);
+  }
+  .hour-row.half { background: linear-gradient(to bottom, transparent 50%, rgba(168, 162, 158, 0.04) 50%); }
+  .availability-block {
+    position: absolute;
+    left: 0; right: 0;
+    background: rgba(168, 162, 158, 0.10);
+    border-top: 0.5px solid var(--border-subtle);
+    border-bottom: 0.5px solid var(--border-subtle);
+    pointer-events: none;
+  }
+  .availability-block::before {
+    content: 'OFF';
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 10px;
+    color: var(--text-tertiary);
+    letter-spacing: 0.1em;
+    font-weight: 500;
+  }
+  .availability-block.pto { background: repeating-linear-gradient(45deg, rgba(168, 162, 158, 0.04), rgba(168, 162, 158, 0.04) 8px, rgba(168, 162, 158, 0.10) 8px, rgba(168, 162, 158, 0.10) 16px); }
+  .availability-block.pto::before { content: 'PTO'; }
+
+  .now-line {
+    position: absolute;
+    left: 78px; right: 0;
+    border-top: 1.5px solid var(--fault);
+    z-index: 3;
+    pointer-events: none;
+  }
+  .now-line::before {
+    content: '';
+    position: absolute;
+    left: -5px; top: -5px;
+    width: 8px; height: 8px;
+    background: var(--fault);
+    border-radius: 50%;
+  }
+
+  .job-block {
+    position: absolute;
+    left: 4px; right: 4px;
+    border-radius: 6px;
+    padding: 6px 8px 6px 10px;
+    cursor: grab;
+    overflow: hidden;
+    border-left: 3px solid currentColor;
+    transition: box-shadow 100ms ease, transform 100ms ease;
+    z-index: 1;
+  }
+  .job-block:hover { box-shadow: var(--shadow-md); z-index: 4; transform: translateY(-1px); }
+  .job-block.tech-mike { background: var(--tech-mike-bg); color: var(--tech-mike); }
+  .job-block.tech-luis { background: var(--tech-luis-bg); color: var(--tech-luis); }
+  .job-block.tech-jamal { background: var(--tech-jamal-bg); color: var(--tech-jamal); }
+  .job-block.tech-luna { background: var(--tech-luna-bg); color: var(--tech-luna); }
+
+  .job-title {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-primary);
+    line-height: 1.3;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .job-customer {
+    font-size: 11px;
+    color: var(--text-secondary);
+    line-height: 1.3;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-top: 1px;
+  }
+  .job-time {
+    font-size: 10px;
+    color: var(--text-tertiary);
+    margin-top: 3px;
+    font-variant-numeric: tabular-nums;
+  }
+  .job-tags {
+    position: absolute;
+    top: 6px; right: 6px;
+    display: flex; gap: 3px;
+  }
+  .job-tag {
+    font-size: 9px;
+    padding: 1px 5px;
+    border-radius: 3px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  .job-tag.warning {
+    background: var(--alert-muted-bg);
+    color: var(--alert-muted-text);
+  }
+  .job-tag.rush {
+    background: var(--fault-muted-bg);
+    color: var(--fault-muted-text);
+  }
+  .job-tag.warranty {
+    background: var(--brand-muted-bg);
+    color: var(--brand-muted-text);
+  }
+
+  .drive-time-marker {
+    position: absolute;
+    left: 8px; right: 8px;
+    height: 16px;
+    display: flex; align-items: center; gap: 4px;
+    font-size: 9.5px;
+    color: var(--text-tertiary);
+    font-variant-numeric: tabular-nums;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .drive-time-marker::before {
+    content: '';
+    flex: 1;
+    height: 1px;
+    border-top: 1px dotted var(--text-tertiary);
+    opacity: 0.5;
+  }
+  .drive-time-marker::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    border-top: 1px dotted var(--text-tertiary);
+    opacity: 0.5;
+  }
+  .drive-time-marker .label {
+    flex: 0 0 auto;
+    padding: 0 4px;
+    background: var(--bg-surface);
+  }
+  .drive-time-marker.infeasible { color: var(--fault); }
+  .drive-time-marker.infeasible::before, .drive-time-marker.infeasible::after {
+    border-top-color: var(--fault);
+    opacity: 1;
+  }
+  .drive-time-marker.infeasible .label { color: var(--fault); font-weight: 500; }
+
+  .info-bar {
+    background: var(--bg-surface);
+    border-top: 0.5px solid var(--border-subtle);
+    padding: 8px 24px;
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    flex-shrink: 0;
+    font-size: 11px;
+    color: var(--text-secondary);
+  }
+  .info-stat { display: flex; gap: 5px; align-items: center; }
+  .info-stat strong { color: var(--text-primary); font-weight: 500; }
+
+  .toast {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--text-primary);
+    color: var(--text-inverse);
+    padding: 10px 16px;
+    border-radius: 8px;
+    font-size: 13px;
+    box-shadow: var(--shadow-lg);
+    z-index: 100;
+    display: none;
+    animation: toast-in 200ms ease-out;
+    max-width: 480px;
+  }
+  .toast.warn { background: var(--alert); color: var(--alert-muted-text); }
+  .toast.block { background: var(--fault); color: white; }
+  @keyframes toast-in {
+    from { opacity: 0; transform: translateX(-50%) translateY(12px); }
+    to { opacity: 1; transform: translateX(-50%) translateY(0); }
+  }
+
+  .prototype-banner {
+    background: var(--brand-muted-bg);
+    color: var(--brand-muted-text);
+    padding: 8px 16px;
+    font-size: 12px;
+    text-align: center;
+    border-bottom: 0.5px solid var(--border-subtle);
+    flex-shrink: 0;
+  }
+  .prototype-banner strong { font-weight: 500; }
+  .prototype-banner code {
+    background: rgba(35, 42, 163, 0.1);
+    padding: 1px 5px;
+    border-radius: 3px;
+    font-size: 11px;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+  }
+</style>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar-nav">
+      <div class="sb-brand">
+        <div class="sb-brand-mark">A</div>
+        <span>AevoFab</span>
+      </div>
+      <div class="sb-section-label">Workspace</div>
+      <nav class="sb-nav">
+        <div class="sb-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>Dashboard</div>
+        <div class="sb-item active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M3 10h18M8 2v4M16 2v4"/></svg>Schedule</div>
+        <div class="sb-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 13h6M9 17h6"/></svg>Quotes</div>
+        <div class="sb-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18"/></svg>Jobs</div>
+        <div class="sb-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 21v-2a4 4 0 0 0-3-3.87M4 21v-2a4 4 0 0 1 3-3.87"/><circle cx="12" cy="7" r="4"/></svg>Customers</div>
+        <div class="sb-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 10h18"/></svg>Billing</div>
+      </nav>
+      <div class="sb-section-label">Analysis</div>
+      <nav class="sb-nav">
+        <div class="sb-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 20h18M7 16v-5M12 16V8M17 16v-3"/></svg>Reports</div>
+      </nav>
+      <div class="sb-section-label">Admin</div>
+      <nav class="sb-nav">
+        <div class="sb-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33h0a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51h0a1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82v0a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>Settings</div>
+      </nav>
+    </aside>
+
+    <main class="main">
+      <div class="prototype-banner">
+        <strong>Pass 3 Flow 3 prototype</strong> · Dispatch board · drag job blocks vertically to reschedule · drag horizontally between techs to reassign · click to inspect · use voice button (top-right) to simulate <code>"Reassign Williams panel to Luis"</code>
+      </div>
+
+      <div class="top-bar">
+        <div class="breadcrumb-block">
+          <div class="breadcrumb"><span>Schedule</span> › Dispatch board</div>
+          <h1 class="page-title">Dispatch</h1>
+        </div>
+
+        <div class="date-nav">
+          <button class="date-btn" id="prev-btn" aria-label="Previous day"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg></button>
+          <span class="date-display" id="date-display">Wednesday, May 21, 2026</span>
+          <button class="date-btn" id="next-btn" aria-label="Next day"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></button>
+          <button class="today-btn">Today</button>
+        </div>
+
+        <div class="scale-tabs">
+          <button class="scale-tab active" data-scale="day">Day</button>
+          <button class="scale-tab" data-scale="4day">4 Day</button>
+          <button class="scale-tab" data-scale="week">Week</button>
+          <button class="scale-tab" data-scale="month">Month</button>
+        </div>
+
+        <div class="top-bar-spacer"></div>
+
+        <div class="calendar-status">
+          <span class="dot"></span>
+          Google Calendar synced 2 min ago
+        </div>
+
+        <button class="voice-btn" id="voice-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="3" width="6" height="12" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg>
+          <span>Voice</span>
+        </button>
+      </div>
+
+      <div class="board-area">
+        <aside class="filters-panel">
+          <div class="filters-section">
+            <p class="filters-section-title">Tech</p>
+            <div id="tech-filters"></div>
+          </div>
+          <div class="filters-section">
+            <p class="filters-section-title">Status</p>
+            <div id="status-filters"></div>
+          </div>
+          <div class="filters-section">
+            <p class="filters-section-title">Customer</p>
+            <div id="customer-filters"></div>
+          </div>
+          <div class="filters-section">
+            <p class="filters-section-title">Job type</p>
+            <div id="jobtype-filters"></div>
+          </div>
+          <div class="filters-section">
+            <p class="filters-section-title">Priority</p>
+            <div id="priority-filters"></div>
+          </div>
+        </aside>
+
+        <div class="grid-area">
+          <div class="grid-header" id="grid-header"></div>
+          <div class="grid-scroll" id="grid-scroll">
+            <div class="grid-body" id="grid-body"></div>
+          </div>
+          <div class="info-bar">
+            <span class="info-stat"><strong>4</strong> techs working</span>
+            <span class="info-stat"><strong>9</strong> jobs scheduled</span>
+            <span class="info-stat"><strong>1</strong> drive-time warning</span>
+            <span class="info-stat"><strong>0</strong> conflicts blocked</span>
+            <span style="flex: 1"></span>
+            <span style="font-size: 11px; color: var(--text-tertiary);">Last updated 12s ago</span>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+<script>
+(function() {
+  const techs = [
+    { id: 'mike',  name: 'Mike R.',  initials: 'MR', meta: '7am – 5pm', workStart: 7, workEnd: 17 },
+    { id: 'luis',  name: 'Luis F.',  initials: 'LF', meta: '7am – 5pm', workStart: 7, workEnd: 17 },
+    { id: 'jamal', name: 'Jamal K.', initials: 'JK', meta: 'PTO until 1pm', workStart: 13, workEnd: 17, ptoBefore: 13 },
+    { id: 'luna',  name: 'Luna T.',  initials: 'LT', meta: '8am – 4pm',  workStart: 8, workEnd: 16 }
+  ];
+
+  const jobs = [
+    { id: 'j1', tech: 'mike', title: 'Johnson — 200A panel upgrade', customer: 'Tom Johnson · 42 Oak St', start: 8,    end: 11,   tags: [] },
+    { id: 'j2', tech: 'mike', title: 'Patel — service call', customer: 'A. Patel · 87 Maple', start: 11.5, end: 12.5, tags: [{ type: 'rush', label: 'Rush' }] },
+    { id: 'j3', tech: 'mike', title: 'Williams — service entrance', customer: 'D. Williams · 12 Cedar', start: 13.5, end: 16.5, tags: [{ type: 'warning', label: 'Drive 18m' }] },
+    { id: 'j4', tech: 'luis', title: 'Chen — EV charger install', customer: 'Jen Chen · 204 Pine', start: 8,   end: 10,   tags: [] },
+    { id: 'j5', tech: 'luis', title: 'Allen — recessed lighting', customer: 'B. Allen · 15 Birch',  start: 10.5, end: 12.5, tags: [] },
+    { id: 'j6', tech: 'luis', title: 'Murphy — service call', customer: 'P. Murphy · 88 Elm', start: 14, end: 15, tags: [{ type: 'warranty', label: 'Warranty' }] },
+    { id: 'j7', tech: 'jamal', title: 'Diaz — panel relocate', customer: 'C. Diaz · 22 Walnut', start: 13, end: 16, tags: [] },
+    { id: 'j8', tech: 'luna', title: 'Wang — generator hookup', customer: 'L. Wang · 199 Ash', start: 9, end: 11.5, tags: [] },
+    { id: 'j9', tech: 'luna', title: 'Reed — outdoor outlets', customer: 'J. Reed · 7 Spruce', start: 13, end: 15.5, tags: [] }
+  ];
+
+  const driveTimes = [
+    { tech: 'mike', afterJob: 'j2', label: '12 min' },
+    { tech: 'mike', afterJob: 'j3', infeasible: true, label: '18 min · tight' },
+    { tech: 'luis', afterJob: 'j4', label: '8 min' },
+    { tech: 'luis', afterJob: 'j5', label: '15 min' }
+  ];
+
+  const filterGroups = {
+    tech: [
+      { id: 'mike',  label: 'Mike R.', count: 3, color: 'var(--tech-mike)', class: 'filter-tech-mike', checked: true },
+      { id: 'luis',  label: 'Luis F.', count: 3, color: 'var(--tech-luis)', class: 'filter-tech-luis', checked: true },
+      { id: 'jamal', label: 'Jamal K.', count: 1, color: 'var(--tech-jamal)', class: 'filter-tech-jamal', checked: true },
+      { id: 'luna',  label: 'Luna T.',  count: 2, color: 'var(--tech-luna)', class: 'filter-tech-luna', checked: true }
+    ],
+    status: [
+      { id: 'unassigned', label: 'Unassigned', count: 2, color: 'var(--text-secondary)', class: 'filter-status-unassigned', checked: true },
+      { id: 'scheduled',  label: 'Scheduled', count: 9, color: 'var(--brand)', class: 'filter-status-scheduled', checked: true },
+      { id: 'inprogress', label: 'In progress', count: 0, color: 'var(--alert)', class: 'filter-status-inprogress', checked: true },
+      { id: 'confirmed',  label: 'Confirmed', count: 0, color: 'var(--margin-positive)', class: 'filter-status-confirmed', checked: true }
+    ],
+    customer: [
+      { id: 'commercial', label: 'Commercial', count: 4, color: 'var(--text-secondary)', class: 'filter-customer', checked: true },
+      { id: 'residential',  label: 'Residential', count: 5, color: 'var(--text-secondary)', class: 'filter-customer', checked: true }
+    ],
+    jobtype: [
+      { id: 'service', label: 'Service calls', count: 3, color: 'var(--text-secondary)', class: 'filter-jobtype', checked: true },
+      { id: 'install', label: 'Installs', count: 4, color: 'var(--text-secondary)', class: 'filter-jobtype', checked: true },
+      { id: 'inspection', label: 'Inspections', count: 2, color: 'var(--text-secondary)', class: 'filter-jobtype', checked: true }
+    ],
+    priority: [
+      { id: 'rush', label: 'Rush', count: 1, color: 'var(--fault)', class: 'filter-priority-rush', checked: true },
+      { id: 'standard', label: 'Standard', count: 7, color: 'var(--text-secondary)', class: 'filter-priority-standard', checked: true },
+      { id: 'warranty', label: 'Warranty', count: 1, color: 'var(--brand)', class: 'filter-priority-warranty', checked: true }
+    ]
+  };
+
+  const HOUR_HEIGHT = 60;
+  const HOUR_START = 6;
+  const HOUR_END = 19;
+
+  function renderFilters() {
+    Object.entries(filterGroups).forEach(([groupId, items]) => {
+      const container = document.getElementById(`${groupId}-filters`);
+      container.innerHTML = items.map(item => `
+        <div class="filter-item ${item.checked ? 'checked' : ''} ${item.class}" data-group="${groupId}" data-id="${item.id}" style="color: ${item.color};">
+          <span class="filter-checkbox"></span>
+          <span class="filter-color-dot" style="background: ${item.color};"></span>
+          <span class="filter-label" style="color: var(--text-primary);">${item.label}</span>
+          <span class="filter-count">${item.count}</span>
+        </div>
+      `).join('');
+    });
+
+    document.querySelectorAll('.filter-item').forEach(el => {
+      el.addEventListener('click', () => {
+        const group = el.dataset.group;
+        const id = el.dataset.id;
+        const item = filterGroups[group].find(i => i.id === id);
+        item.checked = !item.checked;
+        el.classList.toggle('checked');
+        renderGrid();
+      });
+    });
+  }
+
+  function renderGridHeader() {
+    const header = document.getElementById('grid-header');
+    const visibleTechs = techs.filter(t => filterGroups.tech.find(f => f.id === t.id).checked);
+    header.innerHTML = `
+      <div class="grid-header-corner"></div>
+      ${visibleTechs.map(t => `
+        <div class="grid-header-tech">
+          <div class="tech-avatar ${t.id}">${t.initials}</div>
+          <div>
+            <div class="tech-name">${t.name}</div>
+            <div class="tech-meta">${t.meta}</div>
+          </div>
+        </div>
+      `).join('')}
+    `;
+  }
+
+  function renderGrid() {
+    renderGridHeader();
+    const body = document.getElementById('grid-body');
+    const visibleTechs = techs.filter(t => filterGroups.tech.find(f => f.id === t.id).checked);
+    const totalHours = HOUR_END - HOUR_START;
+    const gridHeight = totalHours * HOUR_HEIGHT;
+
+    const timeColumnHTML = `
+      <div class="time-column" style="height: ${gridHeight}px;">
+        ${Array.from({ length: totalHours }, (_, i) => {
+          const hour = HOUR_START + i;
+          const display = hour === 12 ? '12 PM' : hour > 12 ? `${hour - 12} PM` : `${hour} AM`;
+          return `<div class="time-cell ${i === 0 ? 'first' : ''}">${display}</div>`;
+        }).join('')}
+      </div>
+    `;
+
+    const techColumnsHTML = visibleTechs.map(tech => {
+      const techJobs = jobs.filter(j => j.tech === tech.id && filterGroups.tech.find(f => f.id === j.tech).checked);
+      const jobsHTML = techJobs.map(j => {
+        const top = (j.start - HOUR_START) * HOUR_HEIGHT;
+        const height = (j.end - j.start) * HOUR_HEIGHT;
+        const startLabel = formatHour(j.start);
+        const endLabel = formatHour(j.end);
+        const tagsHTML = j.tags.map(t => `<span class="job-tag ${t.type}">${t.label}</span>`).join('');
+        return `
+          <div class="job-block tech-${j.tech}" style="top: ${top}px; height: ${height}px;" data-job-id="${j.id}" draggable="true">
+            ${j.tags.length ? `<div class="job-tags">${tagsHTML}</div>` : ''}
+            <div class="job-title">${j.title}</div>
+            <div class="job-customer">${j.customer}</div>
+            <div class="job-time">${startLabel} – ${endLabel}</div>
+          </div>
+        `;
+      }).join('');
+
+      let availabilityHTML = '';
+      const tBefore = (tech.workStart - HOUR_START) * HOUR_HEIGHT;
+      if (tBefore > 0) {
+        availabilityHTML += `<div class="availability-block ${tech.ptoBefore ? 'pto' : ''}" style="top: 0; height: ${tBefore}px;"></div>`;
+      }
+      const tAfter = (tech.workEnd - HOUR_START) * HOUR_HEIGHT;
+      const heightAfter = gridHeight - tAfter;
+      if (heightAfter > 0) {
+        availabilityHTML += `<div class="availability-block" style="top: ${tAfter}px; height: ${heightAfter}px;"></div>`;
+      }
+
+      let driveTimeHTML = '';
+      driveTimes.filter(dt => dt.tech === tech.id).forEach(dt => {
+        const job = jobs.find(j => j.id === dt.afterJob);
+        if (!job) return;
+        const top = (job.end - HOUR_START) * HOUR_HEIGHT - 8;
+        driveTimeHTML += `<div class="drive-time-marker ${dt.infeasible ? 'infeasible' : ''}" style="top: ${top}px; height: 16px;"><span class="label">${dt.label}</span></div>`;
+      });
+
+      const hourRowsHTML = Array.from({ length: totalHours }, (_, i) => `
+        <div class="hour-row ${i % 2 === 0 ? 'half' : ''}"></div>
+      `).join('');
+
+      return `
+        <div class="tech-column" data-tech="${tech.id}" style="height: ${gridHeight}px;">
+          ${hourRowsHTML}
+          ${availabilityHTML}
+          ${driveTimeHTML}
+          ${jobsHTML}
+        </div>
+      `;
+    }).join('');
+
+    const nowHour = 10.6;
+    const nowTop = (nowHour - HOUR_START) * HOUR_HEIGHT;
+
+    body.innerHTML = `
+      ${timeColumnHTML}
+      ${techColumnsHTML}
+      <div class="now-line" style="top: ${nowTop}px; left: 78px; right: 0;"></div>
+    `;
+
+    document.querySelectorAll('.job-block').forEach(block => {
+      block.addEventListener('click', () => {
+        const jobId = block.dataset.jobId;
+        const job = jobs.find(j => j.id === jobId);
+        showToast(`Selected: ${job.title}`);
+      });
+
+      block.addEventListener('dragstart', (e) => {
+        block.style.opacity = '0.4';
+        e.dataTransfer.setData('text/plain', block.dataset.jobId);
+      });
+      block.addEventListener('dragend', () => {
+        block.style.opacity = '1';
+      });
+    });
+
+    document.querySelectorAll('.tech-column').forEach(col => {
+      col.addEventListener('dragover', (e) => e.preventDefault());
+      col.addEventListener('drop', (e) => {
+        e.preventDefault();
+        const jobId = e.dataTransfer.getData('text/plain');
+        const targetTech = col.dataset.tech;
+        const job = jobs.find(j => j.id === jobId);
+        if (!job) return;
+
+        const overlap = jobs.find(j =>
+          j.id !== job.id &&
+          j.tech === targetTech &&
+          j.start < job.end && j.end > job.start
+        );
+
+        if (overlap) {
+          showToast(`Blocked: ${techs.find(t => t.id === targetTech).name} is already on "${overlap.title}" from ${formatHour(overlap.start)}–${formatHour(overlap.end)}.`, 'block');
+          return;
+        }
+
+        const tech = techs.find(t => t.id === targetTech);
+        if (job.start < tech.workStart || job.end > tech.workEnd) {
+          showToast(`Warning: ${tech.name}'s working hours are ${formatHour(tech.workStart)}–${formatHour(tech.workEnd)}. Reassigning anyway. (In real product, owner can override.)`, 'warn');
+        }
+
+        job.tech = targetTech;
+        renderGrid();
+      });
+    });
+  }
+
+  function formatHour(h) {
+    const hour = Math.floor(h);
+    const min = Math.round((h - hour) * 60);
+    const period = hour >= 12 ? 'PM' : 'AM';
+    const displayH = hour > 12 ? hour - 12 : hour === 0 ? 12 : hour;
+    const displayM = min === 0 ? '' : `:${min.toString().padStart(2, '0')}`;
+    return `${displayH}${displayM} ${period}`;
+  }
+
+  let toastTimer;
+  function showToast(message, type) {
+    const toast = document.getElementById('toast');
+    toast.textContent = message;
+    toast.className = 'toast' + (type ? ' ' + type : '');
+    toast.style.display = 'block';
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => { toast.style.display = 'none'; }, 3500);
+  }
+
+  document.getElementById('voice-btn').addEventListener('click', () => {
+    showToast('Voice command: "Reassign Williams panel to Luis" — in production, this would re-route through the voice intent handler and apply the move with conflict detection.');
+    setTimeout(() => {
+      const job = jobs.find(j => j.id === 'j3');
+      if (!job) return;
+      const overlap = jobs.find(j => j.id !== job.id && j.tech === 'luis' && j.start < job.end && j.end > job.start);
+      if (overlap) {
+        showToast(`Voice command blocked: Luis is already on "${overlap.title}" at that time.`, 'block');
+      } else {
+        job.tech = 'luis';
+        renderGrid();
+        showToast('Williams panel reassigned to Luis.');
+      }
+    }, 2000);
+  });
+
+  document.querySelectorAll('.scale-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.scale-tab').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      if (tab.dataset.scale !== 'day') {
+        showToast(`${tab.textContent} view is stubbed in this prototype — Day view shows the full design.`);
+      }
+    });
+  });
+
+  renderFilters();
+  renderGrid();
+
+  setTimeout(() => {
+    document.getElementById('grid-scroll').scrollTop = 60;
+  }, 100);
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,116 @@
+{
+  "_comment": "Starter electrical pricebook catalog for new founder tenants (DB-MGMT-1, design §F.5). Content gated on Tom's sign-off before first prod use. ~12 items covering common electrical contractor services and materials.",
+  "_uom_codes": {
+    "each": "Each (per unit)",
+    "foot": "Foot (per linear foot)",
+    "bag": "Bag",
+    "box": "Box",
+    "roll": "Roll"
+  },
+  "items": [
+    {
+      "sku": "SVC-OUTLET-INSTALL",
+      "name": "Standard Outlet Install",
+      "description": "Install or replace a standard 15A/20A duplex receptacle, including box and cover plate.",
+      "uom_code": "each",
+      "taxability_code": "taxable",
+      "default_unit_price_cents": 15000
+    },
+    {
+      "sku": "SVC-LIGHT-REPLACE",
+      "name": "Light Fixture Replacement",
+      "description": "Remove existing fixture and install a new light fixture (LED recessed, surface, or pendant).",
+      "uom_code": "each",
+      "taxability_code": "taxable",
+      "default_unit_price_cents": 12500
+    },
+    {
+      "sku": "SVC-SWAP-SWITCH",
+      "name": "Switch Replacement",
+      "description": "Replace a single-pole or 3-way switch, including plate cover.",
+      "uom_code": "each",
+      "taxability_code": "taxable",
+      "default_unit_price_cents": 9500
+    },
+    {
+      "sku": "SVC-PANEL-UPGRADE-200A",
+      "name": "200A Panel Upgrade",
+      "description": "Upgrade main service panel to 200A, including panel, main breaker, and grounding. Permit and inspection included.",
+      "uom_code": "each",
+      "taxability_code": "taxable",
+      "default_unit_price_cents": 180000
+    },
+    {
+      "sku": "SVC-TROUBLESHOOT-1HR",
+      "name": "Troubleshooting — 1 Hour Minimum",
+      "description": "Diagnostic service call to identify electrical issue. 1-hour minimum, billed in 15-min increments thereafter.",
+      "uom_code": "each",
+      "taxability_code": "taxable",
+      "default_unit_price_cents": 15000
+    },
+    {
+      "sku": "SVC-CEILING-FAN",
+      "name": "Ceiling Fan Install",
+      "description": "Install a ceiling fan in an existing junction box, including balancing and remote pairing.",
+      "uom_code": "each",
+      "taxability_code": "taxable",
+      "default_unit_price_cents": 17500
+    },
+    {
+      "sku": "SVC-EV-CHARGER-INSTALL",
+      "name": "EV Charger Install (Level 2)",
+      "description": "Install a Level 2 EV charger (240V/40A circuit), including breaker, wiring, and mounting. Charger hardware not included.",
+      "uom_code": "each",
+      "taxability_code": "taxable",
+      "default_unit_price_cents": 65000
+    },
+    {
+      "sku": "MAT-BREAKER-15A",
+      "name": "15A Single-Pole Breaker",
+      "description": "Square D QO or equivalent 15A single-pole circuit breaker.",
+      "uom_code": "each",
+      "taxability_code": "taxable",
+      "default_unit_price_cents": 1800
+    },
+    {
+      "sku": "MAT-BREAKER-20A",
+      "name": "20A Single-Pole Breaker",
+      "description": "Square D QO or equivalent 20A single-pole circuit breaker.",
+      "uom_code": "each",
+      "taxability_code": "taxable",
+      "default_unit_price_cents": 2000
+    },
+    {
+      "sku": "MAT-EMT-CONDUIT-1IN",
+      "name": "1\" EMT Conduit",
+      "description": "1-inch EMT (Electrical Metallic Tubing) conduit, per linear foot.",
+      "uom_code": "foot",
+      "taxability_code": "taxable",
+      "default_unit_price_cents": 350
+    },
+    {
+      "sku": "MAT-WIRE-12-2-ROMEX",
+      "name": "12/2 Romex NM-B Wire",
+      "description": "12 AWG 2-conductor with ground NM-B copper wire, per foot.",
+      "uom_code": "foot",
+      "taxability_code": "taxable",
+      "default_unit_price_cents": 120
+    },
+    {
+      "sku": "MAT-WIRE-NUTS-ASSORTED",
+      "name": "Wire Nuts — Assorted Bag",
+      "description": "Assorted bag of twist-on wire connectors (yellow/red/orange), 100 count.",
+      "uom_code": "bag",
+      "taxability_code": "taxable",
+      "default_unit_price_cents": 500
+    },
+    {
+      "sku": "MISC-PERMIT-FEE",
+      "name": "Permit Fee — Standard",
+      "description": "Standard electrical permit fee for residential work. Tax-exempt (pass-through cost).",
+      "uom_code": "each",
+      "taxability_code": "exempt",
+      "default_unit_price_cents": 25000
+    }
+  ]
+}

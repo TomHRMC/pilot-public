@@ -1,0 +1,21 @@
+=== seed_scenario_mobile_sync: seed mode ===
+    Tenant ID: 00000000-0000-0000-0000-000000000001
+
+  ℹ️  [mobile_sync_session] Silent push success session already exists
+  ℹ️  [mobile_sync_event] create_time_entry already exists
+  ℹ️  [mobile_sync_event] create_expense already exists
+  ℹ️  [mobile_sync_session] Foreground partial session already exists
+  ℹ️  [mobile_sync_event] update_job_status (session 2) already exists
+  ℹ️  [mobile_sync_event] upload_photo (session 2) already exists
+
+  -- Seeding mobile_sync_owner_escalation rows (SD-6) --
+  ℹ️  [mobile_sync_owner_escalation] Open escalation already exists
+  ℹ️  [mobile_sync_event] Resolved conflict event already exists
+  ℹ️  [mobile_sync_owner_escalation] Resolved escalation already exists
+
+  -- SD-7 Batch 2: mobile_sync_event_audit + mobile_push_permission_state --
+  ℹ️  [mobile_sync_event_audit] Already exists for resolved escalation
+  ✅ [mobile_sync_owner_escalation] resolution_payload updated on resolved row
+  ℹ️  [mobile_push_permission_state] Already exists for tech user
+
+🎉 seed_scenario_mobile_sync complete — data present for 00000000-0000-0000-0000-000000000001

@@ -1,0 +1,56 @@
+# Tech quote approval E2E flow — FE-B5
+# Location: apps/mobile/e2e/batch_fe_b5/tech-quote-approval.flow.yaml
+#
+# Scenario: Tech logs in, views a seeded quote, and asserts it exists
+#
+# Flow:
+#   1. API Setup: Seed test tenant and quote via JS script against real backend
+#   2. Launch app (Mocks disabled to hit real Postgres DB)
+#   3. Log in via UI as the test tech
+#   4. Navigate to Quotes -> Pending
+#   5. Assert: Seeded quote from the JS script is visible
+#   6. API Teardown: Clean up test tenant to prevent data accumulation
+#
+# Run via: maestro test e2e/batch_fe_b5/tech-quote-approval.flow.yaml
+
+appId: com.pilotfortrades.mobile
+---
+# 1. API Setup: Hit the /test endpoints to inject a real quote into the DB
+- runScript: ../scripts/seed_quote.js
+
+# 2. Launch App: Clear state and do NOT pass mock arguments
+- launchApp:
+    clearState: true
+
+# 3. UI Interactions: Log in as the test tech
+# (Assuming your test tech credentials match your backend test environment)
+- tapOn: "Email"
+- inputText: "tech@test-tenant.com"
+- tapOn: "Password"
+- inputText: "TestPassword123!"
+- tapOn: "Sign In"
+
+# Wait for the home screen to render from the real backend
+- waitForAnimationToEnd:
+    timeout: 4000
+
+# 4. Navigate to the pending quotes list
+- assertVisible:
+    text: "Home"
+- tapOn: "Quotes"
+- tapOn: "Pending"
+
+# Wait for the real backend to return the seeded quote
+- waitForAnimationToEnd:
+    timeout: 3000
+
+# 5. Assert the seeded data exists 
+- assertVisible:
+    text: ${output.quoteCustomerName}
+
+# 6. API Teardown: Clean up using the IDs generated during setup
+- runScript: 
+    file: ../scripts/teardown_quote.js
+    env:
+      CUSTOMER_ID: ${output.customerId}
+      SITE_ID: ${output.siteId}

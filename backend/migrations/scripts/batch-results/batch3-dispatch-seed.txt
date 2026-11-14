@@ -1,0 +1,24 @@
+=== seed_scenario_dispatch: seed mode ===
+    Tenant ID: 00000000-0000-0000-0000-000000000001
+
+  ✅ [job] Created 'Scheduled - Outlet Installation' (None)
+  ✅ [job] Created 'In Progress - Panel Upgrade' (None)
+  ✅ [job] Created 'Completed - Circuit Job' (None)
+  ✅ [job] Created 'Completed - Awaiting Invoice' (None)
+  ✅ [job] Created 'Draft - Estimate Only' (None)
+  ✅ [job] Created 'Cancelled - Customer Backed Out' (None)
+  ℹ️  [tech_availability] PTO block already exists for technician
+  ✅ [tech_availability] Owner sick day: 2026-08-07
+
+  -- FIX-005: Refreshing DISP scheduled/in_progress job dates --
+
+  -- FIX-005B: Seeding job_tech_assignment rows for DISP jobs --
+
+  -- FIX-006: Seeding operational data for DISP in_progress/scheduled jobs --
+
+  -- SD-7 B3: customer_communication on-my-way for DISP-002 --
+
+  -- SD-7 B3: job_recurrence_rule (weekly inspection) --
+  ✅ [job_recurrence_rule] Weekly inspection rule created (starts=2026-07-23)
+
+🎉 seed_scenario_dispatch complete — Group D dispatch data present for 00000000-0000-0000-0000-000000000001

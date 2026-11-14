@@ -1,0 +1,90 @@
+<title>The Receipts</title>
+<style>
+  /* Layout: a 3x3 wall of stat tiles — the defensible build metrics at a glance. */
+  :root{
+    --bg:#f6f8f8; --surface:#ffffff; --fg:#192024; --muted:#59656d; --line:#d2d9dc;
+    --accent:#0d7d74; --accent-soft:#e4f1ef; --accent-strong:#0a5d56;
+    --sans:"IBM Plex Sans",ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  }
+  @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+    --bg:#0e1416; --surface:#161d20; --fg:#e9eef0; --muted:#9aa7ad; --line:#2a343a;
+    --accent:#3fd0c2; --accent-soft:#10302e; --accent-strong:#63e2d5; color-scheme:dark;
+  }}
+  :root[data-theme="dark"]{
+    --bg:#0e1416; --surface:#161d20; --fg:#e9eef0; --muted:#9aa7ad; --line:#2a343a;
+    --accent:#3fd0c2; --accent-soft:#10302e; --accent-strong:#63e2d5; color-scheme:dark;
+  }
+  body{background:var(--bg);color:var(--fg);font-family:var(--sans);line-height:1.5;}
+  .wrap{max-width:1120px;margin:0 auto;padding-block:32px 40px;padding-inline:16px;}
+  .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-strong);margin:0 0 6px;}
+  h1{font-size:clamp(22px,3.2vw,30px);line-height:1.12;text-wrap:balance;margin:0 0 8px;font-weight:700;letter-spacing:-.01em;}
+  .lede{color:var(--muted);font-size:15px;max-width:66ch;margin:0 0 22px;}
+  figure{margin:0;}
+  .diagram{width:100%;height:auto;display:block;background:var(--surface);border:1px solid var(--line);border-radius:14px;}
+  figcaption{color:var(--muted);font-size:13px;margin-top:12px;max-width:72ch;}
+  .foot{margin-top:18px;font-size:12.5px;color:var(--muted);font-family:var(--mono);}
+  svg{color:var(--fg);}
+  .h1{fill:var(--fg);font-weight:700;font-size:25px;letter-spacing:-.01em;}
+  .sub{fill:var(--muted);font-size:14.5px;}
+  .tile{fill:var(--surface);stroke:var(--line);stroke-width:1.5;}
+  .tilec{fill:var(--accent-soft);stroke:var(--accent);stroke-width:2;}
+  .tval{fill:var(--accent-strong);font-weight:700;font-size:44px;font-variant-numeric:tabular-nums;letter-spacing:-.01em;}
+  .tlbl{fill:var(--muted);font-size:13px;}
+</style>
+
+<div class="wrap">
+  <p class="eyebrow">HotRMC · The receipts</p>
+  <h1>What one architect + an AI team produced</h1>
+  <p class="lede">A full-stack platform built to production standards — solo, AI-augmented, in about six months of full-time build. Measured on the private original repository; commit and timeline figures per PROVENANCE.md.</p>
+
+  <figure>
+    <svg class="diagram" viewBox="0 0 1200 620" role="img"
+      aria-label="Build metrics: about 252,000 lines of application code, 193 PostgreSQL tables, 952 design and architecture docs, about 8,000 automated tests, measured test coverage of 71 to 76 percent across the full stack, 74 API modules with about 700 operations, 782 commits across 156 active days, 12 integrations, and 100% solo over about six months.">
+      <text class="h1" x="600" y="42" text-anchor="middle">The receipts</text>
+      <text class="sub" x="600" y="70" text-anchor="middle">Measured on the private original repository — solo, AI-augmented, ~6 months of full-time build</text>
+
+      <!-- Row 1 -->
+      <rect class="tile" x="33" y="100" width="366" height="150" rx="12"/>
+      <text class="tval" x="216" y="174" text-anchor="middle">252K</text>
+      <text class="tlbl" x="216" y="206" text-anchor="middle">lines of application code</text>
+
+      <rect class="tile" x="417" y="100" width="366" height="150" rx="12"/>
+      <text class="tval" x="600" y="174" text-anchor="middle">193</text>
+      <text class="tlbl" x="600" y="206" text-anchor="middle">PostgreSQL tables</text>
+
+      <rect class="tile" x="801" y="100" width="366" height="150" rx="12"/>
+      <text class="tval" x="984" y="174" text-anchor="middle">952</text>
+      <text class="tlbl" x="984" y="206" text-anchor="middle">design &amp; architecture docs (private original)</text>
+
+      <!-- Row 2 -->
+      <rect class="tile" x="33" y="270" width="366" height="150" rx="12"/>
+      <text class="tval" x="216" y="344" text-anchor="middle">~8,000</text>
+      <text class="tlbl" x="216" y="376" text-anchor="middle">automated tests (~4,950 backend + ~3,070 frontend)</text>
+
+      <rect class="tilec" x="417" y="270" width="366" height="150" rx="12"/>
+      <text class="tval" x="600" y="344" text-anchor="middle">71–76%</text>
+      <text class="tlbl" x="600" y="376" text-anchor="middle">measured test coverage · full-stack</text>
+
+      <rect class="tile" x="801" y="270" width="366" height="150" rx="12"/>
+      <text class="tval" x="984" y="344" text-anchor="middle">74</text>
+      <text class="tlbl" x="984" y="376" text-anchor="middle">API modules · ~700 ops (~370 prod)</text>
+
+      <!-- Row 3 -->
+      <rect class="tile" x="33" y="440" width="366" height="150" rx="12"/>
+      <text class="tval" x="216" y="514" text-anchor="middle">782</text>
+      <text class="tlbl" x="216" y="546" text-anchor="middle">commits · 156 active days (private history)</text>
+
+      <rect class="tile" x="417" y="440" width="366" height="150" rx="12"/>
+      <text class="tval" x="600" y="514" text-anchor="middle">12</text>
+      <text class="tlbl" x="600" y="546" text-anchor="middle">integrations</text>
+
+      <rect class="tile" x="801" y="440" width="366" height="150" rx="12"/>
+      <text class="tval" x="984" y="514" text-anchor="middle">100%</text>
+      <text class="tlbl" x="984" y="546" text-anchor="middle">solo · ~6 months</text>
+    </svg>
+    <figcaption>~252K lines of application code · 193 tables · 952 design docs (private original) · ~8,000 automated tests · measured coverage 71–76% full-stack (backend 76% line+branch, web ~71% lines, mobile ~75% lines) · 74 API modules (~700 operations) · 782 commits over 156 active days · 12 integrations · 100% solo in about six months of full-time build.</figcaption>
+  </figure>
+
+  <p class="foot">Pilot for Trades proof suite · 2026</p>
+</div>

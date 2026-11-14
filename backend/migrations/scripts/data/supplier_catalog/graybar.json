@@ -1,0 +1,221 @@
+{
+  "supplier": {
+    "name": "Graybar Electric",
+    "website": "https://graybar.com",
+    "api_auth_type": null,
+    "api_base_url": null,
+    "lifecycle_status_code": "active"
+  },
+  "items": [
+    {
+      "sku": "GRB-14AWG-THHN-BLK",
+      "name": "14 AWG THHN Wire, Black (by foot)",
+      "description": "Southwire 14 AWG solid copper THHN/THWN-2, black — 15A branch circuit feeders through conduit",
+      "uom_code": "foot",
+      "category_code": "wire_cable",
+      "taxability_code": "taxable",
+      "is_active": true,
+      "current_price_dollars": 0.65
+    },
+    {
+      "sku": "GRB-12AWG-THHN-WHT",
+      "name": "12 AWG THHN Wire, White (by foot)",
+      "description": "Southwire 12 AWG stranded copper THHN/THWN-2, white — neutral conductors through conduit",
+      "uom_code": "foot",
+      "category_code": "wire_cable",
+      "taxability_code": "taxable",
+      "is_active": true,
+      "current_price_dollars": 0.92
+    },
+    {
+      "sku": "GRB-10-3NM-250",
+      "name": "10/3 NM-B Wire 250ft Roll",
+      "description": "Southwire 10/3 NM-B with ground, 250ft roll — 30A circuits: electric dryers, ranges",
+      "uom_code": "roll",
+      "category_code": "wire_cable",
+      "taxability_code": "taxable",
+      "is_active": true,
+      "current_price_dollars": 189.99
+    },
+    {
+      "sku": "GRB-8AWG-THHN-BLK",
+      "name": "8 AWG THHN Wire, Black (by foot)",
+      "description": "Southwire 8 AWG stranded copper THHN/THWN-2, black — 40/50A feeder circuits",
+      "uom_code": "foot",
+      "category_code": "wire_cable",
+      "taxability_code": "taxable",
+      "is_active": true,
+      "current_price_dollars": 2.15
+    },
+    {
+      "sku": "GRB-EMT-0.75IN",
+      "name": "3/4\" EMT Conduit 10ft",
+      "description": "Allied 3/4\" steel EMT conduit, 10ft stick — standard commercial branch circuit runs",
+      "uom_code": "foot",
+      "category_code": "conduit_raceway",
+      "taxability_code": "taxable",
+      "is_active": true,
+      "current_price_dollars": 2.25
+    },
+    {
+      "sku": "GRB-FLEX-0.5IN",
+      "name": "1/2\" Flexible Metal Conduit (by foot)",
+      "description": "Southwire 1/2\" FMC flex conduit — final connections to motors, HVAC equipment, and panels",
+      "uom_code": "foot",
+      "category_code": "conduit_raceway",
+      "taxability_code": "taxable",
+      "is_active": true,
+      "current_price_dollars": 1.15
+    },
+    {
+      "sku": "GRB-MC-12-2",
+      "name": "12/2 MC Cable (by foot)",
+      "description": "AFC 12/2 MC metal clad armored cable with ground — commercial concealed wiring, no conduit required",
+      "uom_code": "foot",
+      "category_code": "wire_cable",
+      "taxability_code": "taxable",
+      "is_active": true,
+      "current_price_dollars": 2.85
+    },
+    {
+      "sku": "GRB-CH115",
+      "name": "Eaton CH115 15A Single Pole Breaker",
+      "description": "Eaton CH series 15A 1-pole 120V plug-on breaker — for Eaton CH/BR load centers",
+      "uom_code": "each",
+      "category_code": "dist_equip",
+      "taxability_code": "taxable",
+      "is_active": true,
+      "current_price_dollars": 10.50
+    },
+    {
+      "sku": "GRB-CH220",
+      "name": "Eaton CH220 20A Double Pole Breaker",
+      "description": "Eaton CH series 20A 2-pole 240V plug-on breaker — A/C units, water heaters",
+      "uom_code": "each",
+      "category_code": "dist_equip",
+      "taxability_code": "taxable",
+      "is_active": true,
+      "current_price_dollars": 22.75
+    },
+    {
+      "sku": "GRB-AFCI-CH115AF",
+      "name": "Eaton AFCI 15A Single Pole Breaker",
+      "description": "Eaton CH series AFCI 15A 1-pole breaker — NEC 2020 required for bedroom circuits",
+      "uom_code": "each",
+      "category_code": "dist_equip",
+      "taxability_code": "taxable",
+      "is_active": true,
+      "current_price_dollars": 44.99
+    },
+    {
+      "sku": "GRB-GFCI-TR-20A",
+      "name": "GFCI Outlet 20A Tamper-Resistant, White",
+      "description": "Leviton 20A 125V tamper-resistant GFCI outlet — kitchen and bathroom circuits requiring 20A",
+      "uom_code": "each",
+      "category_code": "wiring_devices",
+      "taxability_code": "taxable",
+      "is_active": true,
+      "current_price_dollars": 18.99
+    },
+    {
+      "sku": "GRB-DIMMER-LED-150W",
+      "name": "LED Dimmer Switch 150W, White",
+      "description": "Leviton 150W universal LED/CFL dimmer switch, white — replaces standard toggle switches",
+      "uom_code": "each",
+      "category_code": "wiring_devices",
+      "taxability_code": "taxable",
+      "is_active": true,
+      "current_price_dollars": 24.99
+    },
+    {
+      "sku": "GRB-USB-OUTLET-15A",
+      "name": "USB-A/C Outlet 15A, White",
+      "description": "Leviton 15A outlet with integrated USB-A and USB-C ports — kitchen countertops, home offices",
+      "uom_code": "each",
+      "category_code": "wiring_devices",
+      "taxability_code": "taxable",
+      "is_active": true,
+      "current_price_dollars": 32.50
+    },
+    {
+      "sku": "GRB-CONN-FMC-0.5IN",
+      "name": "1/2\" Flex Conduit Straight Connector",
+      "description": "Thomas & Betts 1/2\" FMC straight squeeze connector — connects flex conduit to boxes/panels",
+      "uom_code": "each",
+      "category_code": "fittings",
+      "taxability_code": "taxable",
+      "is_active": true,
+      "current_price_dollars": 2.25
+    },
+    {
+      "sku": "GRB-CLAMP-NM-0.5IN",
+      "name": "1/2\" NM Romex Clamp Connector",
+      "description": "Arlington 1/2\" NM cable clamp connector — secures NM-B cable into KO openings on panels/boxes",
+      "uom_code": "each",
+      "category_code": "fittings",
+      "taxability_code": "taxable",
+      "is_active": true,
+      "current_price_dollars": 1.45
+    },
+    {
+      "sku": "GRB-LED-2X4-50W",
+      "name": "LED Flat Panel 2x4 50W 5000K",
+      "description": "Lithonia 50W 2x4 recessed LED troffer, 5000K daylight, 5000 lumens — commercial office/retail",
+      "uom_code": "each",
+      "category_code": "lighting",
+      "taxability_code": "taxable",
+      "is_active": true,
+      "current_price_dollars": 89.99
+    },
+    {
+      "sku": "GRB-LED-SHOP-4FT",
+      "name": "LED Shop Light 4ft 40W Linkable",
+      "description": "Lithonia 40W 4ft LED linkable shop light, 4000K, 4000 lumens — garage, warehouse, utility",
+      "uom_code": "each",
+      "category_code": "lighting",
+      "taxability_code": "taxable",
+      "is_active": true,
+      "current_price_dollars": 34.99
+    },
+    {
+      "sku": "GRB-BOX-OCTAGON-4IN",
+      "name": "4\" Octagon Steel Box 1-1/2\" Deep",
+      "description": "Raco 4\" octagon steel ceiling box, 1-1/2\" deep — ceiling fixture and junction box",
+      "uom_code": "each",
+      "category_code": "enclosures",
+      "taxability_code": "taxable",
+      "is_active": true,
+      "current_price_dollars": 3.85
+    },
+    {
+      "sku": "GRB-BOX-WEATHERPROOF-1G",
+      "name": "Single Gang Weatherproof In-Use Box",
+      "description": "Hubbell single gang weatherproof in-use cover w/ box — outdoor GFCI installations",
+      "uom_code": "each",
+      "category_code": "enclosures",
+      "taxability_code": "taxable",
+      "is_active": true,
+      "current_price_dollars": 12.75
+    },
+    {
+      "sku": "GRB-LUGS-WIRE-RED-100",
+      "name": "Wire Connectors, Red (Box of 100)",
+      "description": "Ideal Twister 30-076 red wire connectors — #18 to #10 AWG, 100 per box",
+      "uom_code": "box",
+      "category_code": "fasteners",
+      "taxability_code": "taxable",
+      "is_active": true,
+      "current_price_dollars": 11.49
+    },
+    {
+      "sku": "GRB-ANCHOR-TOGGLE-3-8IN",
+      "name": "Toggle Bolt Anchors 3/8\" (Box of 50)",
+      "description": "Hillman 3/8\" hollow wall toggle bolt anchors — mounting electrical boxes to drywall, 50 pack",
+      "uom_code": "box",
+      "category_code": "fasteners",
+      "taxability_code": "taxable",
+      "is_active": true,
+      "current_price_dollars": 18.99
+    }
+  ]
+}

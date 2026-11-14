@@ -1,0 +1,77 @@
+=== seed_test_tenant: inspect mode ===
+    Tenant ID: 00000000-0000-0000-0000-000000000001
+
+  [tenant]  1 row(s)
+    00000000-0000-0000-0000-000000000001  "Pilot Dev Tenant"  is_active=True
+
+  [user]  4 row(s)
+    00000000-0000-0000-0000-000000000005  accountant@pilot.local  role=accountant
+    00000000-0000-0000-0000-000000000004  office@pilot.local  role=office_staff
+    00000000-0000-0000-0000-000000000002  dev@pilot.local  role=owner
+    00000000-0000-0000-0000-000000000003  tech@pilot.local  role=technician
+
+  [user_endpoint]  12 row(s)
+    00000000-0000-0000-0000-000000000002  channel=email  value=dev@pilot.local  status=verified  consent=opted_in
+    00000000-0000-0000-0000-000000000003  channel=email  value=tech@pilot.local  status=verified  consent=opted_in
+    00000000-0000-0000-0000-000000000004  channel=email  value=office@pilot.local  status=verified  consent=opted_in
+    00000000-0000-0000-0000-000000000005  channel=email  value=accountant@pilot.local  status=verified  consent=opted_in
+    00000000-0000-0000-0000-000000000002  channel=in_app  value=dev@pilot.local  status=verified  consent=opted_in
+    00000000-0000-0000-0000-000000000002  channel=push  value=ExponentPushToken[test-owner-00000002]  status=verified  consent=opted_in
+    00000000-0000-0000-0000-000000000003  channel=in_app  value=tech@pilot.local  status=verified  consent=opted_in
+    00000000-0000-0000-0000-000000000003  channel=push  value=ExponentPushToken[test-tech-00000003]  status=verified  consent=opted_in
+    00000000-0000-0000-0000-000000000004  channel=in_app  value=office@pilot.local  status=verified  consent=opted_in
+    00000000-0000-0000-0000-000000000004  channel=push  value=ExponentPushToken[test-office-00000004]  status=verified  consent=opted_in
+    00000000-0000-0000-0000-000000000005  channel=in_app  value=accountant@pilot.local  status=verified  consent=opted_in
+    00000000-0000-0000-0000-000000000005  channel=push  value=ExponentPushToken[test-acct-00000005]  status=verified  consent=opted_in
+
+  [password_policy]  1 row(s)  min_length=8  (lockout_threshold=5)
+  [tenant_email_branding]  1 row(s)  brand_color=#2563EB
+  [tenant_onboarding_checklist]  1 row(s)  dismissed=True
+
+  [subscription]  1 row(s)  plan=founders_plan  is_active=True
+    (quantity_seats=4, billing_anchor=2026-07-01)
+
+  [labor_rate_version]  3 row(s)
+    apprentice  @ 5500¢/hr  ($55.00/hr)  burden=0.1500  → burdened=$63.25/hr
+    journeyman  @ 8500¢/hr  ($85.00/hr)  burden=0.2000  → burdened=$102.00/hr
+    master  @ 12000¢/hr  ($120.00/hr)  burden=0.2500  → burdened=$150.00/hr
+
+  [tenant_markup_version]  1 row(s)  pct=20.0000
+
+  [user_preference]  1 row(s)  user=dev@pilot.local
+  [user_setting_override]  2 row(s)  user=dev@pilot.local  keys=background_sync_enabled,voice_persona_tone
+
+  [discount_version]  2 row(s)
+    'NEW_CUSTOMER'  $25.00 off  valid: [2026-01-01 00:00:00+00:00 → open]
+    'SUMMER_PROMO'  10.000% off  valid: [2024-06-01 00:00:00+00:00 → 2024-08-31 00:00:00+00:00]
+
+  [notification_preference]  12 row(s)  user=dev@pilot.local
+    category=billing  channel=email  enabled=True
+    category=billing  channel=in_app  enabled=True
+    category=billing  channel=push  enabled=True
+    category=job_activity  channel=email  enabled=True
+    category=job_activity  channel=in_app  enabled=True
+    category=job_activity  channel=push  enabled=True
+    category=quote_approvals  channel=email  enabled=True
+    category=quote_approvals  channel=in_app  enabled=True
+    category=quote_approvals  channel=push  enabled=False
+    category=sync_conflicts  channel=email  enabled=True
+    category=sync_conflicts  channel=in_app  enabled=True
+    category=sync_conflicts  channel=push  enabled=True
+
+  [mobile_device_push_token]  1 row(s)
+    • 53861de9-2a28-420c-94c2-90d76ae49ecd  user=00000000-0000-0000-0000-000000000003  platform=ios  permission_granted=True  last_seen=2026-07-22 17:31:17.467339+00:00
+
+  [subscription_usage]  3 row(s)
+    feature=outbound_sms_segments  used=18  period=2026-07-01→2026-07-31
+    feature=schedule_lanes  used=3  period=2026-07-01→2026-07-31
+    feature=voice_ai_minutes  used=42  period=2026-07-01→2026-07-31
+
+  [tenant_subscription_usage]  1 row(s)  users=4  sms_segments=18  period=2026-07-01 00:00:00+00:00→2026-07-31 23:59:59+00:00
+
+  [user_dashboard_widget]  3 row(s)  user=dev@pilot.local
+    • 157ed8bb-ee00-46e9-8d2c-30e5f82ce656  type=revenue_summary  pos=(0,0)  size=4×2
+    • 4b7a22d7-c60a-4077-82ef-2eba369b32ab  type=job_pipeline  pos=(4,0)  size=4×2
+    • f6bf0f6d-21e0-4247-9386-080f661de434  type=outstanding_invoices  pos=(0,2)  size=8×2
+
+  [tenant_10dlc_profile]  1 row(s)  legal='Pilot Dev Tenant LLC'  dba='Pilot Dev Electrical'  hq=Austin,TX  support=dev@pilot.local

@@ -1,0 +1,38 @@
+=== seed_scenario_supplier_catalog: seed mode ===
+
+  ℹ️  [supplier] 'Wesco Distribution' already exists (ebcfba13-bb62-4311-b8f0-b6cb1fbda00d)
+  ✅ [supplier] 'Wesco Distribution' website/api fields updated
+  ℹ️  [supplier_item] 'WIRE-12AWG-THHN' already exists
+  ℹ️  [supplier_item_price] Price for 'WIRE-12AWG-THHN' already exists
+  ℹ️  [supplier_item] 'CONDUIT-EMT-0.5IN' already exists
+  ℹ️  [supplier_item_price] Price for 'CONDUIT-EMT-0.5IN' already exists
+  ℹ️  [supplier_item] 'BREAKER-QO115' already exists
+  ℹ️  [supplier_item_price] Price for 'BREAKER-QO115' already exists
+  ℹ️  [supplier_item] 'OUTLET-STD-DUPLEX' already exists
+  ℹ️  [supplier_item_price] Price for 'OUTLET-STD-DUPLEX' already exists
+  ℹ️  [supplier_item] 'COUPLING-EMT-0.5IN' already exists
+  ℹ️  [supplier_item_price] Price for 'COUPLING-EMT-0.5IN' already exists
+  ℹ️  [supplier] 'Graybar Electric' already exists (6bcf4539-8bf0-45fc-b0dd-124312a28c1e)
+  ✅ [supplier] 'Graybar Electric' website/api fields updated
+  ℹ️  [supplier_item] 'WIRE-14AWG-THHN' already exists
+  ℹ️  [supplier_item_price] Price for 'WIRE-14AWG-THHN' already exists
+  ℹ️  [supplier_item] 'CONDUIT-EMT-0.75IN' already exists
+  ℹ️  [supplier_item_price] Price for 'CONDUIT-EMT-0.75IN' already exists
+  ℹ️  [supplier_item] 'BREAKER-CH115' already exists
+  ℹ️  [supplier_item_price] Price for 'BREAKER-CH115' already exists
+  ℹ️  [supplier_item] 'OUTLET-GFCI-TR' already exists
+  ℹ️  [supplier_item_price] Price for 'OUTLET-GFCI-TR' already exists
+  ℹ️  [supplier_item] 'COUPLING-EMT-0.75IN' already exists
+  ℹ️  [supplier_item_price] Price for 'COUPLING-EMT-0.75IN' already exists
+  ℹ️  [supplier] 'Platt Electric Supply' already exists (028ec91b-e023-49ce-b9c5-dbe59e2201bc)
+  ✅ [supplier] 'Platt Electric Supply' website/api fields updated
+  ℹ️  [supplier_item] 'LIGHT-LED-2X4-PANEL' already exists
+  ℹ️  [supplier_item_price] Price for 'LIGHT-LED-2X4-PANEL' already exists
+  ℹ️  [supplier_item] 'FAST-WIRE-STAPLES' already exists
+  ℹ️  [supplier_item_price] Price for 'FAST-WIRE-STAPLES' already exists
+  ℹ️  [supplier_item] 'TAPE-ELEC-ROLL' already exists
+  ℹ️  [supplier_item_price] Price for 'TAPE-ELEC-ROLL' already exists
+  ℹ️  [supplier_item] 'INCAND-60W-BULB' already exists
+  ℹ️  [supplier_item_price] Price for 'INCAND-60W-BULB' already exists
+
+🎉 seed_scenario_supplier_catalog complete — 3 suppliers, 14 items + prices seeded.

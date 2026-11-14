@@ -1,0 +1,59 @@
+{
+  // --- Python Configuration (using Ruff) ---
+  "[python]": {
+    "editor.defaultFormatter": "charliermarsh.ruff",
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+      "source.fixAll.ruff": "explicit",
+      "source.organizeImports.ruff": "explicit"
+    }
+  },
+  "ruff.importStrategy": "fromEnvironment",
+
+  // Add this section to stop the crashes:
+  "ruff.exclude": [
+    "**/node_modules/**",
+    "**/dist/**",
+    "**/.venv/**",
+    "**/.git/**",
+    "**/*.json",
+    "**/*.log",
+    "**/build/**"
+  ],
+  
+  // --- JavaScript / React Configuration ---
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": "explicit"
+    }
+  },
+
+  // --- Tailwind CSS CSS Support ---
+  "tailwindCSS.emmetCompletions": true,
+  "editor.inlineSuggest.enabled": true,
+
+  // --- File Nesting (Cleans up the sidebar) ---
+  "explorer.fileNesting.enabled": true,
+  "explorer.fileNesting.patterns": {
+    "requirements.txt": ".venv, .pytest_cache, .python-version",
+    "package.json": "package-lock.json, tsconfig.json, vite.config.ts"
+  },
+
+  // --- Search & Appearance ---
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/.venv": true,
+    "**/dist": true
+  },
+  "explorer.exclude": {
+    "**/__pycache__": true,
+    "**/.pytest_cache": true
+  },
+  "markdown.extension.toc.levels": "1..3"
+}

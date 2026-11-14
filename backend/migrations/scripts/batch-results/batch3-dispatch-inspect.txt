@@ -1,0 +1,41 @@
+=== seed_scenario_dispatch: inspect mode ===
+    Tenant ID: 00000000-0000-0000-0000-000000000001
+
+  [job]  14 row(s)
+    • 0a66fb7a-88ff-4b66-815c-17294b428fd5  status=completed  2026-04-17 07:00:00+00:00 → 2026-04-17 16:00:00+00:00
+    • 15478800-a10e-480a-ad19-c83d2a376221  status=completed  2026-05-02 10:00:00+00:00 → 2026-05-02 16:00:00+00:00
+    • aaf81c1c-5089-4d59-aa8d-323c76644f2a  status=completed  2026-05-17 09:00:00+00:00 → 2026-05-17 13:00:00+00:00
+    • 8945d869-52ee-447c-b8cd-4eda55eb1fd9  status=completed  2026-05-27 08:00:00+00:00 → 2026-05-27 14:00:00+00:00
+    • 325e517b-c6a5-4a35-b0b9-36fe0678eec2  status=completed  2026-06-01 08:00:00+00:00 → 2026-06-01 17:00:00+00:00
+    • 811f0125-614e-4a40-b916-961a8c34e3af  status=completed  2026-06-11 10:00:00+00:00 → 2026-06-11 15:00:00+00:00
+    • 3db645bf-d1b6-4e23-9115-fe49c309d13a  status=completed  2026-06-16 09:00:00+00:00 → 2026-06-16 12:00:00+00:00
+    • 411cf83f-8e33-45a9-bd73-d26b5fab61d2  status=completed  2026-06-24 09:00:00+00:00 → 2026-06-24 17:00:00+00:00
+    • ea630feb-ae97-4377-aeb3-df6946943864  status=completed  2026-07-20 09:00:00+00:00 → 2026-07-20 12:00:00+00:00
+    • 7e925689-4cc9-44f4-8129-b7f9cb0c96fa  status=completed  2026-07-22 10:00:00+00:00 → 2026-07-22 15:00:00+00:00
+    • 51bfbb84-1401-48e3-9fce-5c4bbb0aab99  status=in_progress  2026-07-23 08:00:00+00:00 → 2026-07-23 17:00:00+00:00
+    • ce51c400-ab99-43f9-9b9a-6a8882e17d2d  status=scheduled  2026-07-24 09:00:00+00:00 → 2026-07-24 13:00:00+00:00
+    • 43e8ffce-f277-43d7-bf90-8ede988e4b85  status=draft  no schedule → open
+    • e9285f7b-a6e4-4171-9512-9c78acf7e3a1  status=cancelled  no schedule → open
+
+  [job_tech_assignment]  12 row(s)
+    • job=0a66fb7a-88ff-4b66-815c-17294b428fd5  user=00000000-0000-0000-0000-000000000003  role=primary  ordinal=1
+    • job=15478800-a10e-480a-ad19-c83d2a376221  user=00000000-0000-0000-0000-000000000003  role=primary  ordinal=1
+    • job=325e517b-c6a5-4a35-b0b9-36fe0678eec2  user=00000000-0000-0000-0000-000000000003  role=primary  ordinal=1
+    • job=3db645bf-d1b6-4e23-9115-fe49c309d13a  user=00000000-0000-0000-0000-000000000003  role=primary  ordinal=1
+    • job=51bfbb84-1401-48e3-9fce-5c4bbb0aab99  user=00000000-0000-0000-0000-000000000002  role=helper  ordinal=2
+    • job=51bfbb84-1401-48e3-9fce-5c4bbb0aab99  user=00000000-0000-0000-0000-000000000003  role=primary  ordinal=1
+    • job=7e925689-4cc9-44f4-8129-b7f9cb0c96fa  user=00000000-0000-0000-0000-000000000003  role=primary  ordinal=1
+    • job=811f0125-614e-4a40-b916-961a8c34e3af  user=00000000-0000-0000-0000-000000000003  role=primary  ordinal=1
+    • job=8945d869-52ee-447c-b8cd-4eda55eb1fd9  user=00000000-0000-0000-0000-000000000003  role=primary  ordinal=1
+    • job=aaf81c1c-5089-4d59-aa8d-323c76644f2a  user=00000000-0000-0000-0000-000000000003  role=primary  ordinal=1
+    • job=ce51c400-ab99-43f9-9b9a-6a8882e17d2d  user=00000000-0000-0000-0000-000000000003  role=primary  ordinal=1
+    • job=ce51c400-ab99-43f9-9b9a-6a8882e17d2d  user=00000000-0000-0000-0000-000000000002  role=helper  ordinal=2
+
+  [tech_availability]  2 row(s)
+    • user=00000000-0000-0000-0000-000000000003  type=pto  2026-07-24 08:00:00+00:00 → 2026-07-24 17:00:00+00:00
+    • user=00000000-0000-0000-0000-000000000002  type=unavailable  2026-08-07 08:00:00+00:00 → 2026-08-07 17:00:00+00:00
+
+  [customer_communication]  0 row(s)
+
+  [job_recurrence_rule]  1 row(s)
+    • id=1cbe7be4-f43b-460e-b70c-0296ac519cd0  pattern=weekly  interval=1  is_active=True  duration=120min  next_job_at=2026-07-30 09:00:00+00:00

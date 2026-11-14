@@ -1,0 +1,25 @@
+{
+  "mode": "test",
+  "created_at": "2026-08-08T14:12:50.107806+00:00",
+  "api_version": "2025-03-31.basil",
+  "products": {
+    "prod_starter": "prod_REDACTED04",
+    "prod_teams": "prod_REDACTED05",
+    "prod_passthrough": "prod_REDACTED06"
+  },
+  "meters": {
+    "meter_voice_minutes": "mtr_test_REDACTED01",
+    "meter_sms_segments": "mtr_test_REDACTED02"
+  },
+  "prices": {
+    "price_charter_monthly": "price_REDACTED15",
+    "price_starter_monthly": "price_REDACTED16",
+    "price_starter_annual": "price_REDACTED17",
+    "price_teams_monthly": "price_REDACTED19",
+    "price_teams_annual": "price_REDACTED18",
+    "price_voice_overage": "price_REDACTED21",
+    "price_sms_overage": "price_REDACTED22",
+    "price_lane_addon_1": "price_REDACTED20",
+    "price_lane_addon_5": "price_REDACTED23"
+  }
+}

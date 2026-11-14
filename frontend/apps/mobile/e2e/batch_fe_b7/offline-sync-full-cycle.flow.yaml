@@ -1,0 +1,86 @@
+appId: com.pilotfortrades.mobile
+name: FE-B7 Offline → Sync Full Cycle E2E
+tags:
+  - batch_fe_b7
+  - offline_sync
+  - e2e
+
+---
+
+# Pre-conditions: User is logged in as tech role, app is open on the home screen
+
+# Step 1: Go offline (Airplane mode)
+- setAirplaneMode: true
+
+# Step 2: Verify offline indicator appears
+- assertVisible:
+    id: connection-state-pill
+    timeout: 3000
+
+# Step 3: Navigate to Jobs screen and open a job
+- tapOn:
+    text: "Jobs"
+- assertVisible:
+    text: "Jobs"
+
+# Step 4: Create a time entry while offline
+- tapOn:
+    id: add-time-entry-button
+- fillText:
+    id: notes-input
+    text: "E2E test time entry"
+- tapOn:
+    id: save-time-entry-button
+
+# Step 5: Verify pending badge appears
+- assertVisible:
+    id: pending-badge
+    timeout: 2000
+
+# Step 6: Create an expense while offline
+- tapOn:
+    id: add-expense-button
+- fillText:
+    id: cost-input
+    text: "50"
+- fillText:
+    id: description-input
+    text: "E2E test expense"
+- tapOn:
+    id: save-expense-button
+
+# Step 7: Create a job note while offline
+- tapOn:
+    id: add-note-button
+- fillText:
+    id: note-content-input
+    text: "E2E test job note"
+- tapOn:
+    id: save-note-button
+
+# Step 8: Check sync queue — 3 items pending
+- tapOn:
+    id: connection-state-pill
+- assertVisible:
+    id: sync-queue-drawer
+- assertVisible:
+    text: "Pending"
+- tapOn:
+    id: drawer-close
+
+# Step 9: Reconnect (disable Airplane mode)
+- setAirplaneMode: false
+
+# Step 10: Wait for auto-sync to trigger
+- wait: 5000
+
+# Step 11: Verify sync completes — badges clear
+- assertNotVisible:
+    id: pending-badge
+    timeout: 10000
+
+# Step 12: Verify sync indicator shows "idle" state
+- assertVisible:
+    id: inflight-sync-indicator
+- assertNotVisible:
+    text: "Syncing…"

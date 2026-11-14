@@ -1,0 +1,38 @@
+=== seed_scenario_supplier_catalog: inspect mode ===
+
+  [supplier]  3 row(s)
+    • 'Graybar Electric'  lifecycle=active  is_active=True  id=6bcf4539-8bf0-45fc-b0dd-124312a28c1e
+    • 'Platt Electric Supply'  lifecycle=active  is_active=True  id=028ec91b-e023-49ce-b9c5-dbe59e2201bc
+    • 'Wesco Distribution'  lifecycle=active  is_active=True  id=ebcfba13-bb62-4311-b8f0-b6cb1fbda00d
+
+  [supplier_item]  14 row(s)
+    • [BREAKER-CH115] 'Eaton CH115 15A Breaker'  category=dist_equip  uom=each
+    • [BREAKER-QO115] 'Square D QO115 15A Breaker'  category=dist_equip  uom=each
+    • [CONDUIT-EMT-0.5IN] '1/2" EMT Conduit'  category=conduit_raceway  uom=foot
+    • [CONDUIT-EMT-0.75IN] '3/4" EMT Conduit'  category=conduit_raceway  uom=foot
+    • [COUPLING-EMT-0.5IN] '1/2" EMT Coupling'  category=fittings  uom=each
+    • [COUPLING-EMT-0.75IN] '3/4" EMT Coupling'  category=fittings  uom=each
+    • [FAST-WIRE-STAPLES] 'Wire Staples (box of 100)'  category=fasteners  uom=box
+    • [INCAND-60W-BULB] '60W Incandescent Bulb (discontinued)'  category=lighting  uom=each
+    • [LIGHT-LED-2X4-PANEL] 'LED Panel Light 2x4'  category=lighting  uom=each
+    • [OUTLET-GFCI-TR] 'GFCI Outlet Tamper-Resistant'  category=wiring_devices  uom=each
+    • [OUTLET-STD-DUPLEX] 'Standard Duplex Outlet'  category=wiring_devices  uom=each
+    • [TAPE-ELEC-ROLL] 'Electrical Tape (roll)'  category=wiring_devices  uom=roll
+    • [WIRE-12AWG-THHN] '12 AWG THHN Wire'  category=wire_cable  uom=foot
+    • [WIRE-14AWG-THHN] '14 AWG THHN Wire'  category=wire_cable  uom=foot
+
+  [supplier_item_price]  14 row(s)
+    • [BREAKER-CH115]  unit_price=10.5000 USD
+    • [BREAKER-QO115]  unit_price=12.5000 USD
+    • [CONDUIT-EMT-0.5IN]  unit_price=1.7500 USD
+    • [CONDUIT-EMT-0.75IN]  unit_price=2.2500 USD
+    • [COUPLING-EMT-0.5IN]  unit_price=0.8500 USD
+    • [COUPLING-EMT-0.75IN]  unit_price=1.2500 USD
+    • [FAST-WIRE-STAPLES]  unit_price=12.5000 USD
+    • [INCAND-60W-BULB]  unit_price=1.5000 USD
+    • [LIGHT-LED-2X4-PANEL]  unit_price=45.0000 USD
+    • [OUTLET-GFCI-TR]  unit_price=8.7500 USD
+    • [OUTLET-STD-DUPLEX]  unit_price=2.2500 USD
+    • [TAPE-ELEC-ROLL]  unit_price=3.2500 USD
+    • [WIRE-12AWG-THHN]  unit_price=0.8900 USD
+    • [WIRE-14AWG-THHN]  unit_price=0.6500 USD

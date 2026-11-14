@@ -1,0 +1,148 @@
+=== seed_scenario_quote_to_cash: inspect mode ===
+    Tenant ID: 00000000-0000-0000-0000-000000000001
+
+  [customer]  11 row(s)
+    • 290f2b13-760d-4596-8ba8-08a87759ee26  'Apex Commercial LLC'  type=company  lifecycle=active
+    • 30dbb1cc-2594-41ed-8164-56dd2b72d2a6  'Bob Davis'  type=person  lifecycle=prospect
+    • 4c2e12fd-ccc6-48d7-9c24-f03db2c9a6fb  'Carlos Rivera'  type=person  lifecycle=active
+    • 90af2878-951f-4891-ac7e-bc032ec93270  'Inactive Customer'  type=person  lifecycle=dormant
+    • de687c4f-1454-42a8-abe3-f980cde6d511  'James Torres'  type=person  lifecycle=active
+    • e44e3e6c-2eef-41be-ab58-181d3ba35473  'John Smith'  type=person  lifecycle=active
+    • 06e24906-1fb2-4e3a-bc70-4032edd57e2c  'Linda Park'  type=person  lifecycle=active
+    • 7845ed8b-c816-459e-abdf-4346dca130b0  'Mary Johnson'  type=person  lifecycle=active
+    • 82715ac7-645c-4941-9773-84bc7b85f2d5  'Metro Properties LLC'  type=company  lifecycle=active
+    • dcf6b6b2-5778-43b0-8a2b-e1bb116a6ffa  'Rachel Kim'  type=person  lifecycle=active
+    • 65c2f011-4050-49f8-9b37-65266790ef9f  'Sunrise Electric LLC'  type=company  lifecycle=active
+
+  [site]  7 row(s)
+    • dd648b82-0ba6-4455-a11a-db98631508e1  'Apex HQ'  customer=290f2b13-760d-4596-8ba8-08a87759ee26
+    • 096ad0bc-f62c-4216-bb46-6fc41a46cfda  'Davis Property'  customer=30dbb1cc-2594-41ed-8164-56dd2b72d2a6
+    • cee06c7a-009d-4a87-9986-3cf709874166  'Johnson Home'  customer=7845ed8b-c816-459e-abdf-4346dca130b0
+    • 3f63bbe1-2fe8-4dfc-80ec-d2bd4b49ee9e  'Kim Residence'  customer=dcf6b6b2-5778-43b0-8a2b-e1bb116a6ffa
+    • 2cc7c36f-b7df-43a1-a652-6f3801ccf0af  'Metro Office Park'  customer=82715ac7-645c-4941-9773-84bc7b85f2d5
+    • fd711297-3674-457e-8959-0bdf99085360  'Smith Residence'  customer=e44e3e6c-2eef-41be-ab58-181d3ba35473
+    • e4ca2236-ffde-4d88-b36d-1323e0629b66  'Torres Home'  customer=de687c4f-1454-42a8-abe3-f980cde6d511
+
+  [pricebook_item + version]  6 row(s)
+    • BRKR-15A-01  '15A Circuit Breaker'  $18.00  taxability=taxable
+    • COND-EMT-01  'EMT Conduit'  $3.50  taxability=taxable
+    • OUTLET-STD-01  'Standard Outlet Installation'  $150.00  taxability=taxable
+    • PANEL-200A-01  '200A Panel Upgrade'  $1800.00  taxability=taxable
+    • PERMIT-RES-01  'Residential Permit Fee'  $250.00  taxability=exempt
+    • WNUT-BAG-01  'Wire Nuts (bag of 50)'  $5.00  taxability=taxable
+
+  [quote]  10 row(s)
+    • QUO-900005  status=accepted  subtotal=$2225.00  total=$2343.50
+    • QUO-900003  status=approved  subtotal=$450.00  total=$477.00
+    • QUO-900006  status=converted  subtotal=$790.00  total=$822.40
+    • QTC-001  status=draft  subtotal=$2615.00  total=$2756.90
+    • QUO-900008  status=expired  subtotal=$1800.00  total=$1948.50
+    • QUO-900002  status=pending  subtotal=$2400.00  total=$2529.00
+    • QUO-900001  status=pending_approval  subtotal=$2230.00  total=$2393.35
+    • QUO-900007  status=rejected  subtotal=$3950.00  total=$4187.00
+    • QUO-900004  status=sent  subtotal=$690.00  total=$746.92
+    • QUO-900009  status=void  subtotal=$475.00  total=$503.50
+
+  [quote_line]  28 row(s)
+    • quote=073e56c3-2122-4ac3-a0d7-ef1ce32cca61  pos=1  '200A Panel Upgrade'  qty=2.000  unit=$1800.00  subtotal=$3600.00
+    • quote=073e56c3-2122-4ac3-a0d7-ef1ce32cca61  pos=2  'EMT Conduit'  qty=100.000  unit=$3.50  subtotal=$350.00
+    • quote=3965ba85-eafa-461a-9274-da54ca66fe95  pos=1  '200A Panel Upgrade'  qty=1.000  unit=$1800.00  subtotal=$1800.00
+    • quote=3965ba85-eafa-461a-9274-da54ca66fe95  pos=2  'EMT Conduit'  qty=50.000  unit=$3.50  subtotal=$175.00
+    • quote=3965ba85-eafa-461a-9274-da54ca66fe95  pos=3  'Residential Permit Fee'  qty=1.000  unit=$250.00  subtotal=$250.00
+    • quote=3b63a7e4-cd82-4a15-bcec-ac9a8d4f6d5b  pos=1  'Standard Outlet Installation'  qty=1.000  unit=$150.00  subtotal=$150.00
+    • quote=3b63a7e4-cd82-4a15-bcec-ac9a8d4f6d5b  pos=2  '15A Circuit Breaker'  qty=5.000  unit=$18.00  subtotal=$90.00
+    • quote=3b63a7e4-cd82-4a15-bcec-ac9a8d4f6d5b  pos=3  '200A Panel Upgrade'  qty=1.000  unit=$1800.00  subtotal=$1800.00
+    • quote=3b63a7e4-cd82-4a15-bcec-ac9a8d4f6d5b  pos=4  'EMT Conduit'  qty=50.000  unit=$3.50  subtotal=$175.00
+    • quote=3b63a7e4-cd82-4a15-bcec-ac9a8d4f6d5b  pos=5  'Residential Permit Fee'  qty=1.000  unit=$250.00  subtotal=$250.00
+    • quote=3b63a7e4-cd82-4a15-bcec-ac9a8d4f6d5b  pos=6  'All electrical work performed per NEC 2023 standards.'  qty=1.000  unit=$0.00  subtotal=$0.00
+    • quote=3b63a7e4-cd82-4a15-bcec-ac9a8d4f6d5b  pos=7  'New customer discount'  qty=1.000  unit=$-100.00  subtotal=$-100.00
+    • quote=3b63a7e4-cd82-4a15-bcec-ac9a8d4f6d5b  pos=8  'Wire Nuts (bag of 50)'  qty=50.000  unit=$5.00  subtotal=$250.00
+    • quote=513774a2-1535-444c-a670-0c4e20f93885  pos=1  '200A Panel Upgrade'  qty=1.000  unit=$600.00  subtotal=$600.00
+    • quote=513774a2-1535-444c-a670-0c4e20f93885  pos=2  '15A Circuit Breaker'  qty=5.000  unit=$18.00  subtotal=$90.00
+    • quote=5cc84b0e-c9c1-47e3-a9c9-6574155b3c38  pos=1  'Standard Outlet Installation'  qty=3.000  unit=$150.00  subtotal=$450.00
+    • quote=62a5c2f8-beed-438a-9a74-9caaa828377b  pos=1  '200A Panel Upgrade'  qty=1.000  unit=$1800.00  subtotal=$1800.00
+    • quote=62a5c2f8-beed-438a-9a74-9caaa828377b  pos=2  '15A Circuit Breaker'  qty=10.000  unit=$18.00  subtotal=$180.00
+    • quote=62a5c2f8-beed-438a-9a74-9caaa828377b  pos=3  'Residential Permit Fee'  qty=1.000  unit=$250.00  subtotal=$250.00
+    • quote=8b7754f2-e173-473a-acc6-f1175ce46a58  pos=1  '200A Panel Upgrade'  qty=1.000  unit=$1800.00  subtotal=$1800.00
+    • quote=8b7754f2-e173-473a-acc6-f1175ce46a58  pos=2  'EMT Conduit'  qty=100.000  unit=$3.50  subtotal=$350.00
+    • quote=8b7754f2-e173-473a-acc6-f1175ce46a58  pos=3  'Residential Permit Fee'  qty=1.000  unit=$250.00  subtotal=$250.00
+    • quote=9931018f-4406-40f2-a901-931a3b8ba301  pos=1  'Standard Outlet Installation'  qty=2.000  unit=$150.00  subtotal=$300.00
+    • quote=9931018f-4406-40f2-a901-931a3b8ba301  pos=2  'EMT Conduit'  qty=50.000  unit=$3.50  subtotal=$175.00
+    • quote=a57ff449-17a8-47fc-ba49-a568782e2d2b  pos=1  'Standard Outlet Installation'  qty=3.000  unit=$150.00  subtotal=$450.00
+    • quote=a57ff449-17a8-47fc-ba49-a568782e2d2b  pos=2  '15A Circuit Breaker'  qty=5.000  unit=$18.00  subtotal=$90.00
+    • quote=a57ff449-17a8-47fc-ba49-a568782e2d2b  pos=3  'Residential Permit Fee'  qty=1.000  unit=$250.00  subtotal=$250.00
+    • quote=f184a164-3f31-41a3-ae39-4b7a7a20e72d  pos=1  '200A Panel Upgrade'  qty=1.000  unit=$1800.00  subtotal=$1800.00
+
+  [job]  14 row(s)
+    • DISP-001  status=scheduled  id=ce51c400-ab99-43f9-9b9a-6a8882e17d2d
+    • DISP-002  status=in_progress  id=51bfbb84-1401-48e3-9fce-5c4bbb0aab99
+    • DISP-003  status=completed  id=7e925689-4cc9-44f4-8129-b7f9cb0c96fa
+    • DISP-004  status=completed  id=ea630feb-ae97-4377-aeb3-df6946943864
+    • DISP-005  status=draft  id=43e8ffce-f277-43d7-bf90-8ede988e4b85
+    • DISP-006  status=cancelled  id=e9285f7b-a6e4-4171-9512-9c78acf7e3a1
+    • JOB-900001  status=completed  id=411cf83f-8e33-45a9-bd73-d26b5fab61d2
+    • RPT-001  status=completed  id=325e517b-c6a5-4a35-b0b9-36fe0678eec2
+    • RPT-002  status=completed  id=aaf81c1c-5089-4d59-aa8d-323c76644f2a
+    • RPT-003  status=completed  id=15478800-a10e-480a-ad19-c83d2a376221
+    • RPT-004  status=completed  id=3db645bf-d1b6-4e23-9115-fe49c309d13a
+    • RPT-005  status=completed  id=811f0125-614e-4a40-b916-961a8c34e3af
+    • RPT-006  status=completed  id=8945d869-52ee-447c-b8cd-4eda55eb1fd9
+    • RPT-007  status=completed  id=0a66fb7a-88ff-4b66-815c-17294b428fd5
+
+  [invoice]  14 row(s)
+    • INV-900001  status=paid  total=$955.96  balance=$0.00
+    • INV-900002  status=paid  total=$2261.35  balance=$0.00
+    • INV-900003  status=paid  total=$437.78  balance=$0.00
+    • INV-900004  status=issued  total=$1156.30  balance=$1156.30
+    • INV-900005  status=draft  total=$169.60  balance=$169.60
+    • INV-900006  status=partial  total=$2158.00  balance=$1358.00
+    • INV-900007  status=void  total=$2343.50  balance=$2343.50
+    • INV-900008  status=writeoff  total=$5068.60  balance=$5068.60
+    • INV-900009  status=issued  total=$850.00  balance=$850.00
+    • INV-900010  status=issued  total=$1450.00  balance=$1450.00
+    • INV-900011  status=issued  total=$625.00  balance=$625.00
+    • INV-900012  status=issued  total=$1890.00  balance=$1890.00
+    • INV-900013  status=issued  total=$3400.00  balance=$3400.00
+    • INV-900014  status=partial  total=$1020.00  balance=$520.00
+
+
+  [invoice_line]  24 row(s) across 8 invoice(s)
+    • invoice=eafef80e-dfb4-4663-927e-d6952fbb7168  lines=3  subtotal=$2225.00  total=$2343.50
+    • invoice=705fa06e-dc9d-4bb4-9239-bf960a07739e  lines=3  subtotal=$413.00  total=$437.78
+    • invoice=db207ae5-73c8-49dc-845b-92887cf3e2de  lines=3  subtotal=$1105.00  total=$1156.30
+    • invoice=bde30fc2-fe6a-47bd-b638-60777740f7d2  lines=4  subtotal=$4810.00  total=$5068.60
+    • invoice=8b13b2ac-fa11-48cf-a18a-033c9d6f9d1f  lines=3  subtotal=$916.00  total=$955.96
+    • invoice=22fcb784-8b9f-414d-824e-54fa1560037d  lines=2  subtotal=$2050.00  total=$2158.00
+    • invoice=8bec058b-9f8f-4c67-a412-b994593d8acc  lines=4  subtotal=$2147.50  total=$2261.35
+    • invoice=bbfa4df8-1124-450a-bc01-1aafba7aa6bf  lines=2  subtotal=$160.00  total=$169.60
+
+  [change_order]  2 row(s)
+    • 865dd973-7b9a-453c-9122-77998b1161bb  lines=2  subtotal=$294.00  total=$311.64
+      'Additional 20A breakers requested by customer after panel inspection — awaiting '
+    • 669ab1c0-9f39-438d-850b-5a1b25181183  lines=3  subtotal=$440.00  total=$466.40
+      'Extension of EMT conduit run to secondary panel location — approved by owner 202'
+
+  [payment]  6 row(s)
+    • invoice=705fa06e-dc9d-4bb4-9239-bf960a07739e  status=succeeded  amount=$437.78  via=check
+    • invoice=705fa06e-dc9d-4bb4-9239-bf960a07739e  status=refunded  amount=$-32.00  via=check
+    • invoice=8bec058b-9f8f-4c67-a412-b994593d8acc  status=succeeded  amount=$2261.35  via=check
+    • invoice=9bf4fcaf-f494-4ba9-a514-b98060046547  status=succeeded  amount=$500.00  via=check
+    • invoice=22fcb784-8b9f-414d-824e-54fa1560037d  status=succeeded  amount=$800.00  via=check
+    • invoice=8b13b2ac-fa11-48cf-a18a-033c9d6f9d1f  status=succeeded  amount=$955.96  via=check
+
+  [quote_line_tax_component]  22 row(s)
+    • component=US-DEFAULT  rate=6.0000%  count=17
+    • component=US-TX-HARRIS  rate=8.2500%  count=5
+
+  [change_order_line_tax_component]  4 row(s)
+    • component=US-DEFAULT  rate=6.0000%  count=4
+
+  [quote_acceptance]  1 row(s)
+    • a6d12673-3d97-4144-9220-72ab2aeefb94  quote_version=23102501-7576-483c-889b-d44ca718e75c  accepted_by=00000000-0000-0000-0000-000000000002  public_link=NULL (internal)
+
+  [quote_approval_comment]  1 row(s)
+    • 69cbd75a-2761-4eb9-baee-aace1099ac46  quote=62a5c2f8-beed-438a-9a74-9caaa828377b  type=kickback  content=Please verify the permit fee is included. Also confirm the b...
+
+  [quote_message]  1 row(s)
+    • 451150fe-95a0-4bf7-a877-25cd44e329a1  quote=513774a2-1535-444c-a670-0c4e20f93885  action_type=tenant_user  message=Hi, just following up on the electrical inspection quote we ...
+

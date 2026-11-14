@@ -1,0 +1,9 @@
+{
+  "template_id": "payment_failed",
+  "display_name": "Payment Failed",
+  "category": "customer_facing",
+  "subject_template": "Action needed \u2014 payment issue on your invoice from {{company_name}}",
+  "body_html_template": "<p>Hi {{customer_name}},</p>\n\n<p>We weren't able to process your payment for your recent invoice from <strong>{{company_name}}</strong>. This can happen when a card expires, has insufficient funds, or the bank blocks the charge.</p>\n\n<p style=\"margin:24px 0;\">\n  <a href=\"{{invoice_url}}\" style=\"background:#dc2626;color:#ffffff;padding:12px 24px;border-radius:6px;text-decoration:none;font-weight:600;display:inline-block;\">Retry Payment \u2192</a>\n</p>\n\n<p style=\"color:#6b7280;font-size:13px;\">You can retry with the same card or use a different payment method online. No account required.</p>\n\n<p style=\"color:#6b7280;font-size:13px;\">If you need help or believe this is a mistake, contact us at <a href=\"mailto:support@{{company_domain}}\">support@{{company_domain}}</a> and we'll sort it out quickly.</p>\n\n<p>Thank you,<br><strong>{{company_name}}</strong></p>\n\n<p style=\"color:#9ca3af;font-size:11px;margin-top:32px;\">Do not reply directly to this email \u2014 contact support@pilotfortrades.com for help.</p>",
+  "body_plain_template": "Hi {{customer_name}},\n\nWe weren't able to process your payment for your recent invoice from {{company_name}}.\n\nThis can happen when a card expires, has insufficient funds, or the bank blocks the charge.\n\nRetry payment: {{invoice_url}}\n\nYou can retry with the same card or use a different payment method. No account required.\n\nIf you need help, contact us at support@{{company_domain}}.\n\nThank you,\n{{company_name}}",
+  "variables": ["customer_name", "invoice_url", "company_name", "company_domain"]
+}

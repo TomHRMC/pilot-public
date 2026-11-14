@@ -1,0 +1,57 @@
+# =============================================================================
+# .dockerignore — applies when build context is frontend/
+#   docker build -f frontend/apps/web/Dockerfile frontend/
+# =============================================================================
+
+# --- node_modules (CRITICAL) -------------------------------------------------
+# Must be excluded at every level. Local node_modules collide with the
+# pnpm install layer in the builder stage, causing BuildKit cache conflicts:
+#   "cannot copy to non-directory: …/node_modules/@eslint/config-array"
+node_modules
+**/node_modules
+
+# --- Next.js build output ----------------------------------------------------
+.next
+**/.next
+apps/web/.next
+apps/mobile/.expo
+apps/web/out
+
+# --- Test / dev artifacts ----------------------------------------------------
+**/__tests__
+**/e2e
+**/*.test.ts
+**/*.test.tsx
+**/*.spec.ts
+**/*.spec.tsx
+**/mocks/server.ts
+**/playwright-report
+**/test-results
+**/.playwright
+
+# --- OS / editor noise -------------------------------------------------------
+.DS_Store
+**/.DS_Store
+.vscode
+**/.vscode
+*.log
+
+# --- Git / CI ----------------------------------------------------------------
+.git
+.github
+.gitignore
+.husky
+
+# --- Local env files (secrets must NOT enter the image) ----------------------
+**/.env
+**/.env.local
+**/.env.*.local
+!**/.env.example
+
+# --- Misc dev-only files -----------------------------------------------------
+**/*.md
+!**/package.json
+**/README.md
+**/tsconfig.tsbuildinfo
+**/.eslintcache
+**/.turbo

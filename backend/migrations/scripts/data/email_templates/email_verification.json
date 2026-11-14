@@ -1,0 +1,9 @@
+{
+  "template_id": "email_verification",
+  "display_name": "Email Verification",
+  "category": "internal",
+  "subject_template": "Verify your email address",
+  "body_html_template": "<p>Click to verify your email.</p>",
+  "body_plain_template": "Click to verify your email.",
+  "variables": ["user_name", "verify_url"]
+}

@@ -1,0 +1,9 @@
+{
+  "template_id": "quote_declined",
+  "display_name": "Quote Declined Notification",
+  "category": "internal",
+  "subject_template": "Customer declined your quote",
+  "body_html_template": "<p>Your quote was declined.</p>",
+  "body_plain_template": "Your quote was declined.",
+  "variables": ["customer_name", "quote_id", "decline_reason"]
+}

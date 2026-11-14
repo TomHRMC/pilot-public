@@ -1,0 +1,65 @@
+=== seed_platform: inspect mode ===
+
+  [product_plan]  3 row(s)
+    • founders_plan  'Founders Plan'  is_active=True
+    • starter_plan  'Starter Plan'  is_active=False
+    • teams_plan  'Teams Plan'  is_active=False
+
+  [product_plan_version]  3 row(s)
+    • id=7125  plan=founders_plan  'Founders Plan'  price_cents=0
+    • id=7126  plan=starter_plan  'Starter Plan'  price_cents=4900
+    • id=7127  plan=teams_plan  'Teams Plan'  price_cents=14900
+
+  [product_plan_product_feature_version]  9 row(s)
+    • founders_plan/outbound_sms_segments  limit=100  enforcement=soft
+    • founders_plan/schedule_lanes  limit=5  enforcement=block
+    • founders_plan/voice_ai_minutes  limit=90  enforcement=soft
+    • starter_plan/outbound_sms_segments  limit=100  enforcement=soft
+    • starter_plan/schedule_lanes  limit=5  enforcement=block
+    • starter_plan/voice_ai_minutes  limit=90  enforcement=soft
+    • teams_plan/outbound_sms_segments  limit=500  enforcement=soft
+    • teams_plan/schedule_lanes  limit=20  enforcement=block
+    • teams_plan/voice_ai_minutes  limit=300  enforcement=soft
+
+  [subscription_tier → product_plan_code]  4 row(s)
+    • founders  → founders_plan  annual=0¢  m2m=0¢  stripe_monthly=NULL  stripe_annual=NULL
+    • trial  → starter_plan  annual=0¢  m2m=0¢  stripe_monthly=NULL  stripe_annual=NULL
+    • starter  → starter_plan  annual=58800¢  m2m=5900¢  stripe_monthly=price_REDACTED03  stripe_annual=price_REDACTED07
+    • teams  → teams_plan  annual=178800¢  m2m=17900¢  stripe_monthly=price_REDACTED04  stripe_annual=price_REDACTED08
+
+  [notification_template]  27 row(s)
+    • customer_communication_sent/email  locale=en  is_active=True
+    • customer_communication_sent/in_app  locale=en  is_active=True
+    • customer_communication_sent/push  locale=en  is_active=True
+    • dunning_reminder/email  locale=en  is_active=True
+    • dunning_reminder/in_app  locale=en  is_active=True
+    • dunning_reminder/push  locale=en  is_active=True
+    • gps_variance_alert/email  locale=en  is_active=True
+    • gps_variance_alert/in_app  locale=en  is_active=True
+    • gps_variance_alert/push  locale=en  is_active=True
+    • job_assigned/email  locale=en  is_active=True
+    • job_assigned/in_app  locale=en  is_active=True
+    • job_assigned/push  locale=en  is_active=True
+    • qb_conflict_pre_warning/email  locale=en  is_active=True
+    • qb_conflict_pre_warning/in_app  locale=en  is_active=True
+    • qb_conflict_pre_warning/push  locale=en  is_active=True
+    • qb_sync_conflict/email  locale=en  is_active=True
+    • qb_sync_conflict/in_app  locale=en  is_active=True
+    • qb_sync_conflict/push  locale=en  is_active=True
+    • quote_accepted/email  locale=en  is_active=True
+    • quote_accepted/in_app  locale=en  is_active=True
+    • quote_accepted/push  locale=en  is_active=True
+    • schedule_changed/email  locale=en  is_active=True
+    • schedule_changed/in_app  locale=en  is_active=True
+    • schedule_changed/push  locale=en  is_active=True
+    • system_template_updated/email  locale=en  is_active=True
+    • system_template_updated/in_app  locale=en  is_active=True
+    • system_template_updated/push  locale=en  is_active=True
+
+  [subscription_status]  6 row(s)
+    • active        'Active'  billing_active=True
+    • canceled      'Canceled'  billing_active=False
+    • past_due      'Past Due'  billing_active=True
+    • paused        'Paused'  billing_active=False
+    • trialing      'Trialing'  billing_active=True
+    • unpaid        'Unpaid'  billing_active=False

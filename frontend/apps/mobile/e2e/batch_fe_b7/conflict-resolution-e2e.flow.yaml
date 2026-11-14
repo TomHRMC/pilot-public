@@ -1,0 +1,63 @@
+appId: com.pilotfortrades.mobile
+name: FE-B7 Conflict Resolution E2E
+tags:
+  - batch_fe_b7
+  - conflict_resolution
+  - e2e
+
+---
+
+# Pre-conditions:
+#   - Backend has seeded a requires_review conflict for the test user
+#   - Conflict ID is "conflict-e2e-001" (seeded in test environment)
+#   - User is logged in as tech role
+
+# Step 1: Open the app and trigger sync
+- tapOn:
+    id: connection-state-pill
+- assertVisible:
+    id: sync-queue-drawer
+
+# Step 2: Verify conflict appears in "Action Needed" section
+- assertVisible:
+    id: section-action-needed
+- assertVisible:
+    text: "Action Needed"
+
+# Step 3: Tap "Resolve" on the conflict item
+- tapOn:
+    id: resolve-conflict-e2e-001
+
+# Step 4: Verify ConflictResolutionScreen opens
+- assertVisible:
+    id: conflict-resolution-screen
+    timeout: 3000
+
+# Step 5: Verify both version cards are shown
+- assertVisible:
+    id: local-version-card
+- assertVisible:
+    id: server-version-card
+
+# Step 6: Verify conflict explainer is visible and accessible
+- assertVisible:
+    id: conflict-explainer
+
+# Step 7: Tap "Use my version"
+- tapOn:
+    id: use-local-button
+
+# Step 8: Verify resolution completes and screen dismisses
+- assertNotVisible:
+    id: conflict-resolution-screen
+    timeout: 5000
+
+# Step 9: Verify conflict is cleared from action needed section
+- assertNotVisible:
+    id: section-action-needed
+    timeout: 3000
+
+# Step 10: Verify badge clears
+- assertNotVisible:
+    id: pending-badge
+    timeout: 5000

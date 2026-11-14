@@ -1,0 +1,22 @@
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 280 56"
+  fill="none"
+  role="img"
+  aria-label="Pilot for Trades logo"
+>
+  <title>Pilot for Trades</title>
+  <g>
+    <rect x="0" y="0" width="56" height="56" rx="10" fill="#3b43d6"/>
+    <rect x="10" y="34" width="6" height="12" rx="1.5" fill="white" opacity="0.60"/>
+    <rect x="19" y="28" width="6" height="18" rx="1.5" fill="white" opacity="0.75"/>
+    <rect x="28" y="21" width="6" height="25" rx="1.5" fill="white" opacity="0.88"/>
+    <rect x="37" y="14" width="6" height="32" rx="1.5" fill="white"/>
+    <line x1="10" y1="40" x2="43" y2="12" stroke="white" stroke-width="2.5" stroke-linecap="round" opacity="0.95"/>
+    <polyline points="35,10 44,11 43,20" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none" opacity="0.95"/>
+  </g>
+  <g transform="translate(68, 0)">
+    <text x="0" y="34" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-weight="800" font-size="28" letter-spacing="-0.5" fill="#181d66">Pilot</text>
+    <text x="0" y="52" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-weight="600" font-size="14" letter-spacing="1.5" fill="#3b43d6">FOR TRADES</text>
+  </g>
+</svg>

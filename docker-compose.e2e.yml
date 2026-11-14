@@ -1,0 +1,45 @@
+# E2E test stack — ISOLATED from dev DB/Redis.
+# Dev DB stays on port 5432 (pilot_dev).
+# E2E DB runs on port 5434 (pilot_e2e_db).
+# E2E Redis runs on port 6380.
+# NOTE: port 5433 is reserved for the PROD RDS SSH tunnel (see aws-ops-runbook §9.1).
+#
+# Usage:
+#   docker compose -f docker-compose.e2e.yml up -d
+#   docker compose -f docker-compose.e2e.yml down      (preserves volume)
+#   docker compose -f docker-compose.e2e.yml down -v   (wipes E2E data)
+
+services:
+  db_e2e:
+    image: pgvector/pgvector:pg17
+    container_name: pilot_e2e_postgres
+    environment:
+      POSTGRES_DB: pilot_e2e_db
+      POSTGRES_USER: pilot
+      POSTGRES_PASSWORD: pilot_e2e_password
+    ports:
+      - "5434:5432"   # different port from dev DB (5432); 5433 reserved for prod tunnel
+    volumes:
+      - e2e_postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U pilot -d pilot_e2e_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+  redis_e2e:
+    image: redis:7-alpine
+    container_name: pilot_e2e_redis
+    ports:
+      - "6380:6379"   # different port from dev Redis (6379)
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+    restart: unless-stopped
+
+volumes:
+  e2e_postgres_data:
+    # Isolated from backend_postgres_data (dev). Wiped by: docker compose -f docker-compose.e2e.yml down -v

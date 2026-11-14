@@ -1,0 +1,91 @@
+=== seed_scenario_quote_to_cash: inspect mode ===
+    Tenant ID: 00000000-0000-0000-0000-000000000001
+
+  [customer]  8 row(s)
+    • 6893f826-8116-4b3e-9af3-ac7a60ed8f8a  'Apex Commercial LLC'  type=company  lifecycle=active
+    • 2e7007e1-0f2c-4da9-a410-d8e4e4b119c3  'Bob Davis'  type=person  lifecycle=prospect
+    • 9b581a35-9add-49c0-b42e-441171aed424  'Inactive Customer'  type=person  lifecycle=dormant
+    • 41c9fe07-6cd7-412e-b4d3-b2d29a6f3815  'James Torres'  type=person  lifecycle=active
+    • 645617da-2702-4405-9383-df6fae9ea88d  'John Smith'  type=person  lifecycle=active
+    • 5fe1b7b6-cab1-429c-8bbf-1558cfc456dc  'Mary Johnson'  type=person  lifecycle=active
+    • f3d89189-7718-4a96-984b-c76d39e2e69b  'Metro Properties LLC'  type=company  lifecycle=active
+    • cad08574-6815-49cb-bb7d-500c6f25f06d  'Rachel Kim'  type=person  lifecycle=active
+
+  [site]  7 row(s)
+    • 582131c9-2cee-4036-b50c-fc31e1e5015f  'Apex HQ'  customer=6893f826-8116-4b3e-9af3-ac7a60ed8f8a
+    • 3895d7d7-e4b4-4408-abd8-4288f679f71a  'Davis Property'  customer=2e7007e1-0f2c-4da9-a410-d8e4e4b119c3
+    • a6ac8662-1f66-41d7-812a-f8813e137577  'Johnson Home'  customer=5fe1b7b6-cab1-429c-8bbf-1558cfc456dc
+    • e99c8ae7-29d7-4fc7-8c80-b355619e05ae  'Kim Residence'  customer=cad08574-6815-49cb-bb7d-500c6f25f06d
+    • aa4e0667-8002-4e9e-82b2-dd1011c06aaf  'Metro Office Park'  customer=f3d89189-7718-4a96-984b-c76d39e2e69b
+    • af05dfb2-7fce-427e-9a0d-34c3b7019f94  'Smith Residence'  customer=645617da-2702-4405-9383-df6fae9ea88d
+    • b03cd5a0-5dc6-409a-82d5-e14d08c5ad0b  'Torres Home'  customer=41c9fe07-6cd7-412e-b4d3-b2d29a6f3815
+
+  [pricebook_item + version]  6 row(s)
+    • BRKR-15A-01  '15A Circuit Breaker'  $18.00  taxability=taxable
+    • COND-EMT-01  'EMT Conduit'  $3.50  taxability=taxable
+    • OUTLET-STD-01  'Standard Outlet Installation'  $150.00  taxability=taxable
+    • PANEL-200A-01  '200A Panel Upgrade'  $1800.00  taxability=taxable
+    • PERMIT-RES-01  'Residential Permit Fee'  $250.00  taxability=exempt
+    • WNUT-BAG-01  'Wire Nuts (bag of 50)'  $5.00  taxability=taxable
+
+  [quote]  10 row(s)
+    • QUO-900005  status=accepted  subtotal=$2225.00  total=$2225.00
+    • QUO-900003  status=approved  subtotal=$450.00  total=$450.00
+    • QUO-900006  status=converted  subtotal=$790.00  total=$790.00
+    • QTC-001  status=draft  subtotal=$2615.00  total=$2615.00
+    • QUO-900008  status=expired  subtotal=$1800.00  total=$1800.00
+    • QUO-900002  status=pending  subtotal=$2400.00  total=$2400.00
+    • QUO-900001  status=pending_approval  subtotal=$2230.00  total=$2230.00
+    • QUO-900007  status=rejected  subtotal=$3950.00  total=$3950.00
+    • QUO-900004  status=sent  subtotal=$690.00  total=$690.00
+    • QUO-900009  status=void  subtotal=$475.00  total=$475.00
+
+  [quote_line]  28 row(s)
+    • quote=0dfe362d-cee2-4311-919c-a147beec3bac  pos=1  'PANEL-200A-01 line'  qty=1.000  unit=$1800.00  subtotal=$1800.00
+    • quote=0dfe362d-cee2-4311-919c-a147beec3bac  pos=2  'BRKR-15A-01 line'  qty=10.000  unit=$18.00  subtotal=$180.00
+    • quote=0dfe362d-cee2-4311-919c-a147beec3bac  pos=3  'PERMIT-RES-01 line'  qty=1.000  unit=$250.00  subtotal=$250.00
+    • quote=3540bd1a-afee-43d5-af2f-419d6f481a82  pos=1  'PANEL-200A-01 line'  qty=2.000  unit=$1800.00  subtotal=$3600.00
+    • quote=3540bd1a-afee-43d5-af2f-419d6f481a82  pos=2  'COND-EMT-01 line'  qty=100.000  unit=$3.50  subtotal=$350.00
+    • quote=3e096326-d6b2-4fbf-a554-ae57f2eee714  pos=1  'PANEL-200A-01 line'  qty=1.000  unit=$1800.00  subtotal=$1800.00
+    • quote=3e096326-d6b2-4fbf-a554-ae57f2eee714  pos=2  'COND-EMT-01 line'  qty=50.000  unit=$3.50  subtotal=$175.00
+    • quote=3e096326-d6b2-4fbf-a554-ae57f2eee714  pos=3  'PERMIT-RES-01 line'  qty=1.000  unit=$250.00  subtotal=$250.00
+    • quote=5a1c3ae8-9ec8-4067-9813-cfec124d3928  pos=1  'OUTLET-STD-01 line'  qty=3.000  unit=$150.00  subtotal=$450.00
+    • quote=6bc46919-93a9-4ce8-9152-7262b876293e  pos=1  'PANEL-200A-01 line'  qty=1.000  unit=$600.00  subtotal=$600.00
+    • quote=6bc46919-93a9-4ce8-9152-7262b876293e  pos=2  'BRKR-15A-01 line'  qty=5.000  unit=$18.00  subtotal=$90.00
+    • quote=71cb15fd-9515-4c16-9413-da91d2e532bc  pos=1  'PANEL-200A-01 line'  qty=1.000  unit=$1800.00  subtotal=$1800.00
+    • quote=abc9d4dd-f8a6-4dd1-80ad-50775f70ae3e  pos=1  'Standard Outlet Installation'  qty=1.000  unit=$150.00  subtotal=$150.00
+    • quote=abc9d4dd-f8a6-4dd1-80ad-50775f70ae3e  pos=2  '15A Circuit Breaker'  qty=5.000  unit=$18.00  subtotal=$90.00
+    • quote=abc9d4dd-f8a6-4dd1-80ad-50775f70ae3e  pos=3  '200A Panel Upgrade'  qty=1.000  unit=$1800.00  subtotal=$1800.00
+    • quote=abc9d4dd-f8a6-4dd1-80ad-50775f70ae3e  pos=4  'EMT Conduit'  qty=50.000  unit=$3.50  subtotal=$175.00
+    • quote=abc9d4dd-f8a6-4dd1-80ad-50775f70ae3e  pos=5  'Residential Permit Fee'  qty=1.000  unit=$250.00  subtotal=$250.00
+    • quote=abc9d4dd-f8a6-4dd1-80ad-50775f70ae3e  pos=6  'All electrical work performed per NEC 2023 standards.'  qty=1.000  unit=$0.00  subtotal=$0.00
+    • quote=abc9d4dd-f8a6-4dd1-80ad-50775f70ae3e  pos=7  'New customer discount'  qty=1.000  unit=$-100.00  subtotal=$-100.00
+    • quote=abc9d4dd-f8a6-4dd1-80ad-50775f70ae3e  pos=8  'Wire Nuts (bag of 50)'  qty=50.000  unit=$5.00  subtotal=$250.00
+    • quote=c2f3b05d-be26-474d-bb86-3f42e906f4ec  pos=1  'OUTLET-STD-01 line'  qty=2.000  unit=$150.00  subtotal=$300.00
+    • quote=c2f3b05d-be26-474d-bb86-3f42e906f4ec  pos=2  'COND-EMT-01 line'  qty=50.000  unit=$3.50  subtotal=$175.00
+    • quote=dc7451d0-572f-496e-bee7-4cec8a9315fa  pos=1  'OUTLET-STD-01 line'  qty=3.000  unit=$150.00  subtotal=$450.00
+    • quote=dc7451d0-572f-496e-bee7-4cec8a9315fa  pos=2  'BRKR-15A-01 line'  qty=5.000  unit=$18.00  subtotal=$90.00
+    • quote=dc7451d0-572f-496e-bee7-4cec8a9315fa  pos=3  'PERMIT-RES-01 line'  qty=1.000  unit=$250.00  subtotal=$250.00
+    • quote=faaef7c5-96ec-4573-aa4a-60d61efed3be  pos=1  'PANEL-200A-01 line'  qty=1.000  unit=$1800.00  subtotal=$1800.00
+    • quote=faaef7c5-96ec-4573-aa4a-60d61efed3be  pos=2  'COND-EMT-01 line'  qty=100.000  unit=$3.50  subtotal=$350.00
+    • quote=faaef7c5-96ec-4573-aa4a-60d61efed3be  pos=3  'PERMIT-RES-01 line'  qty=1.000  unit=$250.00  subtotal=$250.00
+
+  [job]  1 row(s)
+    • JOB-900001  status=completed  id=6367f964-f9ac-4990-ab65-18c5d4e634e2
+
+  [invoice]  1 row(s)
+    • INV-900001  status=paid  total=$955.96  balance=$0.00
+
+
+  [invoice_line]  3 row(s) across 1 invoice(s)
+    • invoice=380ae2a7-bc2c-4463-bd75-5809c9fce9e5  lines=3  subtotal=$916.00  total=$955.96
+
+  [change_order]  2 row(s)
+    • 5e18ddf4-0f51-4499-86da-705c72dbe30d  lines=2  subtotal=$294.00  total=$294.00
+      'Additional 20A breakers requested by customer after panel inspection — awaiting '
+    • 1a6be538-cc97-4f39-93c1-1355862832de  lines=3  subtotal=$440.00  total=$440.00
+      'Extension of EMT conduit run to secondary panel location — approved by owner 202'
+
+  [payment]  1 row(s)
+    • invoice=380ae2a7-bc2c-4463-bd75-5809c9fce9e5  status=succeeded  amount=$955.96  via=check
+

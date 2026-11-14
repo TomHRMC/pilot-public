@@ -1,0 +1,59 @@
+# voice-reply E2E — Mobile Maestro
+#
+# Voice-to-text full flow: tap mic on real device → speak phrase → transcript in field → preview → send.
+# Design doc G.3, Decision 3
+appId: com.pilot.mobile
+---
+- launchApp:
+    clearState: true
+
+# Login
+- tapOn: "Email"
+- inputText: "tech@test.com"
+- tapOn: "Password"
+- inputText: "test-password"
+- tapOn: "Sign In"
+- assertVisible: "Pilot for Trades"
+
+# Open inbox and navigate to a thread
+- tapOn:
+    id: "view-all-inbox"
+- tapOn:
+    id: "thread-row-thread-001"
+- assertVisible:
+    id: "reply-composer"
+
+# Tap mic button to start voice dictation
+- tapOn:
+    id: "mic-button"
+
+# Wait for recording state
+- assertVisible:
+    id: "mic-button"
+
+# Simulate utterance (in test environment, Whisper returns fixed transcript)
+# On real device, tech would speak naturally
+- stopRecording:
+    id: "mic-button"
+
+# Wait for transcript to appear in text field
+- assertVisible:
+    id: "composer-text-input"
+
+# Tech can edit the transcript before sending
+- clearText:
+    id: "composer-text-input"
+- inputText: "I'll be there at 3pm."
+
+# Tap send — preview modal should appear
+- tapOn:
+    id: "send-button"
+- assertVisible:
+    id: "message-preview-modal"
+
+# Confirm send in preview modal
+- tapOn: "Send"
+
+# Message appears in thread
+- assertVisible:
+    id: "conversation-list"

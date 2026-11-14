@@ -1,0 +1,68 @@
+# E2E Mobile: Help voice question flow — FE-B16
+#
+# Location: apps/mobile/e2e/batch_fe_b16/help-voice-question.e2e.yaml
+#
+# Scenario: Tap More → Help → tap mic → speak → transcript in input → send → AI response
+#
+# STATUS: Authored — pending Maestro runner + live backend with Whisper STT.
+# DO NOT delete — run when mobile CI + backend are available.
+#
+# RULE 1: Voice input uses useVoiceStream (FE-B3 hook) — no new WebSocket infra.
+
+appId: com.pilotfortrades.app
+
+---
+- launchApp
+
+# Navigate to Help via More tab
+- tapOn:
+    text: "More"
+- assertVisible:
+    text: "More"
+- tapOn:
+    text: "Help"
+
+# Verify help chat screen is visible
+- assertVisible:
+    id: "help-chat-screen"
+- assertVisible:
+    id: "help-empty-state"
+
+# Tap mic button for voice input
+- tapOn:
+    id: "help-mic-button"
+
+# Wait for recording state
+- assertVisible:
+    id: "help-mic-button"
+
+# Speak the question (Maestro audio injection or manual)
+# In CI, this uses a pre-recorded audio file injection
+# - inputText: "How do I create a quote?"
+
+# For manual run: user speaks "How do I create a quote?"
+# Transcript should appear in the input field
+- waitForAnimationToEnd
+
+# After transcript appears, tap send
+- tapOn:
+    id: "help-send-button"
+
+# Verify user message appears
+- assertVisible:
+    id: "help-message-user"
+
+# Verify typing indicator appears while AI generates response
+- assertVisible:
+    id: "help-typing-indicator"
+
+# Wait for AI response
+- waitForAnimationToEnd
+
+# Verify AI response renders (not a knowledge boundary for "create a quote" topic)
+- assertVisible:
+    id: "help-message-assistant"
+
+# Verify anonymization notice is visible
+- assertVisible:
+    id: "help-anonymization-notice"

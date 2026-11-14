@@ -1,0 +1,19 @@
+[cosmic-ray]
+# Cosmic Ray Tier 1 — Financial Correctness
+# Mutates: Stripe subscriptions, payment intents, SMS quota, quote service,
+#          ETC capture, billing rate, billing aggregator task, invoice routes,
+#          Stripe webhook route, tax calculation
+#
+# Run from: backend/
+# Command:  cosmic-ray init admin_tools/cosmic-ray/cosmic-ray-tier-1.toml sessions/tier-1.sqlite
+#           cosmic-ray exec admin_tools/cosmic-ray/cosmic-ray-tier-1.toml sessions/tier-1.sqlite
+#           cr-report sessions/tier-1.sqlite
+
+module-path = "services/sms_quota.py"
+timeout = 30
+
+# Use full venv path — 'pytest' is not on PATH in this environment
+test-command = ".venv/bin/pytest tests/batch_b11/test_a65_sms_quota.py -x -q --tb=no"
+
+[cosmic-ray.distributor]
+name = "local"

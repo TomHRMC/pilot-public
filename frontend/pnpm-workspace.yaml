@@ -1,0 +1,10 @@
+packages:
+  - "apps/*"
+  - "packages/*"
+
+# Packages that should not be built (their build scripts are skipped).
+# Moved here from apps/web/pnpm-workspace.yaml to avoid the multiple-lockfiles
+# warning emitted by Next.js when it detects workspace YAML files in subdirectories.
+ignoredBuiltDependencies:
+  - sharp
+  - unrs-resolver

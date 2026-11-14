@@ -1,0 +1,1254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AevoFab — Flow 6 Calendar Conflict Resolution Prototype</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  /* AevoFab Pass 1 design tokens — light theme (web default) */
+  :root {
+    /* Brand — indigo */
+    --brand-50: #EEF0FE;
+    --brand-100: #DDE0FD;
+    --brand-200: #BCC1FB;
+    --brand-400: #6F76EC;
+    --brand-600: #3B43D6;
+    --brand-700: #2E36AE;
+    --brand-800: #232989;
+
+    /* Alert — amber (voice + warnings) */
+    --alert-50: #FEF7E0;
+    --alert-100: #FDEAB1;
+    --alert-200: #FBD876;
+    --alert-400: #F59E0B;
+    --alert-600: #C77C04;
+    --alert-700: #9A6005;
+    --alert-800: #6B4106;
+
+    /* Margin — emerald */
+    --margin-50: #ECFDF5;
+    --margin-100: #D1FAE5;
+    --margin-400: #34D399;
+    --margin-600: #059669;
+    --margin-700: #047857;
+    --margin-800: #065F46;
+
+    /* Fault — red */
+    --fault-50: #FEF2F2;
+    --fault-100: #FEE2E2;
+    --fault-400: #F87171;
+    --fault-600: #DC2626;
+    --fault-700: #B91C1C;
+    --fault-800: #991B1B;
+
+    /* Neutral — warm stone */
+    --neutral-50: #FAFAF9;
+    --neutral-100: #F5F5F4;
+    --neutral-200: #E7E5E4;
+    --neutral-300: #D6D3D1;
+    --neutral-400: #A8A29E;
+    --neutral-500: #78716C;
+    --neutral-600: #57534E;
+    --neutral-700: #44403C;
+    --neutral-800: #292524;
+    --neutral-900: #1C1917;
+
+    /* Type tokens */
+    --font-ui: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+
+    /* Layout */
+    --radius-sm: 4px;
+    --radius-md: 6px;
+    --radius-lg: 8px;
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+
+  body {
+    font-family: var(--font-ui);
+    background: var(--neutral-100);
+    color: var(--neutral-900);
+    font-size: 14px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Page chrome — simulated AevoFab web shell */
+  .shell {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    min-height: 100vh;
+  }
+
+  .sidebar {
+    background: white;
+    border-right: 1px solid var(--neutral-200);
+    padding: 20px 0;
+  }
+
+  .sidebar .brand {
+    padding: 0 20px 20px;
+    border-bottom: 1px solid var(--neutral-200);
+    margin-bottom: 12px;
+  }
+  .sidebar .brand-mark {
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--neutral-900);
+    letter-spacing: -0.01em;
+  }
+  .sidebar .brand-mark .accent { color: var(--brand-600); }
+  .sidebar .brand-tagline {
+    font-size: 11px;
+    color: var(--neutral-500);
+    margin-top: 2px;
+  }
+
+  .nav-item {
+    padding: 8px 20px;
+    font-size: 13px;
+    color: var(--neutral-700);
+    cursor: default;
+  }
+  .nav-item.active {
+    background: var(--brand-50);
+    color: var(--brand-700);
+    font-weight: 500;
+    border-left: 3px solid var(--brand-600);
+    padding-left: 17px;
+  }
+  .nav-section-label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--neutral-500);
+    padding: 16px 20px 4px;
+    font-weight: 500;
+  }
+
+  .main {
+    padding: 0;
+    overflow: auto;
+  }
+
+  /* Top bar */
+  .topbar {
+    background: white;
+    border-bottom: 1px solid var(--neutral-200);
+    padding: 12px 32px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .breadcrumb {
+    font-size: 12px;
+    color: var(--neutral-500);
+    display: flex;
+    gap: 6px;
+    align-items: center;
+  }
+  .breadcrumb .sep { color: var(--neutral-300); }
+  .breadcrumb .current { color: var(--neutral-900); }
+
+  .topbar-spacer { flex: 1; }
+
+  .sync-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 500;
+    background: var(--alert-50);
+    color: var(--alert-800);
+    border: 1px solid var(--alert-200);
+    cursor: pointer;
+  }
+  .sync-pill .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--alert-400);
+  }
+  .sync-pill.healthy {
+    background: var(--margin-50);
+    color: var(--margin-800);
+    border-color: var(--margin-100);
+  }
+  .sync-pill.healthy .dot { background: var(--margin-600); }
+
+  /* Content area */
+  .content {
+    padding: 28px 32px;
+    max-width: 980px;
+  }
+
+  .page-h1 {
+    font-size: 22px;
+    font-weight: 500;
+    margin: 0 0 4px;
+    color: var(--neutral-900);
+  }
+  .page-sub {
+    font-size: 13px;
+    color: var(--neutral-500);
+    margin: 0 0 24px;
+  }
+
+  /* Panels and cards */
+  .panel {
+    background: white;
+    border: 1px solid var(--neutral-200);
+    border-radius: var(--radius-lg);
+    margin-bottom: 16px;
+    overflow: hidden;
+  }
+  .panel-head {
+    padding: 14px 18px;
+    border-bottom: 1px solid var(--neutral-200);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .panel-title {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--neutral-900);
+  }
+  .panel-meta {
+    font-size: 12px;
+    color: var(--neutral-500);
+    margin-left: auto;
+  }
+
+  /* Status banner inside Calendar settings */
+  .conn-status {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 18px;
+    border-bottom: 1px solid var(--neutral-200);
+    background: white;
+  }
+  .conn-status .dot-lg {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--margin-600);
+  }
+  .conn-status .conn-label {
+    font-size: 13px;
+    font-weight: 500;
+  }
+  .conn-status .conn-detail {
+    font-size: 12px;
+    color: var(--neutral-500);
+    margin-left: 4px;
+  }
+  .conn-status .conn-action {
+    margin-left: auto;
+    font-size: 12px;
+    color: var(--brand-700);
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 0;
+  }
+
+  /* Conflicts table */
+  .conflicts-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  .conflicts-table th {
+    text-align: left;
+    font-weight: 500;
+    color: var(--neutral-500);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 10px 18px;
+    background: var(--neutral-50);
+    border-bottom: 1px solid var(--neutral-200);
+  }
+  .conflicts-table td {
+    padding: 14px 18px;
+    border-bottom: 1px solid var(--neutral-100);
+    vertical-align: top;
+  }
+  .conflicts-table tr:last-child td { border-bottom: none; }
+  .conflicts-table tr:hover td { background: var(--neutral-50); }
+
+  .urgency-marker {
+    display: inline-block;
+    width: 4px;
+    height: 28px;
+    border-radius: 2px;
+    margin-right: 8px;
+    vertical-align: middle;
+  }
+  .urgency-marker.high { background: var(--fault-600); }
+  .urgency-marker.med { background: var(--alert-400); }
+  .urgency-marker.low { background: var(--neutral-300); }
+
+  .event-name { font-weight: 500; color: var(--neutral-900); }
+  .event-when {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--neutral-500);
+    margin-top: 2px;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .conflict-type {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 11px;
+    padding: 2px 7px;
+    border-radius: var(--radius-sm);
+    font-weight: 500;
+    background: var(--alert-50);
+    color: var(--alert-800);
+    border: 1px solid var(--alert-100);
+  }
+  .conflict-type.deletion {
+    background: var(--fault-50);
+    color: var(--fault-800);
+    border-color: var(--fault-100);
+  }
+
+  .change-summary { color: var(--neutral-700); font-size: 12px; }
+  .change-summary .actor { color: var(--neutral-900); font-weight: 500; }
+  .change-when {
+    font-size: 11px;
+    color: var(--neutral-500);
+    margin-top: 2px;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 6px 12px;
+    border-radius: var(--radius-md);
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    border: 1px solid transparent;
+    font-family: inherit;
+  }
+  .btn-resolve {
+    background: white;
+    color: var(--brand-700);
+    border-color: var(--brand-200);
+  }
+  .btn-resolve:hover {
+    background: var(--brand-50);
+    border-color: var(--brand-400);
+  }
+  .btn-primary {
+    background: var(--brand-600);
+    color: white;
+    padding: 9px 16px;
+    font-size: 13px;
+  }
+  .btn-primary:hover { background: var(--brand-700); }
+  .btn-secondary {
+    background: white;
+    color: var(--neutral-900);
+    border-color: var(--neutral-300);
+    padding: 9px 16px;
+    font-size: 13px;
+  }
+  .btn-secondary:hover { background: var(--neutral-50); }
+  .btn-link {
+    background: none;
+    border: none;
+    color: var(--neutral-500);
+    font-size: 12px;
+    cursor: pointer;
+    padding: 0;
+  }
+  .btn-link:hover { color: var(--neutral-900); }
+
+  /* Empty state */
+  .empty-state {
+    padding: 48px 18px;
+    text-align: center;
+  }
+  .empty-state .empty-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--margin-50);
+    color: var(--margin-700);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 12px;
+    font-size: 18px;
+  }
+  .empty-state .empty-title {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--neutral-900);
+    margin-bottom: 4px;
+  }
+  .empty-state .empty-sub {
+    font-size: 12px;
+    color: var(--neutral-500);
+  }
+
+  /* Resolution view */
+  .resolution-header {
+    padding: 16px 20px;
+    background: white;
+    border-bottom: 1px solid var(--neutral-200);
+  }
+  .resolution-header .res-title {
+    font-size: 16px;
+    font-weight: 500;
+    margin: 0 0 4px;
+  }
+  .resolution-header .res-explain {
+    font-size: 12px;
+    color: var(--neutral-500);
+    margin: 0;
+    max-width: 600px;
+  }
+  .resolution-header .res-meta {
+    font-size: 11px;
+    color: var(--neutral-500);
+    margin-top: 8px;
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .ctx-strip {
+    background: var(--neutral-50);
+    padding: 12px 20px;
+    border-bottom: 1px solid var(--neutral-200);
+    display: flex;
+    gap: 28px;
+    font-size: 12px;
+  }
+  .ctx-cell .ctx-label {
+    font-size: 10px;
+    text-transform: uppercase;
+    color: var(--neutral-500);
+    letter-spacing: 0.05em;
+    margin-bottom: 2px;
+    font-weight: 500;
+  }
+  .ctx-cell .ctx-value {
+    font-size: 13px;
+    color: var(--neutral-900);
+    font-weight: 500;
+  }
+
+  .diff-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    background: white;
+  }
+  .diff-col {
+    padding: 18px 20px;
+    background: white;
+  }
+  .diff-col + .diff-col {
+    border-left: 1px solid var(--neutral-200);
+  }
+
+  .col-head {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 4px;
+  }
+  .col-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+  }
+  .col-dot.aevofab { background: var(--brand-600); }
+  .col-dot.calendar { background: var(--margin-600); }
+  .col-name {
+    font-size: 13px;
+    font-weight: 500;
+  }
+  .col-actor {
+    font-size: 11px;
+    color: var(--neutral-500);
+    margin-bottom: 16px;
+  }
+
+  .field {
+    margin-bottom: 10px;
+  }
+  .field-label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--neutral-500);
+    margin-bottom: 3px;
+    font-weight: 500;
+  }
+  .field-value {
+    font-size: 13px;
+    color: var(--neutral-900);
+    padding: 5px 8px;
+  }
+  .field-value.modified {
+    background: var(--alert-50);
+    border-left: 3px solid var(--alert-400);
+    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  }
+  .field-value.modified .new-val {
+    color: var(--alert-800);
+    font-weight: 500;
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+  }
+  .field-value.modified .old-val {
+    color: var(--alert-700);
+    font-size: 11px;
+    text-decoration: line-through;
+    font-family: var(--font-mono);
+    margin-top: 3px;
+    display: block;
+  }
+  .field-value.added {
+    background: var(--margin-50);
+    border-left: 3px solid var(--margin-600);
+    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+    color: var(--margin-800);
+  }
+  .field-value.added .badge {
+    font-size: 10px;
+    color: var(--margin-700);
+    margin-left: 6px;
+    font-style: italic;
+  }
+  .field-value.removed {
+    background: var(--fault-50);
+    border-left: 3px solid var(--fault-600);
+    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+    color: var(--fault-800);
+    text-decoration: line-through;
+  }
+  .field-value.empty {
+    color: var(--neutral-400);
+    font-style: italic;
+  }
+
+  .action-bar {
+    background: var(--neutral-50);
+    border-top: 1px solid var(--neutral-200);
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .action-bar .later-link { margin-left: auto; }
+
+  .legend {
+    padding: 10px 20px;
+    background: white;
+    border-top: 1px solid var(--neutral-100);
+    display: flex;
+    gap: 18px;
+    font-size: 11px;
+    color: var(--neutral-500);
+  }
+  .legend-swatch {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    margin-right: 4px;
+    vertical-align: middle;
+    border-radius: 2px;
+  }
+  .legend-swatch.amber { background: var(--alert-50); border-left: 2px solid var(--alert-400); }
+  .legend-swatch.green { background: var(--margin-50); border-left: 2px solid var(--margin-600); }
+  .legend-swatch.red { background: var(--fault-50); border-left: 2px solid var(--fault-600); }
+
+  /* Deletion conflict treatment */
+  .deletion-treatment {
+    padding: 32px 24px;
+    background: white;
+  }
+  .deletion-explanation {
+    background: var(--neutral-50);
+    border: 1px solid var(--neutral-200);
+    border-radius: var(--radius-lg);
+    padding: 18px 20px;
+    margin-bottom: 20px;
+  }
+  .deletion-explanation .del-title {
+    font-size: 14px;
+    font-weight: 500;
+    margin: 0 0 6px;
+  }
+  .deletion-explanation .del-body {
+    font-size: 13px;
+    color: var(--neutral-700);
+    margin: 0;
+    line-height: 1.6;
+  }
+  .deletion-paths {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .del-path {
+    border: 1px solid var(--neutral-200);
+    border-radius: var(--radius-lg);
+    padding: 16px;
+    cursor: pointer;
+    background: white;
+  }
+  .del-path:hover {
+    border-color: var(--brand-400);
+    background: var(--brand-50);
+  }
+  .del-path .path-verb {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--neutral-900);
+    margin-bottom: 4px;
+  }
+  .del-path .path-explain {
+    font-size: 11px;
+    color: var(--neutral-500);
+    line-height: 1.5;
+  }
+
+  /* Toast for resolution confirmation */
+  .toast {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--neutral-900);
+    color: white;
+    padding: 10px 16px;
+    border-radius: var(--radius-md);
+    font-size: 13px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+    opacity: 0;
+    transition: opacity 0.2s;
+    pointer-events: none;
+    z-index: 100;
+  }
+  .toast.visible { opacity: 1; }
+
+  /* Mobile owner status row preview (collapsible) */
+  .mobile-preview {
+    margin-top: 24px;
+    background: white;
+    border: 1px dashed var(--neutral-300);
+    border-radius: var(--radius-lg);
+    padding: 16px 18px;
+  }
+  .mobile-preview .mp-header {
+    font-size: 11px;
+    text-transform: uppercase;
+    color: var(--neutral-500);
+    letter-spacing: 0.05em;
+    margin-bottom: 8px;
+    font-weight: 500;
+  }
+  .mobile-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    background: var(--neutral-900);
+    color: white;
+    border-radius: var(--radius-md);
+    margin-bottom: 6px;
+    font-size: 12px;
+  }
+  .mobile-row .m-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+  }
+  .mobile-row.health-yellow .m-dot { background: var(--alert-400); }
+  .mobile-row.health-green .m-dot { background: var(--margin-400); }
+  .mobile-row .m-label { font-weight: 500; }
+  .mobile-row .m-detail { color: var(--neutral-400); margin-left: auto; }
+
+  .reset-bar {
+    margin-top: 24px;
+    padding: 12px 16px;
+    background: var(--neutral-50);
+    border: 1px dashed var(--neutral-300);
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 12px;
+    color: var(--neutral-600);
+  }
+</style>
+</head>
+<body>
+
+<div class="shell">
+
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="brand-mark"><span class="accent">●</span> AevoFab</div>
+      <div class="brand-tagline">Flow 6 prototype</div>
+    </div>
+    <div class="nav-item">Dashboard</div>
+    <div class="nav-item">Schedule</div>
+    <div class="nav-item">Quotes</div>
+    <div class="nav-item">Jobs</div>
+    <div class="nav-item">Customers</div>
+    <div class="nav-item">Billing</div>
+    <div class="nav-item">Reports</div>
+    <div class="nav-item active">Settings</div>
+    <div class="nav-section-label">In settings</div>
+    <div class="nav-item" style="padding-left: 32px;">Company</div>
+    <div class="nav-item" style="padding-left: 32px;">Users &amp; roles</div>
+    <div class="nav-item" style="padding-left: 32px; color: var(--brand-700); font-weight: 500;">Integrations</div>
+    <div class="nav-item" style="padding-left: 44px; color: var(--neutral-900); font-weight: 500;">Calendar</div>
+    <div class="nav-item" style="padding-left: 44px;">QuickBooks</div>
+    <div class="nav-item" style="padding-left: 32px;">Notifications</div>
+  </aside>
+
+  <main class="main">
+
+    <div class="topbar">
+      <div class="breadcrumb">
+        <span>Settings</span>
+        <span class="sep">›</span>
+        <span>Integrations</span>
+        <span class="sep">›</span>
+        <span class="current" id="bc-current">Calendar</span>
+      </div>
+      <div class="topbar-spacer"></div>
+      <div id="sync-pill" class="sync-pill">
+        <span class="dot"></span>
+        <span id="sync-pill-text">3 conflicts</span>
+      </div>
+    </div>
+
+    <div class="content" id="content"></div>
+
+  </main>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+  // ---- Mock state -----------------------------------------------------------
+
+  const initialConflicts = [
+    {
+      id: 'c-johnson',
+      eventName: 'Tom Johnson — 200A panel upgrade',
+      customer: 'Tom Johnson',
+      site: '42 Oak St',
+      scheduledFor: 'Tue Apr 28 · 8:00 AM',
+      urgency: 'high',
+      type: 'modified-modified',
+      detectedAgo: '14 min ago',
+      aevofab: {
+        actor: 'Mike Reyes (mobile)',
+        when: '3 hours ago',
+        fields: {
+          dateTime: { state: 'modified', current: 'Thu Apr 30 · 2:00 PM – 5:00 PM', prior: 'Tue Apr 28 · 8:00 AM – 11:00 AM' },
+          tech: { state: 'unchanged', value: 'Mike Reyes' },
+          site: { state: 'unchanged', value: '42 Oak St' },
+          title: { state: 'unchanged', value: '200A panel upgrade' },
+          notes: { state: 'unchanged', value: '(none)', empty: true }
+        }
+      },
+      calendar: {
+        actor: 'via Google Calendar',
+        when: '1 hour ago',
+        fields: {
+          dateTime: { state: 'modified', current: 'Wed Apr 29 · 9:00 AM – 12:00 PM', prior: 'Tue Apr 28 · 8:00 AM – 11:00 AM' },
+          tech: { state: 'unchanged', value: 'Mike Reyes' },
+          site: { state: 'unchanged', value: '42 Oak St' },
+          title: { state: 'unchanged', value: '200A panel upgrade' },
+          notes: { state: 'added', value: 'Customer requested 30A subpanel breaker' }
+        }
+      }
+    },
+    {
+      id: 'c-williams',
+      eventName: 'Maria Williams — service call',
+      customer: 'Maria Williams',
+      site: '118 Cedar Ln',
+      scheduledFor: 'Mon May 5 · 10:00 AM',
+      urgency: 'med',
+      type: 'modified-modified',
+      detectedAgo: '2 hours ago',
+      aevofab: {
+        actor: 'Sarah (web)',
+        when: '5 hours ago',
+        fields: {
+          dateTime: { state: 'unchanged', value: 'Mon May 5 · 10:00 AM – 11:30 AM' },
+          tech: { state: 'modified', current: 'Luis Hernandez', prior: 'Mike Reyes' },
+          site: { state: 'unchanged', value: '118 Cedar Ln' },
+          title: { state: 'unchanged', value: 'Service call — outlets' },
+          notes: { state: 'unchanged', value: '(none)', empty: true }
+        }
+      },
+      calendar: {
+        actor: 'via Google Calendar',
+        when: '3 hours ago',
+        fields: {
+          dateTime: { state: 'modified', current: 'Mon May 5 · 11:00 AM – 12:30 PM', prior: 'Mon May 5 · 10:00 AM – 11:30 AM' },
+          tech: { state: 'unchanged', value: 'Mike Reyes' },
+          site: { state: 'unchanged', value: '118 Cedar Ln' },
+          title: { state: 'unchanged', value: 'Service call — outlets' },
+          notes: { state: 'unchanged', value: '(none)', empty: true }
+        }
+      }
+    },
+    {
+      id: 'c-garcia',
+      eventName: 'Bob Garcia — annual inspection',
+      customer: 'Bob Garcia',
+      site: '7 Maple Ave',
+      scheduledFor: 'Wed May 14 · 1:00 PM',
+      urgency: 'low',
+      type: 'modified-deleted',
+      detectedAgo: '4 hours ago',
+      aevofab: {
+        actor: 'Sarah (web)',
+        when: '6 hours ago',
+        summary: 'Modified scheduled time'
+      },
+      calendar: {
+        actor: 'via Google Calendar',
+        when: '5 hours ago',
+        summary: 'Event was deleted'
+      }
+    }
+  ];
+
+  let state = {
+    view: 'list',           // 'list' | 'resolution' | 'empty'
+    conflicts: JSON.parse(JSON.stringify(initialConflicts)),
+    activeConflictId: null
+  };
+
+  // ---- Render ---------------------------------------------------------------
+
+  const $content = document.getElementById('content');
+  const $toast = document.getElementById('toast');
+  const $bc = document.getElementById('bc-current');
+  const $syncPill = document.getElementById('sync-pill');
+  const $syncPillText = document.getElementById('sync-pill-text');
+
+  function render() {
+    if (state.view === 'list') renderList();
+    else if (state.view === 'resolution') renderResolution();
+    updateChrome();
+  }
+
+  function updateChrome() {
+    const pending = state.conflicts.length;
+    if (pending === 0) {
+      $syncPill.classList.add('healthy');
+      $syncPill.classList.remove('warning');
+      $syncPillText.textContent = 'Synced';
+    } else {
+      $syncPill.classList.remove('healthy');
+      $syncPillText.textContent = pending + ' conflict' + (pending === 1 ? '' : 's');
+    }
+
+    if (state.view === 'resolution') {
+      $bc.textContent = 'Conflict';
+    } else {
+      $bc.textContent = 'Calendar';
+    }
+  }
+
+  function renderList() {
+    const pending = state.conflicts.length;
+
+    let html = '<h1 class="page-h1">Calendar integration</h1>';
+    html += '<p class="page-sub">Bi-directional sync with Google Calendar. Conflicts surface here when the same event is modified on both sides since last sync.</p>';
+
+    // Connection status
+    html += `
+      <div class="panel">
+        <div class="conn-status">
+          <span class="dot-lg"></span>
+          <span class="conn-label">Connected</span>
+          <span class="conn-detail">Google Calendar · last sync 2 min ago</span>
+          <button class="conn-action">Sync now</button>
+        </div>
+      </div>
+    `;
+
+    // Conflicts panel
+    html += `
+      <div class="panel">
+        <div class="panel-head">
+          <span class="panel-title">Pending conflicts</span>
+          <span class="panel-meta">${pending === 0 ? 'None' : pending + ' to resolve'} · sorted by job start time</span>
+        </div>
+    `;
+
+    if (pending === 0) {
+      html += `
+        <div class="empty-state">
+          <div class="empty-icon">✓</div>
+          <div class="empty-title">No sync conflicts</div>
+          <div class="empty-sub">Last successful sync: 2 minutes ago. The calendar and AevoFab agree on every event.</div>
+        </div>
+      `;
+    } else {
+      html += `
+        <table class="conflicts-table">
+          <thead>
+            <tr>
+              <th>Event</th>
+              <th>Conflict</th>
+              <th>AevoFab change</th>
+              <th>Calendar change</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+      `;
+
+      state.conflicts.forEach(c => {
+        const typeLabel = c.type === 'modified-modified'
+          ? 'Modified ↔ Modified'
+          : (c.type === 'modified-deleted' ? 'Modified ↔ Deleted' : 'Deleted ↔ Modified');
+        const typeClass = c.type.includes('deleted') ? 'deletion' : '';
+
+        html += `
+          <tr>
+            <td>
+              <span class="urgency-marker ${c.urgency}"></span>
+              <span class="event-name">${c.eventName}</span>
+              <div class="event-when">${c.scheduledFor}</div>
+            </td>
+            <td>
+              <span class="conflict-type ${typeClass}">${typeLabel}</span>
+              <div class="event-when" style="margin-top: 6px;">detected ${c.detectedAgo}</div>
+            </td>
+            <td>
+              <div class="change-summary"><span class="actor">${c.aevofab.actor}</span></div>
+              <div class="change-when">${c.aevofab.when}</div>
+            </td>
+            <td>
+              <div class="change-summary"><span class="actor">${c.calendar.actor}</span></div>
+              <div class="change-when">${c.calendar.when}</div>
+            </td>
+            <td>
+              <button class="btn btn-resolve" onclick="openConflict('${c.id}')">Resolve →</button>
+            </td>
+          </tr>
+        `;
+      });
+
+      html += '</tbody></table>';
+    }
+
+    html += '</div>'; // close panel
+
+    // Sync activity log preview
+    html += `
+      <div class="panel">
+        <div class="panel-head">
+          <span class="panel-title">Recent sync activity</span>
+          <span class="panel-meta">Last 10 events</span>
+        </div>
+        <table class="conflicts-table">
+          <tbody>
+            <tr><td style="font-family: var(--font-mono); font-size: 11px; color: var(--neutral-500);">14:23:08</td><td colspan="3">Pulled 4 events from Google Calendar</td><td><span class="conflict-type" style="background: var(--margin-50); color: var(--margin-800); border-color: var(--margin-100);">success</span></td></tr>
+            <tr><td style="font-family: var(--font-mono); font-size: 11px; color: var(--neutral-500);">14:18:08</td><td colspan="3">Pushed 'Tom Johnson — 200A panel upgrade' to calendar</td><td><span class="conflict-type" style="background: var(--alert-50); color: var(--alert-800);">conflict</span></td></tr>
+            <tr><td style="font-family: var(--font-mono); font-size: 11px; color: var(--neutral-500);">14:12:08</td><td colspan="3">Pulled 2 events from Google Calendar</td><td><span class="conflict-type" style="background: var(--margin-50); color: var(--margin-800); border-color: var(--margin-100);">success</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    `;
+
+    // Mobile preview
+    html += `
+      <div class="mobile-preview">
+        <div class="mp-header">Mobile owner tab — status row preview</div>
+        <div class="mobile-row health-yellow">
+          <span class="m-dot"></span>
+          <span class="m-label">Calendar sync</span>
+          <span class="m-detail">${pending} pending · resolve on web →</span>
+        </div>
+        <div class="mobile-row health-green">
+          <span class="m-dot"></span>
+          <span class="m-label">QuickBooks sync</span>
+          <span class="m-detail">synced 3 min ago</span>
+        </div>
+      </div>
+    `;
+
+    // Reset bar
+    html += `
+      <div class="reset-bar">
+        <span style="color: var(--neutral-500);">Prototype controls:</span>
+        <button class="btn btn-secondary" onclick="resetState()" style="padding: 5px 11px; font-size: 11px;">Reset all conflicts</button>
+        <span style="margin-left: auto; font-size: 11px; color: var(--neutral-400);">Click a "Resolve" button to enter the conflict resolution view.</span>
+      </div>
+    `;
+
+    $content.innerHTML = html;
+  }
+
+  function renderResolution() {
+    const c = state.conflicts.find(x => x.id === state.activeConflictId);
+    if (!c) {
+      state.view = 'list';
+      render();
+      return;
+    }
+
+    const isDeletion = c.type.includes('deleted');
+
+    let html = `
+      <div style="margin-bottom: 16px;">
+        <button class="btn-link" onclick="goBack()">← Back to conflicts</button>
+      </div>
+    `;
+
+    html += '<div class="panel">';
+    html += `
+      <div class="resolution-header">
+        <div style="display: flex; align-items: baseline; justify-content: space-between;">
+          <h2 class="res-title">Calendar sync conflict</h2>
+          <span class="res-meta">Detected ${c.detectedAgo} · 1 of ${state.conflicts.length}</span>
+        </div>
+        <p class="res-explain">This event was modified in both AevoFab and Google Calendar since the last successful sync. ${isDeletion ? 'One side deleted the event while the other kept changes — pick what should happen.' : 'Pick the version to keep — your choice will be pushed to the other side.'}</p>
+      </div>
+    `;
+
+    html += `
+      <div class="ctx-strip">
+        <div class="ctx-cell">
+          <div class="ctx-label">Job</div>
+          <div class="ctx-value">${c.eventName}</div>
+        </div>
+        <div class="ctx-cell">
+          <div class="ctx-label">Customer</div>
+          <div class="ctx-value">${c.customer} · ${c.site}</div>
+        </div>
+        <div class="ctx-cell" style="margin-left: auto;">
+          <div class="ctx-label">Was scheduled</div>
+          <div class="ctx-value">${c.scheduledFor}</div>
+        </div>
+      </div>
+    `;
+
+    if (isDeletion) {
+      html += renderDeletionTreatment(c);
+    } else {
+      html += renderDiffGrid(c);
+      html += renderLegend();
+    }
+
+    html += `
+      <div class="action-bar">
+        <button class="btn btn-primary" onclick="resolveConflict('aevofab')">Use AevoFab version</button>
+        <button class="btn btn-secondary" onclick="resolveConflict('calendar')">Use Google Calendar version</button>
+        <button class="btn-link later-link" onclick="goBack()">Resolve later →</button>
+      </div>
+    `;
+
+    html += '</div>'; // close panel
+
+    $content.innerHTML = html;
+  }
+
+  function renderDiffGrid(c) {
+    function fieldHTML(f, fieldName) {
+      if (!f) return '';
+      if (f.state === 'modified') {
+        return `
+          <div class="field">
+            <div class="field-label">${fieldName}</div>
+            <div class="field-value modified">
+              <span class="new-val">${f.current}</span>
+              <span class="old-val">was ${f.prior}</span>
+            </div>
+          </div>
+        `;
+      }
+      if (f.state === 'added') {
+        return `
+          <div class="field">
+            <div class="field-label">${fieldName}</div>
+            <div class="field-value added">${f.value}<span class="badge">(added)</span></div>
+          </div>
+        `;
+      }
+      if (f.state === 'removed') {
+        return `
+          <div class="field">
+            <div class="field-label">${fieldName}</div>
+            <div class="field-value removed">${f.value}</div>
+          </div>
+        `;
+      }
+      return `
+        <div class="field">
+          <div class="field-label">${fieldName}</div>
+          <div class="field-value ${f.empty ? 'empty' : ''}">${f.value}</div>
+        </div>
+      `;
+    }
+
+    const labels = {
+      dateTime: 'Date & time',
+      tech: 'Tech',
+      site: 'Site',
+      title: 'Title',
+      notes: 'Notes'
+    };
+
+    let aFields = '';
+    let cFields = '';
+    Object.keys(labels).forEach(k => {
+      aFields += fieldHTML(c.aevofab.fields[k], labels[k]);
+      cFields += fieldHTML(c.calendar.fields[k], labels[k]);
+    });
+
+    return `
+      <div class="diff-grid">
+        <div class="diff-col">
+          <div class="col-head">
+            <span class="col-dot aevofab"></span>
+            <span class="col-name">AevoFab</span>
+          </div>
+          <div class="col-actor">Modified by ${c.aevofab.actor} · ${c.aevofab.when}</div>
+          ${aFields}
+        </div>
+        <div class="diff-col">
+          <div class="col-head">
+            <span class="col-dot calendar"></span>
+            <span class="col-name">Google Calendar</span>
+          </div>
+          <div class="col-actor">Modified ${c.calendar.actor} · ${c.calendar.when}</div>
+          ${cFields}
+        </div>
+      </div>
+    `;
+  }
+
+  function renderLegend() {
+    return `
+      <div class="legend">
+        <span><span class="legend-swatch amber"></span>modified</span>
+        <span><span class="legend-swatch green"></span>added</span>
+        <span><span class="legend-swatch red"></span>removed</span>
+        <span style="margin-left: auto; font-style: italic;">diff vocabulary inherited from Flow 5 (quote approval)</span>
+      </div>
+    `;
+  }
+
+  function renderDeletionTreatment(c) {
+    const aDeleted = c.type === 'deleted-modified';
+    const cDeleted = c.type === 'modified-deleted';
+
+    let title, body, leftVerb, leftExplain, rightVerb, rightExplain;
+    if (cDeleted) {
+      title = 'The calendar event was deleted. AevoFab still has the job.';
+      body = 'Sarah modified the AevoFab job 6 hours ago. Google Calendar reports the event was deleted 5 hours ago. Pick what should happen next.';
+      leftVerb = 'Recreate calendar event from AevoFab';
+      leftExplain = 'Push AevoFab\'s current state back to Google Calendar as a new event. Your modifications are preserved.';
+      rightVerb = 'Delete the AevoFab job';
+      rightExplain = 'Remove the job from AevoFab to match the calendar. Sarah\'s modifications will be discarded.';
+    } else {
+      title = 'AevoFab no longer has this job. The calendar event was modified after deletion.';
+      body = 'The job was deleted from AevoFab earlier. Google Calendar shows the event was modified after that point. Pick what should happen.';
+      leftVerb = 'Restore the job from the calendar';
+      leftExplain = 'Recreate the AevoFab job using the current Google Calendar state, then sync.';
+      rightVerb = 'Delete from calendar too';
+      rightExplain = 'Remove the event from Google Calendar to match AevoFab\'s deleted state.';
+    }
+
+    return `
+      <div class="deletion-treatment">
+        <div class="deletion-explanation">
+          <div class="del-title">${title}</div>
+          <p class="del-body">${body}</p>
+        </div>
+        <div class="deletion-paths">
+          <div class="del-path" onclick="resolveConflict('aevofab')">
+            <div class="path-verb">${leftVerb}</div>
+            <div class="path-explain">${leftExplain}</div>
+          </div>
+          <div class="del-path" onclick="resolveConflict('calendar')">
+            <div class="path-verb">${rightVerb}</div>
+            <div class="path-explain">${rightExplain}</div>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  // ---- Actions --------------------------------------------------------------
+
+  function openConflict(id) {
+    state.activeConflictId = id;
+    state.view = 'resolution';
+    render();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function goBack() {
+    state.activeConflictId = null;
+    state.view = 'list';
+    render();
+  }
+
+  function resolveConflict(side) {
+    const c = state.conflicts.find(x => x.id === state.activeConflictId);
+    if (!c) return;
+    const sideName = side === 'aevofab' ? 'AevoFab version' : 'Google Calendar version';
+    showToast('Resolved ' + c.eventName + ' — accepted ' + sideName);
+    state.conflicts = state.conflicts.filter(x => x.id !== state.activeConflictId);
+    goBack();
+  }
+
+  function resetState() {
+    state.conflicts = JSON.parse(JSON.stringify(initialConflicts));
+    state.activeConflictId = null;
+    state.view = 'list';
+    render();
+    showToast('Reset — 3 conflicts restored');
+  }
+
+  function showToast(msg) {
+    $toast.textContent = msg;
+    $toast.classList.add('visible');
+    clearTimeout($toast._t);
+    $toast._t = setTimeout(() => $toast.classList.remove('visible'), 2400);
+  }
+
+  // expose to inline handlers
+  window.openConflict = openConflict;
+  window.goBack = goBack;
+  window.resolveConflict = resolveConflict;
+  window.resetState = resetState;
+
+  render();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,22 @@
+=== seed_scenario_dispatch: inspect mode ===
+    Tenant ID: 00000000-0000-0000-0000-000000000001
+
+  [job]  7 row(s)
+    • 411cf83f-8e33-45a9-bd73-d26b5fab61d2  status=completed  2026-06-24 09:00:00+00:00 → 2026-06-24 17:00:00+00:00
+    • ea630feb-ae97-4377-aeb3-df6946943864  status=completed  2026-07-20 09:00:00+00:00 → 2026-07-20 12:00:00+00:00
+    • 7e925689-4cc9-44f4-8129-b7f9cb0c96fa  status=completed  2026-07-22 10:00:00+00:00 → 2026-07-22 15:00:00+00:00
+    • 51bfbb84-1401-48e3-9fce-5c4bbb0aab99  status=in_progress  2026-07-23 08:00:00+00:00 → 2026-07-23 17:00:00+00:00
+    • ce51c400-ab99-43f9-9b9a-6a8882e17d2d  status=scheduled  2026-07-24 09:00:00+00:00 → 2026-07-24 13:00:00+00:00
+    • 43e8ffce-f277-43d7-bf90-8ede988e4b85  status=draft  no schedule → open
+    • e9285f7b-a6e4-4171-9512-9c78acf7e3a1  status=cancelled  no schedule → open
+
+  [job_tech_assignment]  5 row(s)
+    • job=51bfbb84-1401-48e3-9fce-5c4bbb0aab99  user=00000000-0000-0000-0000-000000000003  role=primary  ordinal=1
+    • job=51bfbb84-1401-48e3-9fce-5c4bbb0aab99  user=00000000-0000-0000-0000-000000000002  role=helper  ordinal=2
+    • job=7e925689-4cc9-44f4-8129-b7f9cb0c96fa  user=00000000-0000-0000-0000-000000000003  role=primary  ordinal=1
+    • job=ce51c400-ab99-43f9-9b9a-6a8882e17d2d  user=00000000-0000-0000-0000-000000000003  role=primary  ordinal=1
+    • job=ce51c400-ab99-43f9-9b9a-6a8882e17d2d  user=00000000-0000-0000-0000-000000000002  role=helper  ordinal=2
+
+  [tech_availability]  2 row(s)
+    • user=00000000-0000-0000-0000-000000000003  type=pto  2026-07-24 08:00:00+00:00 → 2026-07-24 17:00:00+00:00
+    • user=00000000-0000-0000-0000-000000000002  type=unavailable  2026-08-07 08:00:00+00:00 → 2026-08-07 17:00:00+00:00

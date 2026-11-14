@@ -1,0 +1,15 @@
+services:
+  db:
+    image: pgvector/pgvector:pg17
+    container_name: pilot_postgres
+    environment:
+      POSTGRES_USER: pilot_user
+      POSTGRES_PASSWORD: CHANGE_ME_LOCAL_DB_PW
+      POSTGRES_DB: pilot_dev
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:

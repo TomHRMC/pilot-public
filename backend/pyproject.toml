@@ -1,0 +1,49 @@
+[tool.ruff]
+target-version = "py311"
+line-length = 88
+
+[tool.ruff.lint]
+select = [
+    "E",   # pycodestyle errors
+    "W",   # pycodestyle warnings
+    "F",   # pyflakes
+    "I",   # isort (import sorting)
+    "B",   # flake8-bugbear
+    "UP",  # pyupgrade
+    "N",   # pep8-naming
+    "C4",  # flake8-comprehensions
+    "RUF", # Ruff-specific rules
+]
+ignore = [
+    "E501",   # Line too long (Let the formatter do its best, ignore the rest)
+    "B008",   # Function call in default arg (Required for FastAPI Depends / SQLModel Field)
+    "E711",   # None comparison (Required for SQLAlchemy .where(col == None))
+    "E712",   # True/False comparison (Required for SQLAlchemy .where(col == True))
+    "RUF012", # Mutable class default (SQLModel handles this safely)
+    "B904",   # Raise without from inside except (Pedantic for MVP)
+]
+
+[tool.ruff.lint.per-file-ignores]
+# Seed scripts use emoji (ℹ️, ✅, 🗑) in print statements for CLI readability
+"migrations/scripts/seed_core.py" = ["RUF001", "RUF003"]
+"migrations/scripts/seed_platform.py" = ["RUF001", "RUF002", "RUF003"]
+# Barrel export __init__.py files re-export names for callers — F401 (unused import) is the intended pattern
+"app/models/__init__.py" = ["F401"]
+"app/__init__.py" = ["F401"]
+"api/__init__.py" = ["F401"]
+"api/routes/__init__.py" = ["F401"]
+# PLATFORM-SMS-B2: campaign-locked en-dash (U+2013) in registered Sample 4 values
+# (error-806 rule — the en-dash must be preserved byte-for-byte; not a hyphen).
+"scripts/broadcast_maintenance_sms.py" = ["RUF001", "RUF002", "RUF003"]
+"lambda/post_authentication/handler.py" = ["RUF003"]
+"tests/domains/notifications_comms/test_platform_sms_b2_verbatim_guardrail.py" = ["RUF001", "RUF002", "RUF003"]
+"tests/domains/notifications_comms/test_platform_sms_b2_template_context.py" = ["RUF001"]
+"tests/domains/notifications_comms/test_platform_sms_b2_broadcast_cli.py" = ["RUF001"]
+# Lambda package uses the Python keyword `lambda` as a directory name (AWS
+# convention; mirrors the existing post_confirmation package).
+"lambda/post_authentication/__init__.py" = ["N999"]
+"lambda/post_confirmation/__init__.py" = ["N999"]
+"lambda/custom_email_sender/__init__.py" = ["N999"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["app", "core", "services", "tasks", "api"]

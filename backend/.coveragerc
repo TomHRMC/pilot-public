@@ -1,0 +1,14 @@
+[run]
+source =
+    api
+    app
+    core
+    services
+    tasks
+branch = True
+omit =
+    tests/*
+    alembic/*
+
+[report]
+show_missing = True

@@ -1,0 +1,409 @@
+=== seed_core: inspect mode ===
+
+  [address_type]  4 row(s)
+    • code=billing  name=Billing Address  is_default=False  is_active=True
+    • code=mailing  name=Mailing Address  is_default=False  is_active=True
+    • code=service_location  name=Service Location  is_default=True  is_active=True
+    • code=shipping  name=Shipping Address  is_default=False  is_active=True
+
+  [contact_type]  4 row(s)
+    • code=billing  name=Billing Contact  is_default=False  is_active=True
+    • code=decision_maker  name=Decision Maker  is_default=False  is_active=True
+    • code=primary  name=Primary Contact  is_default=True  is_active=True
+    • code=technical  name=Technical Contact  is_default=False  is_active=True
+
+  [taxability_code]  3 row(s)
+    • code=exempt  name=Tax Exempt  is_active=True
+    • code=taxable  name=Taxable  is_active=True
+    • code=zero_rated  name=Zero-Rated  is_active=True
+
+  [currency]  4 row(s)
+    • code=CAD  name=Canadian Dollar  symbol=C$  is_active=False
+    • code=EUR  name=Euro  symbol=€  is_active=False
+    • code=GBP  name=British Pound  symbol=£  is_active=False
+    • code=USD  name=US Dollar  symbol=$  is_active=True
+
+  [job_status]  5 row(s)
+    • code=cancelled  name=Cancelled  is_default=False  is_terminal=True  is_active=True
+    • code=completed  name=Completed  is_default=False  is_terminal=True  is_active=True
+    • code=draft  name=Draft  is_default=True  is_terminal=False  is_active=True
+    • code=in_progress  name=In Progress  is_default=False  is_terminal=False  is_active=True
+    • code=scheduled  name=Scheduled  is_default=False  is_terminal=False  is_active=True
+
+  [quote_status]  10 row(s)
+    • code=accepted  name=Accepted  is_default=False  is_terminal=True  is_active=True
+    • code=approved  name=Approved  is_default=False  is_terminal=False  is_active=True
+    • code=converted  name=Converted to Job  is_default=False  is_terminal=True  is_active=True
+    • code=draft  name=Draft  is_default=True  is_terminal=False  is_active=True
+    • code=expired  name=Expired  is_default=False  is_terminal=True  is_active=True
+    • code=pending  name=Pending Review  is_default=False  is_terminal=False  is_active=True
+    • code=pending_approval  name=Pending Approval  is_default=False  is_terminal=False  is_active=True
+    • code=rejected  name=Rejected  is_default=False  is_terminal=True  is_active=True
+    • code=sent  name=Sent to Customer  is_default=False  is_terminal=False  is_active=True
+    • code=void  name=Void  is_default=False  is_terminal=True  is_active=True
+
+  [invoice_status]  6 row(s)
+    • code=draft  name=Draft  is_default=True  is_terminal=False  is_active=True
+    • code=issued  name=Issued  is_default=False  is_terminal=False  is_active=True
+    • code=paid  name=Paid  is_default=False  is_terminal=True  is_active=True
+    • code=partial  name=Partially Paid  is_default=False  is_terminal=False  is_active=True
+    • code=void  name=Void  is_default=False  is_terminal=True  is_active=True
+    • code=writeoff  name=Write-Off  is_default=False  is_terminal=True  is_active=True
+
+  [payment_status]  5 row(s)
+    • code=canceled  name=Canceled  is_default=False  is_terminal=True  is_active=True
+    • code=failed  name=Failed  is_default=False  is_terminal=True  is_active=True
+    • code=pending  name=Pending  is_default=True  is_terminal=False  is_active=True
+    • code=refunded  name=Refunded  is_default=False  is_terminal=True  is_active=True
+    • code=succeeded  name=Succeeded  is_default=False  is_terminal=True  is_active=True
+
+  [payment_type]  6 row(s)
+    • code=ach  name=ACH  is_active=True
+    • code=bank_debit  name=Bank Debit  is_active=True
+    • code=card  name=Card  is_active=True
+    • code=manual_check  name=Manual Check  is_active=True
+    • code=venmo  name=Venmo  is_active=True
+    • code=wallet  name=Wallet  is_active=True
+
+  [entity_type]  6 row(s)
+    • code=customer  name=Customer  is_active=True
+    • code=customer_communication  name=Customer Communication  is_active=True
+    • code=invoice  name=Invoice  is_active=True
+    • code=job  name=Job  is_active=True
+    • code=quote  name=Quote  is_active=True
+    • code=site  name=Site  is_active=True
+
+  [platform_role]  3 row(s)
+    • code=accountant  name=Platform Accountant (Read-Only)  is_active=True
+    • code=owner  name=Platform Owner (Read/Write)  is_active=True
+    • code=support  name=Platform Support  is_active=True
+
+  [tenant_user_status]  4 row(s)
+    • code=active  name=Active  is_default=True  is_active=True
+    • code=invited  name=Invited  is_default=False  is_active=True
+    • code=pending  name=Pending  is_default=False  is_active=True
+    • code=suspended  name=Suspended  is_default=False  is_active=True
+
+  [customer_lifecycle_status]  4 row(s)
+    • code=active  name=Active  is_default=False  is_active=True
+    • code=churned  name=Churned  is_default=False  is_active=True
+    • code=dormant  name=Dormant  is_default=False  is_active=True
+    • code=prospect  name=Prospect  is_default=True  is_active=True
+
+  [site_lifecycle_status]  3 row(s)
+    • code=active  name=Active  is_default=True  is_active=True
+    • code=closed  name=Closed  is_default=False  is_active=True
+    • code=construction  name=Construction  is_default=False  is_active=True
+
+  [supplier_lifecycle_status]  2 row(s)
+    • code=active  name=Active  is_default=True  is_active=True
+    • code=deprecated  name=Deprecated  is_default=False  is_active=True
+
+  [notification_channel]  4 row(s)
+    • code=email  name=Email  is_active=True
+    • code=in_app  name=In-App Banner  is_active=True
+    • code=push  name=Push  is_active=True
+    • code=sms  name=SMS  is_active=True
+
+  [notification_type]  9 row(s)
+    • code=customer_communication_sent  name=Customer Communication Sent  is_active=True
+    • code=dunning_reminder  name=Dunning Reminder  is_active=True
+    • code=gps_variance_alert  name=GPS Variance Alert  is_active=True
+    • code=job_assigned  name=Job Assigned  is_active=True
+    • code=qb_conflict_pre_warning  name=QB Conflict Pre-Warning  is_active=True
+    • code=qb_sync_conflict  name=QB Sync Conflict  is_active=True
+    • code=quote_accepted  name=Quote Accepted  is_active=True
+    • code=schedule_changed  name=Schedule Changed  is_active=True
+    • code=system_template_updated  name=System Template Updated  is_active=True
+
+  [subscription_status]  6 row(s)
+    • code=active  name=Active  is_billing_active=True
+    • code=canceled  name=Canceled  is_billing_active=False
+    • code=past_due  name=Past Due  is_billing_active=True
+    • code=paused  name=Paused  is_billing_active=False
+    • code=trialing  name=Trialing  is_billing_active=True
+    • code=unpaid  name=Unpaid  is_billing_active=False
+
+  [app_service_category]  1 row(s)
+    • code=accounting  description=Accounting & Bookkeeping integrations  is_active=True
+
+  [app_service_provider]  2 row(s)
+    • code=intuit  description=Intuit (QuickBooks Online)  is_active=True
+    • code=quickbooks  description=QuickBooks Online  is_active=True
+
+  [quote_link_status]  4 row(s)
+    • code=active  name=Active  is_default=True  is_active=True
+    • code=exhausted  name=Max Uses Reached  is_default=False  is_active=True
+    • code=expired  name=Expired  is_default=False  is_active=True
+    • code=revoked  name=Revoked  is_default=False  is_active=True
+
+  [supplier_item_category]  9 row(s)
+    • code=conduit_raceway  name=Conduit, Raceway & Strut  is_active=True
+    • code=dist_equip  name=Distribution & Control (Breakers/Panels)  is_active=True
+    • code=enclosures  name=Boxes & Enclosures  is_active=True
+    • code=fasteners  name=Hardware & Fasteners  is_active=True
+    • code=fittings  name=Fittings  is_active=True
+    • code=lighting  name=Lighting & Controls  is_active=True
+    • code=tools_equip  name=Tools & Field Equipment  is_active=True
+    • code=wire_cable  name=Wire & Cable  is_active=True
+    • code=wiring_devices  name=Wiring Devices (Switches/Outlets)  is_active=True
+
+  [supplier_item_uom]  8 row(s)
+    • code=bag  name=Bag  is_default=False  is_active=True
+    • code=box  name=Box  is_default=False  is_active=True
+    • code=each  name=Each  is_default=True  is_active=True
+    • code=foot  name=Foot  is_default=False  is_active=True
+    • code=linear_foot  name=Linear Foot  is_default=False  is_active=True
+    • code=package  name=Package  is_default=False  is_active=True
+    • code=roll  name=Roll  is_default=False  is_active=True
+    • code=spool  name=Spool  is_default=False  is_active=True
+
+  [webhook_event_type]  3 row(s)
+    • code=invoice.paid  name=Invoice Paid  is_active=True
+    • code=job.updated  name=Job Updated  is_active=True
+    • code=quote.accepted  name=Quote Accepted  is_active=True
+
+  [sso_provider]  2 row(s)
+    • code=google  name=Google  is_active=True
+    • code=microsoft  name=Microsoft  is_active=True
+
+  [job_expense_category]  3 row(s)
+    • code=equipment  is_active=True
+    • code=materials  is_active=True
+    • code=permits  is_active=True
+
+  [qpl_contact_action_type]  4 row(s)
+    • approve  'Approve'  is_active=False
+    • message  'Message'  is_active=False
+    • request_change  'Request Change'  is_active=False
+    • view  'View'  is_active=True
+
+  [notification_category]  8 row(s)
+    • [1] quote_approvals                   'Quote Approvals'
+          Notifications when quotes are submitted, approved, or reje…
+    • [2] field_issues                      'Field Issues'
+          Notifications for field escalations and mobile sync confli…
+    • [3] sync_conflicts                    'Sync Conflicts'
+          Notifications for QuickBooks and calendar sync conflicts r…
+    • [4] job_activity                      'Job Activity'
+          Notifications for job assignments, updates, and status cha…
+    • [5] customer_activity                 'Customer Activity'
+          Notifications for customer communications and inbound mess…
+    • [6] billing                           'Billing'
+          Notifications for invoice activity, payments, and subscrip…
+    • [7] background_sync_alerts            'Background Sync Alerts'
+          Notifications for background synchronization status and er…
+    • [8] system_announcements              'System Announcements'
+          Platform announcements and critical system notifications.
+
+  [notification_default_policy]  24 row(s)
+    • background_sync_alerts         channel=email     enabled=False
+    • background_sync_alerts         channel=in_app    enabled=True
+    • background_sync_alerts         channel=push      enabled=True
+    • billing                        channel=email     enabled=True
+    • billing                        channel=in_app    enabled=True
+    • billing                        channel=push      enabled=False
+    • customer_activity              channel=email     enabled=False
+    • customer_activity              channel=in_app    enabled=True
+    • customer_activity              channel=push      enabled=True
+    • field_issues                   channel=email     enabled=True
+    • field_issues                   channel=in_app    enabled=True
+    • field_issues                   channel=push      enabled=True
+    • job_activity                   channel=email     enabled=False
+    • job_activity                   channel=in_app    enabled=True
+    • job_activity                   channel=push      enabled=True
+    • quote_approvals                channel=email     enabled=True
+    • quote_approvals                channel=in_app    enabled=True
+    • quote_approvals                channel=push      enabled=True
+    • sync_conflicts                 channel=email     enabled=True
+    • sync_conflicts                 channel=in_app    enabled=True
+    • sync_conflicts                 channel=push      enabled=False
+    • system_announcements           channel=email     enabled=True
+    • system_announcements           channel=in_app    enabled=True
+    • system_announcements           channel=push      enabled=False
+
+  [tax_rate_version]  3 row(s)
+    • US-CA-LA             rate=9.5000%  period=["2024-01-01 00:00:00+00",)  'Los Angeles County, CA'
+    • US-DEFAULT           rate=6.0000%  period=["2020-01-01 00:00:00+00",)  'Default US Sales Tax'
+    • US-TX-HARRIS         rate=8.2500%  period=["2024-01-01 00:00:00+00",)  'Harris County, TX Combined Rate'
+
+  [notification_category_sub_trigger]  7 row(s)
+    • customer_activity.inbound_sms_reply                 category=customer_activity
+    • field_issues.all                                    category=field_issues
+    • job_activity.assignment                             category=job_activity
+    • mfa_grace_reminder_critical                         category=system_announcements
+    • mfa_grace_reminder_gentle                           category=system_announcements
+    • mfa_grace_reminder_urgent                           category=system_announcements
+    • system_announcements.critical                       category=system_announcements
+
+  [product_feature]  3 row(s)
+    • outbound_sms_segments  'Outbound SMS Segments'  unit=segments
+    • schedule_lanes  'Schedule Lanes'  unit=lanes
+    • voice_ai_minutes  'Voice AI minutes'  unit=minutes
+
+  [jwk_status]  3 row(s)
+    • active  'Active'  is_default=True  is_signable=True
+    • retired  'Retired'  is_default=False  is_signable=False
+    • retiring  'Retiring'  is_default=False  is_signable=False
+
+  [tenant_user_role]  4 row(s)
+    • accountant  'Accountant'  is_default=False  is_active=True
+    • office_staff  'Office Staff'  is_default=False  is_active=True
+    • owner  'Owner'  is_default=True  is_active=True
+    • technician  'Field Technician'  is_default=False  is_active=True
+
+  [sync_conflict_classification_matrix]  17 row(s) (null-tenant)
+    • change_order         quote_version_active                 → auto_silent
+    • change_order         quote_version_superseded             → tech_resolvable
+    • expense              category_exists_under_limit          → auto_silent
+    • expense              category_renamed                     → auto_notice
+    • expense              exceeds_per_item_limit               → tech_resolvable
+    • expense              job_deleted                          → owner_escalation
+    • loto_check           job_completed_before_sync            → auto_notice
+    • loto_check           job_in_progress                      → auto_silent
+    • photo                job_deleted                          → owner_escalation
+    • photo                job_exists                           → auto_silent
+    • photo                storage_limit_exceeded               → tech_resolvable
+    • status_change        job_already_completed                → owner_escalation
+    • status_change        normal_transition                    → auto_silent
+    • time_entry           job_deleted                          → owner_escalation
+    • time_entry           job_reassigned                       → tech_resolvable
+    • time_entry           job_still_assigned                   → auto_silent
+    • time_entry           time_overlap                         → tech_resolvable
+
+  [communication_template]  17 row(s) (null-tenant)
+    • appointment_reminder_1h              channel=email
+    • appointment_reminder_1h              channel=sms
+    • appointment_reminder_24h             channel=email
+    • appointment_reminder_24h             channel=sms
+    • arrived                              channel=sms
+    • confirm_appointment                  channel=sms
+    • invoice_sent                         channel=email
+    • invoice_sent                         channel=sms
+    • job_complete                         channel=sms
+    • on_my_way                            channel=email
+    • on_my_way                            channel=sms
+    • parts_delay                          channel=sms
+    • payment_received                     channel=email
+    • payment_received                     channel=sms
+    • recurring_job_scheduled              channel=email
+    • recurring_job_scheduled              channel=sms
+    • running_late                         channel=sms
+
+  [email_template]  16 row(s)
+    • email_verification                   'Email Verification'  category=internal
+    • invoice_sent                         'Invoice Sent to Customer'  category=customer_facing
+    • mfa_reset_by_owner                   'MFA Reset by Account Owner'  category=internal
+    • password_reset                       'Password Reset'  category=internal
+    • payment_failed                       'Payment Failed'  category=customer_facing
+    • payment_received_customer            'Payment Receipt'  category=customer_facing
+    • payment_received_tenant              'Payment Received (Tenant)'  category=internal
+    • quote_accepted                       'Quote Accepted Notification'  category=internal
+    • quote_declined                       'Quote Declined Notification'  category=internal
+    • quote_expiring                       'Quote Expiring Soon'  category=customer_facing
+    • quote_sent                           'Quote Sent to Customer'  category=customer_facing
+    • subscription_payment_failed          'Subscription Payment Failed'  category=internal
+    • subscription_renewal                 'Subscription Renewal'  category=internal
+    • trial_expired                        'Trial Expired'  category=internal
+    • trial_expiring                       'Trial Expiring Soon'  category=internal
+    • welcome                              'Welcome'  category=internal
+
+  [platform_setting_catalog]  48 row(s)
+    • square_integration_enabled                          type=boolean     editable=True  cat=billing
+    • default_payment_terms                               type=string      editable=True  cat=billing
+    • default_billing_mode                                type=string      editable=True  cat=billing
+    • invoice_reminder_days_1                             type=integer     editable=True  cat=billing
+    • invoice_reminder_days_2                             type=integer     editable=True  cat=billing
+    • invoice_reminder_days_3                             type=integer     editable=True  cat=billing
+    • default_labor_rate_cents                            type=integer     editable=False  cat=labor
+    • default_billable_labor_rate_cents                   type=integer     editable=False  cat=labor
+    • photo_upload_wifi_only                              type=boolean     editable=True  cat=mobile
+    • photo_local_retention_days                          type=integer     editable=True  cat=mobile
+    • offline_hard_limit_hours                            type=integer     editable=False  cat=mobile
+    • voice_offline_audio_storage_limit_mb                type=integer     editable=False  cat=mobile
+    • sms_quota_cap_policy                                type=string      editable=True  cat=notifications
+    • qb_auto_expire_days                                 type=integer     editable=True  cat=qb
+    • qb_pre_warning_days                                 type=integer     editable=True  cat=qb
+    • qb_auto_expire_customer_enabled                     type=boolean     editable=True  cat=qb
+    • qb_auto_expire_customer_direction                   type=string      editable=True  cat=qb
+    • qb_auto_expire_quote_enabled                        type=boolean     editable=True  cat=qb
+    • qb_auto_expire_quote_direction                      type=string      editable=True  cat=qb
+    • qb_auto_expire_invoice_enabled                      type=boolean     editable=True  cat=qb
+    • qb_auto_expire_invoice_direction                    type=string      editable=True  cat=qb
+    • qb_auto_expire_expense_enabled                      type=boolean     editable=True  cat=qb
+    • qb_auto_expire_expense_direction                    type=string      editable=True  cat=qb
+    • require_approval_for_tech_quotes                    type=boolean     editable=True  cat=quotes
+    • max_discount_pct_owner                              type=decimal     editable=True  cat=quotes
+    • default_quote_validity_days                         type=integer     editable=True  cat=quotes
+    • default_invoice_terms_days                          type=integer     editable=True  cat=quotes
+    • etc_variance_owner_notify_pct                       type=integer     editable=True  cat=reports
+    • etc_variance_note_required_pct                      type=integer     editable=True  cat=reports
+    • margin_target_pct                                   type=integer     editable=True  cat=reports
+    • margin_bucket_boundaries                            type=jsonb       editable=True  cat=reports
+    • report_chart_threshold                              type=integer     editable=False  cat=reports
+    • tech_color_palette                                  type=jsonb       editable=True  cat=reports
+    • gps_variance_alert_threshold_meters                 type=integer     editable=True  cat=safety
+    • loto_confirmation_required                          type=boolean     editable=True  cat=safety
+    • tenant_mfa_required                                 type=boolean     editable=True  cat=security
+    • tenant_mfa_grace_period_days                        type=integer     editable=True  cat=security
+    • calendar_conflict_auto_expire_enabled               type=boolean     editable=True  cat=sync
+    • calendar_conflict_auto_expire_days                  type=integer     editable=True  cat=sync
+    • calendar_conflict_pre_warning_days                  type=integer     editable=True  cat=sync
+    • background_sync_enabled                             type=boolean     editable=True  cat=sync
+    • background_sync_wifi_only                           type=boolean     editable=True  cat=sync
+    • background_sync_battery_floor_pct                   type=integer     editable=True  cat=sync
+    • background_sync_push_interval_minutes               type=integer     editable=True  cat=sync
+    • tenant_sync_indicator_pending_amber_threshold       type=integer     editable=False  cat=sync
+    • default_trial_length_days                           type=integer     editable=False  cat=trial
+    • voice_persona_tone                                  type=string      editable=True  cat=voice
+    • voice_persona_tone_user_override_allowed            type=boolean     editable=True  cat=voice
+
+  [platform_setting (null-tenant defaults)]  48 row(s)
+    • background_sync_battery_floor_pct                   = 20
+    • background_sync_enabled                             = True
+    • background_sync_push_interval_minutes               = 5
+    • background_sync_wifi_only                           = False
+    • calendar_conflict_auto_expire_days                  = 60
+    • calendar_conflict_auto_expire_enabled               = True
+    • calendar_conflict_pre_warning_days                  = 14
+    • default_billable_labor_rate_cents                   = 15000
+    • default_billing_mode                                = line_item
+    • default_invoice_terms_days                          = 0
+    • default_labor_rate_cents                            = 8500
+    • default_payment_terms                               = due_on_receipt
+    • default_quote_validity_days                         = 30
+    • default_trial_length_days                           = 14
+    • etc_variance_note_required_pct                      = 10
+    • etc_variance_owner_notify_pct                       = 50
+    • gps_variance_alert_threshold_meters                 = 500
+    • invoice_reminder_days_1                             = 1
+    • invoice_reminder_days_2                             = 7
+    • invoice_reminder_days_3                             = 14
+    • loto_confirmation_required                          = False
+    • margin_bucket_boundaries                            = [10, 20, 30]
+    • margin_target_pct                                   = 20
+    • max_discount_pct_owner                              = 15.0
+    • offline_hard_limit_hours                            = 72
+    • photo_local_retention_days                          = 7
+    • photo_upload_wifi_only                              = True
+    • qb_auto_expire_customer_direction                   = None
+    • qb_auto_expire_customer_enabled                     = False
+    • qb_auto_expire_days                                 = 60
+    • qb_auto_expire_expense_direction                    = None
+    • qb_auto_expire_expense_enabled                      = False
+    • qb_auto_expire_invoice_direction                    = None
+    • qb_auto_expire_invoice_enabled                      = False
+    • qb_auto_expire_quote_direction                      = None
+    • qb_auto_expire_quote_enabled                        = False
+    • qb_pre_warning_days                                 = 14
+    • report_chart_threshold                              = 8
+    • require_approval_for_tech_quotes                    = True
+    • sms_quota_cap_policy                                = soft
+    • square_integration_enabled                          = False
+    • tech_color_palette                                  = None
+    • tenant_mfa_grace_period_days                        = 7
+    • tenant_mfa_required                                 = False
+    • tenant_sync_indicator_pending_amber_threshold       = 5
+    • voice_offline_audio_storage_limit_mb                = 500
+    • voice_persona_tone                                  = balanced
+    • voice_persona_tone_user_override_allowed            = True

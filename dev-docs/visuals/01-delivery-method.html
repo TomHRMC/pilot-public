@@ -1,0 +1,130 @@
+<title>The Delivery Method</title>
+<style>
+  /* Layout: a single hero figure — AI team → human-operated guardrail gate → correct output, looped back to the human. */
+  :root{
+    --bg:#f6f8f8; --surface:#ffffff; --fg:#192024; --muted:#59656d; --line:#d2d9dc;
+    --accent:#0d7d74; --accent-soft:#e4f1ef; --accent-strong:#0a5d56;
+    --sans:"IBM Plex Sans",ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  }
+  @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+    --bg:#0e1416; --surface:#161d20; --fg:#e9eef0; --muted:#9aa7ad; --line:#2a343a;
+    --accent:#3fd0c2; --accent-soft:#10302e; --accent-strong:#63e2d5; color-scheme:dark;
+  }}
+  :root[data-theme="dark"]{
+    --bg:#0e1416; --surface:#161d20; --fg:#e9eef0; --muted:#9aa7ad; --line:#2a343a;
+    --accent:#3fd0c2; --accent-soft:#10302e; --accent-strong:#63e2d5; color-scheme:dark;
+  }
+  body{background:var(--bg);color:var(--fg);font-family:var(--sans);line-height:1.5;}
+  .wrap{max-width:1120px;margin:0 auto;padding-block:32px 40px;padding-inline:16px;}
+  .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-strong);margin:0 0 6px;}
+  h1{font-size:clamp(22px,3.2vw,30px);line-height:1.12;text-wrap:balance;margin:0 0 8px;font-weight:700;letter-spacing:-.01em;}
+  .lede{color:var(--muted);font-size:15px;max-width:66ch;margin:0 0 22px;}
+  figure{margin:0;}
+  .diagram{width:100%;height:auto;display:block;background:var(--surface);border:1px solid var(--line);border-radius:14px;}
+  figcaption{color:var(--muted);font-size:13px;margin-top:12px;max-width:72ch;}
+  .foot{margin-top:18px;font-size:12.5px;color:var(--muted);font-family:var(--mono);}
+  /* SVG text roles */
+  svg{color:var(--fg);}
+  .h1{fill:var(--fg);font-weight:700;font-size:25px;letter-spacing:-.01em;}
+  .sub{fill:var(--muted);font-size:14.5px;}
+  .nt{fill:var(--fg);font-weight:700;font-size:18px;}
+  .gt{fill:var(--accent-strong);font-weight:700;font-size:17px;letter-spacing:.02em;}
+  .nb{fill:var(--fg);font-size:13px;}
+  .nm{fill:var(--muted);font-family:var(--mono);font-size:11px;}
+  .ns{fill:var(--muted);font-size:12px;}
+  .nsi{fill:var(--muted);font-size:12px;font-style:italic;}
+  .lbl{fill:var(--muted);font-family:var(--mono);font-size:12px;}
+  .lbla{fill:var(--accent-strong);font-family:var(--mono);font-size:12px;}
+  .anote{fill:var(--accent-strong);font-size:12.5px;font-weight:600;}
+  .node{fill:var(--surface);stroke:var(--line);stroke-width:1.5;}
+  .gate{fill:var(--accent-soft);stroke:var(--accent);stroke-width:2.5;}
+  .uline{stroke:var(--accent);stroke-width:2;}
+</style>
+
+<div class="wrap">
+  <p class="eyebrow">HotRMC · The delivery method</p>
+  <h1>How I run engineering</h1>
+  <p class="lede">One architect directs a team of AI agents. Seven standing guardrails and a human-operated gate turn their volume into correct work built to production standards — not fast, confident debt.</p>
+
+  <figure>
+    <svg class="diagram" viewBox="0 0 1200 660" role="img"
+      aria-label="One human architect directs an AI team of 12 roles across 6 LLMs. Every change the team produces passes through a gate of seven guardrails that the human operates, producing correct work built to production standards; findings loop back to the human for the next batch.">
+      <defs>
+        <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto-start-reverse">
+          <path d="M1,1 L9,5 L1,9 Z" fill="var(--muted)"/>
+        </marker>
+        <marker id="arrowA" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto-start-reverse">
+          <path d="M1,1 L9,5 L1,9 Z" fill="var(--accent)"/>
+        </marker>
+      </defs>
+
+      <!-- title -->
+      <text class="h1" x="600" y="44" text-anchor="middle">AI generates. Guardrails + a human gate make it correct.</text>
+      <text class="sub" x="600" y="74" text-anchor="middle">The operating model behind a solo, ~6-month build to production standards</text>
+
+      <!-- ===== TOP BAND: TEAM -> GATE -> OUTPUT ===== -->
+      <!-- TEAM -->
+      <rect class="node" x="55" y="150" width="340" height="212" rx="12"/>
+      <text class="nt" x="225" y="186" text-anchor="middle">The AI team</text>
+      <text class="nb" x="225" y="212" text-anchor="middle">12 specialized roles, model-routed</text>
+      <text class="nm" x="225" y="240" text-anchor="middle">architect · orchestrator · python · react</text>
+      <text class="nm" x="225" y="260" text-anchor="middle">qa · devops · integrations · voice-ai</text>
+      <text class="nm" x="225" y="280" text-anchor="middle">3 ui designers · domain expert</text>
+      <text class="nb" x="225" y="312" text-anchor="middle">across 6 LLMs</text>
+      <text class="nm" x="225" y="336" text-anchor="middle">Gemini · Claude · Grok · GPT · Kimi · GLM</text>
+
+      <!-- TEAM -> GATE -->
+      <line x1="395" y1="256" x2="483" y2="256" stroke="var(--muted)" stroke-width="2" marker-end="url(#arrow)"/>
+      <text class="lbl" x="439" y="244" text-anchor="middle">every change</text>
+
+      <!-- GATE (accent) -->
+      <rect class="gate" x="485" y="150" width="280" height="212" rx="12"/>
+      <text class="gt" x="625" y="181" text-anchor="middle">The gate · 7 guardrails</text>
+      <text class="nb" x="505" y="205" text-anchor="start">1 · venv-locked commands</text>
+      <text class="nb" x="505" y="226" text-anchor="start">2 · golden-master schema + diff</text>
+      <text class="nb" x="505" y="247" text-anchor="start">3 · zero-regression test ratchet</text>
+      <text class="nb" x="505" y="268" text-anchor="start">4 · done = code + docs + trackers</text>
+      <text class="nb" x="505" y="289" text-anchor="start">5 · /test twins, prod-blocked</text>
+      <text class="nb" x="505" y="310" text-anchor="start">6 · verify live DB, never assume</text>
+      <text class="nb" x="505" y="331" text-anchor="start">7 · human gate on every batch</text>
+
+      <!-- GATE -> OUTPUT -->
+      <line x1="765" y1="256" x2="853" y2="256" stroke="var(--muted)" stroke-width="2" marker-end="url(#arrow)"/>
+      <text class="lbl" x="809" y="244" text-anchor="middle">reconciled</text>
+
+      <!-- OUTPUT -->
+      <rect class="node" x="855" y="150" width="290" height="212" rx="12"/>
+      <text class="nt" x="1000" y="184" text-anchor="middle">Correct output</text>
+      <text class="nsi" x="1000" y="206" text-anchor="middle">built to production standards</text>
+      <line x1="885" y1="224" x2="1115" y2="224" stroke="var(--line)" stroke-width="1"/>
+      <text class="nb" x="1000" y="252" text-anchor="middle">~8,000 automated tests</text>
+      <text class="nb" x="1000" y="282" text-anchor="middle">193-table multi-tenant schema</text>
+      <text class="nb" x="1000" y="312" text-anchor="middle">built to a Charter-ready state</text>
+
+      <!-- ===== CONNECTORS to HUMAN band ===== -->
+      <!-- HUMAN -> TEAM (assigns) -->
+      <line x1="225" y1="470" x2="225" y2="364" stroke="var(--muted)" stroke-width="2" marker-end="url(#arrow)"/>
+      <text class="lbl" x="238" y="422" text-anchor="start">assigns scoped work</text>
+
+      <!-- HUMAN -> GATE (operates, accent) -->
+      <line x1="625" y1="470" x2="625" y2="364" stroke="var(--accent)" stroke-width="2.5" marker-end="url(#arrowA)"/>
+      <text class="lbla" x="638" y="415" text-anchor="start">runs migrations · diffs</text>
+      <text class="lbla" x="638" y="431" text-anchor="start">· tests · confirms</text>
+
+      <!-- OUTPUT -> HUMAN (feedback) -->
+      <line x1="1000" y1="364" x2="1000" y2="470" stroke="var(--muted)" stroke-width="2" marker-end="url(#arrow)"/>
+      <text class="lbl" x="987" y="422" text-anchor="end">findings → next batch</text>
+
+      <!-- ===== HUMAN band ===== -->
+      <rect class="node" x="55" y="470" width="1090" height="150" rx="12"/>
+      <text class="nt" x="600" y="512" text-anchor="middle">The human — architect · reviewer · accountable owner</text>
+      <text class="ns" x="600" y="542" text-anchor="middle">Sets the architecture, owns the decisions that are expensive to reverse, and confirms every gate.</text>
+      <text class="anote" x="600" y="574" text-anchor="middle">The AI proposes and implements. A human owns every output.</text>
+      <text class="ns" x="600" y="598" text-anchor="middle">This is the scarce input — and what you hire.</text>
+    </svg>
+    <figcaption>The method in one view: specialized AI agents produce the volume; seven guardrails plus a human who runs the migrations, diffs, and tests form the gate every change must clear; what passes is correct work built to production standards. Findings loop back to the human, one batch at a time.</figcaption>
+  </figure>
+
+  <p class="foot">Pilot for Trades proof suite · 2026</p>
+</div>

@@ -1,0 +1,461 @@
+# Infrastructure Script Hardening Prompt
+
+> **⚠️ Historical Note (2026-07-03)**: This prompt was executed and Phase 5.5 is ✅ Complete. **App Runner was sunset April 30, 2026.** The `INFRA_APP_RUNNER` flag and `APP_RUNNER_ARN` variable that this prompt generated are now obsolete. As part of Phase 6 Step 6.4, `generate-infra-state.sh` must be updated to **remove** these variables, and `INFRA_ECS` must be extended to include the `pilot-web` ECS service. The 4 profile scripts must replace all `aws apprunner pause/resume` calls with `aws ecs update-service --desired-count 0/1 --service pilot-web`. See [`aws-phase6-step6.4-devops-engr-prompt.md`](aws-phase6-step6.4-devops-engr-prompt.md) for the complete implementation instructions.
+
+**Mode**: `pilot-devops-engineer`
+**Task**: Harden all 4 profile scripts for dynamic resource discovery + deployment-phase awareness
+**Files to modify**: `infrastructure/scripts/profile-a-marketing.sh`, `profile-b-app.sh`, `profile-c-checklist.sh`, `profile-off.sh`
+**New files to create**: `infrastructure/scripts/generate-infra-state.sh`, `infrastructure/scripts/.infra-state.env.example`
+**Estimate**: 45–60 minutes
+**Status doc**: [`dev-docs/devops/aws-deployment-status.md`](../aws-deployment-status.md) Phase 5.5
+
+---
+
+## ⚠️ MANDATORY STOP — Read ALL Files Before Writing Any Code
+
+Read every file listed below before making any changes. This task touches operational scripts that control live AWS resources — mistakes cost money and break the marketing site.
+
+### Infrastructure Scripts (modify these)
+- [`infrastructure/scripts/profile-a-marketing.sh`](../../../infrastructure/scripts/profile-a-marketing.sh)
+- [`infrastructure/scripts/profile-b-app.sh`](../../../infrastructure/scripts/profile-b-app.sh)
+- `infrastructure/scripts/profile-c-checklist.sh` _(private)_
+- [`infrastructure/scripts/profile-off.sh`](../../../infrastructure/scripts/profile-off.sh)
+
+### DevOps Reference Docs (read for context)
+- [`dev-docs/devops/aws-deployment-plan-v1.md §5 Phase 5.5`](../aws-deployment-plan-v1.md) — Phase 5.5 design spec and step descriptions
+- [`dev-docs/devops/aws-deployment-status.md`](../aws-deployment-status.md) — current Phase Status Summary + Phase 5.5 tracking section to update
+- [`dev-docs/devops/aws-ops-runbook.md`](../aws-ops-runbook.md) — existing runbook; may need a new section for `generate-infra-state.sh`
+- [`dev-docs/devops/aws-infrastructure-as-built.md`](../aws-infrastructure-as-built.md) — live resource names, IDs, and ARNs for verification
+
+### Terraform Outputs Reference (verify these exist before using in script)
+- [`infrastructure/terraform/environments/production/main.tf`](../../../infrastructure/terraform/environments/production/main.tf) — shows which outputs exist
+- [`infrastructure/terraform/modules/compute/outputs.tf`](../../../infrastructure/terraform/modules/compute/outputs.tf) — GPU, App Runner, CloudFront, ECS outputs
+- [`infrastructure/terraform/modules/networking/outputs.tf`](../../../infrastructure/terraform/modules/networking/outputs.tf) — bastion, VPC outputs
+
+> **Current context**: Phase 5 is complete, Phase 6 (ECS) is NOT yet deployed. The scripts must work correctly in this partial state without failing.
+
+> **Key principle**: `generate-infra-state.sh` is the single source of truth for what's available. Do NOT hard-code phase knowledge into the profile scripts themselves — they derive everything from `.infra-state.env`.
+
+---
+
+## Problem Being Solved
+
+The 4 profile scripts currently have two structural issues:
+
+**Issue 1 — Hard-coded instance IDs and ARNs** (`<fill:>` placeholders)
+All scripts have a `── Variables ──` block with placeholders like `GPU_INSTANCE_ID="<fill: i-0xxx>"`. These break silently when Terraform replaces a resource (new instance ID, old script). They also require manual maintenance.
+
+**Issue 2 — No deployment-phase awareness**
+All scripts unconditionally call ECS `update-service` for services that don't exist until Phase 6. With `set -euo pipefail`, these calls fail hard and abort the script. There's no way to run any script before Phase 6 is complete.
+
+---
+
+## Design
+
+### The `generate-infra-state.sh` Helper
+
+This new script is the **only place** that knows what Terraform has deployed. It runs `terraform output -json`, checks for the presence of each deployable component, and writes `.infra-state.env` — a sourced shell file that the 4 profile scripts read at startup.
+
+```
+infrastructure/scripts/
+├── generate-infra-state.sh     ← NEW: queries terraform + writes .infra-state.env
+├── .infra-state.env            ← GENERATED: sourced by all 4 profile scripts (gitignored)
+├── .infra-state.env.example    ← NEW: committed reference showing all available flags
+├── profile-a-marketing.sh      ← MODIFIED
+├── profile-b-app.sh            ← MODIFIED
+├── profile-c-checklist.sh      ← MODIFIED
+└── profile-off.sh              ← MODIFIED
+```
+
+### `.infra-state.env` Format
+
+```bash
+# Auto-generated by generate-infra-state.sh — DO NOT EDIT
+# Last generated: <ISO timestamp>
+# Terraform workspace: production
+#
+# Usage: source .infra-state.env
+# All profile scripts source this file at startup.
+
+# ── Provisioned resource IDs (resolved from Terraform outputs) ────────────────
+GPU_INSTANCE_ID="i-0abc123def456789"       # empty string if not provisioned
+BASTION_INSTANCE_ID="i-0xyz789abc123456"   # empty string if not provisioned
+APP_RUNNER_ARN="arn:aws:apprunner:..."     # empty string if not provisioned
+CLOUDFRONT_DIST_ID="EXXXXXXXXXXXX2"       # empty string if not provisioned
+
+# ── Feature flags: true = resource exists in Terraform state ─────────────────
+INFRA_NETWORKING="true"      # Phase 1: VPC, subnets, NAT, bastion, security groups
+INFRA_DATABASE="true"        # Phase 2: RDS + ElastiCache Redis
+INFRA_STORAGE="true"         # Phase 2+5: S3 buckets + CloudFront distribution
+INFRA_BASTION="true"         # Phase 1: bastion EC2 instance
+INFRA_GPU="true"             # Phase 4+5: g4dn.xlarge EC2 instance
+INFRA_APP_RUNNER="true"      # Phase 5: App Runner web dashboard service
+INFRA_ECS="false"            # Phase 6: ECS cluster + pilot-api/worker/beat services
+```
+
+---
+
+## Task 1 — Create `generate-infra-state.sh`
+
+Create `infrastructure/scripts/generate-infra-state.sh`:
+
+```bash
+#!/usr/bin/env bash
+set -euo pipefail
+# ── generate-infra-state.sh ───────────────────────────────────────────────────
+# Queries live Terraform state and writes .infra-state.env for use by profile scripts.
+# Run this once after any terraform apply, and whenever Terraform creates new resources.
+#
+# Usage:
+#   cd infrastructure/scripts
+#   ./generate-infra-state.sh
+#
+# Output: infrastructure/scripts/.infra-state.env (gitignored)
+# ─────────────────────────────────────────────────────────────────────────────
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+TF_DIR="$SCRIPT_DIR/../../infrastructure/terraform/environments/production"
+OUTPUT_FILE="$SCRIPT_DIR/.infra-state.env"
+REGION="us-east-1"
+ACCOUNT_ID="000000000000"
+
+echo "=== generate-infra-state.sh ==="
+echo "Terraform dir: $TF_DIR"
+echo "Output file:   $OUTPUT_FILE"
+echo ""
+
+# Verify correct AWS account
+CURRENT_ACCOUNT=$(aws sts get-caller-identity --query 'Account' --output text --region $REGION 2>/dev/null || echo "")
+if [ "$CURRENT_ACCOUNT" != "$ACCOUNT_ID" ]; then
+  echo "ERROR: Wrong AWS account ($CURRENT_ACCOUNT) — must be $ACCOUNT_ID"
+  exit 1
+fi
+echo "AWS account: $CURRENT_ACCOUNT ✅"
+
+# ── Helper: get terraform output, return empty string if not found ────────────
+tf_output() {
+  local key="$1"
+  (cd "$TF_DIR" && terraform output -raw "$key" 2>/dev/null) || echo ""
+}
+
+# ── Resolve resource IDs from Terraform outputs ───────────────────────────────
+echo ""
+echo "Resolving resource IDs from terraform output..."
+
+GPU_INSTANCE_ID=$(tf_output "gpu_instance_id" || echo "")
+BASTION_INSTANCE_ID=$(tf_output "bastion_instance_id" || echo "")
+APP_RUNNER_ARN=$(tf_output "app_runner_service_arn" || echo "")
+CLOUDFRONT_DIST_ID=$(tf_output "cloudfront_distribution_id" || echo "")
+ECS_CLUSTER=$(tf_output "ecs_cluster_name" || echo "")
+
+# ── Determine feature flags ───────────────────────────────────────────────────
+# Networking: VPC output exists = Phase 1 complete
+VPC_ID=$(tf_output "vpc_id" || echo "")
+[ -n "$VPC_ID" ] && INFRA_NETWORKING="true" || INFRA_NETWORKING="false"
+
+# Database: RDS endpoint exists = Phase 2 complete
+RDS_ENDPOINT=$(tf_output "rds_endpoint" || echo "")
+[ -n "$RDS_ENDPOINT" ] && INFRA_DATABASE="true" || INFRA_DATABASE="false"
+
+# Storage: CloudFront distribution ID exists = Phase 5 compute complete
+[ -n "$CLOUDFRONT_DIST_ID" ] && INFRA_STORAGE="true" || INFRA_STORAGE="false"
+
+# Bastion: instance ID exists
+[ -n "$BASTION_INSTANCE_ID" ] && INFRA_BASTION="true" || INFRA_BASTION="false"
+
+# GPU: instance ID exists
+[ -n "$GPU_INSTANCE_ID" ] && INFRA_GPU="true" || INFRA_GPU="false"
+
+# App Runner: ARN exists
+[ -n "$APP_RUNNER_ARN" ] && INFRA_APP_RUNNER="true" || INFRA_APP_RUNNER="false"
+
+# ECS: verify ECS services actually exist in AWS (not just cluster output)
+INFRA_ECS="false"
+if [ -n "$ECS_CLUSTER" ]; then
+  API_SERVICE=$(aws ecs describe-services --cluster "$ECS_CLUSTER" --services "pilot-api" \
+    --query 'services[?status==`ACTIVE`].serviceName' --output text --region $REGION 2>/dev/null || echo "")
+  [ -n "$API_SERVICE" ] && INFRA_ECS="true"
+fi
+
+# ── Write .infra-state.env ─────────────────────────────────────────────────────
+TIMESTAMP=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+
+cat > "$OUTPUT_FILE" << EOF
+# Auto-generated by generate-infra-state.sh — DO NOT EDIT
+# Last generated: $TIMESTAMP
+# Terraform dir:  $TF_DIR
+# AWS account:    $ACCOUNT_ID
+#
+# Usage: source "$(dirname "\$0")/.infra-state.env"
+# All profile scripts source this file at startup.
+
+# ── Provisioned resource IDs ──────────────────────────────────────────────────
+GPU_INSTANCE_ID="$GPU_INSTANCE_ID"
+BASTION_INSTANCE_ID="$BASTION_INSTANCE_ID"
+APP_RUNNER_ARN="$APP_RUNNER_ARN"
+CLOUDFRONT_DIST_ID="$CLOUDFRONT_DIST_ID"
+ECS_CLUSTER="${ECS_CLUSTER:-pilot-production}"
+
+# ── Feature flags: "true" = resource exists in Terraform state ───────────────
+INFRA_NETWORKING="$INFRA_NETWORKING"
+INFRA_DATABASE="$INFRA_DATABASE"
+INFRA_STORAGE="$INFRA_STORAGE"
+INFRA_BASTION="$INFRA_BASTION"
+INFRA_GPU="$INFRA_GPU"
+INFRA_APP_RUNNER="$INFRA_APP_RUNNER"
+INFRA_ECS="$INFRA_ECS"
+EOF
+
+echo ""
+echo "=== Infrastructure State ==="
+echo "  INFRA_NETWORKING:  $INFRA_NETWORKING"
+echo "  INFRA_DATABASE:    $INFRA_DATABASE"
+echo "  INFRA_STORAGE:     $INFRA_STORAGE"
+echo "  INFRA_BASTION:     $INFRA_BASTION   (ID: ${BASTION_INSTANCE_ID:-<not provisioned>})"
+echo "  INFRA_GPU:         $INFRA_GPU       (ID: ${GPU_INSTANCE_ID:-<not provisioned>})"
+echo "  INFRA_APP_RUNNER:  $INFRA_APP_RUNNER (ARN: ${APP_RUNNER_ARN:-<not provisioned>})"
+echo "  INFRA_ECS:         $INFRA_ECS       (ECS services: pilot-api/worker/beat)"
+echo ""
+echo "Written to: $OUTPUT_FILE"
+echo ""
+echo "Run this script again after any terraform apply that adds new resources."
+```
+
+---
+
+## Task 2 — Create `.infra-state.env.example`
+
+Create `infrastructure/scripts/.infra-state.env.example` showing the fully-provisioned state (all phases complete). This is committed to git as a reference:
+
+```bash
+# .infra-state.env.example — reference for fully-provisioned infrastructure (all phases complete)
+# Actual .infra-state.env is generated by generate-infra-state.sh and is gitignored.
+
+GPU_INSTANCE_ID="i-0xxxxxxxxxxxxxxxxx"
+BASTION_INSTANCE_ID="i-0xxxxxxxxxxxxxxxxx"
+APP_RUNNER_ARN="arn:aws:apprunner:us-east-1:000000000000:service/pilot-web-dashboard/xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+CLOUDFRONT_DIST_ID="XXXXXXXXXXXXX"
+ECS_CLUSTER="pilot-production"
+
+INFRA_NETWORKING="true"
+INFRA_DATABASE="true"
+INFRA_STORAGE="true"
+INFRA_BASTION="true"
+INFRA_GPU="true"
+INFRA_APP_RUNNER="true"
+INFRA_ECS="true"
+```
+
+---
+
+## Task 3 — Add `.infra-state.env` to `.gitignore`
+
+Add to the repo root `.gitignore`:
+
+```
+# Generated infrastructure state — run generate-infra-state.sh to regenerate
+infrastructure/scripts/.infra-state.env
+```
+
+---
+
+## Task 4 — Modify All 4 Profile Scripts
+
+Apply these changes to **each** of the 4 scripts. The modifications follow the same pattern in all 4:
+
+### 4a — Replace `── Variables ──` block
+
+Remove the entire existing `── Variables — fill in after terraform apply ──` block and replace with a `.infra-state.env` source call:
+
+```bash
+# ── Load infrastructure state (generated by generate-infra-state.sh) ─────────
+# Run generate-infra-state.sh after any terraform apply to refresh this file.
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+INFRA_STATE_FILE="$SCRIPT_DIR/.infra-state.env"
+
+if [ ! -f "$INFRA_STATE_FILE" ]; then
+  echo "ERROR: .infra-state.env not found."
+  echo "Run first: cd infrastructure/scripts && ./generate-infra-state.sh"
+  exit 1
+fi
+source "$INFRA_STATE_FILE"
+
+# Static vars (Terraform resource names — stable)
+ACCOUNT_ID="000000000000"
+REGION="us-east-1"
+CLUSTER="${ECS_CLUSTER:-pilot-production}"
+MARKETING_BUCKET="pilot-production-marketing"
+DOMAIN="pilotfortrades.com"
+# ─────────────────────────────────────────────────────────────────────────────
+```
+
+### 4b — Change shebang and pipefail setting
+
+Change:
+```bash
+set -euo pipefail
+```
+To:
+```bash
+set -eo pipefail
+```
+
+`-u` (unbound variable error) is removed because feature flags from `.infra-state.env` are always set by `generate-infra-state.sh` — but removing `-u` prevents hard exits if the file has any gap.
+
+### 4c — Wrap GPU block with `INFRA_GPU` guard
+
+In **all 4 scripts**, any block that references `$GPU_INSTANCE_ID` must be wrapped:
+
+```bash
+if [ "$INFRA_GPU" = "true" ] && [ -n "$GPU_INSTANCE_ID" ]; then
+  echo "[N/M] GPU → stopped..."
+  GPU_STATE=$(aws ec2 describe-instances --instance-ids "$GPU_INSTANCE_ID" \
+    --query 'Reservations[0].Instances[0].State.Name' --output text --region "$REGION")
+  # ... rest of GPU logic
+else
+  echo "[N/M] GPU → [SKIP] not yet provisioned (Phase 4)"
+fi
+```
+
+### 4d — Wrap App Runner block with `INFRA_APP_RUNNER` guard
+
+```bash
+if [ "$INFRA_APP_RUNNER" = "true" ] && [ -n "$APP_RUNNER_ARN" ]; then
+  echo "[N/M] App Runner → paused..."
+  # ... rest of App Runner logic
+else
+  echo "[N/M] App Runner → [SKIP] not yet provisioned (Phase 5)"
+fi
+```
+
+### 4e — Wrap ECS blocks with `INFRA_ECS` guard
+
+```bash
+if [ "$INFRA_ECS" = "true" ]; then
+  echo "[N/M] ECS services → desired count..."
+  aws ecs update-service --cluster "$CLUSTER" --service pilot-api \
+    --desired-count "$API_COUNT" --region "$REGION" > /dev/null
+  # ... rest of ECS logic
+else
+  echo "[N/M] ECS services → [SKIP] not yet provisioned (Phase 6)"
+  echo "  After Phase 6 deploys ECS, run: ./generate-infra-state.sh"
+fi
+```
+
+### 4f — Wrap CloudFront invalidation with `INFRA_STORAGE` guard
+
+```bash
+if [ "$INFRA_STORAGE" = "true" ] && [ -n "$CLOUDFRONT_DIST_ID" ]; then
+  aws cloudfront create-invalidation \
+    --distribution-id "$CLOUDFRONT_DIST_ID" \
+    --paths "/site-config.json" --region us-east-1 > /dev/null
+  echo "  CloudFront invalidation issued"
+else
+  echo "  CloudFront → [SKIP] not yet provisioned"
+fi
+```
+
+### 4g — Wrap bastion block with `INFRA_BASTION` guard (profile-off.sh only)
+
+`profile-off.sh` is the only script that stops the bastion:
+
+```bash
+if [ "$INFRA_BASTION" = "true" ] && [ -n "$BASTION_INSTANCE_ID" ]; then
+  echo "[4/5] Bastion → stopped..."
+  # ... stop bastion logic
+else
+  echo "[4/5] Bastion → [SKIP] not yet provisioned"
+fi
+```
+
+### 4h — Update status summary section
+
+In the final status summary printed by each script, add `[SKIP]` labels for unprovisioned resources and update the `[N/M]` step numbers to match the wrapped blocks.
+
+---
+
+## Task 5 — Update Phase 5.5 Step 5.5.1 in Status Doc
+
+Update [`dev-docs/devops/aws-deployment-status.md`](../aws-deployment-status.md) Phase 5.5 Step 5.5.1 to replace the "fill placeholders" instructions with:
+
+```bash
+# Run the generator — replaces all <fill:> placeholder logic
+cd infrastructure/scripts
+./generate-infra-state.sh
+```
+
+And update the verification step from "fill placeholders" to "verify `.infra-state.env` was written with correct values."
+
+---
+
+## Definition of Done
+
+### Code
+- [ ] `infrastructure/scripts/generate-infra-state.sh` created and executable (`chmod +x`)
+- [ ] `infrastructure/scripts/.infra-state.env.example` created and committed
+- [ ] `infrastructure/scripts/.infra-state.env` added to `.gitignore`
+- [ ] All 4 profile scripts modified: `── Variables ──` block replaced with `source .infra-state.env`
+- [ ] All GPU blocks in 4 scripts wrapped with `INFRA_GPU` guard
+- [ ] All App Runner blocks in 4 scripts wrapped with `INFRA_APP_RUNNER` guard
+- [ ] All ECS blocks in 4 scripts wrapped with `INFRA_ECS` guard
+- [ ] All CloudFront blocks in 4 scripts wrapped with `INFRA_STORAGE` guard
+- [ ] Bastion block in `profile-off.sh` wrapped with `INFRA_BASTION` guard
+- [ ] `generate-infra-state.sh` runs successfully and writes `.infra-state.env` showing current Phase 5 state (`INFRA_ECS=false`)
+- [ ] `profile-off.sh` runs end-to-end without error — ECS block prints `[SKIP]`, S3/CF/GPU/App Runner/bastion blocks execute
+- [ ] `profile-a-marketing.sh` runs end-to-end without error — ECS block prints `[SKIP]`, GPU/App Runner/S3-CF blocks execute
+
+### Doc Updates (required before this task is considered complete)
+- [ ] [`dev-docs/devops/aws-deployment-status.md`](../aws-deployment-status.md) — Phase 5.5 Step 5.5.1: replace "fill placeholders" instructions with "run `generate-infra-state.sh`"; mark step as ✅ if generator ran successfully
+- [ ] [`dev-docs/devops/aws-deployment-status.md`](../aws-deployment-status.md) — Phase Status Summary table: update Phase 5.5 row to ✅ Complete once all steps verified
+- [ ] [`dev-docs/devops/aws-ops-runbook.md`](../aws-ops-runbook.md) — add a `## Infrastructure State Management` section documenting `generate-infra-state.sh` usage: when to run it, what it produces, and the `.infra-state.env` flag reference table
+- [ ] [`dev-docs/devops/aws-infrastructure-as-built.md`](../aws-infrastructure-as-built.md) — add `generate-infra-state.sh` and `.infra-state.env` to the scripts reference table if one exists; otherwise add a note in the Operations Scripts section
+
+---
+
+## Completion Summary
+
+Post in chat:
+
+```
+## Phase 5.5 Script Hardening Complete
+
+**Date**: <date>
+
+### New Files Created
+- infrastructure/scripts/generate-infra-state.sh: ✅ created + chmod +x
+- infrastructure/scripts/.infra-state.env.example: ✅ created + committed
+- infrastructure/scripts/.infra-state.env: ✅ generated (gitignored)
+
+### Scripts Modified
+- profile-a-marketing.sh: ✅ INFRA guards added, Variables block removed
+- profile-b-app.sh: ✅ INFRA guards added, Variables block removed
+- profile-c-checklist.sh: ✅ INFRA guards added, Variables block removed
+- profile-off.sh: ✅ INFRA guards added, Variables block removed
+
+### .infra-state.env Current Values
+INFRA_NETWORKING=<true/false>
+INFRA_DATABASE=<true/false>
+INFRA_STORAGE=<true/false>
+INFRA_BASTION=<true/false>
+INFRA_GPU=<true/false>
+INFRA_APP_RUNNER=<true/false>
+INFRA_ECS=<true/false>
+GPU_INSTANCE_ID=<value or empty>
+BASTION_INSTANCE_ID=<value or empty>
+APP_RUNNER_ARN=<value or empty>
+CLOUDFRONT_DIST_ID=<value or empty>
+
+### Script Verification
+- generate-infra-state.sh ran successfully: ✅
+- profile-off.sh ran end-to-end (ECS=[SKIP]): ✅
+- profile-a-marketing.sh ran end-to-end (ECS=[SKIP]): ✅
+
+### Doc Updates Completed
+- aws-deployment-status.md Phase 5.5 Step 5.5.1: updated ✅
+- aws-deployment-status.md Phase Status Summary Phase 5.5 row: ✅ Complete
+- aws-ops-runbook.md Infrastructure State Management section: added ✅
+- aws-infrastructure-as-built.md scripts reference: updated ✅
+
+### Issues Encountered
+<list or "None">
+```

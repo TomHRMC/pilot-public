@@ -1,0 +1,51 @@
+=== seed_test_tenant: seed mode ===
+    Tenant ID: 00000000-0000-0000-0000-000000000001
+
+  ✅ [user] Upserted dev@pilot.local (00000000-0000-0000-0000-000000000002)
+  ✅ [user] Upserted tech@pilot.local (00000000-0000-0000-0000-000000000003)
+  ✅ [user] Upserted office@pilot.local (00000000-0000-0000-0000-000000000004)
+  ✅ [user] Upserted accountant@pilot.local (00000000-0000-0000-0000-000000000005)
+  ✅ [tenant] Upserted 'Pilot Dev Tenant' (00000000-0000-0000-0000-000000000001)
+  ✅ [user_endpoint] Updated email → dev@pilot.local
+  ✅ [user_endpoint] Updated email → tech@pilot.local
+  ✅ [user_endpoint] Updated email → office@pilot.local
+  ✅ [user_endpoint] Updated email → accountant@pilot.local
+  ✅ [user_endpoint] in_app + push endpoints set for 4 users (value-scoped DELETE + INSERT — idempotent, non-destructive)
+  ℹ️  [tenant_user] 00000000-0000-0000-0000-000000000002 already linked (role=owner)
+  ℹ️  [tenant_user] 00000000-0000-0000-0000-000000000003 already linked (role=technician)
+  ℹ️  [tenant_user] 00000000-0000-0000-0000-000000000004 already linked (role=office_staff)
+  ℹ️  [tenant_user] 00000000-0000-0000-0000-000000000005 already linked (role=accountant)
+  ℹ️  [password_policy] Already exists
+  ✅ [password_policy] Lockout/history fields ensured
+  ℹ️  [tenant_email_branding] Already exists
+  ✅ [tenant_email_branding] custom_footer ensured
+  ℹ️  [tenant_onboarding_checklist] Already exists
+  ℹ️  [subscription] Already exists
+  ✅ [subscription] quantity_seats=4, billing_anchor=2026-07-01 ensured
+  ℹ️  [labor_rate_version] 'master' already exists
+  ℹ️  [labor_rate_version] 'journeyman' already exists
+  ℹ️  [labor_rate_version] 'apprentice' already exists
+  ✅ [labor_rate_version] Updated 'master' burden_pct → 0.25
+  ✅ [labor_rate_version] Updated 'journeyman' burden_pct → 0.20
+  ✅ [labor_rate_version] Updated 'apprentice' burden_pct → 0.15
+  ℹ️  [tenant_markup_version] Already exists
+  ℹ️  [discount_version] 'SUMMER_PROMO' already exists
+  ℹ️  [discount_version] 'NEW_CUSTOMER' already exists
+  ℹ️  [user_preference] Owner user preference already exists
+  ✅ [user_setting_override] 2 rows created for dev@pilot.local (background_sync_enabled, voice_persona_tone)
+  ✅ [user] email_verified_at + last_login_at set for all 4 test users
+  ✅ [tenant_user] skill_level_code + employee_number set for 4 users
+  ✅ [auth_jwk] Created active signing key 'pilot-dev-signing-key-v1' (RS256, no expiry)
+  ✅ [notification_preference] 12 channel overrides ensured for dev@pilot.local
+  ✅ [mobile_device_push_token] Created for tech@pilot.local (device=00000000-0000-0000-0001-000000000001)
+  ✅ [subscription_usage] 'schedule_lanes'  used=3  period=2026-07-01→2026-07-31
+  ✅ [subscription_usage] 'voice_ai_minutes'  used=42  period=2026-07-01→2026-07-31
+  ✅ [subscription_usage] 'outbound_sms_segments'  used=18  period=2026-07-01→2026-07-31
+  ✅ [tenant_subscription_usage] Created current-period summary (users=4, sms_segments=18)
+  ✅ [user_dashboard_widget] 'revenue_summary' at (0,0)
+  ✅ [user_dashboard_widget] 'job_pipeline' at (4,0)
+  ✅ [user_dashboard_widget] 'outstanding_invoices' at (0,2)
+  ✅ [user_dashboard_widget] 3 widgets seeded for dev@pilot.local
+  ✅ [tenant_10dlc_profile] Created (legal_name='Pilot Dev Tenant LLC', TX HQ)
+
+🎉 seed_test_tenant complete — Group C data present for 00000000-0000-0000-0000-000000000001

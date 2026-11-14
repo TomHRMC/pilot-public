@@ -1,0 +1,9 @@
+{
+  "template_id": "subscription_renewal",
+  "display_name": "Subscription Renewal",
+  "category": "internal",
+  "subject_template": "Your Pilot subscription has renewed",
+  "body_html_template": "<p>Your subscription renewed.</p>",
+  "body_plain_template": "Your subscription renewed.",
+  "variables": ["tenant_name", "plan_name", "next_billing_date"]
+}

@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AevoFab — Flow 7 Offline Sync Prototype</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --brand-600: #3B43D6;
+    --brand-700: #312E81;
+    --alert-400: #F59E0B;
+    --alert-500: #D97706;
+    --alert-bg: rgba(245, 158, 11, 0.08);
+    --alert-border: rgba(245, 158, 11, 0.25);
+    --margin-400: #34D399;
+    --margin-600: #059669;
+    --fault-400: #EF4444;
+    --fault-600: #DC2626;
+    --fault-bg: rgba(220, 38, 38, 0.08);
+    --fault-border: rgba(220, 38, 38, 0.25);
+    --bg-page: #F5F5F4;
+    --bg-app: #0A0A0A;
+    --bg-surface: #18181B;
+    --bg-surface-2: #27272A;
+    --text-primary: #FAFAF9;
+    --text-secondary: #A8A29E;
+    --text-tertiary: #78716C;
+    --text-quaternary: #525252;
+    --border-subtle: #2A2A2D;
+    --border-default: #3F3F46;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+    background: var(--bg-page);
+    color: #1C1917;
+    min-height: 100vh;
+    padding: 32px 16px;
+    -webkit-font-smoothing: antialiased;
+  }
+  .num { font-family: 'JetBrains Mono', monospace; font-feature-settings: 'tnum'; }
+  .container {
+    max-width: 880px;
+    margin: 0 auto;
+  }
+  h1 {
+    font-size: 18px;
+    font-weight: 500;
+    margin: 0 0 4px;
+    color: #1C1917;
+  }
+  .subtitle {
+    font-size: 13px;
+    color: #57534E;
+    margin: 0 0 24px;
+  }
+  .stage {
+    display: flex;
+    gap: 28px;
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+  .device-col {
+    flex: 0 0 auto;
+  }
+  .legend-col {
+    flex: 1;
+    min-width: 320px;
+    background: white;
+    border: 0.5px solid #E7E5E4;
+    border-radius: 12px;
+    padding: 18px 20px;
+    font-size: 13px;
+    color: #44403C;
+  }
+  .legend-col h3 {
+    font-size: 13px;
+    font-weight: 500;
+    margin: 0 0 10px;
+    color: #1C1917;
+  }
+  .legend-col .group { margin-bottom: 14px; }
+  .legend-col .group:last-child { margin-bottom: 0; }
+  .legend-col p { margin: 0 0 6px; line-height: 1.5; }
+  .legend-col .row {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    margin-bottom: 4px;
+    font-size: 12px;
+  }
+  .legend-col .swatch {
+    flex: 0 0 12px;
+    width: 12px;
+    height: 12px;
+    border-radius: 3px;
+    margin-top: 3px;
+  }
+  .legend-col .swatch.red { background: var(--fault-600); }
+  .legend-col .swatch.amber { background: var(--alert-400); }
+  .legend-col .swatch.gray { background: #71717A; }
+  .legend-col .swatch.green { background: var(--margin-600); }
+  .legend-col code {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    background: #F5F5F4;
+    padding: 1px 4px;
+    border-radius: 3px;
+  }
+  .legend-col .nav-buttons {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px;
+    flex-wrap: wrap;
+  }
+  .legend-col button {
+    padding: 6px 10px;
+    font-size: 12px;
+    font-family: inherit;
+    background: white;
+    color: #1C1917;
+    border: 0.5px solid #D6D3D1;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .legend-col button:hover { background: #F5F5F4; }
+  .legend-col button.active {
+    background: var(--brand-600);
+    color: white;
+    border-color: var(--brand-600);
+  }
+
+  /* Phone frame */
+  .phone {
+    background: #18181B;
+    border-radius: 36px;
+    padding: 8px;
+    width: 320px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+  }
+  .phone-screen {
+    background: var(--bg-app);
+    border-radius: 28px;
+    overflow: hidden;
+    height: 640px;
+    display: flex;
+    flex-direction: column;
+    color: var(--text-primary);
+    position: relative;
+  }
+  /* Status bar */
+  .status-bar {
+    padding: 8px 20px 4px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: var(--text-primary);
+    font-size: 11px;
+    font-weight: 500;
+  }
+  .status-bar .signals {
+    font-size: 9px;
+    letter-spacing: 1.5px;
+  }
+  /* Header */
+  .app-header {
+    padding: 10px 16px 8px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .app-header .title-block .label {
+    color: var(--text-secondary);
+    font-size: 11px;
+  }
+  .app-header .title-block .title {
+    color: var(--text-primary);
+    font-size: 17px;
+    font-weight: 500;
+    margin-top: 2px;
+  }
+  .conn-pill {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 10px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: opacity 0.15s;
+  }
+  .conn-pill:hover { opacity: 0.85; }
+  .conn-pill.offline {
+    background: var(--fault-bg);
+    border: 0.5px solid var(--fault-border);
+    color: #FCA5A5;
+  }
+  .conn-pill .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+  }
+  .conn-pill.offline .dot { background: var(--fault-600); }
+
+  /* Drawer */
+  .drawer {
+    background: var(--bg-surface);
+    border-radius: 16px 16px 0 0;
+    margin-top: 12px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  .drawer-handle {
+    width: 36px;
+    height: 4px;
+    background: var(--border-default);
+    border-radius: 2px;
+    margin: 12px auto 14px;
+  }
+  .drawer-title-row {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    padding: 0 16px 14px;
+  }
+  .drawer-title {
+    color: var(--text-primary);
+    font-size: 16px;
+    font-weight: 500;
+    margin: 0;
+  }
+  .drawer-meta {
+    color: var(--text-secondary);
+    font-size: 11px;
+  }
+  .drawer-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 0 16px 16px;
+  }
+  .drawer-body::-webkit-scrollbar { width: 0; }
+
+  .section { margin-bottom: 18px; }
+  .section-label {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .section-label.red { color: #FCA5A5; }
+  .section-label.amber { color: #FBBF24; }
+  .section-label.neutral { color: var(--text-secondary); }
+  .section-label.green { color: #6EE7B7; }
+
+  .item {
+    padding: 10px 12px;
+    border-radius: 0 6px 6px 0;
+    margin-bottom: 6px;
+    font-size: 13px;
+  }
+  .item.action-needed {
+    background: var(--fault-bg);
+    border-left: 3px solid var(--fault-600);
+  }
+  .item.syncing {
+    background: rgba(245, 158, 11, 0.05);
+    border-left: 3px solid var(--alert-400);
+  }
+  .item.pending {
+    background: rgba(255,255,255,0.02);
+    border-left: 3px solid var(--border-default);
+  }
+  .item.synced {
+    background: rgba(255,255,255,0.02);
+    border-left: 3px solid var(--margin-600);
+    opacity: 0.7;
+  }
+  .item-row {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 8px;
+  }
+  .item-main {
+    flex: 1;
+    min-width: 0;
+  }
+  .item-title {
+    color: var(--text-primary);
+    font-size: 13px;
+    font-weight: 500;
+  }
+  .item-detail {
+    color: var(--text-secondary);
+    font-size: 11px;
+    margin-top: 2px;
+  }
+  .item-time {
+    color: var(--text-tertiary);
+    font-size: 10px;
+    margin-top: 4px;
+  }
+  .item-progress {
+    color: #FBBF24;
+    font-size: 11px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  .progress-track {
+    height: 2px;
+    background: rgba(245, 158, 11, 0.2);
+    border-radius: 1px;
+    margin-top: 6px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: var(--alert-400);
+  }
+
+  .action-btn {
+    padding: 4px 10px;
+    font-size: 11px;
+    font-weight: 500;
+    background: var(--fault-600);
+    color: var(--text-primary);
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    white-space: nowrap;
+    font-family: inherit;
+  }
+  .action-btn:hover { background: #B91C1C; }
+
+  .more-link {
+    color: var(--text-tertiary);
+    font-size: 11px;
+    padding: 6px 12px;
+    cursor: pointer;
+  }
+
+  /* Resolution screen */
+  .resolution-header {
+    padding: 12px 16px;
+    background: var(--bg-app);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-bottom: 0.5px solid var(--border-subtle);
+  }
+  .back-btn {
+    background: none;
+    border: none;
+    color: var(--text-primary);
+    font-size: 18px;
+    cursor: pointer;
+    padding: 4px;
+    line-height: 1;
+  }
+  .resolution-header .title {
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--text-primary);
+    flex: 1;
+  }
+  .resolution-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 16px;
+  }
+  .resolution-body::-webkit-scrollbar { width: 0; }
+  .resolution-explainer {
+    background: var(--fault-bg);
+    border-left: 3px solid var(--fault-600);
+    padding: 12px 14px;
+    border-radius: 0 8px 8px 0;
+    margin-bottom: 18px;
+  }
+  .resolution-explainer .h {
+    color: #FCA5A5;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .resolution-explainer .b {
+    color: var(--text-primary);
+    font-size: 13px;
+    line-height: 1.45;
+  }
+  .version-card {
+    background: var(--bg-surface);
+    border-radius: 8px;
+    padding: 14px;
+    margin-bottom: 12px;
+    border: 0.5px solid var(--border-subtle);
+  }
+  .version-card .vlabel {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 6px;
+  }
+  .version-card .vlabel .vdot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+  }
+  .version-card.local .vdot { background: var(--brand-600); }
+  .version-card.server .vdot { background: var(--margin-400); }
+  .version-card .vname {
+    color: var(--text-primary);
+    font-size: 13px;
+    font-weight: 500;
+  }
+  .version-card .vmeta {
+    color: var(--text-secondary);
+    font-size: 11px;
+    margin-bottom: 10px;
+  }
+  .field {
+    margin-bottom: 10px;
+  }
+  .field-label {
+    color: var(--text-tertiary);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.3px;
+    text-transform: uppercase;
+    margin-bottom: 3px;
+  }
+  .field-value {
+    color: var(--text-primary);
+    font-size: 13px;
+    padding: 6px 8px;
+    border-radius: 4px;
+  }
+  .field-value.modified {
+    background: rgba(245, 158, 11, 0.1);
+    border-left: 2px solid var(--alert-400);
+    border-radius: 0 4px 4px 0;
+    color: #FCD34D;
+    font-weight: 500;
+  }
+  .field-value.modified .prior {
+    display: block;
+    color: rgba(252, 211, 77, 0.6);
+    font-size: 10px;
+    text-decoration: line-through;
+    margin-top: 2px;
+    font-weight: 400;
+  }
+  .field-value.added {
+    background: rgba(5, 150, 105, 0.1);
+    border-left: 2px solid var(--margin-600);
+    border-radius: 0 4px 4px 0;
+    color: #6EE7B7;
+  }
+  .field-value.added .anno {
+    color: rgba(110, 231, 183, 0.7);
+    font-size: 10px;
+    margin-left: 6px;
+  }
+
+  .resolution-actions {
+    background: var(--bg-app);
+    padding: 14px 16px;
+    border-top: 0.5px solid var(--border-subtle);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .btn-primary {
+    padding: 12px;
+    font-size: 13px;
+    font-weight: 500;
+    background: var(--brand-600);
+    color: var(--text-primary);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    width: 100%;
+    font-family: inherit;
+  }
+  .btn-primary:hover { background: #4F46E5; }
+  .btn-secondary {
+    padding: 12px;
+    font-size: 13px;
+    background: transparent;
+    color: var(--text-primary);
+    border: 0.5px solid var(--border-default);
+    border-radius: 8px;
+    cursor: pointer;
+    width: 100%;
+    font-family: inherit;
+  }
+  .btn-secondary:hover { background: var(--bg-surface); }
+  .escalate-link {
+    color: var(--text-secondary);
+    font-size: 12px;
+    text-align: center;
+    margin-top: 4px;
+    cursor: pointer;
+    text-decoration: none;
+  }
+
+  /* Toast / confirmation */
+  .toast {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--margin-600);
+    color: white;
+    padding: 10px 16px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 500;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    opacity: 0;
+    transition: opacity 0.3s;
+    pointer-events: none;
+    z-index: 10;
+  }
+  .toast.show { opacity: 1; }
+
+  /* Hide/show */
+  .hidden { display: none !important; }
+</style>
+</head>
+<body>
+<div class="container">
+<h1>AevoFab — Flow 7: Offline-to-Online Sync</h1>
+<p class="subtitle">Mobile prototype · two views · click "Resolve" on the conflict to drill in</p>
+
+<div class="stage">
+
+<div class="device-col">
+<div class="phone">
+<div class="phone-screen">
+
+<!-- Status bar -->
+<div class="status-bar">
+<span class="num">9:41</span>
+<span class="signals">●●●  ▌▌▌▌</span>
+</div>
+
+<!-- ============== VIEW 1: SYNC QUEUE ============== -->
+<div id="view-queue">
+
+<!-- Header -->
+<div class="app-header">
+<div class="title-block">
+<div class="label">Today</div>
+<div class="title">Wed, Apr 30</div>
+</div>
+<div class="conn-pill offline" onclick="document.getElementById('queue-drawer').scrollIntoView({behavior:'smooth'});">
+<span class="dot"></span>
+<span>Offline · <span id="conn-count">12</span></span>
+</div>
+</div>
+
+<!-- Drawer -->
+<div class="drawer" id="queue-drawer">
+<div class="drawer-handle"></div>
+<div class="drawer-title-row">
+<h3 class="drawer-title">Sync queue</h3>
+<span class="drawer-meta">Last attempt 4 min ago</span>
+</div>
+<div class="drawer-body">
+
+<!-- Action needed -->
+<div class="section" id="action-needed-section">
+<div class="section-label red">Action needed (1)</div>
+<div class="item action-needed" id="conflict-item">
+<div class="item-row">
+<div class="item-main">
+<div class="item-title">Time entry · Johnson panel</div>
+<div class="item-detail">Job reassigned to Luis while offline</div>
+<div class="item-time">Captured 2:14 PM · 2.5 hrs</div>
+</div>
+<button class="action-btn" onclick="showResolution()">Resolve</button>
+</div>
+</div>
+</div>
+
+<!-- Syncing -->
+<div class="section">
+<div class="section-label amber">Syncing (2)</div>
+<div class="item syncing">
+<div class="item-row">
+<div class="item-main">
+<div class="item-title">3 photos · Davis residence</div>
+</div>
+<div class="item-progress">62%</div>
+</div>
+<div class="progress-track"><div class="progress-fill" style="width: 62%;"></div></div>
+</div>
+<div class="item syncing">
+<div class="item-main">
+<div class="item-title">Voice command · "Tell Tom 20 out"</div>
+<div class="item-detail">Transcribing...</div>
+</div>
+</div>
+</div>
+
+<!-- Pending -->
+<div class="section">
+<div class="section-label neutral">Pending (9)</div>
+<div class="item pending">
+<div class="item-main">
+<div class="item-title">Clock in · Williams service</div>
+<div class="item-time">8:02 AM</div>
+</div>
+</div>
+<div class="item pending">
+<div class="item-row">
+<div class="item-main">
+<div class="item-title">Expense · $84.32 · 4/0 SER cable</div>
+<div class="item-time">9:47 AM · 1 photo</div>
+</div>
+<div class="item-progress" style="color: var(--text-tertiary); font-size: 10px;">WiFi pending</div>
+</div>
+</div>
+<div class="item pending">
+<div class="item-main">
+<div class="item-title">Time entry · Davis residence</div>
+<div class="item-time">10:15 AM · 1.25 hrs</div>
+</div>
+</div>
+<div class="item pending">
+<div class="item-main">
+<div class="item-title">LOTO check · Davis residence</div>
+<div class="item-time">10:18 AM · confirmed</div>
+</div>
+</div>
+<div class="more-link">+ 5 more</div>
+</div>
+
+<!-- Recently synced -->
+<div class="section">
+<div class="section-label green">Recently synced</div>
+<div class="item synced">
+<div class="item-row">
+<div class="item-main">
+<div class="item-title" style="color: var(--text-secondary); font-weight: 400;">LOTO confirmed · Davis residence</div>
+</div>
+<div style="color: #6EE7B7; font-size: 11px;">✓</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<!-- ============ /VIEW 1 ============ -->
+
+<!-- ============== VIEW 2: RESOLUTION ============== -->
+<div id="view-resolution" class="hidden" style="height: 100%; display: flex; flex-direction: column;">
+
+<div class="resolution-header">
+<button class="back-btn" onclick="showQueue()">←</button>
+<span class="title">Resolve conflict</span>
+</div>
+
+<div class="resolution-body">
+
+<div class="resolution-explainer">
+<div class="h">Why this needs you</div>
+<div class="b">Your time entry doesn't match — the Johnson panel job was reassigned to Luis at 1:48 PM, after you started working.</div>
+</div>
+
+<div class="version-card local">
+<div class="vlabel">
+<span class="vdot"></span>
+<span class="vname">Your version</span>
+</div>
+<div class="vmeta">Captured offline at 2:14 PM</div>
+<div class="field">
+<div class="field-label">Job</div>
+<div class="field-value">Tom Johnson — 200A panel upgrade</div>
+</div>
+<div class="field">
+<div class="field-label">Tech</div>
+<div class="field-value modified">
+Mike Reyes (you)
+<span class="prior">was Mike Reyes (still you, but reassigned)</span>
+</div>
+</div>
+<div class="field">
+<div class="field-label">Hours</div>
+<div class="field-value">2.5 hrs (12:30 PM – 3:00 PM)</div>
+</div>
+<div class="field">
+<div class="field-label">ETC</div>
+<div class="field-value">3.5 hrs remaining</div>
+</div>
+</div>
+
+<div class="version-card server">
+<div class="vlabel">
+<span class="vdot"></span>
+<span class="vname">Server version</span>
+</div>
+<div class="vmeta">Reassigned by Sarah (owner) at 1:48 PM</div>
+<div class="field">
+<div class="field-label">Job</div>
+<div class="field-value">Tom Johnson — 200A panel upgrade</div>
+</div>
+<div class="field">
+<div class="field-label">Tech</div>
+<div class="field-value modified">
+Luis Hernandez
+<span class="prior">was Mike Reyes</span>
+</div>
+</div>
+<div class="field">
+<div class="field-label">Hours</div>
+<div class="field-value">(no entry — Luis hasn't logged yet)</div>
+</div>
+<div class="field">
+<div class="field-label">Note</div>
+<div class="field-value added">
+"Mike pulled to Williams emergency"
+<span class="anno">(added by Sarah)</span>
+</div>
+</div>
+</div>
+
+</div>
+
+<div class="resolution-actions">
+<button class="btn-primary" onclick="acceptLocal()">Use my version</button>
+<button class="btn-secondary" onclick="acceptServer()">Use server version</button>
+<a class="escalate-link" onclick="escalate()">Send to owner for review</a>
+</div>
+
+</div>
+<!-- ============ /VIEW 2 ============ -->
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+</div>
+</div>
+</div>
+
+<!-- Right column: legend + nav -->
+<div class="legend-col">
+<div class="group">
+<h3>Status colors in the queue</h3>
+<div class="row"><div class="swatch red"></div><div>Action needed — failed sync, tech input required (Decision 5: tech-resolvable)</div></div>
+<div class="row"><div class="swatch amber"></div><div>Syncing — currently in flight (with progress for photos per Decision 6)</div></div>
+<div class="row"><div class="swatch gray"></div><div>Pending — queued, awaiting trigger or connection (Decision 8)</div></div>
+<div class="row"><div class="swatch green"></div><div>Recently synced — last 10 successful items (Decision 4)</div></div>
+</div>
+
+<div class="group">
+<h3>Diff vocabulary on resolution screen</h3>
+<p style="margin-bottom: 4px;">Inherits Flow 5 / Flow 6 track-changes palette, fourth reuse:</p>
+<div class="row"><div class="swatch amber"></div><div>Modified field — amber tint with strike-through prior value</div></div>
+<div class="row"><div class="swatch green"></div><div>Added field — green tint with "(added)" annotation</div></div>
+</div>
+
+<div class="group">
+<h3>Try the flow</h3>
+<div class="nav-buttons">
+<button onclick="showQueue()" id="nav-queue" class="active">Sync queue</button>
+<button onclick="showResolution()" id="nav-resolution">Resolve conflict</button>
+</div>
+<p style="margin-top: 12px; font-size: 12px; color: #57534E;">Click <code>Resolve</code> on the action-needed item, then pick a version. Both choices return to the queue with the conflict cleared.</p>
+</div>
+</div>
+
+</div>
+</div>
+
+<script>
+  function showQueue() {
+    document.getElementById('view-queue').classList.remove('hidden');
+    document.getElementById('view-resolution').classList.add('hidden');
+    document.getElementById('nav-queue').classList.add('active');
+    document.getElementById('nav-resolution').classList.remove('active');
+  }
+  function showResolution() {
+    document.getElementById('view-queue').classList.add('hidden');
+    document.getElementById('view-resolution').classList.remove('hidden');
+    document.getElementById('nav-queue').classList.remove('active');
+    document.getElementById('nav-resolution').classList.add('active');
+  }
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2400);
+  }
+  function clearConflict(msg) {
+    // Remove the conflict from queue
+    const section = document.getElementById('action-needed-section');
+    if (section) section.style.display = 'none';
+    // Update count
+    document.getElementById('conn-count').textContent = '11';
+    showQueue();
+    showToast(msg);
+  }
+  function acceptLocal() {
+    clearConflict('Your version kept · syncing');
+  }
+  function acceptServer() {
+    clearConflict('Server version applied · synced');
+  }
+  function escalate() {
+    // Mark item as escalated rather than removing
+    document.getElementById('conflict-item').innerHTML = `
+      <div class="item-row">
+        <div class="item-main">
+          <div class="item-title">Time entry · Johnson panel</div>
+          <div class="item-detail" style="color: #FBBF24;">Sent to owner for review</div>
+          <div class="item-time">Escalated just now · awaiting Sarah</div>
+        </div>
+      </div>`;
+    document.getElementById('conflict-item').className = 'item syncing';
+    showQueue();
+    showToast('Escalated to owner');
+  }
+</script>
+</body>
+</html>

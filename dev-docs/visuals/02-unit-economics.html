@@ -1,0 +1,87 @@
+<title>Unit Economics</title>
+<style>
+  /* Layout: a hero run-cost number with a cap bar, a 2x2 proof-tile grid, and a one-line judgment framing. */
+  :root{
+    --bg:#f6f8f8; --surface:#ffffff; --fg:#192024; --muted:#59656d; --line:#d2d9dc;
+    --accent:#0d7d74; --accent-soft:#e4f1ef; --accent-strong:#0a5d56;
+    --sans:"IBM Plex Sans",ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  }
+  @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+    --bg:#0e1416; --surface:#161d20; --fg:#e9eef0; --muted:#9aa7ad; --line:#2a343a;
+    --accent:#3fd0c2; --accent-soft:#10302e; --accent-strong:#63e2d5; color-scheme:dark;
+  }}
+  :root[data-theme="dark"]{
+    --bg:#0e1416; --surface:#161d20; --fg:#e9eef0; --muted:#9aa7ad; --line:#2a343a;
+    --accent:#3fd0c2; --accent-soft:#10302e; --accent-strong:#63e2d5; color-scheme:dark;
+  }
+  body{background:var(--bg);color:var(--fg);font-family:var(--sans);line-height:1.5;}
+  .wrap{max-width:1120px;margin:0 auto;padding-block:32px 40px;padding-inline:16px;}
+  .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-strong);margin:0 0 6px;}
+  h1{font-size:clamp(22px,3.2vw,30px);line-height:1.12;text-wrap:balance;margin:0 0 8px;font-weight:700;letter-spacing:-.01em;}
+  .lede{color:var(--muted);font-size:15px;max-width:66ch;margin:0 0 22px;}
+  figure{margin:0;}
+  .diagram{width:100%;height:auto;display:block;background:var(--surface);border:1px solid var(--line);border-radius:14px;}
+  figcaption{color:var(--muted);font-size:13px;margin-top:12px;max-width:72ch;}
+  .foot{margin-top:18px;font-size:12.5px;color:var(--muted);font-family:var(--mono);}
+  svg{color:var(--fg);}
+  .h1{fill:var(--fg);font-weight:700;font-size:25px;letter-spacing:-.01em;}
+  .sub{fill:var(--muted);font-size:14.5px;}
+  .big{fill:var(--accent-strong);font-weight:700;font-size:76px;letter-spacing:-.02em;font-variant-numeric:tabular-nums;}
+  .big-u{fill:var(--fg);font-size:15px;}
+  .tile{fill:var(--surface);stroke:var(--line);stroke-width:1.5;}
+  .tval{fill:var(--accent-strong);font-weight:700;font-size:34px;font-variant-numeric:tabular-nums;}
+  .tlbl{fill:var(--muted);font-size:12.5px;}
+  .ns{fill:var(--muted);font-size:12px;}
+  .nsi{fill:var(--muted);font-size:12px;font-style:italic;}
+  .frame{fill:var(--fg);font-size:14px;}
+  .frame-a{fill:var(--accent-strong);font-size:13.5px;font-weight:600;}
+  .bartrack{fill:var(--line);}
+  .barfill{fill:var(--accent);}
+</style>
+
+<div class="wrap">
+  <p class="eyebrow">HotRMC · Unit economics</p>
+  <h1>I architect to a budget</h1>
+  <p class="lede">The platform was designed under a fiscal cap. Cost and margin weren't an afterthought — they were design constraints from day one.</p>
+
+  <figure>
+    <svg class="diagram" viewBox="0 0 1200 520" role="img"
+      aria-label="Modelled infrastructure cost is about $888 per month at 100 customers, under a $1,000 design cap. That is $8.88 per customer per month and about 94% infrastructure margin at the $149 Teams-annual price (about 82 to 85% at the $49 to $59 tiers), before payment and SMS fees. One GPU is sized on paper for up to about 500 customers, not load-tested. There is no per-request inference cost for voice AI because the models run locally.">
+      <text class="h1" x="600" y="44" text-anchor="middle">Run cost: ~$888/month at 100 customers</text>
+      <text class="sub" x="600" y="72" text-anchor="middle">Modelled to a &lt;$1,000 design cap — margin protected by architecture, not hope</text>
+
+      <!-- LEFT: hero number + cap bar -->
+      <text class="big" x="60" y="210" text-anchor="start">$888</text>
+      <text class="big-u" x="64" y="242" text-anchor="start">per month, modelled, at 100 customers</text>
+      <text class="ns" x="64" y="286" text-anchor="start">design cap: under $1,000/mo</text>
+      <rect class="bartrack" x="64" y="296" width="470" height="20" rx="10"/>
+      <rect class="barfill" x="64" y="296" width="417" height="20" rx="10"/>
+      <text class="ns" x="64" y="344" text-anchor="start">~$112/mo buffer under the cap · modelled, not a measured bill</text>
+
+      <!-- RIGHT: 2x2 proof tiles -->
+      <rect class="tile" x="605" y="108" width="265" height="118" rx="12"/>
+      <text class="tval" x="737" y="166" text-anchor="middle">$8.88</text>
+      <text class="tlbl" x="737" y="196" text-anchor="middle">infra cost / customer / month</text>
+
+      <rect class="tile" x="890" y="108" width="265" height="118" rx="12"/>
+      <text class="tval" x="1022" y="166" text-anchor="middle">94%</text>
+      <text class="tlbl" x="1022" y="196" text-anchor="middle">modelled infra margin at $149</text>
+
+      <rect class="tile" x="605" y="246" width="265" height="118" rx="12"/>
+      <text class="tval" x="737" y="304" text-anchor="middle">500</text>
+      <text class="tlbl" x="737" y="334" text-anchor="middle">customers per GPU (paper sizing)</text>
+
+      <rect class="tile" x="890" y="246" width="265" height="118" rx="12"/>
+      <text class="tval" x="1022" y="304" text-anchor="middle">$0</text>
+      <text class="tlbl" x="1022" y="334" text-anchor="middle">per-request voice-AI cost (fixed-cost GPU)</text>
+
+      <!-- framing -->
+      <text class="frame" x="600" y="438" text-anchor="middle">Cost and margin as design constraints, not afterthoughts.</text>
+      <text class="frame-a" x="600" y="462" text-anchor="middle">That's the difference between shipping features and shipping a business.</text>
+    </svg>
+    <figcaption>Modelled run economics at 100 customers: ~$888/mo infrastructure (design target, under a $1,000 cap), $8.88 per customer, ~94% infrastructure margin at the $149 Teams-annual price (~82–85% at the $49–$59 tiers) before payment and SMS fees; one fixed-cost GPU sized on paper for up to ~500 customers, so no per-request voice-AI inference cost (local Whisper + Llama).</figcaption>
+  </figure>
+
+  <p class="foot">Pilot for Trades proof suite · 2026</p>
+</div>

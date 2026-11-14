@@ -1,0 +1,145 @@
+{
+  "public.user_endpoint": [
+    {
+      "name": "trg_user_endpoint_guard_biu",
+      "timing": "BEFORE",
+      "events": [
+        "INSERT",
+        "UPDATE"
+      ],
+      "for_each": "ROW",
+      "function": "guard_user_endpoint_primary_email_fn()"
+    },
+    {
+      "name": "trg_user_endpoint_guard_bd",
+      "timing": "BEFORE",
+      "events": [
+        "DELETE"
+      ],
+      "for_each": "ROW",
+      "function": "guard_user_endpoint_primary_email_fn()"
+    },
+    {
+      "name": "sync_user_email_from_endpoint_trigger",
+      "timing": "AFTER",
+      "events": [
+        "INSERT",
+        "UPDATE",
+        "DELETE"
+      ],
+      "function": "sync_user_email_from_endpoint_fn",
+      "for_each": "ROW"
+    }
+  ],
+  "public.tenant_user": [
+    {
+      "name": "trg_tenant_user_guard_platform_biu",
+      "timing": "BEFORE",
+      "events": [
+        "INSERT",
+        "UPDATE"
+      ],
+      "for_each": "ROW",
+      "function": "guard_tenant_user_platform_isolation()"
+    }
+  ],
+  "public.quote_line": [
+    {
+      "name": "trg_quote_line_recalc_totals_aiud",
+      "timing": "AFTER",
+      "events": [
+        "INSERT",
+        "UPDATE",
+        "DELETE"
+      ],
+      "for_each": "ROW",
+      "function": "recalc_quote_totals_fn()"
+    }
+  ],
+  "public.quote_line_tax_component": [
+    {
+      "name": "trg_qltc_recalc_totals_aiud",
+      "timing": "AFTER",
+      "events": [
+        "INSERT",
+        "UPDATE",
+        "DELETE"
+      ],
+      "for_each": "ROW",
+      "function": "recalc_quote_totals_fn()"
+    }
+  ],
+  "public.change_order_line": [
+    {
+      "name": "trg_col_recalc_totals_aiud",
+      "timing": "AFTER",
+      "events": [
+        "INSERT",
+        "UPDATE",
+        "DELETE"
+      ],
+      "for_each": "ROW",
+      "function": "recalc_change_order_totals_fn()"
+    }
+  ],
+  "public.change_order_line_tax_component": [
+    {
+      "name": "trg_coltc_recalc_totals_aiud",
+      "timing": "AFTER",
+      "events": [
+        "INSERT",
+        "UPDATE",
+        "DELETE"
+      ],
+      "for_each": "ROW",
+      "function": "recalc_change_order_totals_fn()"
+    }
+  ],
+  "public.invoice": [
+    {
+      "name": "trg_invoice_set_updated_at",
+      "timing": "BEFORE",
+      "events": [
+        "UPDATE"
+      ],
+      "for_each": "ROW",
+      "function": "set_updated_at()"
+    },
+    {
+      "name": "trg_invoice_guard_created_immutable",
+      "timing": "BEFORE",
+      "events": [
+        "UPDATE"
+      ],
+      "for_each": "ROW",
+      "function": "guard_created_fields_immutable()"
+    }
+  ],
+  "public.invoice_line": [
+    {
+      "name": "trg_invoice_line_recalc_totals_aiud",
+      "timing": "AFTER",
+      "events": [
+        "INSERT",
+        "UPDATE",
+        "DELETE"
+      ],
+      "for_each": "ROW",
+      "function": "recalc_invoice_totals_fn()"
+    }
+  ],
+  "public.invoice_line_tax_component": [
+    {
+      "name": "trg_iltc_recalc_totals_aiud",
+      "timing": "AFTER",
+      "events": [
+        "INSERT",
+        "UPDATE",
+        "DELETE"
+      ],
+      "for_each": "ROW",
+      "function": "recalc_invoice_totals_fn()",
+      "comment": "Ensures that adding or removing a tax component automatically updates the subtotal/tax/total on the parent invoice header."
+    }
+  ]
+}

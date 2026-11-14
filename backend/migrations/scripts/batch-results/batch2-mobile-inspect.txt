@@ -1,0 +1,21 @@
+=== seed_scenario_mobile_sync: inspect mode ===
+  [mobile_sync_session]  2 row(s)
+    • ba3de8d9-5055-4853-8288-deda6ca0929e  device=00000000-0000-0000-0001-000000000001  triggered_by=silent_push  outcome=success  items=3/3
+    • 2e8baca1-8922-4f35-9b87-29238c9107ca  device=00000000-0000-0000-0002-000000000001  triggered_by=foreground  outcome=partial  items=4/2
+
+  [mobile_sync_event]  5 row(s)
+    • a77cc5db-94fe-4c41-955f-92cac9478b29  op=create_time_entry  status=succeeded  idem=00000000-0001-0001-0001-000000000001
+    • 69fc18e9-3759-4b08-b7dd-023be2dfce94  op=create_expense  status=succeeded  idem=00000000-0001-0001-0001-000000000002
+    • 582bcc24-edfa-4255-93c1-286a871f3d6a  op=update_job_status  status=conflict  idem=00000000-0002-0002-0002-000000000001
+    • 5db7e70a-346e-4411-a892-2cfca44884d6  op=upload_photo  status=failed  idem=00000000-0002-0002-0002-000000000002
+    • f463aaf5-2638-47ab-81c7-c5c8845df549  op=update_expense  status=conflict  idem=00000000-0002-0002-0002-000000000099
+
+  [mobile_sync_owner_escalation]  2 row(s)
+    • 2727abf8-be6f-4273-8f77-0cb0a4e5a6ba  status=pending  reason=tech_chose  escalated_at=2026-07-01 00:00:00+00:00  resolved_at=None  resolution_payload=NULL
+    • 792c7b10-2236-474a-ac42-a8d93a6e8bd5  status=resolved  reason=tech_chose  escalated_at=2026-06-21 00:00:00+00:00  resolved_at=2026-06-22 00:00:00+00:00  resolution_payload=set
+
+  [mobile_sync_event_audit]  1 row(s)
+    • bbfc8f6a-1d70-4943-981e-a503e4870148  esc=792c7b10-2236-474a-ac42-a8d93a6e8bd5  action=use_tech  channel=web  resolved=2026-06-22 00:00:00+00:00
+
+  [mobile_push_permission_state]  1 row(s)
+    • user=00000000-0000-0000-0000-000000000003  device=00000000-0000-0000-0001-000000000001  state=granted  changed=2026-07-16 17:32:29.009250+00:00

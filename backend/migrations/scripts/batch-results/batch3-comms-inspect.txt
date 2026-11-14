@@ -1,0 +1,55 @@
+=== seed_scenario_customer_comms: inspect mode ===
+    Tenant ID: 00000000-0000-0000-0000-000000000001
+
+  [tenant_phone_number]  18 row(s)
+    •   area=512  status=provisioning_failed
+    •   area=512  status=provisioning_failed
+    •   area=512  status=provisioning_failed
+    •   area=512  status=provisioning_failed
+    •   area=512  status=provisioning_failed
+    •   area=512  status=provisioning_failed
+    •   area=512  status=provisioning_failed
+    •   area=512  status=provisioning_failed
+    •   area=512  status=provisioning_failed
+    •   area=512  status=provisioning_failed
+    •   area=512  status=provisioning_failed
+    •   area=512  status=provisioning_failed
+    •   area=512  status=provisioning_failed
+    •   area=512  status=provisioning_failed
+    •   area=512  status=provisioning_failed
+    •   area=512  status=provisioning_failed
+    •   area=512  status=provisioning_failed
+    • +15125559001  area=512  status=provisioning_failed
+
+  [customer (comms scenario)]  3 row(s)
+    • 4c2e12fd-ccc6-48d7-9c24-f03db2c9a6fb  'Carlos Rivera'  phone=+14105550123  lifecycle=active
+    • 06e24906-1fb2-4e3a-bc70-4032edd57e2c  'Linda Park'  phone=+14105550123  lifecycle=active
+    • 65c2f011-4050-49f8-9b37-65266790ef9f  'Sunrise Electric LLC'  phone=+14105550123  lifecycle=active
+
+  [customer_communication_thread]  3 row(s)
+    • 85f9d02f-14e7-4d43-9fdb-f9a52dcbc33d  customer='Linda Park'  status=active  msg_count=3
+          first=2026-07-23 08:34:40.944215+00:00  last=2026-07-23 12:19:40.944215+00:00
+    • 27cb7e44-ebd2-4b83-8f10-048aec04155c  customer='Carlos Rivera'  status=active  msg_count=4
+          first=2026-07-23 10:34:40.944215+00:00  last=2026-07-23 12:04:40.944215+00:00
+    • f6b0edd1-5aa8-4995-9186-f2fca6eaf0e4  customer='Sunrise Electric LLC'  status=archived  msg_count=2
+          first=2026-07-22 12:34:40.944215+00:00  last=2026-07-22 13:34:40.944215+00:00
+
+  [customer_communication_message]  9 row(s)
+    • OUTBOUND  delivered      'Hi Carlos, this is Pilot Electric. Your panel inspection is '
+    • OUTBOUND  delivered      'Great! Our tech will arrive between 9-10am. Reply STOP to op'
+    • INBOUND   received       'Yes, that works. See you then!'
+    • INBOUND   received     (UNREAD)  'Actually, can you move it to 10am?'
+    • OUTBOUND  delivered      'Hi Linda! Your invoice #1042 for the outlet installation is '
+    • INBOUND   received       'Paid! Thank you, great service.'
+    • INBOUND   received     (UNREAD)  'Also — do you do HVAC work?'
+    • OUTBOUND  delivered      'Hi Sunrise Electric, this is Pilot Electric confirming your '
+    • INBOUND   received       'Confirmed. Please ask the tech to check in at the front desk'
+
+    Unread messages: 2
+
+  [contact_endpoint]  0 row(s)  (SKIPPED in seed — channel chk: email|sms only; sms on hold §8.2)
+
+  [customer_communication_message_read_state]  7 row(s)
+
+  [customer_communication_unrouted]  1 row(s)
+    • id=fdd187af-465c-4170-8cf0-e7f976500a6b  from=+14085559123  to=+15125559001  status=parked  received=2026-07-23 20:13:23.178471+00:00  body='Hello, is this the electrician?'
